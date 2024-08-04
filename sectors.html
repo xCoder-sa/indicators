@@ -205,54 +205,56 @@
             let nonTransferredCases = document.getElementById('nonTransferredCases').value;
 
             let xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
-<report>
-    <date>${date}</date>
-    <sector>${sector}</sector>
-    <time>${time}</time>
-    <capacity>
-        <activeTeams>${activeTeams}</activeTeams>
-        <totalTeams>${totalTeams}</totalTeams>
-        <rapidResponseTeams>${rapidResponseTeams}</rapidResponseTeams>
-        <activeVehicles>${activeVehicles}</activeVehicles>
-        <brokenVehicles>${brokenVehicles}</brokenVehicles>
-        <logisticSupportReports>${logisticSupportReports}</logisticSupportReports>
-        <coordinationStaff>${coordinationStaff}</coordinationStaff>
-        <hospitalsOff>${hospitalsOff}</hospitalsOff>
-    </capacity>
-    <demand>
-        <ecoReports>${ecoReports}</ecoReports>
-        <deltaReports>${deltaReports}</deltaReports>
-        <charlieReports>${charlieReports}</charlieReports>
-        <bravoReports>${bravoReports}</bravoReports>
-        <alphaReports>${alphaReports}</alphaReports>
-        <omegaReports>${omegaReports}</omegaReports>
-        <catheterReports>${catheterReports}</catheterReports>
-        <strokeReports>${strokeReports}</strokeReports>
-        <totalSectorReports>${totalSectorReports}</totalSectorReports>
-    </demand>
-    <outputs>
-        <avgWaitingTime>${avgWaitingTime}</avgWaitingTime>
-        <topTeamReports>${topTeamReports}</topTeamReports>
-        <avgReportsPerTeam>${avgReportsPerTeam}</avgReportsPerTeam>
-        <responseTime8Min>${responseTime8Min}</responseTime8Min>
-        <avgResponseTimeAccidents>${avgResponseTimeAccidents}</avgResponseTimeAccidents>
-        <totalResponseTimeSector>${totalResponseTimeSector}</totalResponseTimeSector>
-        <patientsKingFahad>${patientsKingFahad}</patientsKingFahad>
-        <patientsOtherHospitals>${patientsOtherHospitals}</patientsOtherHospitals>
-    </outputs>
-    <shiftNotes>
-        <absences>${absences}</absences>
-        <casesToGovernment>${casesToGovernment}</casesToGovernment>
-        <casesToPrivate>${casesToPrivate}</casesToPrivate>
-        <nonTransferredCases>${nonTransferredCases}</nonTransferredCases>
-    </shiftNotes>
-</report>`;
+<reports>
+    <report>
+        <date>${date}</date>
+        <sector>${sector}</sector>
+        <time>${time}</time>
+        <capacity>
+            <activeTeams>${activeTeams}</activeTeams>
+            <totalTeams>${totalTeams}</totalTeams>
+            <rapidResponseTeams>${rapidResponseTeams}</rapidResponseTeams>
+            <activeVehicles>${activeVehicles}</activeVehicles>
+            <brokenVehicles>${brokenVehicles}</brokenVehicles>
+            <logisticSupportReports>${logisticSupportReports}</logisticSupportReports>
+            <coordinationStaff>${coordinationStaff}</coordinationStaff>
+            <hospitalsOff>${hospitalsOff}</hospitalsOff>
+        </capacity>
+        <demand>
+            <ecoReports>${ecoReports}</ecoReports>
+            <deltaReports>${deltaReports}</deltaReports>
+            <charlieReports>${charlieReports}</charlieReports>
+            <bravoReports>${bravoReports}</bravoReports>
+            <alphaReports>${alphaReports}</alphaReports>
+            <omegaReports>${omegaReports}</omegaReports>
+            <catheterReports>${catheterReports}</catheterReports>
+            <strokeReports>${strokeReports}</strokeReports>
+            <totalSectorReports>${totalSectorReports}</totalSectorReports>
+        </demand>
+        <outputs>
+            <avgWaitingTime>${avgWaitingTime}</avgWaitingTime>
+            <topTeamReports>${topTeamReports}</topTeamReports>
+            <avgReportsPerTeam>${avgReportsPerTeam}</avgReportsPerTeam>
+            <responseTime8Min>${responseTime8Min}</responseTime8Min>
+            <avgResponseTimeAccidents>${avgResponseTimeAccidents}</avgResponseTimeAccidents>
+            <totalResponseTimeSector>${totalResponseTimeSector}</totalResponseTimeSector>
+            <patientsKingFahad>${patientsKingFahad}</patientsKingFahad>
+            <patientsOtherHospitals>${patientsOtherHospitals}</patientsOtherHospitals>
+        </outputs>
+        <shiftNotes>
+            <absences>${absences}</absences>
+            <casesToGovernment>${casesToGovernment}</casesToGovernment>
+            <casesToPrivate>${casesToPrivate}</casesToPrivate>
+            <nonTransferredCases>${nonTransferredCases}</nonTransferredCases>
+        </shiftNotes>
+    </report>
+</reports>`;
 
             let blob = new Blob([xmlContent], { type: 'text/xml' });
             let url = URL.createObjectURL(blob);
             let a = document.createElement('a');
             a.href = url;
-            a.download = 'report.xml';
+            a.download = 'reports.xml';
             a.click();
             URL.revokeObjectURL(url);
         });
