@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحليل رسائل الواتساب</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+        }
+        textarea {
+            width: 100%;
+            height: 300px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>تحليل رسائل الواتساب</h1>
+    <textarea id="whatsappMessages" placeholder="الصق هنا النصوص من الواتساب"></textarea>
+    <br>
+    <button onclick="processMessages()">تحليل الرسائل</button>
+
+    <h2>نتيجة التحليل</h2>
+    <table id="resultTable">
+        <thead>
+            <tr>
+                <th>القطاع</th>
+                <th>التاريخ</th>
+                <th>من الساعة</th>
+                <th>إلى الساعة</th>
+                <th>عدد الفرق العاملة</th>
+                <th>عدد فرق التدخل السريع</th>
+                <th>عدد المركبات العاملة</th>
+                <th>عدد المركبات المتعطلة</th>
+                <th>بلاغات الدعم اللوجستي المفتوحة</th>
+                <th>عدد العاملين في التنسيق والتحكم</th>
+                <th>عدد العاملين في الدعم اللوجستي</th>
+            </tr>
+        </thead>
+        <tbody id="resultBody">
+            <!-- النتائج ستعرض هنا -->
+        </tbody>
+    </table>
+
+    <script>
+        function processMessages() {
+            const text = document.getElementById('whatsappMessages').value;
+
+            // Regular expression to capture the needed data more flexibly
+            const regex = /قطاع\s*\((.*?)\).*?(\d{2}[-\/]\d{2}[-\/]\d{4}).*?الساعة.*?(\d{2}:\d{2})\s*إلى\s*(\d{2}:\d{2}).*?عدد الفرق العاملة:\s*\(*(\d+)\)*.*?عدد فرق التدخل السريع:\s*(\d+)\s*عدد المركبات العاملة:\s*(\d+)\s*عدد المركبات المتعطلة:\s*(\d+)\s*بلاغات الدعم اللوجستي المفتوحة:\s*(\d+)\s*عدد العاملين في التنسيق والتحكم:\s*(\d+)\s*عدد العاملين في الدعم اللوجستي:\s*(\d+)/gs;
+
+            let result;
+            const resultTableBody = document.getElementById('resultBody');
+            resultTableBody.innerHTML = ''; // Clear previous results
+
+            while ((result = regex.exec(text)) !== null) {
+                const row = document.createElement('tr');
+                result.slice(1).forEach(data => {
+                    const cell = document.createElement('td');
+                    cell.textContent = data.trim();
+                    row.appendChild(cell);
+                });
+                resultTableBody.appendChild(row);
+            }
+        }
+    </script>
+
+</body>
+</html>
