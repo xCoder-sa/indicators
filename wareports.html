@@ -60,8 +60,8 @@
         function processMessages() {
             const text = document.getElementById('whatsappMessages').value;
 
-            // Regular expression to capture the needed data from the input text
-            const regex = /قطاع\s*\((.*?)\).*?(\d{4}\/\d{2}\/\d{2}).*?الساعة:\s*(\d{2}:\d{2})\s*إلى\s*(\d{2}:\d{2}).*?عدد الفرق العاملة:\s*\(*(\d+)\)*.*?عدد فرق التدخل السريع:\s*(\d+).*?عدد المركبات العاملة:\s*(\d+).*?عدد المركبات المتعطلة:\s*(\d+).*?بلاغات الدعم اللوجستي المفتوحة:\s*(\d+).*?عدد العاملين في التنسيق والتحكم:\s*(\d+).*?عدد العاملين في الدعم اللوجستي:\s*(\d+)/gs;
+            // Regular expression to capture the needed data
+            const regex = /قطاع\s*\((.*?)\)\s*التاريخ:\s*(\d{4}\/\d{2}\/\d{2}).*?الساعة:\s*(\d{2}:\d{2})\s*إلى\s*(\d{2}:\d{2}).*?عدد الفرق العاملة:\s*(\d+).*?عدد فرق التدخل السريع:\s*(\d+).*?عدد المركبات العاملة:\s*(\d+).*?عدد المركبات المتعطلة:\s*(\d+).*?بلاغات الدعم اللوجستي المفتوحة:\s*(\d+).*?عدد العاملين في التنسيق والتحكم:\s*(\d+).*?عدد العاملين في الدعم اللوجستي:\s*(\d+)/gs;
 
             let result;
             const resultTableBody = document.getElementById('resultBody');
