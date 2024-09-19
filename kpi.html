@@ -65,7 +65,6 @@
         <input type="date" id="startDate" placeholder="تاريخ البدء">
         <input type="date" id="endDate" placeholder="تاريخ الانتهاء">
         <button id="applyFilter">تطبيق الفلاتر</button>
-        <button id="compareSectors">مقارنة القطاعات</button>
     </div>
 
     <!-- اختيار المؤشرات لعرض الرسوم البيانية -->
@@ -118,44 +117,42 @@
                 const parser = new DOMParser();
                 const htmlDocument = parser.parseFromString(data, "text/html");
 
-                // استخراج البيانات من الجدول داخل الملف المستلم
-                const rows = htmlDocument.querySelectorAll('table tr');
+                // استخراج البيانات من العنصر المناسب
+                const rows = htmlDocument.querySelectorAll('th[id^="0R1"]');
 
                 // الحصول على tbody الخاص بجدول المؤشرات
                 const tableBody = document.querySelector('#indicatorsTable tbody');
 
                 // تكرار الصفوف من البيانات مع تجاهل الصف الأول (العناوين)
                 rows.forEach((row, index) => {
-                    if (index > 0) { // تخطي الصف الأول
-                        const columns = row.querySelectorAll('td');
-                        const sector = columns[0].textContent;
+                    const columns = row.closest('tr').querySelectorAll('td');
+                    const sector = columns[0].textContent;
 
-                        if (!sectorsData[sector]) {
-                            sectorsData[sector] = [];
-                        }
-
-                        const rowData = {
-                            sector: columns[0].textContent,
-                            date: columns[1].textContent,
-                            workingTeams: parseInt(columns[4].textContent),
-                            rapidTeams: parseInt(columns[5].textContent),
-                            totalVehicles: parseInt(columns[11].textContent)
-                        };
-
-                        sectorsData[sector].push(rowData);
-
-                        const newRow = document.createElement('tr');
-
-                        // إضافة البيانات إلى الصف الجديد
-                        columns.forEach(col => {
-                            const newCell = document.createElement('td');
-                            newCell.textContent = col.textContent;
-                            newRow.appendChild(newCell);
-                        });
-
-                        // إضافة الصف الجديد إلى الجدول
-                        tableBody.appendChild(newRow);
+                    if (!sectorsData[sector]) {
+                        sectorsData[sector] = [];
                     }
+
+                    const rowData = {
+                        sector: columns[0].textContent,
+                        date: columns[1].textContent,
+                        workingTeams: parseInt(columns[4].textContent),
+                        rapidTeams: parseInt(columns[5].textContent),
+                        totalVehicles: parseInt(columns[11].textContent)
+                    };
+
+                    sectorsData[sector].push(rowData);
+
+                    const newRow = document.createElement('tr');
+
+                    // إضافة البيانات إلى الصف الجديد
+                    columns.forEach(col => {
+                        const newCell = document.createElement('td');
+                        newCell.textContent = col.textContent;
+                        newRow.appendChild(newCell);
+                    });
+
+                    // إضافة الصف الجديد إلى الجدول
+                    tableBody.appendChild(newRow);
                 });
 
                 // تحديث الفلاتر بناءً على القطاعات المتاحة
@@ -198,7 +195,7 @@
                 const chartData = sectorData.map(item => item.totalVehicles);
 
                 new Chart(ctx, {
-                    type: 'line',
+                    type: 'bar', // تغيير نوع الرسم البياني إلى bar
                     data: {
                         labels: chartLabels,
                         datasets: [{
@@ -242,11 +239,56 @@
             const startDate = document.getElementById('startDate').value;
             const endDate = document.getElementById('endDate').value;
 
-            // يمكن هنا تحديد منطق لتطبيق الفلاتر الزمنية وغيرها
-            // بناءً على القطاع والفترة الزمنية المحددة.
-            console.log(`تم تطبيق الفلاتر للقطاع ${sector} بين ${startDate} و ${endDate}`);
-        });
-    </script>
+            if (sector !== 'all') {
+                const sectorData = sectorsData[sector].filter(item => {
+                    const date = new Date(item.date);
+                    return (!startDate || new Date(startDate) <= date) && (!endDate || new Date(endDate) >= date);
+                });
 
+                // قم بتحديث الرسوم البيانية بناءً على الفلاتر
+                updateChart(sectorData);
+            }
+        });
+
+        // تحديث الرسم البياني بناءً على البيانات المفلترة
+        function updateChart(filteredData) {
+            const chart = Chart.getChart('chart-selected'); // الحصول على الرسم البياني الحالي
+            if (chart) {
+                chart.destroy(); // تدمير الرسم البياني القديم
+            }
+
+            const canvas = document.createElement('canvas');
+            canvas.id = 'chart-selected';
+            canvas.width = 400;
+            canvas.height = 200;
+            document.getElementById('chartsContainer').appendChild(canvas);
+
+            const ctx = document.getElementById('chart-selected').getContext('2d');
+            const chartLabels = filteredData.map(item => item.date);
+            const chartData = filteredData.map(item => item.totalVehicles);
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: chartLabels,
+                    datasets: [{
+                        label: 'إجمالي المركبات (مفلتر)',
+                        data: chartData,
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    </script>
 </body>
 </html>
