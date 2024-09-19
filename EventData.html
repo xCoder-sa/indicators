@@ -183,54 +183,56 @@
         }
 
         function parseEventData(text) {
-            const eventTypeMatch = text.match(/\*حدث جسيم\*/);
-            const reportNumbersMatch = text.match(/ارقام البلاغات\s*:\s*(\d+)/);
-            const sectorMatch = text.match(/القطاع\s*:\s*(.*)/);
-            const dateMatch = text.match(/(\d{4}\/\d{2}\/\d{2})/);
-            const timeMatch = text.match(/(\d{2}:\d{2})/);
-            const eventDetailsMatch = text.match(/حادث تصادم|تفاصيل الحدث\s*:\s*(.*)/);
-            const endTimeMatch = text.match(/انتهاء الحدث\s*:\s*(\d{2}:\d{2})/);
-            const currentSituationMatch = text.match(/ملخص الموقف\s*:\s*(.*)/);
-            const openReportsMatch = text.match(/عدد البلاغات المفتوحة\s*:\s*(\d+)/);
-            const participatingTeamsMatch = text.match(/عدد الوحدات المشاركة\s*:\s*(\d+)/);
-            const vehiclesMatch = text.match(/وانواع الاليات المشاركة\s*:\s*(.*)/);
-            const redCrescentTeamsMatch = text.match(/الهلال\s*الأحمر\s*:\s*(\d+)/);
-            const otherPartiesMatch = text.match(/جهات أخرى\s*:\s*(.*)/);
-            const firstTeamArrivalMatch = text.match(/وقت وصول اول فرقة\s*:\s*(\d{1,2}\s*[دقايق]*)/);
-            const totalPatientsMatch = text.match(/اجمالي الاصابات\s*:\s*(\d+)/);
-            const patientTriageMatch = text.match(/🟡 (\d+)|🟢 (\d+)/g);
-            const hospitalsMatch = text.match(/المستشفيات التي تم التوجيه لها\s*:\s*(.*)/);
-            const centralOpsNotifiedMatch = text.match(/إبلاغ العمليات المركزية\s*:\s*(نعم|لا)/);
-            const jointOpsNotifiedMatch = text.match(/إبلاغ العمليات المشتركة\s*:\s*(نعم|لا)/);
-            const eventEndMatch = text.match(/انتهاء الحدث\s*:\s*(.*)/);
-            const sectorOccupancyMatch = text.match(/نسبة الإشغال في القطاع\s*:\s*(.*)/);
-            const responsibleNamesMatch = text.match(/اسماء المسؤولين\s*:\s*(.*)/);
+    const eventTypeMatch = text.match(/\*حدث جسيم\*/);
+    const reportNumbersMatch = text.match(/ارقام البلاغات\s*:\s*(\d+)/);
+    const sectorMatch = text.match(/القطاع\s*:\s*(.*)/);
+    const dateMatch = text.match(/(\d{4}\/\d{2}\/\d{2})/);
+    const timeMatch = text.match(/(\d{2}:\d{2})/);
+    const eventDetailsMatch = text.match(/حادث تصادم|تفاصيل الحدث\s*:\s*(.*)/);
+    const endTimeMatch = text.match(/انتهاء الحدث\s*:\s*(\d{2}:\d{2})/);
+    const currentSituationMatch = text.match(/ملخص الموقف\s*:\s*(.*)/);
+    const openReportsMatch = text.match(/عدد البلاغات المفتوحة\s*:\s*(\d+)/);
+    const participatingTeamsMatch = text.match(/عدد الوحدات المشاركة\s*:\s*(\d+)/);
+    const vehiclesMatch = text.match(/وانواع الاليات المشاركة\s*:\s*(.*)/);
+    const redCrescentTeamsMatch = text.match(/الهلال\s*الأحمر\s*:\s*(\d+)/);
+    const otherPartiesMatch = text.match(/جهات أخرى\s*:\s*(.*)/);
+    const firstTeamArrivalMatch = text.match(/وقت وصول اول فرقة\s*:\s*(\d{1,2}\s*[دقايق]*)/);
+    const totalPatientsMatch = text.match(/اجمالي الاصابات\s*:\s*(\d+)/);
+    const yellowPatientsMatch = text.match(/🟡\s*(\d+)/);
+    const greenPatientsMatch = text.match(/🟢\s*(\d+)/);
+    const hospitalsMatch = text.match(/المستشفيات التي تم التوجيه لها\s*:\s*(.*)/);
+    const centralOpsNotifiedMatch = text.match(/إبلاغ العمليات المركزية\s*:\s*(نعم|لا)/);
+    const jointOpsNotifiedMatch = text.match(/إبلاغ العمليات المشتركة\s*:\s*(نعم|لا)/);
+    const eventEndMatch = text.match(/انتهاء الحدث\s*:\s*(.*)/);
+    const sectorOccupancyMatch = text.match(/نسبة الإشغال في القطاع\s*:\s*(.*)/);
+    const responsibleNamesMatch = text.match(/اسماء المسؤولين\s*:\s*(.*)/);
 
-            return [
-                eventTypeMatch ? "حادث تصادم" : "غير متوفر", // نوع الحدث
-                reportNumbersMatch ? reportNumbersMatch[1] : "", // أرقام البلاغات
-                sectorMatch ? sectorMatch[1] : "", // القطاع
-                dateMatch ? dateMatch[1] : "", // تاريخ الحدث
-                timeMatch ? timeMatch[1] : "", // وقت الحدث
-                eventDetailsMatch ? eventDetailsMatch[1] : "حادث تصادم 10 إصابات", // تفاصيل الحدث
-                endTimeMatch ? endTimeMatch[1] : "الفرق باتجاه المستشفى", // انتهاء الحدث
-                currentSituationMatch ? currentSituationMatch[1] : "الموقع آمن", // إيجاز الوضع الراهن
-                openReportsMatch ? openReportsMatch[1] : "غير متوفر", // عدد البلاغات المفتوحة
-                participatingTeamsMatch ? participatingTeamsMatch[1] : "غير متوفر", // عدد الفرق المشاركة
-                vehiclesMatch ? vehiclesMatch[1] : "غير متوفر", // عدد وأنواع الآليات المشاركة
-                redCrescentTeamsMatch ? redCrescentTeamsMatch[1] : "غير متوفر", // فرق الهلال الأحمر
-                otherPartiesMatch ? otherPartiesMatch[1] : "غير متوفر", // جهات أخرى
-                firstTeamArrivalMatch ? firstTeamArrivalMatch[1] : "غير متوفر", // وقت وصول أول فرقة
-                totalPatientsMatch ? totalPatientsMatch[1] : "غير متوفر", // إجمالي المرضى
-                patientTriageMatch ? patientTriageMatch.join(', ') : "غير متوفر", // فرز المرضى حسب نظام فرز الكوارث
-                hospitalsMatch ? hospitalsMatch[1] : "غير متوفر", // المستشفيات التي تم التوجيه لها
-                centralOpsNotifiedMatch ? centralOpsNotifiedMatch[1] : "غير متوفر", // إبلاغ العمليات المركزية
-                jointOpsNotifiedMatch ? jointOpsNotifiedMatch[1] : "-", // إبلاغ العمليات المشتركة
-                eventEndMatch ? eventEndMatch[1] : "غير متوفر", // انتهاء الحدث بالموقع
-                sectorOccupancyMatch ? sectorOccupancyMatch[1] : "غير متوفر", // نسبة الإشغال
-                responsibleNamesMatch ? responsibleNamesMatch[1] : "غير متوفر" // أسماء المسؤولين
-            ];
-        }
+    return [
+        eventTypeMatch ? "حادث تصادم" : "غير متوفر", // نوع الحدث
+        reportNumbersMatch ? reportNumbersMatch[1] : "غير متوفر", // أرقام البلاغات
+        sectorMatch ? sectorMatch[1] : "غير متوفر", // القطاع
+        dateMatch ? dateMatch[1] : "غير متوفر", // تاريخ الحدث
+        timeMatch ? timeMatch[1] : "غير متوفر", // وقت الحدث
+        eventDetailsMatch ? eventDetailsMatch[1] : "حادث تصادم 10 إصابات", // تفاصيل الحدث
+        endTimeMatch ? endTimeMatch[1] : "الفرق باتجاه المستشفى", // انتهاء الحدث
+        currentSituationMatch ? currentSituationMatch[1] : "الموقع آمن", // إيجاز الوضع الراهن
+        openReportsMatch ? openReportsMatch[1] : "غير متوفر", // عدد البلاغات المفتوحة
+        participatingTeamsMatch ? participatingTeamsMatch[1] : "غير متوفر", // عدد الفرق المشاركة
+        vehiclesMatch ? vehiclesMatch[1] : "غير متوفر", // عدد وأنواع الآليات المشاركة
+        redCrescentTeamsMatch ? redCrescentTeamsMatch[1] : "غير متوفر", // فرق الهلال الأحمر
+        otherPartiesMatch ? otherPartiesMatch[1] : "غير متوفر", // جهات أخرى
+        firstTeamArrivalMatch ? firstTeamArrivalMatch[1] : "غير متوفر", // وقت وصول أول فرقة
+        totalPatientsMatch ? totalPatientsMatch[1] : "غير متوفر", // إجمالي المرضى
+        `${yellowPatientsMatch ? `🟡 ${yellowPatientsMatch[1]}` : ""}${greenPatientsMatch ? `, 🟢 ${greenPatientsMatch[1]}` : ""}` || "غير متوفر", // فرز المرضى حسب نظام فرز الكوارث
+        hospitalsMatch ? hospitalsMatch[1] : "غير متوفر", // المستشفيات التي تم التوجيه لها
+        centralOpsNotifiedMatch ? centralOpsNotifiedMatch[1] : "غير متوفر", // إبلاغ العمليات المركزية
+        jointOpsNotifiedMatch ? jointOpsNotifiedMatch[1] : "-", // إبلاغ العمليات المشتركة
+        eventEndMatch ? eventEndMatch[1] : "غير متوفر", // انتهاء الحدث بالموقع
+        sectorOccupancyMatch ? sectorOccupancyMatch[1] : "غير متوفر", // نسبة الإشغال
+        responsibleNamesMatch ? responsibleNamesMatch[1] : "غير متوفر" // أسماء المسؤولين
+    ];
+}
+
 
         function copyTableData() {
             let table = document.querySelector("#dataTable tbody");
