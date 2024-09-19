@@ -3,39 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تحليل رسائل الواتساب</title>
+    <title>تنظيم البيانات المستقبلية</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             direction: rtl;
+            text-align: center;
+            background-color: #f0f4f8;
+            color: #333;
+        }
+        h1 {
+            color: #4CAF50;
+            font-size: 2.5em;
+            margin-bottom: 20px;
         }
         textarea {
-            width: 100%;
-            height: 300px;
+            width: 80%;
+            height: 150px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            border: 2px solid #4CAF50;
+            padding: 10px;
+            font-size: 1em;
+            resize: none;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
         }
         table {
-            width: 100%;
+            width: 90%;
+            margin: 20px auto;
             border-collapse: collapse;
-            margin-top: 20px;
         }
         table, th, td {
-            border: 1px solid black;
+            border: 1px solid #ddd;
         }
         th, td {
-            padding: 8px;
+            padding: 10px;
             text-align: center;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .regex-container {
+            background-color: #e8f5e9;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            display: inline-block;
+            width: 80%;
+        }
+        .regex-container textarea {
+            background-color: #f0fff4;
+            border: 1px solid #4CAF50;
+            color: #333;
+        }
+        .copy-btn {
+            margin-top: 10px;
+        }
+        .instruction {
+            font-size: 1.1em;
+            margin-bottom: 15px;
         }
     </style>
 </head>
 <body>
 
-    <h1>تحليل رسائل الواتساب</h1>
-    <textarea id="whatsappMessages" placeholder="الصق هنا النصوص من الواتساب"></textarea>
-    <br>
-    <button onclick="processMessages()">تحليل الرسائل</button>
+    <h1>تنظيم البيانات المستقبلية</h1>
 
-    <h2>نتيجة التحليل</h2>
-    <table id="resultTable">
+    <div class="regex-container">
+        <p class="instruction">قم بنسخ الجملة أدناه بالضغط على الزر:</p>
+        <textarea id="regexPattern" readonly>قطاع \([^)]+\)\s+\d{4}/\d{2}/\d{2}\s+الساعة: \d{2}:\d{2} إلى \d{2}:\d{2}\s+\*السعة\*\s+عدد الفرق العاملة:\s*\(\s*\d+\s*\) من أصل \(\s*\d+\s*\)\s+\( اجمالي الفرق المتاحة في القطاع\)\s+عدد فرق التدخل السريع:\s*\d*\s*عدد المركبات العاملة:\s*\d*\s*عدد المركبات المتعطلة:\s*\d*\s*بلاغات الدعم اللوجستي المفتوحة\s*:\s*\d*\s*عدد العاملين في التنسيق والتحكم\s*:\s*\d*\s*عدد العاملين في الدعم اللوجستي\s*:\s*\d*</textarea>
+        <button class="copy-btn" onclick="copyRegex()">نسخ الجملة</button>
+    </div>
+
+    <label for="dataInput">أدخل البيانات هنا:</label>
+    <textarea id="dataInput" placeholder="اكتب هنا..."></textarea>
+    <button onclick="processData()">تنظيم البيانات</button>
+
+    <table id="dataTable">
         <thead>
             <tr>
                 <th>القطاع</th>
@@ -51,31 +107,69 @@
                 <th>عدد العاملين في الدعم اللوجستي</th>
             </tr>
         </thead>
-        <tbody id="resultBody">
-            <!-- النتائج ستعرض هنا -->
+        <tbody>
         </tbody>
     </table>
 
     <script>
-        function processMessages() {
-            const text = document.getElementById('whatsappMessages').value;
+        function copyRegex() {
+            const regexPattern = document.getElementById("regexPattern");
+            regexPattern.select();
+            regexPattern.setSelectionRange(0, 99999); // For mobile devices
+            document.execCommand("copy");
+            alert("تم نسخ الجملة بنجاح!");
+        }
 
-            // Regular expression to capture the needed data
-            const regex = /قطاع\s*\((.*?)\)\s*التاريخ:\s*(\d{4}\/\d{2}\/\d{2}).*?الساعة:\s*(\d{2}:\d{2})\s*إلى\s*(\d{2}:\d{2}).*?عدد الفرق العاملة:\s*(\d+).*?عدد فرق التدخل السريع:\s*(\d+).*?عدد المركبات العاملة:\s*(\d+).*?عدد المركبات المتعطلة:\s*(\d+).*?بلاغات الدعم اللوجستي المفتوحة:\s*(\d+).*?عدد العاملين في التنسيق والتحكم:\s*(\d+).*?عدد العاملين في الدعم اللوجستي:\s*(\d+)/gs;
+        function processData() {
+            const input = document.getElementById("dataInput").value;
+            const rows = input.split("----");
 
-            let result;
-            const resultTableBody = document.getElementById('resultBody');
-            resultTableBody.innerHTML = ''; // Clear previous results
+            const tableBody = document.querySelector("#dataTable tbody");
+            tableBody.innerHTML = ""; // تفريغ الجدول
 
-            while ((result = regex.exec(text)) !== null) {
-                const row = document.createElement('tr');
-                result.slice(1).forEach(data => {
-                    const cell = document.createElement('td');
-                    cell.textContent = data.trim();
-                    row.appendChild(cell);
-                });
-                resultTableBody.appendChild(row);
+            rows.forEach(row => {
+                const sectorData = parseSectorData(row);
+                if (sectorData) {
+                    const tr = document.createElement("tr");
+                    sectorData.forEach(data => {
+                        const td = document.createElement("td");
+                        td.textContent = data || "غير متوفر";
+                        tr.appendChild(td);
+                    });
+                    tableBody.appendChild(tr);
+                }
+            });
+        }
+
+        function parseSectorData(text) {
+            const sectorMatch = text.match(/قطاع\s*\((.*?)\)/);
+            const dateMatch = text.match(/\d{4}\/\d{2}\/\d{2}/);
+            const fromTimeMatch = text.match(/الساعة:\s*(\d{2}:\d{2})/);
+            const toTimeMatch = text.match(/إلى\s*(\d{2}:\d{2})/);
+            const teamsMatch = text.match(/عدد الفرق العاملة:\s*\(\s*\d+\s*\)/);
+            const rapidTeamsMatch = text.match(/عدد فرق التدخل السريع:\s*\d+/);
+            const vehiclesWorkingMatch = text.match(/عدد المركبات العاملة:\s*\d+/);
+            const vehiclesBrokenMatch = text.match(/عدد المركبات المتعطلة:\s*\d+/);
+            const logisticReportsMatch = text.match(/بلاغات الدعم اللوجستي المفتوحة\s*:\s*\d+/);
+            const controlStaffMatch = text.match(/عدد العاملين في التنسيق والتحكم\s*:\s*\d+/);
+            const logisticStaffMatch = text.match(/عدد العاملين في الدعم اللوجستي\s*:\s*\d+/);
+
+            if (sectorMatch && dateMatch) {
+                return [
+                    sectorMatch[1], 
+                    dateMatch[0], 
+                    fromTimeMatch ? fromTimeMatch[1] : "",
+                    toTimeMatch ? toTimeMatch[1] : "",
+                    teamsMatch ? teamsMatch[0].match(/\d+/)[0] : "",
+                    rapidTeamsMatch ? rapidTeamsMatch[0].match(/\d+/)[0] : "",
+                    vehiclesWorkingMatch ? vehiclesWorkingMatch[0].match(/\d+/)[0] : "",
+                    vehiclesBrokenMatch ? vehiclesBrokenMatch[0].match(/\d+/)[0] : "",
+                    logisticReportsMatch ? logisticReportsMatch[0].match(/\d+/)[0] : "غير متوفر",
+                    controlStaffMatch ? controlStaffMatch[0].match(/\d+/)[0] : "",
+                    logisticStaffMatch ? logisticStaffMatch[0].match(/\d+/)[0] : ""
+                ];
             }
+            return null;
         }
     </script>
 
