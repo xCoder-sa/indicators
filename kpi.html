@@ -34,6 +34,10 @@
         input[type="date"] {
             padding: 5px;
         }
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -60,6 +64,9 @@
             <label for="endDate">إلى:</label>
             <input type="date" id="endDate">
         </div>
+
+        <!-- زر محو الفلتر -->
+        <button id="clearFilter">محو الفلتر</button>
     </div>
 
     <!-- الرسم البياني الخاص بالقطاعات -->
@@ -134,8 +141,9 @@
             const selectedIndicator = document.getElementById('indicatorFilter').value;
 
             const filteredData = filterDataByDate(sectorData);
-            const chartLabels = filteredData.map(item => item.date);
-            const chartData = filteredData.map(item => item[selectedIndicator]);
+            const uniqueDates = getUniqueDates(filteredData);
+            const chartLabels = uniqueDates.map(item => item.date);
+            const chartData = uniqueDates.map(item => item[selectedIndicator]);
 
             new Chart(ctx, {
                 type: 'bar',
@@ -165,6 +173,13 @@
         document.getElementById('startDate').addEventListener('change', generateCharts);
         document.getElementById('endDate').addEventListener('change', generateCharts);
 
+        // زر محو الفلتر
+        document.getElementById('clearFilter').addEventListener('click', () => {
+            document.getElementById('startDate').value = '';
+            document.getElementById('endDate').value = '';
+            generateCharts();
+        });
+
         // تصفية البيانات حسب التاريخ
         function filterDataByDate(data) {
             const startDate = document.getElementById('startDate').value;
@@ -181,6 +196,22 @@
 
                 return itemDate >= start && itemDate <= end;
             });
+        }
+
+        // الحصول على تواريخ فريدة
+        function getUniqueDates(data) {
+            const uniqueDates = [];
+            const seenDates = new Set();
+
+            data.forEach(item => {
+                const date = item.date;
+                if (!seenDates.has(date)) {
+                    uniqueDates.push(item);
+                    seenDates.add(date);
+                }
+            });
+
+            return uniqueDates;
         }
 
         // ترجمة أسماء المؤشرات
