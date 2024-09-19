@@ -9,13 +9,14 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             direction: rtl;
             text-align: center;
-            background-color: #f0f4f8;
-            color: #333;
+            background-color: #1a1a2e;
+            color: #e0e0e0;
         }
         h1 {
-            color: #4CAF50;
-            font-size: 2.5em;
+            color: #00f2fe;
+            font-size: 3em;
             margin-bottom: 20px;
+            text-shadow: 0px 0px 10px #00f2fe;
         }
         .container {
             display: flex;
@@ -28,13 +29,16 @@
             height: 150px;
             margin-bottom: 20px;
             border-radius: 10px;
-            border: 2px solid #4CAF50;
+            border: 2px solid #00f2fe;
             padding: 10px;
             font-size: 1em;
+            background-color: #1a1a2e;
+            color: #e0e0e0;
             resize: none;
+            box-shadow: 0px 0px 15px #00f2fe;
         }
         button {
-            background-color: #4CAF50;
+            background-color: #00f2fe;
             color: white;
             border: none;
             padding: 10px 20px;
@@ -42,46 +46,36 @@
             cursor: pointer;
             border-radius: 5px;
             margin-top: 10px;
+            transition: 0.3s;
+            box-shadow: 0px 0px 15px #00f2fe;
         }
         button:hover {
-            background-color: #45a049;
+            background-color: #009fe3;
+            box-shadow: 0px 0px 20px #009fe3;
         }
         table {
             width: 90%;
             margin: 20px auto;
             border-collapse: collapse;
+            box-shadow: 0px 0px 20px #00f2fe;
         }
         table, th, td {
-            border: 1px solid #ddd;
+            border: 1px solid #009fe3;
         }
         th, td {
             padding: 10px;
             text-align: center;
+            color: #00f2fe;
         }
         th {
-            background-color: #4CAF50;
+            background-color: #009fe3;
             color: white;
         }
-        .regex-container {
-            background-color: #e8f5e9;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            width: 80%;
-            text-align: left;
-        }
-        .regex-container textarea {
-            background-color: #f0fff4;
-            border: 1px solid #4CAF50;
-            color: #333;
-            width: 100%;
-        }
-        .copy-btn {
-            margin-top: 10px;
-        }
         .instruction {
-            font-size: 1.1em;
+            font-size: 1.3em;
+            color: #00f2fe;
             margin-bottom: 15px;
+            text-shadow: 0px 0px 5px #00f2fe;
         }
     </style>
 </head>
@@ -89,24 +83,9 @@
 
     <h1>تنظيم البيانات المستقبلية</h1>
 
-    <div class="regex-container">
-        <p class="instruction">لإضافة سطر جديد يحتوي على ---- قبل كل سطر يحتوي على جملة قطاع ( باستخدام Notepad++، يمكنك اتباع الخطوات التالية:</p>
-        <textarea id="instructions" readonly>
-1. افتح الملف المطلوب في Notepad++.
-2. اضغط على Ctrl + H لفتح نافذة البحث والاستبدال.
-3. في الحقل المسمى Find what، أدخل التعليمة التالية:
-   (قطاع\s*\()
-4. في الحقل المسمى Replace with، أدخل التالي:
-   ----\n\1
-5. أسفل النافذة، قم بتفعيل خيار Match case و Regular expression.
-6. اضغط على Replace All.
-        </textarea>
-        <button class="copy-btn" onclick="copyInstructions()">نسخ التعليمات</button>
-    </div>
-
     <div class="container">
-        <label for="dataInput">أدخل البيانات هنا:</label>
-        <textarea id="dataInput" placeholder="اكتب هنا..."></textarea>
+        <label class="instruction">أدخل البيانات هنا وسيتم إضافة السطور تلقائيًا:</label>
+        <textarea id="dataInput" placeholder="الصق النص هنا..."></textarea>
         <button onclick="processData()">تنظيم البيانات</button>
     </div>
 
@@ -131,16 +110,12 @@
     </table>
 
     <script>
-        function copyInstructions() {
-            const instructions = document.getElementById("instructions");
-            instructions.select();
-            instructions.setSelectionRange(0, 99999); // For mobile devices
-            document.execCommand("copy");
-            alert("تم نسخ التعليمات بنجاح!");
-        }
-
         function processData() {
-            const input = document.getElementById("dataInput").value;
+            let input = document.getElementById("dataInput").value;
+
+            // إضافة "----" قبل كل سطر يحتوي على "قطاع ("
+            input = input.replace(/(قطاع\s*\()/g, "----\n$1");
+
             const rows = input.split("----");
 
             const tableBody = document.querySelector("#dataTable tbody");
