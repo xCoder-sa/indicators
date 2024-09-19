@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>صفحة المؤشرات</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -37,6 +38,9 @@
             margin-bottom: 20px;
             font-size: 16px;
         }
+        canvas {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -46,6 +50,7 @@
     <!-- حقل إدخال لتصفية البيانات -->
     <input type="text" id="filterInput" placeholder="ابحث في الجدول...">
 
+    <!-- جدول المؤشرات -->
     <table id="indicatorsTable">
         <thead>
             <tr>
@@ -68,6 +73,9 @@
         </tbody>
     </table>
 
+    <!-- الرسم البياني -->
+    <canvas id="sectorChart"></canvas>
+
     <script>
         // جلب البيانات من الرابط المحدد
         fetch('https://xcoder-sa.github.io/indicators/data.html')
@@ -82,6 +90,17 @@
 
                 // الحصول على tbody الخاص بجدول المؤشرات
                 const tableBody = document.querySelector('#indicatorsTable tbody');
+
+                let chartData = {
+                    labels: [],
+                    datasets: [{
+                        label: 'إجمالي المركبات',
+                        data: [],
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                };
 
                 // تكرار الصفوف من البيانات مع تجاهل الصف الأول (العناوين)
                 rows.forEach((row, index) => {
@@ -98,6 +117,24 @@
 
                         // إضافة الصف الجديد إلى الجدول
                         tableBody.appendChild(newRow);
+
+                        // إضافة البيانات إلى الرسم البياني
+                        chartData.labels.push(columns[0].textContent + ' - ' + columns[1].textContent);
+                        chartData.datasets[0].data.push(parseInt(columns[11].textContent)); // إجمالي المركبات
+                    }
+                });
+
+                // عرض الرسم البياني
+                const ctx = document.getElementById('sectorChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: chartData,
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
                     }
                 });
             })
