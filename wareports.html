@@ -127,17 +127,31 @@
             const tableBody = document.querySelector("#dataTable tbody");
             tableBody.innerHTML = ""; // تفريغ الجدول
 
+            let data = [];
+
             rows.forEach(row => {
                 const sectorData = parseSectorData(row);
                 if (sectorData) {
-                    const tr = document.createElement("tr");
-                    sectorData.forEach(data => {
-                        const td = document.createElement("td");
-                        td.textContent = data || "غير متوفر";
-                        tr.appendChild(td);
-                    });
-                    tableBody.appendChild(tr);
+                    data.push(sectorData);
                 }
+            });
+
+            // فرز البيانات حسب التاريخ والوقت
+            data.sort((a, b) => {
+                const dateA = new Date(a[1] + " " + a[2]);
+                const dateB = new Date(b[1] + " " + b[2]);
+                return dateA - dateB;
+            });
+
+            // إنشاء الصفوف بعد الفرز
+            data.forEach(sectorData => {
+                const tr = document.createElement("tr");
+                sectorData.forEach(dataItem => {
+                    const td = document.createElement("td");
+                    td.textContent = dataItem || "غير متوفر";
+                    tr.appendChild(td);
+                });
+                tableBody.appendChild(tr);
             });
         }
 
