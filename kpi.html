@@ -31,11 +31,20 @@
             background-color: #f3f3f3;
             font-weight: bold;
         }
+        #filterInput {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
 
     <h1>مؤشرات الأداء</h1>
+
+    <!-- حقل إدخال لتصفية البيانات -->
+    <input type="text" id="filterInput" placeholder="ابحث في الجدول...">
 
     <table id="indicatorsTable">
         <thead>
@@ -74,9 +83,9 @@
                 // الحصول على tbody الخاص بجدول المؤشرات
                 const tableBody = document.querySelector('#indicatorsTable tbody');
 
-                // تكرار الصفوف من البيانات
+                // تكرار الصفوف من البيانات مع تجاهل الصف الأول (العناوين)
                 rows.forEach((row, index) => {
-                    if (index > 0) { // تخطي الصف الأول إذا كان يحتوي على العناوين
+                    if (index > 0) { // تخطي الصف الأول
                         const columns = row.querySelectorAll('td');
                         const newRow = document.createElement('tr');
                         
@@ -95,6 +104,21 @@
             .catch(error => {
                 console.error('خطأ في جلب البيانات:', error);
             });
+
+        // فلترة الجدول بناءً على الإدخال في حقل البحث
+        document.getElementById('filterInput').addEventListener('keyup', function() {
+            const filterValue = this.value.toLowerCase();
+            const tableRows = document.querySelectorAll('#indicatorsTable tbody tr');
+            
+            tableRows.forEach(row => {
+                const rowText = row.textContent.toLowerCase();
+                if (rowText.includes(filterValue)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
     </script>
 
 </body>
