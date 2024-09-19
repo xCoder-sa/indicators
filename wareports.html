@@ -13,10 +13,10 @@
             color: #333;
         }
         h1 {
-            color: #f44336; /* لون أحمر */
+            color: #2196F3; /* لون أزرق */
             font-size: 3em;
             margin-bottom: 10px;
-            text-shadow: 0px 0px 5px #f44336;
+            text-shadow: 0px 0px 5px #2196F3;
         }
         .container {
             display: flex;
@@ -29,13 +29,13 @@
             height: 150px;
             margin-bottom: 20px;
             border-radius: 10px;
-            border: 2px solid #f44336; /* لون أحمر */
+            border: 2px solid #2196F3;
             padding: 10px;
             font-size: 1em;
             background-color: white;
             color: #333;
             resize: none;
-            box-shadow: 0px 0px 10px #f44336;
+            box-shadow: 0px 0px 10px #2196F3;
         }
         button {
             background-color: #2196F3; /* لون أزرق */
@@ -50,14 +50,14 @@
             box-shadow: 0px 0px 15px #2196F3;
         }
         button:hover {
-            background-color: #f44336; /* لون أحمر عند التحويم */
-            box-shadow: 0px 0px 20px #f44336;
+            background-color: #1976D2; /* لون أزرق داكن عند التحويم */
+            box-shadow: 0px 0px 20px #1976D2;
         }
         table {
             width: 90%;
             margin: 20px auto;
             border-collapse: collapse;
-            box-shadow: 0px 0px 20px #2196F3; /* ظل باللون الأزرق */
+            box-shadow: 0px 0px 20px #2196F3;
         }
         table, th, td {
             border: 1px solid #2196F3; /* لون أزرق */
@@ -68,14 +68,17 @@
             color: #2196F3;
         }
         th {
-            background-color: #f44336; /* خلفية الهيدر باللون الأحمر */
+            background-color: #2196F3;
             color: white;
         }
         .instruction {
             font-size: 1.3em;
-            color: #2196F3; /* لون أزرق */
+            color: #2196F3;
             margin-bottom: 15px;
             text-shadow: 0px 0px 5px #2196F3;
+        }
+        .hidden {
+            display: none;
         }
         footer {
             margin-top: 30px;
@@ -86,13 +89,12 @@
 </head>
 <body>
 
-    <h1>برمجة الأداة للإستخدام الشخصي فقط</h1>
+    <h1> 👨🏿‍🚒 برمجة الأداة للإستخدام الشخصي فقط</h1>
 
     <div class="container">
         <label class="instruction">أدخل رسائل كبار المسعفين هنا:</label>
         <textarea id="dataInput" placeholder="الصق الرسائل هنا..."></textarea>
         <button onclick="processData()">تنظيم البيانات</button>
-        <button onclick="copyTableData()">نسخ البيانات</button> <!-- زر النسخ -->
     </div>
 
     <table id="dataTable">
@@ -114,6 +116,8 @@
         <tbody>
         </tbody>
     </table>
+
+    <button id="copyButton" class="hidden" onclick="copyTableData()">نسخ البيانات</button> <!-- زر النسخ -->
 
     <footer>
         Design and Development by Ali Alshahrani
@@ -157,6 +161,14 @@
                 });
                 tableBody.appendChild(tr);
             });
+
+            // إظهار زر النسخ فقط إذا كانت هناك بيانات
+            const copyButton = document.getElementById("copyButton");
+            if (data.length > 0) {
+                copyButton.classList.remove("hidden");
+            } else {
+                copyButton.classList.add("hidden");
+            }
         }
 
         function parseSectorData(text) {
