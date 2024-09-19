@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة مؤشرات من HTML</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            background-color: #f4f5f7;
+        }
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 20px;
+            padding: 20px;
+        }
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .content-item {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        }
+        canvas {
+            max-width: 100%;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <div class="content">
+            <div class="content-item">
+                <h3>عدد الفرق العاملة</h3>
+                <canvas id="workingTeams"></canvas>
+            </div>
+            <div class="content-item">
+                <h3>المركبات العاملة والمتعطلة</h3>
+                <canvas id="vehiclesStatus"></canvas>
+            </div>
+            <div class="content-item">
+                <h3>بلاغات الدعم اللوجستي المفتوحة</h3>
+                <canvas id="logisticsSupport"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // دالة لاستخراج البيانات من HTML
+        function extractDataFromTable() {
+            const table = document.querySelector('table'); // حدد جدول البيانات
+            const rows = table.querySelectorAll('tr');
+
+            const sectors = [];
+            const workingTeamsData = [];
+            const vehiclesWorking = [];
+            const vehiclesBroken = [];
+            const logisticsSupportOpen = [];
+
+            rows.forEach((row, index) => {
+                if (index === 0) return; // تجاهل صف العناوين
+                const cells = row.querySelectorAll('td');
+                sectors.push(cells[0].innerText);
+                workingTeamsData.push(Number(cells[4].innerText));
+                vehiclesWorking.push(Number(cells[6].innerText));
+                vehiclesBroken.push(Number(cells[7].innerText));
+                logisticsSupportOpen.push(Number(cells[8].innerText));
+            });
+
+            renderCharts(sectors, workingTeamsData, vehiclesWorking, vehiclesBroken, logisticsSupportOpen);
+        }
+
+        // دالة لعرض الرسوم البيانية
+        function renderCharts(sectors, workingTeamsData, vehiclesWorking, vehiclesBroken, logisticsSupportOpen) {
+            // رسم عدد الفرق العاملة
+            const workingTeamsCtx = document.getElementById('workingTeams').getContext('2d');
+            new Chart(workingTeamsCtx, {
+                type: 'bar',
+                data: {
+                    labels: sectors,
+                    datasets: [{
+                        label: 'عدد الفرق العاملة',
+                        data: workingTeamsData,
+                        backgroundColor: '#4CAF50'
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // رسم المركبات العاملة والمتعطلة
+            const vehiclesStatusCtx = document.getElementById('vehiclesStatus').getContext('2d');
+            new Chart(vehiclesStatusCtx, {
+                type: 'bar',
+                data: {
+                    labels: sectors,
+                    datasets: [{
+                        label: 'المركبات العاملة',
+                        data: vehiclesWorking,
+                        backgroundColor: '#4CAF50'
+                    }, {
+                        label: 'المركبات المتعطلة',
+                        data: vehiclesBroken,
+                        backgroundColor: '#FF6384'
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // رسم بلاغات الدعم اللوجستي المفتوحة
+            const logisticsSupportCtx = document.getElementById('logisticsSupport').getContext('2d');
+            new Chart(logisticsSupportCtx, {
+                type: 'line',
+                data: {
+                    labels: sectors,
+                    datasets: [{
+                        label: 'بلاغات الدعم اللوجستي المفتوحة',
+                        data: logisticsSupportOpen,
+                        borderColor: '#FFC107',
+                        fill: false
+                    }]
+                }
+            });
+        }
+
+        // استخراج البيانات من صفحة HTML
+        document.addEventListener('DOMContentLoaded', function() {
+            extractDataFromTable();
+        });
+    </script>
+
+</body>
+</html>
