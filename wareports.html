@@ -17,6 +17,12 @@
             font-size: 2.5em;
             margin-bottom: 20px;
         }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
         textarea {
             width: 80%;
             height: 150px;
@@ -35,6 +41,7 @@
             font-size: 1.2em;
             cursor: pointer;
             border-radius: 5px;
+            margin-top: 10px;
         }
         button:hover {
             background-color: #45a049;
@@ -60,13 +67,14 @@
             padding: 20px;
             border-radius: 10px;
             margin-bottom: 30px;
-            display: inline-block;
             width: 80%;
+            text-align: left;
         }
         .regex-container textarea {
             background-color: #f0fff4;
             border: 1px solid #4CAF50;
             color: #333;
+            width: 100%;
         }
         .copy-btn {
             margin-top: 10px;
@@ -87,9 +95,11 @@
         <button class="copy-btn" onclick="copyRegex()">نسخ الجملة</button>
     </div>
 
-    <label for="dataInput">أدخل البيانات هنا:</label>
-    <textarea id="dataInput" placeholder="اكتب هنا..."></textarea>
-    <button onclick="processData()">تنظيم البيانات</button>
+    <div class="container">
+        <label for="dataInput">أدخل البيانات هنا:</label>
+        <textarea id="dataInput" placeholder="اكتب هنا..."></textarea>
+        <button onclick="processData()">تنظيم البيانات</button>
+    </div>
 
     <table id="dataTable">
         <thead>
