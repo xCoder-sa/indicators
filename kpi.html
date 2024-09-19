@@ -29,6 +29,10 @@
             display: flex;
             justify-content: center;
             margin-bottom: 20px;
+            gap: 20px;
+        }
+        input[type="date"] {
+            padding: 5px;
         }
     </style>
 </head>
@@ -48,13 +52,20 @@
             <option value="logisticWorkers">عدد العاملين في الدعم اللوجستي</option>
             <option value="totalVehicles">إجمالي المركبات</option>
         </select>
+
+        <!-- اختيار التاريخ -->
+        <div>
+            <label for="startDate">من:</label>
+            <input type="date" id="startDate">
+            <label for="endDate">إلى:</label>
+            <input type="date" id="endDate">
+        </div>
     </div>
 
     <!-- الرسم البياني الخاص بالقطاعات -->
     <div id="chartsContainer" class="chart-container"></div>
 
     <script>
-        // المتغيرات الخاصة بالبيانات
         let sectorsData = {};
         const colors = [
             'rgba(75, 192, 192, 0.5)',
@@ -66,18 +77,15 @@
             'rgba(201, 203, 207, 0.5)'
         ];
 
-        // جلب البيانات من الرابط المحدد
+        // جلب البيانات من الملف
         fetch('https://xcoder-sa.github.io/indicators/data.html')
             .then(response => response.text())
             .then(data => {
-                // تحويل النص المستلم إلى HTML
                 const parser = new DOMParser();
                 const htmlDocument = parser.parseFromString(data, "text/html");
 
-                // استخراج البيانات من العنصر المناسب
                 const rows = htmlDocument.querySelectorAll('th[id^="0R1"]');
 
-                // تكرار الصفوف من البيانات مع تجاهل الصف الأول (العناوين)
                 rows.forEach((row, index) => {
                     const columns = row.closest('tr').querySelectorAll('td');
                     const sector = columns[0].textContent;
@@ -101,40 +109,36 @@
                     sectorsData[sector].push(rowData);
                 });
 
-                // إنشاء الرسوم البيانية الأولية
                 generateCharts();
             })
             .catch(error => {
                 console.error('خطأ في جلب البيانات:', error);
             });
 
-        // إنشاء الرسوم البيانية
         function generateCharts() {
             const chartsContainer = document.getElementById('chartsContainer');
-            chartsContainer.innerHTML = ''; // تفريغ الرسوم البيانية القديمة
+            chartsContainer.innerHTML = '';
 
             Object.keys(sectorsData).forEach((sector, index) => {
-                // إنشاء عنصر الرسم البياني
                 const canvas = document.createElement('canvas');
                 canvas.id = `chart-${sector}`;
                 chartsContainer.appendChild(canvas);
 
-                // إنشاء الرسم البياني
                 const ctx = document.getElementById(`chart-${sector}`).getContext('2d');
                 createChart(ctx, sector, colors[index % colors.length]);
             });
         }
 
-        // إنشاء الرسم البياني بناءً على المؤشر المختار
         function createChart(ctx, sector, color) {
             const sectorData = sectorsData[sector];
             const selectedIndicator = document.getElementById('indicatorFilter').value;
 
-            const chartLabels = sectorData.map(item => item.date);
-            const chartData = sectorData.map(item => item[selectedIndicator]);
+            const filteredData = filterDataByDate(sectorData);
+            const chartLabels = filteredData.map(item => item.date);
+            const chartData = filteredData.map(item => item[selectedIndicator]);
 
             new Chart(ctx, {
-                type: 'bar', // نوع الرسم البياني
+                type: 'bar',
                 data: {
                     labels: chartLabels,
                     datasets: [{
@@ -156,10 +160,28 @@
             });
         }
 
-        // تحديث الرسوم البيانية عند تغيير المؤشر
-        document.getElementById('indicatorFilter').addEventListener('change', function () {
-            generateCharts();
-        });
+        // تحديث الرسوم البيانية عند تغيير المؤشر أو التاريخ
+        document.getElementById('indicatorFilter').addEventListener('change', generateCharts);
+        document.getElementById('startDate').addEventListener('change', generateCharts);
+        document.getElementById('endDate').addEventListener('change', generateCharts);
+
+        // تصفية البيانات حسب التاريخ
+        function filterDataByDate(data) {
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+
+            if (!startDate && !endDate) {
+                return data;
+            }
+
+            return data.filter(item => {
+                const itemDate = new Date(item.date);
+                const start = startDate ? new Date(startDate) : new Date('1900-01-01');
+                const end = endDate ? new Date(endDate) : new Date();
+
+                return itemDate >= start && itemDate <= end;
+            });
+        }
 
         // ترجمة أسماء المؤشرات
         function getIndicatorLabel(indicator) {
