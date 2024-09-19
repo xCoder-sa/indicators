@@ -132,7 +132,7 @@
 
         function processData() {
             const input = document.getElementById("dataInput").value;
-            const rows = input.split("----");
+            const rows = input.split("قطاع");
 
             const tableBody = document.querySelector("#dataTable tbody");
             tableBody.innerHTML = ""; // تفريغ الجدول
@@ -140,7 +140,7 @@
             let data = [];
 
             rows.forEach(row => {
-                const sectorData = parseSectorData(row);
+                const sectorData = parseSectorData("قطاع" + row);
                 if (sectorData) {
                     data.push(sectorData);
                 }
