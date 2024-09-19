@@ -38,14 +38,35 @@
             margin-bottom: 20px;
             font-size: 16px;
         }
+        .chart-container {
+            margin-top: 20px;
+        }
         canvas {
             margin-top: 20px;
+        }
+        .filter-container {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
 
     <h1>مؤشرات الأداء</h1>
+
+    <!-- الفلاتر -->
+    <div class="filter-container">
+        <select id="sectorFilter">
+            <option value="all">اختر القطاع</option>
+        </select>
+        <input type="date" id="startDate" placeholder="تاريخ البدء">
+        <input type="date" id="endDate" placeholder="تاريخ الانتهاء">
+        <button id="applyFilter">تطبيق الفلاتر</button>
+    </div>
+
+    <!-- الرسم البياني الخاص بالقطاعات -->
+    <div id="chartsContainer"></div>
 
     <!-- حقل إدخال لتصفية البيانات -->
     <input type="text" id="filterInput" placeholder="ابحث في الجدول...">
@@ -73,10 +94,10 @@
         </tbody>
     </table>
 
-    <!-- الرسم البياني -->
-    <canvas id="sectorChart"></canvas>
-
     <script>
+        // المتغيرات الخاصة بالبيانات
+        let sectorsData = {};
+
         // جلب البيانات من الرابط المحدد
         fetch('https://xcoder-sa.github.io/indicators/data.html')
             .then(response => response.text())
@@ -91,23 +112,28 @@
                 // الحصول على tbody الخاص بجدول المؤشرات
                 const tableBody = document.querySelector('#indicatorsTable tbody');
 
-                let chartData = {
-                    labels: [],
-                    datasets: [{
-                        label: 'إجمالي المركبات',
-                        data: [],
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
-                    }]
-                };
-
                 // تكرار الصفوف من البيانات مع تجاهل الصف الأول (العناوين)
                 rows.forEach((row, index) => {
                     if (index > 0) { // تخطي الصف الأول
                         const columns = row.querySelectorAll('td');
+                        const sector = columns[0].textContent;
+
+                        if (!sectorsData[sector]) {
+                            sectorsData[sector] = [];
+                        }
+
+                        const rowData = {
+                            sector: columns[0].textContent,
+                            date: columns[1].textContent,
+                            workingTeams: parseInt(columns[4].textContent),
+                            rapidTeams: parseInt(columns[5].textContent),
+                            totalVehicles: parseInt(columns[11].textContent)
+                        };
+
+                        sectorsData[sector].push(rowData);
+
                         const newRow = document.createElement('tr');
-                        
+
                         // إضافة البيانات إلى الصف الجديد
                         columns.forEach(col => {
                             const newCell = document.createElement('td');
@@ -117,18 +143,60 @@
 
                         // إضافة الصف الجديد إلى الجدول
                         tableBody.appendChild(newRow);
-
-                        // إضافة البيانات إلى الرسم البياني
-                        chartData.labels.push(columns[0].textContent + ' - ' + columns[1].textContent);
-                        chartData.datasets[0].data.push(parseInt(columns[11].textContent)); // إجمالي المركبات
                     }
                 });
 
-                // عرض الرسم البياني
-                const ctx = document.getElementById('sectorChart').getContext('2d');
+                // تحديث الفلاتر بناءً على القطاعات المتاحة
+                updateSectorFilter();
+                generateCharts();
+            })
+            .catch(error => {
+                console.error('خطأ في جلب البيانات:', error);
+            });
+
+        // تحديث قائمة الفلاتر الخاصة بالقطاع
+        function updateSectorFilter() {
+            const sectorFilter = document.getElementById('sectorFilter');
+            Object.keys(sectorsData).forEach(sector => {
+                const option = document.createElement('option');
+                option.value = sector;
+                option.textContent = sector;
+                sectorFilter.appendChild(option);
+            });
+        }
+
+        // إنشاء الرسوم البيانية
+        function generateCharts() {
+            const chartsContainer = document.getElementById('chartsContainer');
+            chartsContainer.innerHTML = ''; // تفريغ الرسوم البيانية القديمة
+
+            Object.keys(sectorsData).forEach(sector => {
+                // إنشاء عنصر الرسم البياني
+                const canvas = document.createElement('canvas');
+                canvas.id = `chart-${sector}`;
+                canvas.width = 400;
+                canvas.height = 200;
+                chartsContainer.appendChild(canvas);
+
+                // إنشاء الرسم البياني
+                const ctx = document.getElementById(`chart-${sector}`).getContext('2d');
+                const sectorData = sectorsData[sector];
+
+                const chartLabels = sectorData.map(item => item.date);
+                const chartData = sectorData.map(item => item.totalVehicles);
+
                 new Chart(ctx, {
                     type: 'line',
-                    data: chartData,
+                    data: {
+                        labels: chartLabels,
+                        datasets: [{
+                            label: `إجمالي المركبات - ${sector}`,
+                            data: chartData,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
                     options: {
                         scales: {
                             y: {
@@ -137,16 +205,14 @@
                         }
                     }
                 });
-            })
-            .catch(error => {
-                console.error('خطأ في جلب البيانات:', error);
             });
+        }
 
         // فلترة الجدول بناءً على الإدخال في حقل البحث
-        document.getElementById('filterInput').addEventListener('keyup', function() {
+        document.getElementById('filterInput').addEventListener('keyup', function () {
             const filterValue = this.value.toLowerCase();
             const tableRows = document.querySelectorAll('#indicatorsTable tbody tr');
-            
+
             tableRows.forEach(row => {
                 const rowText = row.textContent.toLowerCase();
                 if (rowText.includes(filterValue)) {
@@ -156,6 +222,63 @@
                 }
             });
         });
+
+        // تطبيق الفلاتر على الرسوم البيانية
+        document.getElementById('applyFilter').addEventListener('click', function () {
+            const sector = document.getElementById('sectorFilter').value;
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+
+            if (sector !== 'all') {
+                filterBySectorAndDate(sector, startDate, endDate);
+            } else {
+                generateCharts();
+            }
+        });
+
+        // فلترة البيانات حسب القطاع والفترة الزمنية
+        function filterBySectorAndDate(sector, startDate, endDate) {
+            const filteredData = sectorsData[sector].filter(item => {
+                const itemDate = new Date(item.date);
+                const start = new Date(startDate);
+                const end = new Date(endDate);
+
+                return (!startDate || itemDate >= start) && (!endDate || itemDate <= end);
+            });
+
+            updateChartForSector(sector, filteredData);
+        }
+
+        // تحديث الرسم البياني الخاص بالقطاع
+        function updateChartForSector(sector, data) {
+            const chartElement = document.getElementById(`chart-${sector}`);
+            if (chartElement) {
+                const ctx = chartElement.getContext('2d');
+                const chartLabels = data.map(item => item.date);
+                const chartData = data.map(item => item.totalVehicles);
+
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: chartLabels,
+                        datasets: [{
+                            label: `إجمالي المركبات - ${sector}`,
+                            data: chartData,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+        }
     </script>
 
 </body>
