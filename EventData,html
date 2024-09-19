@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تنظيم البيانات من قروب قيادات الرياض</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            direction: rtl;
+            text-align: center;
+            background-color: white;
+            color: #333;
+        }
+        h1 {
+            color: #2196F3; /* لون أزرق */
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 0px 0px 5px #2196F3;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        textarea {
+            width: 80%;
+            height: 150px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            border: 2px solid #2196F3;
+            padding: 10px;
+            font-size: 1em;
+            background-color: white;
+            color: #333;
+            resize: none;
+            box-shadow: 0px 0px 10px #2196F3;
+        }
+        button {
+            background-color: #2196F3; /* لون أزرق */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+            transition: 0.3s;
+            box-shadow: 0px 0px 15px #2196F3;
+        }
+        button:hover {
+            background-color: #1976D2; /* لون أزرق داكن عند التحويم */
+            box-shadow: 0px 0px 20px #1976D2;
+        }
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0px 0px 20px #2196F3;
+        }
+        table, th, td {
+            border: 1px solid #2196F3; /* لون أزرق */
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            color: #2196F3;
+        }
+        th {
+            background-color: #2196F3;
+            color: white;
+        }
+        .instruction {
+            font-size: 1.3em;
+            color: #2196F3;
+            margin-bottom: 15px;
+            text-shadow: 0px 0px 5px #2196F3;
+        }
+        .hidden {
+            display: none;
+        }
+        footer {
+            margin-top: 30px;
+            font-size: 1em;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>برمجة الأداة للإستخدام الشخصي فقط</h1>
+
+    <div class="container">
+        <label class="instruction">أدخل رسائل كبار المسعفين هنا:</label>
+        <textarea id="dataInput" placeholder="الصق الرسائل هنا..."></textarea>
+        <button onclick="processData()">تنظيم البيانات</button>
+    </div>
+
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>نوع الحدث</th>
+                <th>أرقام البلاغات</th>
+                <th>القطاع</th>
+                <th>تاريخ الحدث</th>
+                <th>وقت الحدث</th>
+                <th>تفاصيل الحدث</th>
+                <th>انتهاء الحدث</th>
+                <th>إيجاز الوضع الراهن أثناء ورود البلاغ</th>
+                <th>عدد البلاغات المفتوحة</th>
+                <th>عدد الفرق المشاركة</th>
+                <th>عدد وأنواع الآليات المشاركة</th>
+                <th>فرق الهلال الأحمر</th>
+                <th>جهات أخرى</th>
+                <th>وقت وصول أول فرقة</th>
+                <th>إجمالي المرضى</th>
+                <th>فرز المرضى حسب نظام فرز الكوارث</th>
+                <th>المستشفيات التي تم التوجيه لها</th>
+                <th>إبلاغ العمليات المركزية</th>
+                <th>إبلاغ العمليات المشتركة</th>
+                <th>انتهاء الحدث بالموقع</th>
+                <th>نسبة الإشغال في القطاع أثناء الحدث</th>
+                <th>أسماء المسؤولين</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <button id="copyButton" class="hidden" onclick="copyTableData()">نسخ البيانات</button> <!-- زر النسخ -->
+
+    <footer>
+        Design and Development by Ali Alshahrani
+    </footer>
+
+    <script>
+        function processData() {
+            let input = document.getElementById("dataInput").value;
+
+            // إضافة "----" قبل كل سطر يحتوي على "حدث جسيم"
+            input = input.replace(/(\*حدث جسيم\*)/g, "----\n$1");
+
+            const rows = input.split("----");
+
+            const tableBody = document.querySelector("#dataTable tbody");
+            tableBody.innerHTML = ""; // تفريغ الجدول
+
+            let data = [];
+
+            rows.forEach(row => {
+                const eventData = parseEventData(row);
+                if (eventData) {
+                    data.push(eventData);
+                }
+            });
+
+            // فرز البيانات حسب التاريخ والوقت
+            data.sort((a, b) => {
+                const dateA = new Date(a[3] + " " + a[4]);
+                const dateB = new Date(b[3] + " " + b[4]);
+                return dateA - dateB;
+            });
+
+            // إنشاء الصفوف بعد الفرز
+            data.forEach(eventData => {
+                const tr = document.createElement("tr");
+                eventData.forEach(dataItem => {
+                    const td = document.createElement("td");
+                    td.textContent = dataItem || "غير متوفر";
+                    tr.appendChild(td);
+                });
+                tableBody.appendChild(tr);
+            });
+
+            // إظهار زر النسخ فقط إذا كانت هناك بيانات
+            const copyButton = document.getElementById("copyButton");
+            if (data.length > 0) {
+                copyButton.classList.remove("hidden");
+            } else {
+                copyButton.classList.add("hidden");
+            }
+        }
+
+        function parseEventData(text) {
+            const eventTypeMatch = text.match(/\*حدث جسيم\*/);
+            const reportNumbersMatch = text.match(/ارقام البلاغات\s*:\s*(\d+)/);
+            const sectorMatch = text.match(/قطاع\s*:\s*(.*)/);
+            const dateMatch = text.match(/(\d{4}\/\d{2}\/\d{2})/);
+            const timeMatch = text.match(/وقت وتاريخ\s*الحدث\s*:\s*(\d{2}:\d{2})/);
+            const eventDetailsMatch = text.match(/تفاصيل الحدث\s*:\s*(.*)/);
+            const endTimeMatch = text.match(/انتهاء الحدث\s*:\s*(\d{2}:\d{2})/);
+            const currentSituationMatch = text.match(/ايجاز الوضع الراهن اثناء ورود البلاغ\s*:\s*(.*)/);
+            const openReportsMatch = text.match(/عدد البلاغات المفتوحة\s*:\s*(\d+)/);
+            const participatingTeamsMatch = text.match(/عدد الفرق المشاركة\s*:\s*(\d+)/);
+            const vehiclesMatch = text.match(/عدد وانواع الاليات المشاركة\s*:\s*(.*)/);
+            const redCrescentTeamsMatch = text.match(/الهلال\s*الأحمر\s*:\s*(.*)/);
+            const otherPartiesMatch = text.match(/جهات أخرى\s*:\s*(.*)/);
+            const firstTeamArrivalMatch = text.match(/وقت وصول اول فرقة\s*:\s*(\d{2}:\d{2})/);
+            const totalPatientsMatch = text.match(/اجمالي المرضى\s*:\s*(.*)/);
+            const patientTriageMatch = text.match(/فرز المرضى حسب نظام فرز الكوارث\s*:\s*(.*)/);
+            const hospitalsMatch = text.match(/المستشفيات التي تم التوجيه لها\s*:\s*(.*)/);
+            const centralOpsNotifiedMatch = text.match(/إبلاغ العمليات المركزية\s*:\s*(.*)/);
+            const jointOpsNotifiedMatch = text.match(/إبلاغ العمليات المشتركة\s*:\s*(.*)/);
+            const eventEndMatch = text.match(/انتهاء الحدث بالموقع\s*:\s*(.*)/);
+            const sectorOccupancyMatch = text.match(/نسبة الإشغال في القطاع\s*:\s*(.*)/);
+            const responsibleNamesMatch = text.match(/اسماء المسؤولين\s*:\s*(.*)/);
+
+            return [
+                eventTypeMatch ? "حدث جسيم" : "غير متوفر", // نوع الحدث
+                reportNumbersMatch ? reportNumbersMatch[1] : "", // أرقام البلاغات
+                sectorMatch ? sectorMatch[1] : "", // القطاع
+                dateMatch ? dateMatch[1] : "", // تاريخ الحدث
+                timeMatch ? timeMatch[1] : "", // وقت الحدث
+                eventDetailsMatch ? eventDetailsMatch[1] : "", // تفاصيل الحدث
+                endTimeMatch ? endTimeMatch[1] : "", // انتهاء الحدث
+                currentSituationMatch ? currentSituationMatch[1] : "", // إيجاز الوضع الراهن
+                openReportsMatch ? openReportsMatch[1] : "", // عدد البلاغات المفتوحة
+                participatingTeamsMatch ? participatingTeamsMatch[1] : "", // عدد الفرق المشاركة
+                vehiclesMatch ? vehiclesMatch[1] : "", // عدد وأنواع الآليات
+                redCrescentTeamsMatch ? redCrescentTeamsMatch[1] : "", // فرق الهلال الأحمر
+                otherPartiesMatch ? otherPartiesMatch[1] : "", // جهات أخرى
+                firstTeamArrivalMatch ? firstTeamArrivalMatch[1] : "", // وقت وصول أول فرقة
+                totalPatientsMatch ? totalPatientsMatch[1] : "", // إجمالي المرضى
+                patientTriageMatch ? patientTriageMatch[1] : "", // فرز المرضى
+                hospitalsMatch ? hospitalsMatch[1] : "", // المستشفيات
+                centralOpsNotifiedMatch ? centralOpsNotifiedMatch[1] : "", // إبلاغ العمليات المركزية
+                jointOpsNotifiedMatch ? jointOpsNotifiedMatch[1] : "", // إبلاغ العمليات المشتركة
+                eventEndMatch ? eventEndMatch[1] : "", // انتهاء الحدث بالموقع
+                sectorOccupancyMatch ? sectorOccupancyMatch[1] : "", // نسبة الإشغال
+                responsibleNamesMatch ? responsibleNamesMatch[1] : "" // أسماء المسؤولين
+            ];
+        }
+
+        function copyTableData() {
+            let table = document.querySelector("#dataTable tbody");
+            let range = document.createRange();
+            range.selectNode(table);
+            window.getSelection().removeAllRanges(); // إزالة أي تحديد سابق
+            window.getSelection().addRange(range); // تحديد محتوى الجدول
+            document.execCommand("copy"); // نسخ المحتوى
+            alert("تم نسخ البيانات بنجاح!");
+        }
+    </script>
+
+</body>
+</html>
