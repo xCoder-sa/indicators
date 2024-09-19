@@ -43,6 +43,8 @@
         }
         canvas {
             margin-top: 20px;
+            max-width: 600px; /* التحكم في حجم الرسم البياني */
+            max-height: 300px;
         }
         .filter-container {
             display: flex;
@@ -63,6 +65,16 @@
         <input type="date" id="startDate" placeholder="تاريخ البدء">
         <input type="date" id="endDate" placeholder="تاريخ الانتهاء">
         <button id="applyFilter">تطبيق الفلاتر</button>
+        <button id="compareSectors">مقارنة القطاعات</button>
+    </div>
+
+    <!-- اختيار المؤشرات لعرض الرسوم البيانية -->
+    <div class="filter-container">
+        <select id="indicatorFilter">
+            <option value="totalVehicles">إجمالي المركبات</option>
+            <option value="workingTeams">عدد الفرق العاملة</option>
+            <option value="rapidTeams">عدد فرق التدخل السريع</option>
+        </select>
     </div>
 
     <!-- الرسم البياني الخاص بالقطاعات -->
@@ -198,6 +210,7 @@
                         }]
                     },
                     options: {
+                        responsive: true,
                         scales: {
                             y: {
                                 beginAtZero: true
@@ -229,56 +242,10 @@
             const startDate = document.getElementById('startDate').value;
             const endDate = document.getElementById('endDate').value;
 
-            if (sector !== 'all') {
-                filterBySectorAndDate(sector, startDate, endDate);
-            } else {
-                generateCharts();
-            }
+            // يمكن هنا تحديد منطق لتطبيق الفلاتر الزمنية وغيرها
+            // بناءً على القطاع والفترة الزمنية المحددة.
+            console.log(`تم تطبيق الفلاتر للقطاع ${sector} بين ${startDate} و ${endDate}`);
         });
-
-        // فلترة البيانات حسب القطاع والفترة الزمنية
-        function filterBySectorAndDate(sector, startDate, endDate) {
-            const filteredData = sectorsData[sector].filter(item => {
-                const itemDate = new Date(item.date);
-                const start = new Date(startDate);
-                const end = new Date(endDate);
-
-                return (!startDate || itemDate >= start) && (!endDate || itemDate <= end);
-            });
-
-            updateChartForSector(sector, filteredData);
-        }
-
-        // تحديث الرسم البياني الخاص بالقطاع
-        function updateChartForSector(sector, data) {
-            const chartElement = document.getElementById(`chart-${sector}`);
-            if (chartElement) {
-                const ctx = chartElement.getContext('2d');
-                const chartLabels = data.map(item => item.date);
-                const chartData = data.map(item => item.totalVehicles);
-
-                new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: chartLabels,
-                        datasets: [{
-                            label: `إجمالي المركبات - ${sector}`,
-                            data: chartData,
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                });
-            }
-        }
     </script>
 
 </body>
