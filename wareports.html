@@ -114,8 +114,6 @@
     <table id="dataTable">
         <thead>
             <tr>
-                <th>المرسل</th> <!-- إضافة عمود المرسل -->
-                <th>تاريخ ووقت الإرسال</th> <!-- إضافة عمود تاريخ ووقت الإرسال -->
                 <th>القطاع</th>
                 <th>التاريخ</th>
                 <th>من الساعة</th>
@@ -139,7 +137,7 @@
         <a href="https://xcoder-sa.github.io/indicators/kpi.html">📶</a>
         <br><br>
         <span>&lt; / &gt; Design and Development by Ali Alshahrani &lt;  &gt;</span>
-        <div class="version">إصدار النسخة: 1.3.2</div> <!-- تحديث رقم الإصدار -->
+        <div class="version">إصدار النسخة: 1.3.3</div> <!-- تحديث رقم الإصدار -->
     </footer>
 
     <script>
@@ -170,15 +168,15 @@
 
             // فرز البيانات حسب التاريخ والوقت
             data.sort((a, b) => {
-                const dateA = new Date(formatDate(a[2]) + " " + a[3]);
-                const dateB = new Date(formatDate(b[2]) + " " + b[3]);
+                const dateA = new Date(formatDate(a[1]) + " " + a[2]);
+                const dateB = new Date(formatDate(b[1]) + " " + b[2]);
                 return dateA - dateB;
             });
 
             // إنشاء الصفوف بعد الفرز
             data.forEach(sectorData => {
                 // تحقق من عدد مرات ظهور "غير متوفر" في الأعمدة المحددة
-                const columnsToCheck = [6, 7, 8, 9, 10, 11, 12];
+                const columnsToCheck = [4, 5, 6, 7, 8, 9, 10];
                 let unavailableCount = 0;
                 columnsToCheck.forEach(index => {
                     if (sectorData[index] === "غير متوفر") {
@@ -210,8 +208,6 @@
 
         function parseSectorData(text) {
             // تحسين استخراج المرسل والتاريخ والوقت
-            const senderMatch = text.match(/-\s*(.*?)(?=:| \()/);  // استخراج اسم أو رقم المرسل
-            const dateTimeMatch = text.match(/(\d{1,2}‏\/\d{1,2}‏\/\d{4}، \d{1,2}:\d{2} [صم])/); // استخراج التاريخ والوقت
             const sectorMatch = text.match(/قطاع\s*\((.*?)\)/); // استخراج القطاع
             const dateMatch = text.match(/\d{4}\/\d{2}\/\d{2}|\d{2}-\d{2}-\d{4}/);
             const timeMatch = text.match(/الساعة\s*(\d{2}:\d{2})\s*إلى\s*(\d{2}:\d{2})/); // استخراج التوقيت الموحد
@@ -225,8 +221,6 @@
 
             if (sectorMatch && dateMatch) {
                 return [
-                    senderMatch ? senderMatch[0].trim() : "غير معروف",  // المرسل
-                    dateTimeMatch ? dateTimeMatch[0].trim() : "غير متوفر", // تاريخ ووقت الإرسال
                     sectorMatch[1],
                     dateMatch[0],
                     timeMatch ? timeMatch[1] : "غير متوفر",
