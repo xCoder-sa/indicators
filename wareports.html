@@ -108,6 +108,8 @@
     <table id="dataTable">
         <thead>
             <tr>
+                <th>المرسل</th> <!-- إضافة عمود المرسل -->
+                <th>تاريخ ووقت الإرسال</th> <!-- إضافة عمود تاريخ ووقت الإرسال -->
                 <th>القطاع</th>
                 <th>التاريخ</th>
                 <th>من الساعة</th>
@@ -162,8 +164,8 @@
 
             // فرز البيانات حسب التاريخ والوقت
             data.sort((a, b) => {
-                const dateA = new Date(formatDate(a[1]) + " " + a[2]);
-                const dateB = new Date(formatDate(b[1]) + " " + b[2]);
+                const dateA = new Date(formatDate(a[2]) + " " + a[3]);
+                const dateB = new Date(formatDate(b[2]) + " " + b[3]);
                 return dateA - dateB;
             });
 
@@ -188,6 +190,8 @@
         }
 
         function parseSectorData(text) {
+            const senderMatch = text.match(/-\s*(.*?)(?=\( قطاع|\+?\d{1,4}.*\):)/); // التعرف على المرسل أو رقم الجوال
+            const dateTimeMatch = text.match(/^\d{1,2}‏\/\d{1,2}‏\/\d{4}، \d{1,2}:\d{2} [ص|م]/); // التعرف على التاريخ والوقت
             const sectorMatch = text.match(/قطاع\s*\((.*?)\)/);
             const dateMatch = text.match(/\d{4}\/\d{2}\/\d{2}|\d{2}-\d{2}-\d{4}/);
             const timeMatch = text.match(/الساعة\s*(\d{2}:\d{2})\s*إلى\s*(\d{2}:\d{2})/); // استخراج التوقيت الموحد
@@ -201,6 +205,8 @@
 
             if (sectorMatch && dateMatch) {
                 return [
+                    senderMatch ? senderMatch[1].trim() : "غير معروف",  // المرسل
+                    dateTimeMatch ? dateTimeMatch[0].trim() : "غير متوفر", // تاريخ ووقت الإرسال
                     sectorMatch[1], 
                     dateMatch[0], 
                     timeMatch ? timeMatch[1] : "غير متوفر",
