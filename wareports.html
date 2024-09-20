@@ -138,6 +138,9 @@
         function processData() {
             let input = document.getElementById("dataInput").value;
 
+            // إزالة النقطتين الرأسيتين بعد كلمة "الساعة" (الساعة:06:00)
+            input = input.replace(/الساعة:/g, 'الساعة ');
+
             // إضافة "----" قبل كل سطر يحتوي على "قطاع ("
             input = input.replace(/(قطاع\s*\()/g, "----\n$1");
 
