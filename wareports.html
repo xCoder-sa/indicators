@@ -209,12 +209,11 @@
         }
 
         function parseSectorData(text) {
-            // تحسين استخراج المرسل
-            const senderMatch = text.match(/^(.*?)(?=\s*-\s*)/); // التعرف على المرسل
-            // تحسين استخراج تاريخ ووقت الإرسال
-            const dateTimeMatch = text.match(/(\d{1,2}\/\d{1,2}\/\d{4}\s*[، ]\s*\d{1,2}:\d{2}\s*(?:ص|م))/);
-            const sectorMatch = text.match(/قطاع\s*\((.*?)\)/);
-            const dateMatch = text.match(/(\d{4}[\/\-]\d{1,2}[\/\-]\d{1,2}|\d{1,2}[\/\-]\d{1,2}[\/\-]\d{4})/);
+            // تحسين استخراج المرسل والتاريخ والوقت
+            const senderMatch = text.match(/-\s*(.*?)(?=:| \()/);  // استخراج اسم أو رقم المرسل
+            const dateTimeMatch = text.match(/(\d{1,2}‏\/\d{1,2}‏\/\d{4}، \d{1,2}:\d{2} [صم])/); // استخراج التاريخ والوقت
+            const sectorMatch = text.match(/قطاع\s*\((.*?)\)/); // استخراج القطاع
+            const dateMatch = text.match(/\d{4}\/\d{2}\/\d{2}|\d{2}-\d{2}-\d{4}/);
             const timeMatch = text.match(/الساعة\s*(\d{2}:\d{2})\s*إلى\s*(\d{2}:\d{2})/); // استخراج التوقيت الموحد
             const teamsMatch = text.match(/عدد الفرق العاملة[: ]*\(\s*(\d+)\s*\)/);
             const rapidTeamsMatch = text.match(/عدد فرق التدخل السريع[: ]*(\d+)/);
@@ -226,10 +225,10 @@
 
             if (sectorMatch && dateMatch) {
                 return [
-                    senderMatch ? senderMatch[0].trim() : "غير معروف",  // المرسل
-                    dateTimeMatch ? dateTimeMatch[0].trim() : "غير متوفر", // تاريخ ووقت الإرسال
+                    senderMatch ? senderMatch[1].trim() : "غير معروف",  // المرسل
+                    dateTimeMatch ? dateTimeMatch[1].trim() : "غير متوفر", // تاريخ ووقت الإرسال
                     sectorMatch[1],
-                    dateMatch[1],
+                    dateMatch[0],
                     timeMatch ? timeMatch[1] : "غير متوفر",
                     timeMatch ? timeMatch[2] : "غير متوفر",
                     teamsMatch ? teamsMatch[1] : "غير متوفر",
