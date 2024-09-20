@@ -43,9 +43,12 @@
             text-align: center;
         }
         .indicator-charts {
-            display: flex;
+            display: none;
             flex-wrap: wrap;
             justify-content: space-around;
+        }
+        .indicator-charts.active {
+            display: flex;
         }
         .indicator-title {
             font-size: 1.2em;
@@ -55,25 +58,6 @@
             font-size: 2em;
             font-weight: bold;
             margin-top: 10px;
-            text-align: center;
-        }
-        .chart-with-labels {
-            position: relative;
-        }
-        .chart-with-labels .chart-value {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1.5em;
-            font-weight: bold;
-            color: white;
-        }
-        .legend-description {
-            text-align: center;
-            margin-top: 10px;
-            font-size: 1em;
-            color: red;
         }
     </style>
 </head>
@@ -81,8 +65,20 @@
 
     <h1>مؤشرات الأداء</h1>
 
-    <!-- اختيار التاريخ -->
+    <!-- اختيار المؤشرات لعرض الرسوم البيانية -->
     <div class="filter-container">
+        <select id="indicatorFilter">
+            <option value="workingTeams">عدد الفرق العاملة</option>
+            <option value="rapidTeams">عدد فرق التدخل السريع</option>
+            <option value="workingVehicles">عدد المركبات العاملة</option>
+            <option value="brokenVehicles">عدد المركبات المتعطلة</option>
+            <option value="logisticReports">بلاغات الدعم اللوجستي المفتوحة</option>
+            <option value="coordinationWorkers">عدد العاملين في التنسيق والتحكم</option>
+            <option value="logisticWorkers">عدد العاملين في الدعم اللوجستي</option>
+            <option value="totalVehicles">إجمالي المركبات</option>
+        </select>
+
+        <!-- اختيار التاريخ -->
         <div>
             <label for="startDate">من:</label>
             <input type="date" id="startDate">
@@ -103,28 +99,24 @@
         <select id="sectorSelect">
             <!-- سيتم تعبئة القطاعات ديناميكيا -->
         </select>
-
+        <button id="showIndicators">عرض المؤشرات</button>
         <div id="indicatorCharts" class="indicator-charts">
-            <div class="chart-with-labels">
+            <div>
                 <canvas id="chart-indicator2"></canvas>
                 <div id="value-indicator2" class="indicator-value"></div>
             </div>
-            <div class="chart-with-labels">
+            <div>
                 <canvas id="chart-indicator3"></canvas>
                 <div id="value-indicator3" class="indicator-value"></div>
             </div>
         </div>
     </div>
 
-    <div class="legend-description">
-        اللون الأحمر يدل على القيم السلبية أو التنبيهات
-    </div>
-
     <script>
         let sectorsData = {};
         const colors = [
             'rgba(75, 192, 192, 0.5)',
-            'rgba(255, 99, 132, 0.5)', // أحمر يدل على القيم السلبية
+            'rgba(255, 99, 132, 0.5)',
             'rgba(54, 162, 235, 0.5)',
             'rgba(255, 206, 86, 0.5)',
             'rgba(153, 102, 255, 0.5)',
@@ -183,14 +175,11 @@
                 const ctx = document.getElementById(`chart-${sector}`).getContext('2d');
                 createChart(ctx, sector, colors[index % colors.length]);
             });
-
-            // عرض المؤشرات تلقائيا بمجرد تحميل الصفحة
-            displayIndicators(Object.keys(sectorsData)[0]);
         }
 
         function createChart(ctx, sector, color) {
             const sectorData = sectorsData[sector];
-            const selectedIndicator = document.getElementById('indicatorFilter')?.value || 'workingTeams';
+            const selectedIndicator = document.getElementById('indicatorFilter').value;
 
             const filteredData = filterDataByDate(sectorData);
             const uniqueDates = getUniqueDates(filteredData);
@@ -211,15 +200,6 @@
                 },
                 options: {
                     responsive: true,
-                    plugins: {
-                        datalabels: {
-                            display: true,
-                            color: 'white',
-                            font: {
-                                weight: 'bold'
-                            }
-                        }
-                    },
                     scales: {
                         y: {
                             beginAtZero: true
@@ -239,7 +219,8 @@
             });
         }
 
-        // تحديث الرسوم البيانية عند تغيير التاريخ
+        // تحديث الرسوم البيانية عند تغيير المؤشر أو التاريخ
+        document.getElementById('indicatorFilter').addEventListener('change', generateCharts);
         document.getElementById('startDate').addEventListener('change', generateCharts);
         document.getElementById('endDate').addEventListener('change', generateCharts);
 
@@ -260,7 +241,7 @@
             }
 
             return data.filter(item => {
-                const itemDate = new Date(item.date);
+                const itemDate = new Date(item.date.split('/').reverse().join('-')); // تحويل التاريخ للتعامل مع المقارنة الصحيحة
                 const start = startDate ? new Date(startDate) : null;
                 const end = endDate ? new Date(endDate) : null;
 
@@ -293,6 +274,12 @@
 
             return labels[indicator];
         }
+
+        // عرض مؤشرات الأداء بناءً على القطاع المختار
+        document.getElementById('showIndicators').addEventListener('click', () => {
+            const sector = document.getElementById('sectorSelect').value;
+            displayIndicators(sector);
+        });
 
         function displayIndicators(sector) {
             const indicatorCharts = document.getElementById('indicatorCharts');
