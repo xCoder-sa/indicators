@@ -43,12 +43,9 @@
             text-align: center;
         }
         .indicator-charts {
-            display: none;
+            display: flex;
             flex-wrap: wrap;
             justify-content: space-around;
-        }
-        .indicator-charts.active {
-            display: flex;
         }
         .indicator-title {
             font-size: 1.2em;
@@ -99,7 +96,6 @@
         <select id="sectorSelect">
             <!-- سيتم تعبئة القطاعات ديناميكيا -->
         </select>
-        <button id="showIndicators">عرض المؤشرات</button>
         <div id="indicatorCharts" class="indicator-charts">
             <div>
                 <canvas id="chart-indicator2"></canvas>
@@ -217,6 +213,12 @@
                 option.textContent = sector;
                 sectorSelect.appendChild(option);
             });
+
+            // عرض المؤشرات تلقائيًا عند تحميل القطاعات
+            sectorSelect.addEventListener('change', function() {
+                const sector = sectorSelect.value;
+                displayIndicators(sector);
+            });
         }
 
         // تحديث الرسوم البيانية عند تغيير المؤشر أو التاريخ
@@ -276,11 +278,6 @@
         }
 
         // عرض مؤشرات الأداء بناءً على القطاع المختار
-        document.getElementById('showIndicators').addEventListener('click', () => {
-            const sector = document.getElementById('sectorSelect').value;
-            displayIndicators(sector);
-        });
-
         function displayIndicators(sector) {
             const indicatorCharts = document.getElementById('indicatorCharts');
             indicatorCharts.classList.add('active');
