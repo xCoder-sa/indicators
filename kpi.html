@@ -216,7 +216,7 @@
             }
 
             return data.filter(item => {
-                const itemDate = new Date(item.date);
+                const itemDate = new Date(item.date.split('/').reverse().join('-')); // تحويل التاريخ للتعامل مع المقارنة الصحيحة
                 const start = startDate ? new Date(startDate) : new Date('1900-01-01');
                 const end = endDate ? new Date(endDate) : new Date();
 
@@ -257,7 +257,7 @@
 
         // عرض مؤشرات الأداء بناءً على القطاع المختار
         document.getElementById('showIndicators').addEventListener('click', () => {
-            const sector = document.getElementById('sectorSelect').value;
+            const sector = Object.keys(sectorsData)[0]; // يمكن التعديل ليأخذ من القائمة المنسدلة
             displayIndicators(sector);
         });
 
