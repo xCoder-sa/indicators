@@ -177,6 +177,19 @@
 
             // إنشاء الصفوف بعد الفرز
             data.forEach(sectorData => {
+                // تحقق من عدد مرات ظهور "غير متوفر" في الأعمدة المحددة
+                const columnsToCheck = [6, 7, 8, 9, 10, 11, 12];
+                let unavailableCount = 0;
+                columnsToCheck.forEach(index => {
+                    if (sectorData[index] === "غير متوفر") {
+                        unavailableCount++;
+                    }
+                });
+                // إذا كانت "غير متوفر" في أكثر من خلية، تجاهل الصف
+                if (unavailableCount > 1) {
+                    return;
+                }
+
                 const tr = document.createElement("tr");
                 sectorData.forEach(dataItem => {
                     const td = document.createElement("td");
@@ -196,25 +209,27 @@
         }
 
         function parseSectorData(text) {
-            const senderMatch = text.match(/-\s*(.*?)\s*:/); // التعرف على المرسل سواء اسم أو رقم جوال
-            const dateTimeMatch = text.match(/(\d{1,2}‏\/\d{1,2}‏\/\d{4}، \d{1,2}:\d{2} [ص|م])/); // تحسين التعرف على التاريخ والوقت
+            // تحسين استخراج المرسل
+            const senderMatch = text.match(/^(.*?)\s*-\s*/); // التعرف على المرسل في بداية النص
+            // تحسين استخراج تاريخ ووقت الإرسال
+            const dateTimeMatch = text.match(/(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}[، ,]\s*\d{1,2}:\d{2}\s*[صم])/);
             const sectorMatch = text.match(/قطاع\s*\((.*?)\)/);
-            const dateMatch = text.match(/\d{4}\/\d{2}\/\d{2}|\d{2}-\d{2}-\d{4}/);
+            const dateMatch = text.match(/(\d{4}[\/\-]\d{1,2}[\/\-]\d{1,2}|\d{1,2}[\/\-]\d{1,2}[\/\-]\d{4})/);
             const timeMatch = text.match(/الساعة\s*(\d{2}:\d{2})\s*إلى\s*(\d{2}:\d{2})/); // استخراج التوقيت الموحد
-            const teamsMatch = text.match(/عدد الفرق العاملة:\s*\(\s*(\d+)\s*\)/);
-            const rapidTeamsMatch = text.match(/عدد فرق التدخل السريع:\s*(\d+)/);
-            const vehiclesWorkingMatch = text.match(/عدد المركبات العاملة\s*:\s*(\d+)/);
-            const vehiclesBrokenMatch = text.match(/عدد المركبات المتعطلة\s*:\s*(\d+)/);
-            const logisticReportsMatch = text.match(/بلاغات الدعم اللوجستي المفتوحة\s*:\s*(\d+|$)/) || [null, "0"];
-            const controlStaffMatch = text.match(/عدد العاملين في التنسيق والتحكم\s*:\s*(\d+)/);
-            const logisticStaffMatch = text.match(/عدد العاملين في الدعم اللوجستي\s*:\s*(\d+)/);
+            const teamsMatch = text.match(/عدد الفرق العاملة[: ]*\(\s*(\d+)\s*\)/);
+            const rapidTeamsMatch = text.match(/عدد فرق التدخل السريع[: ]*(\d+)/);
+            const vehiclesWorkingMatch = text.match(/عدد المركبات العاملة[: ]*(\d+)/);
+            const vehiclesBrokenMatch = text.match(/عدد المركبات المتعطلة[: ]*(\d+)/);
+            const logisticReportsMatch = text.match(/بلاغات الدعم اللوجستي المفتوحة[: ]*(\d+)/) || [null, "0"];
+            const controlStaffMatch = text.match(/عدد العاملين في التنسيق والتحكم[: ]*(\d+)/);
+            const logisticStaffMatch = text.match(/عدد العاملين في الدعم اللوجستي[: ]*(\d+)/);
 
             if (sectorMatch && dateMatch) {
                 return [
                     senderMatch ? senderMatch[1].trim() : "غير معروف",  // المرسل
-                    dateTimeMatch ? dateTimeMatch[1].trim() : "غير متوفر", // تحسين التعرف على تاريخ ووقت الإرسال
-                    sectorMatch[1], 
-                    dateMatch[0], 
+                    dateTimeMatch ? dateTimeMatch[0].trim() : "غير متوفر", // تاريخ ووقت الإرسال
+                    sectorMatch[1],
+                    dateMatch[1],
                     timeMatch ? timeMatch[1] : "غير متوفر",
                     timeMatch ? timeMatch[2] : "غير متوفر",
                     teamsMatch ? teamsMatch[1] : "غير متوفر",
@@ -230,20 +245,25 @@
         }
 
         function formatDate(date) {
-            if (date.includes("-")) {
-                const [day, month, year] = date.split("-");
-                return `${year}/${month}/${day}`;
+            if (date.includes("-") || date.includes("/")) {
+                const parts = date.split(/[-\/]/);
+                if (parts[0].length === 4) { // صيغة YYYY-MM-DD
+                    return `${parts[0]}/${parts[1]}/${parts[2]}`;
+                } else { // صيغة DD-MM-YYYY
+                    return `${parts[2]}/${parts[1]}/${parts[0]}`;
+                }
             }
             return date;
         }
 
         function copyTableData() {
-            let table = document.querySelector("#dataTable tbody");
+            let table = document.querySelector("#dataTable");
             let range = document.createRange();
             range.selectNode(table);
             window.getSelection().removeAllRanges(); // إزالة أي تحديد سابق
             window.getSelection().addRange(range); // تحديد محتوى الجدول
             document.execCommand("copy"); // نسخ المحتوى
+            window.getSelection().removeAllRanges(); // إلغاء التحديد بعد النسخ
             alert("تم نسخ البيانات بنجاح!");
         }
     </script>
