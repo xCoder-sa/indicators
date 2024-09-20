@@ -140,6 +140,9 @@
 
             // إزالة النقطتين الرأسيتين بعد كلمة "الساعة" ومعالجة الصيغ الزمنية مثل 1800 وتحويلها إلى 18:00
             input = input.replace(/الساعة:\s*(\d{4})/g, (match, p1) => `الساعة ${p1.slice(0, 2)}:${p1.slice(2)}`);
+            
+            // تحويل الأوقات بشكل عام إلى التنسيق 00:00 إن لم تكن بصيغة صحيحة
+            input = input.replace(/(\d{1,2})\s*:\s*(\d{2})/g, (match, p1, p2) => `${p1.padStart(2, '0')}:${p2}`);
 
             // إضافة "----" قبل كل سطر يحتوي على "قطاع ("
             input = input.replace(/(قطاع\s*\()/g, "----\n$1");
@@ -205,10 +208,10 @@
                     fromTimeMatch ? formatTime(fromTimeMatch[1]) : "غير متوفر",
                     toTimeMatch ? formatTime(toTimeMatch[1]) : "غير متوفر",
                     teamsMatch ? teamsMatch[1] : "غير متوفر",
-                    rapidTeamsMatch ? rapidTeamsMatch[1].replace("متعطل", "").trim() : "غير متوفر", // إزالة كلمة "متعطل"
+                    rapidTeamsMatch ? rapidTeamsMatch[1].replace("متعطل", "").trim() : "غير متوفر",
                     vehiclesWorkingMatch ? vehiclesWorkingMatch[1] : "غير متوفر",
-                    vehiclesBrokenMatch ? vehiclesBrokenMatch[1].replace("مدك", "").trim() : "غير متوفر", // إزالة كلمة "مدك"
-                    logisticReportsMatch ? logisticReportsMatch[1] : "0", // إذا لم تكن هناك قيمة، اعرض 0
+                    vehiclesBrokenMatch ? vehiclesBrokenMatch[1].replace("مدك", "").trim() : "غير متوفر",
+                    logisticReportsMatch ? logisticReportsMatch[1] : "0",
                     controlStaffMatch ? controlStaffMatch[1] : "غير متوفر",
                     logisticStaffMatch ? logisticStaffMatch[1] : "غير متوفر"
                 ];
@@ -228,9 +231,6 @@
             if (time.length === 4) {
                 // تحويل الوقت من 1800 إلى 18:00
                 return `${time.slice(0, 2)}:${time.slice(2)}`;
-            }
-            if (time.startsWith("0")) {
-                return time.replace(/^0+/, ''); // إزالة الأصفار الأولية
             }
             return time;
         }
