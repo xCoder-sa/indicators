@@ -135,66 +135,66 @@
     </footer>
 
     <script>
-        function processData() {
-            let input = document.getElementById("dataInput").value;
+function processData() {
+    let input = document.getElementById("dataInput").value;
 
-            // إزالة النقطتين الرأسيتين بعد كلمة "الساعة" (الساعة:06:00) ومسافة غير مرغوبة بعد الوقت
-            input = input.replace(/الساعة:\s*(\d{1,2})\s*:\s*(\d{2})/g, 'الساعة $1:$2');
+    // إزالة النقطتين الرأسيتين بعد كلمة "الساعة" ومعالجة الصيغ الزمنية مثل 1800 وتحويلها إلى 18:00
+    input = input.replace(/الساعة:\s*(\d{4})/g, (match, p1) => `الساعة ${p1.slice(0, 2)}:${p1.slice(2)}`);
+    
+    // إضافة "----" قبل كل سطر يحتوي على "قطاع ("
+    input = input.replace(/(قطاع\s*\()/g, "----\n$1");
 
-            // إضافة "----" قبل كل سطر يحتوي على "قطاع ("
-            input = input.replace(/(قطاع\s*\()/g, "----\n$1");
+    const rows = input.split("----");
 
-            const rows = input.split("----");
+    const tableBody = document.querySelector("#dataTable tbody");
+    tableBody.innerHTML = ""; // تفريغ الجدول
 
-            const tableBody = document.querySelector("#dataTable tbody");
-            tableBody.innerHTML = ""; // تفريغ الجدول
+    let data = [];
 
-            let data = [];
-
-            rows.forEach(row => {
-                const sectorData = parseSectorData(row);
-                if (sectorData) {
-                    data.push(sectorData);
-                }
-            });
-
-            // فرز البيانات حسب التاريخ والوقت
-            data.sort((a, b) => {
-                const dateA = new Date(formatDate(a[1]) + " " + formatTime(a[2]));
-                const dateB = new Date(formatDate(b[1]) + " " + formatTime(b[2]));
-                return dateA - dateB;
-            });
-
-            // إنشاء الصفوف بعد الفرز
-            data.forEach(sectorData => {
-                const tr = document.createElement("tr");
-                sectorData.forEach(dataItem => {
-                    const td = document.createElement("td");
-                    td.textContent = dataItem || "غير متوفر";
-                    tr.appendChild(td);
-                });
-                tableBody.appendChild(tr);
-            });
-
-            // إظهار زر النسخ فقط إذا كانت هناك بيانات
-            const copyButton = document.getElementById("copyButton");
-            if (data.length > 0) {
-                copyButton.classList.remove("hidden");
-            } else {
-                copyButton.classList.add("hidden");
-            }
+    rows.forEach(row => {
+        const sectorData = parseSectorData(row);
+        if (sectorData) {
+            data.push(sectorData);
         }
+    });
+
+    // فرز البيانات حسب التاريخ والوقت
+    data.sort((a, b) => {
+        const dateA = new Date(formatDate(a[1]) + " " + formatTime(a[2]));
+        const dateB = new Date(formatDate(b[1]) + " " + formatTime(b[2]));
+        return dateA - dateB;
+    });
+
+    // إنشاء الصفوف بعد الفرز
+    data.forEach(sectorData => {
+        const tr = document.createElement("tr");
+        sectorData.forEach(dataItem => {
+            const td = document.createElement("td");
+            td.textContent = dataItem || "غير متوفر";
+            tr.appendChild(td);
+        });
+        tableBody.appendChild(tr);
+    });
+
+    // إظهار زر النسخ فقط إذا كانت هناك بيانات
+    const copyButton = document.getElementById("copyButton");
+    if (data.length > 0) {
+        copyButton.classList.remove("hidden");
+    } else {
+        copyButton.classList.add("hidden");
+    }
+}
 
 function parseSectorData(text) {
     const sectorMatch = text.match(/قطاع\s*\((.*?)\)/);
     const dateMatch = text.match(/\d{4}\/\d{2}\/\d{2}|\d{2}-\d{2}-\d{4}/);
-    const fromTimeMatch = text.match(/الساعة\s*(\d{1,2}:\d{2})/);
-    const toTimeMatch = text.match(/إلى\s*(\d{1,2}:\d{2})/);
+    const fromTimeMatch = text.match(/الساعة\s*(\d{1,2}:\d{2}|\d{4})/); // معالجة الأوقات مثل 1800 و 00:00
+    const toTimeMatch = text.match(/إلى\s*(\d{1,2}:\d{2}|\d{4})/); // نفس المعالجة للأوقات
     const teamsMatch = text.match(/عدد الفرق العاملة:\s*\(\s*(\d+)\s*\)/);
     const rapidTeamsMatch = text.match(/عدد فرق التدخل السريع:\s*(\d+)/);
-    const vehiclesWorkingMatch = text.match(/عدد المركبات العاملة\s*:\s*(\d+)/);  // تحديث هنا للتأكد من عدم وجود مسافات إضافية
+    const vehiclesWorkingMatch = text.match(/عدد المركبات العاملة\s*:\s*(\d+)/);
     const vehiclesBrokenMatch = text.match(/عدد المركبات المتعطلة\s*:\s*(\d+)/);
-    const logisticReportsMatch = text.match(/بلاغات الدعم اللوجستي المفتوحة\s*:\s*(\d+)/);
+    const logisticReportsMatch = text.match(/بلاغات الدعم اللوجستي المفتوحة\s*:\s*(\d+|$)/) || [null, "0"]; // معالجة الحقول الفارغة وجعل القيمة 0
     const controlStaffMatch = text.match(/عدد العاملين في التنسيق والتحكم\s*:\s*(\d+)/);
     const logisticStaffMatch = text.match(/عدد العاملين في الدعم اللوجستي\s*:\s*(\d+)/);
 
@@ -202,13 +202,13 @@ function parseSectorData(text) {
         return [
             sectorMatch[1], 
             dateMatch[0], 
-            fromTimeMatch ? fromTimeMatch[1] : "غير متوفر",
-            toTimeMatch ? toTimeMatch[1] : "غير متوفر",
+            fromTimeMatch ? formatTime(fromTimeMatch[1]) : "غير متوفر",
+            toTimeMatch ? formatTime(toTimeMatch[1]) : "غير متوفر",
             teamsMatch ? teamsMatch[1] : "",
             rapidTeamsMatch ? rapidTeamsMatch[1] : "",
-            vehiclesWorkingMatch ? vehiclesWorkingMatch[1] : "غير متوفر", // تعديل هنا ليعرض الرقم بشكل صحيح
+            vehiclesWorkingMatch ? vehiclesWorkingMatch[1] : "غير متوفر",
             vehiclesBrokenMatch ? vehiclesBrokenMatch[1] : "",
-            logisticReportsMatch ? logisticReportsMatch[1] : "غير متوفر",
+            logisticReportsMatch ? logisticReportsMatch[1] : "0", // إذا لم تكن هناك قيمة، اعرض 0
             controlStaffMatch ? controlStaffMatch[1] : "",
             logisticStaffMatch ? logisticStaffMatch[1] : ""
         ];
@@ -216,31 +216,35 @@ function parseSectorData(text) {
     return null;
 }
 
+function formatDate(date) {
+    if (date.includes("-")) {
+        const [day, month, year] = date.split("-");
+        return `${year}/${month}/${day}`;
+    }
+    return date;
+}
 
-        function formatDate(date) {
-            if (date.includes("-")) {
-                const [day, month, year] = date.split("-");
-                return `${year}/${month}/${day}`;
-            }
-            return date;
-        }
+function formatTime(time) {
+    if (time.length === 4) {
+        // تحويل الوقت من 1800 إلى 18:00
+        return `${time.slice(0, 2)}:${time.slice(2)}`;
+    }
+    if (time.startsWith("0")) {
+        return time.replace(/^0+/, ''); // إزالة الأصفار الأولية
+    }
+    return time;
+}
 
-        function formatTime(time) {
-            if (time.startsWith("0")) {
-                return time.replace(/^0+/, ''); // إزالة الصفر الأول عند وجوده
-            }
-            return time; // إرجاع التوقيت كما هو عند عدم وجود صفر في البداية
-        }
+function copyTableData() {
+    let table = document.querySelector("#dataTable tbody");
+    let range = document.createRange();
+    range.selectNode(table);
+    window.getSelection().removeAllRanges(); // إزالة أي تحديد سابق
+    window.getSelection().addRange(range); // تحديد محتوى الجدول
+    document.execCommand("copy"); // نسخ المحتوى
+    alert("تم نسخ البيانات بنجاح!");
+}
 
-        function copyTableData() {
-            let table = document.querySelector("#dataTable tbody");
-            let range = document.createRange();
-            range.selectNode(table);
-            window.getSelection().removeAllRanges(); // إزالة أي تحديد سابق
-            window.getSelection().addRange(range); // تحديد محتوى الجدول
-            document.execCommand("copy"); // نسخ المحتوى
-            alert("تم نسخ البيانات بنجاح!");
-        }
     </script>
 
 </body>
