@@ -1,219 +1,320 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مؤشرات الأداء</title>
+    <title>صفحة المؤشرات</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+        }
         .chart-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
         }
-        .chart-item {
-            width: 45%;
-            margin-bottom: 30px;
+        canvas {
+            margin: 10px;
+            max-width: 600px;
+            max-height: 400px;
         }
-        #indicatorContainer {
-            margin-top: 50px;
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 20px;
         }
-        #indicatorContainer .chart-item {
-            width: 100%;
+        input[type="date"] {
+            padding: 5px;
+        }
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .indicators {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .indicator-charts {
+            display: none;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .indicator-charts.active {
+            display: flex;
+        }
+        .indicator-title {
+            font-size: 1.2em;
+            text-align: center;
+        }
+        .indicator-value {
+            font-size: 2em;
+            font-weight: bold;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
+
     <h1>مؤشرات الأداء</h1>
-    <div>
-        <label for="startDate">من:</label>
-        <input type="date" id="startDate">
-        <label for="endDate">إلى:</label>
-        <input type="date" id="endDate">
-        <button onclick="filterByDate()">فلترة</button>
-        <button onclick="clearFilter()">محو الفلتر</button>
+
+    <!-- اختيار المؤشرات لعرض الرسوم البيانية -->
+    <div class="filter-container">
+        <select id="indicatorFilter">
+            <option value="workingTeams">عدد الفرق العاملة</option>
+            <option value="rapidTeams">عدد فرق التدخل السريع</option>
+            <option value="workingVehicles">عدد المركبات العاملة</option>
+            <option value="brokenVehicles">عدد المركبات المتعطلة</option>
+            <option value="logisticReports">بلاغات الدعم اللوجستي المفتوحة</option>
+            <option value="coordinationWorkers">عدد العاملين في التنسيق والتحكم</option>
+            <option value="logisticWorkers">عدد العاملين في الدعم اللوجستي</option>
+            <option value="totalVehicles">إجمالي المركبات</option>
+        </select>
+
+        <!-- اختيار التاريخ -->
+        <div>
+            <label for="startDate">من:</label>
+            <input type="date" id="startDate">
+            <label for="endDate">إلى:</label>
+            <input type="date" id="endDate">
+        </div>
+
+        <!-- زر محو الفلتر -->
+        <button id="clearFilter">محو الفلتر</button>
     </div>
 
-    <div class="chart-container">
-        <div class="chart-item">
-            <canvas id="chartDoughnut"></canvas>
-        </div>
-        <div class="chart-item">
-            <canvas id="chartBar"></canvas>
-        </div>
-        <div class="chart-item">
-            <canvas id="chartStackedBar"></canvas>
-        </div>
-        <div class="chart-item">
-            <canvas id="chartRadar"></canvas>
-        </div>
-    </div>
+    <!-- الرسم البياني الخاص بالقطاعات -->
+    <div id="chartsContainer" class="chart-container"></div>
 
-    <h2>مؤشرات الأداء حسب القطاع</h2>
-    <div id="indicatorContainer">
-        <div class="chart-item">
-            <canvas id="indicatorChart"></canvas>
+    <!-- مؤشرات الأداء الخاصة بالقطاع -->
+    <div class="indicators">
+        <h2 class="indicator-title">مؤشرات الأداء حسب القطاع</h2>
+        <select id="sectorSelect">
+            <!-- سيتم تعبئة القطاعات ديناميكيا -->
+        </select>
+        <button id="showIndicators">عرض المؤشرات</button>
+        <div id="indicatorCharts" class="indicator-charts">
+            <div>
+                <canvas id="chart-indicator2"></canvas>
+                <div id="value-indicator2" class="indicator-value"></div>
+            </div>
+            <div>
+                <canvas id="chart-indicator3"></canvas>
+                <div id="value-indicator3" class="indicator-value"></div>
+            </div>
         </div>
     </div>
 
     <script>
-        let workingVehicles = 80;
-        let totalVehicles = 100;
-        let logisticsOpenReportDay1 = 5;
-        let logisticsOpenReportDay2 = 3;
-        let logisticsOpenReportDay3 = 4;
+        let sectorsData = {};
+        const colors = [
+            'rgba(75, 192, 192, 0.5)',
+            'rgba(255, 99, 132, 0.5)',
+            'rgba(54, 162, 235, 0.5)',
+            'rgba(255, 206, 86, 0.5)',
+            'rgba(153, 102, 255, 0.5)',
+            'rgba(255, 159, 64, 0.5)',
+            'rgba(201, 203, 207, 0.5)'
+        ];
 
-        // Doughnut chart for نسبة المركبات العاملة
-        const ctxDoughnut = document.getElementById('chartDoughnut').getContext('2d');
-        const doughnutChart = new Chart(ctxDoughnut, {
-            type: 'doughnut',
-            data: {
-                labels: ['مركبات عاملة', 'مركبات متعطلة'],
-                datasets: [{
-                    data: [workingVehicles, totalVehicles - workingVehicles],
-                    backgroundColor: ['#36a2eb', '#ff6384'],
-                }]
-            },
-            options: {
-                title: {
-                    display: true,
-                    text: 'نسبة المركبات العاملة من إجمالي المركبات'
-                }
-            }
-        });
+        // جلب البيانات من الملف
+        fetch('https://xcoder-sa.github.io/indicators/data.html')
+            .then(response => response.text())
+            .then(data => {
+                const parser = new DOMParser();
+                const htmlDocument = parser.parseFromString(data, "text/html");
 
-        // Bar chart for معدل البلاغات اللوجستية المفتوحة
-        const ctxBar = document.getElementById('chartBar').getContext('2d');
-        const barChart = new Chart(ctxBar, {
-            type: 'bar',
-            data: {
-                labels: ['2024/09/01', '2024/09/02', '2024/09/03', '...'], 
-                datasets: [{
-                    label: 'البلاغات اللوجستية المفتوحة',
-                    data: [logisticsOpenReportDay1, logisticsOpenReportDay2, logisticsOpenReportDay3],
-                    backgroundColor: '#4bc0c0',
-                }]
-            },
-            options: {
-                title: {
-                    display: true,
-                    text: 'معدل البلاغات اللوجستية المفتوحة يوميًا'
-                },
-                scales: {
-                    xAxes: [{
-                        type: 'time',
-                        time: {
-                            unit: 'day'
-                        }
-                    }],
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
+                const rows = htmlDocument.querySelectorAll('th[id^="0R1"]');
 
-        // Stacked Bar chart for عدد الفرق العاملة وعدد فرق التدخل السريع
-        const ctxStackedBar = document.getElementById('chartStackedBar').getContext('2d');
-        const stackedBarChart = new Chart(ctxStackedBar, {
-            type: 'bar',
-            data: {
-                labels: ['القطاع 1', 'القطاع 2', 'القطاع 3'],
-                datasets: [{
-                    label: 'فرق عاملة',
-                    data: [50, 40, 45],
-                    backgroundColor: '#ffcd56',
-                }, {
-                    label: 'فرق التدخل السريع',
-                    data: [20, 15, 10],
-                    backgroundColor: '#ff6384',
-                }]
-            },
-            options: {
-                title: {
-                    display: true,
-                    text: 'عدد الفرق العاملة وعدد فرق التدخل السريع حسب القطاع'
-                },
-                scales: {
-                    xAxes: [{
-                        stacked: true
-                    }],
-                    yAxes: [{
-                        stacked: true
-                    }]
-                }
-            }
-        });
+                rows.forEach((row, index) => {
+                    const columns = row.closest('tr').querySelectorAll('td');
+                    const sector = columns[0].textContent;
 
-        // Radar chart for عدد العاملين في التنسيق والتحكم وعدد العاملين في الدعم اللوجستي
-        const ctxRadar = document.getElementById('chartRadar').getContext('2d');
-        const radarChart = new Chart(ctxRadar, {
-            type: 'radar',
-            data: {
-                labels: ['تنسيق وتحكم', 'دعم لوجستي'],
-                datasets: [{
-                    label: 'القطاع 1',
-                    data: [10, 8],
-                    backgroundColor: 'rgba(179,181,198,0.2)',
-                    borderColor: 'rgba(179,181,198,1)',
-                }, {
-                    label: 'القطاع 2',
-                    data: [12, 10],
-                    backgroundColor: 'rgba(255,99,132,0.2)',
-                    borderColor: 'rgba(255,99,132,1)',
-                }]
-            },
-            options: {
-                title: {
-                    display: true,
-                    text: 'عدد العاملين في التنسيق والتحكم وعدد العاملين في الدعم اللوجستي'
-                }
-            }
-        });
+                    if (!sectorsData[sector]) {
+                        sectorsData[sector] = [];
+                    }
 
-        // Indicator Chart - نسبة المركبات العاملة
-        function showIndicatorChart(working, total) {
-            const ctxIndicator = document.getElementById('indicatorChart').getContext('2d');
-            new Chart(ctxIndicator, {
-                type: 'doughnut',
+                    const rowData = {
+                        date: columns[1].textContent,
+                        workingTeams: parseInt(columns[4].textContent),
+                        rapidTeams: parseInt(columns[5].textContent),
+                        workingVehicles: parseInt(columns[6].textContent),
+                        brokenVehicles: parseInt(columns[7].textContent),
+                        logisticReports: parseInt(columns[8].textContent),
+                        coordinationWorkers: parseInt(columns[9].textContent),
+                        logisticWorkers: parseInt(columns[10].textContent),
+                        totalVehicles: parseInt(columns[11].textContent)
+                    };
+
+                    sectorsData[sector].push(rowData);
+                });
+
+                populateSectorSelect();
+                generateCharts();
+            })
+            .catch(error => {
+                console.error('خطأ في جلب البيانات:', error);
+            });
+
+        function generateCharts() {
+            const chartsContainer = document.getElementById('chartsContainer');
+            chartsContainer.innerHTML = '';
+
+            Object.keys(sectorsData).forEach((sector, index) => {
+                const canvas = document.createElement('canvas');
+                canvas.id = `chart-${sector}`;
+                chartsContainer.appendChild(canvas);
+
+                const ctx = document.getElementById(`chart-${sector}`).getContext('2d');
+                createChart(ctx, sector, colors[index % colors.length]);
+            });
+        }
+
+        function createChart(ctx, sector, color) {
+            const sectorData = sectorsData[sector];
+            const selectedIndicator = document.getElementById('indicatorFilter').value;
+
+            const filteredData = filterDataByDate(sectorData);
+            const uniqueDates = getUniqueDates(filteredData);
+            const chartLabels = uniqueDates.map(item => item.date);
+            const chartData = uniqueDates.map(item => item[selectedIndicator]);
+
+            new Chart(ctx, {
+                type: 'bar',
                 data: {
-                    labels: ['مركبات عاملة', 'مركبات متعطلة'],
+                    labels: chartLabels,
                     datasets: [{
-                        data: [working, total - working],
-                        backgroundColor: ['#36a2eb', '#ff6384'],
+                        label: `${sector} - ${getIndicatorLabel(selectedIndicator)}`,
+                        data: chartData,
+                        backgroundColor: color,
+                        borderColor: color,
+                        borderWidth: 1
                     }]
                 },
                 options: {
-                    title: {
-                        display: true,
-                        text: 'نسبة المركبات العاملة من إجمالي المركبات'
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
                     }
                 }
             });
         }
 
-        function filterByDate() {
-            // فلترة البيانات بناءً على التاريخ المحدد
-            const startDate = document.getElementById('startDate').value;
-            const endDate = document.getElementById('endDate').value;
-            if (startDate && endDate) {
-                // هنا من المفترض جلب البيانات التي تقع بين هذه التواريخ
-                console.log(`فلترة من ${startDate} إلى ${endDate}`);
-            } else {
-                alert('يرجى تحديد التاريخ');
-            }
+        function populateSectorSelect() {
+            const sectorSelect = document.getElementById('sectorSelect');
+            Object.keys(sectorsData).forEach(sector => {
+                const option = document.createElement('option');
+                option.value = sector;
+                option.textContent = sector;
+                sectorSelect.appendChild(option);
+            });
         }
 
-        function clearFilter() {
-            // إعادة تعيين الفلتر
+        // تحديث الرسوم البيانية عند تغيير المؤشر أو التاريخ
+        document.getElementById('indicatorFilter').addEventListener('change', generateCharts);
+        document.getElementById('startDate').addEventListener('change', generateCharts);
+        document.getElementById('endDate').addEventListener('change', generateCharts);
+
+        // زر محو الفلتر
+        document.getElementById('clearFilter').addEventListener('click', () => {
             document.getElementById('startDate').value = '';
             document.getElementById('endDate').value = '';
-            // إعادة تحميل البيانات الأصلية
-            console.log('تم محو الفلتر');
+            generateCharts();
+        });
+
+        // تصفية البيانات حسب التاريخ
+        function filterDataByDate(data) {
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+
+            if (!startDate && !endDate) {
+                return data;
+            }
+
+            return data.filter(item => {
+                const itemDate = new Date(item.date.split('/').reverse().join('-')); // تحويل التاريخ للتعامل مع المقارنة الصحيحة
+                const start = startDate ? new Date(startDate) : null;
+                const end = endDate ? new Date(endDate) : null;
+
+                return (!start || itemDate >= start) && (!end || itemDate <= end);
+            });
+        }
+
+        // الحصول على تواريخ فريدة للعرض في الرسم البياني
+        function getUniqueDates(data) {
+            const uniqueDatesMap = new Map();
+            data.forEach(item => {
+                if (!uniqueDatesMap.has(item.date)) {
+                    uniqueDatesMap.set(item.date, item);
+                }
+            });
+            return Array.from(uniqueDatesMap.values());
+        }
+
+        function getIndicatorLabel(indicator) {
+            const labels = {
+                workingTeams: 'عدد الفرق العاملة',
+                rapidTeams: 'عدد فرق التدخل السريع',
+                workingVehicles: 'عدد المركبات العاملة',
+                brokenVehicles: 'عدد المركبات المتعطلة',
+                logisticReports: 'بلاغات الدعم اللوجستي المفتوحة',
+                coordinationWorkers: 'عدد العاملين في التنسيق والتحكم',
+                logisticWorkers: 'عدد العاملين في الدعم اللوجستي',
+                totalVehicles: 'إجمالي المركبات'
+            };
+
+            return labels[indicator];
+        }
+
+        // عرض مؤشرات الأداء بناءً على القطاع المختار
+        document.getElementById('showIndicators').addEventListener('click', () => {
+            const sector = document.getElementById('sectorSelect').value;
+            displayIndicators(sector);
+        });
+
+        function displayIndicators(sector) {
+            const indicatorCharts = document.getElementById('indicatorCharts');
+            indicatorCharts.classList.add('active');
+
+            const data = sectorsData[sector];
+            const workingVehiclesPercentage = (data[0].workingVehicles / (data[0].workingVehicles + data[0].brokenVehicles)) * 100;
+            const logisticReportsRate = data.reduce((acc, item) => acc + item.logisticReports, 0) / data.length;
+
+            createIndicatorChart('chart-indicator2', 'نسبة المركبات العاملة من إجمالي المركبات', workingVehiclesPercentage);
+            createIndicatorChart('chart-indicator3', 'معدل البلاغات اللوجستية المفتوحة', logisticReportsRate);
+
+            document.getElementById('value-indicator2').textContent = `${workingVehiclesPercentage.toFixed(2)}%`;
+            document.getElementById('value-indicator3').textContent = logisticReportsRate.toFixed(2);
+        }
+
+        function createIndicatorChart(chartId, label, value) {
+            const ctx = document.getElementById(chartId).getContext('2d');
+
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: [label, ''],
+                    datasets: [{
+                        data: [value, 100 - value],
+                        backgroundColor: ['#4caf50', '#f44336'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
         }
     </script>
+
 </body>
 </html>
