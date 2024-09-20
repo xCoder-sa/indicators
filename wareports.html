@@ -183,50 +183,43 @@
         }
 
         function parseSectorData(text) {
-            const sectorMatch = text.match(/قطاع\s*\((.*?)\)/);
-            const dateMatch = text.match(/\d{4}\/\d{2}\/\d{2}|\d{2}-\d{2}-\d{4}/);
-            const fromTimeMatch = text.match(/الساعة:\s*(\d{1,2}:\d{2})/);
-            const toTimeMatch = text.match(/إلى\s*(\d{1,2}:\d{2})/);
-            const teamsMatch = text.match(/عدد الفرق العاملة:\s*\(\s*\d+\s*\)/);
-            const rapidTeamsMatch = text.match(/عدد فرق التدخل السريع:\s*\d+/);
-            const vehiclesWorkingMatch = text.match(/عدد المركبات العاملة:\s*\d+/);
-            const vehiclesBrokenMatch = text.match(/عدد المركبات المتعطلة:\s*\d+/);
-            const logisticReportsMatch = text.match(/بلاغات الدعم اللوجستي المفتوحة\s*:\s*\d+/);
-            const controlStaffMatch = text.match(/عدد العاملين في التنسيق والتحكم\s*:\s*\d+/);
-            const logisticStaffMatch = text.match(/عدد العاملين في الدعم اللوجستي\s*:\s*\d+/);
+    const sectorMatch = text.match(/قطاع\s*\((.*?)\)/);
+    const dateMatch = text.match(/\d{4}\/\d{2}\/\d{2}|\d{2}-\d{2}-\d{4}/);
+    const fromTimeMatch = text.match(/الساعة:\s*(\d{1,2}:\d{2})/); // تعديل للتعرف على التوقيت مثل 6:00 و 06:00
+    const toTimeMatch = text.match(/إلى\s*(\d{1,2}:\d{2})/); // نفس التعديل ليشمل جميع الصيغ
+    const teamsMatch = text.match(/عدد الفرق العاملة:\s*\(\s*\d+\s*\)/);
+    const rapidTeamsMatch = text.match(/عدد فرق التدخل السريع:\s*\d+/);
+    const vehiclesWorkingMatch = text.match(/عدد المركبات العاملة:\s*\d+/);
+    const vehiclesBrokenMatch = text.match(/عدد المركبات المتعطلة:\s*\d+/);
+    const logisticReportsMatch = text.match(/بلاغات الدعم اللوجستي المفتوحة\s*:\s*\d+/);
+    const controlStaffMatch = text.match(/عدد العاملين في التنسيق والتحكم\s*:\s*\d+/);
+    const logisticStaffMatch = text.match(/عدد العاملين في الدعم اللوجستي\s*:\s*\d+/);
 
-            if (sectorMatch && dateMatch) {
-                return [
-                    sectorMatch[1], 
-                    dateMatch[0], 
-                    fromTimeMatch ? fromTimeMatch[1] : "",
-                    toTimeMatch ? toTimeMatch[1] : "",
-                    teamsMatch ? teamsMatch[0].match(/\d+/)[0] : "",
-                    rapidTeamsMatch ? rapidTeamsMatch[0].match(/\d+/)[0] : "",
-                    vehiclesWorkingMatch ? vehiclesWorkingMatch[0].match(/\d+/)[0] : "",
-                    vehiclesBrokenMatch ? vehiclesBrokenMatch[0].match(/\d+/)[0] : "",
-                    logisticReportsMatch ? logisticReportsMatch[0].match(/\d+/)[0] : "غير متوفر",
-                    controlStaffMatch ? controlStaffMatch[0].match(/\d+/)[0] : "",
-                    logisticStaffMatch ? logisticStaffMatch[0].match(/\d+/)[0] : ""
-                ];
-            }
-            return null;
-        }
+    if (sectorMatch && dateMatch) {
+        return [
+            sectorMatch[1], 
+            dateMatch[0], 
+            fromTimeMatch ? fromTimeMatch[1] : "غير متوفر", // تعديل هنا ليظهر الوقت الصحيح
+            toTimeMatch ? toTimeMatch[1] : "غير متوفر",
+            teamsMatch ? teamsMatch[0].match(/\d+/)[0] : "",
+            rapidTeamsMatch ? rapidTeamsMatch[0].match(/\d+/)[0] : "",
+            vehiclesWorkingMatch ? vehiclesWorkingMatch[0].match(/\d+/)[0] : "",
+            vehiclesBrokenMatch ? vehiclesBrokenMatch[0].match(/\d+/)[0] : "",
+            logisticReportsMatch ? logisticReportsMatch[0].match(/\d+/)[0] : "غير متوفر",
+            controlStaffMatch ? controlStaffMatch[0].match(/\d+/)[0] : "",
+            logisticStaffMatch ? logisticStaffMatch[0].match(/\d+/)[0] : ""
+        ];
+    }
+    return null;
+}
 
-        function formatDate(date) {
-            if (date.includes("-")) {
-                const [day, month, year] = date.split("-");
-                return `${year}/${month}/${day}`;
-            }
-            return date;
-        }
+function formatTime(time) {
+    if (time.startsWith("0")) {
+        return time.replace(/^0+/, ''); // إزالة الصفر الأول عند وجوده
+    }
+    return time; // إرجاع التوقيت كما هو عند عدم وجود صفر في البداية
+}
 
-        function formatTime(time) {
-            if (time.startsWith("0")) {
-                return time.replace(/^0+/, '');
-            }
-            return time;
-        }
 
         function copyTableData() {
             let table = document.querySelector("#dataTable tbody");
