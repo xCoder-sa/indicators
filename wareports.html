@@ -139,7 +139,7 @@
         <a href="https://xcoder-sa.github.io/indicators/kpi.html">📶</a>
         <br><br>
         <span>&lt; / &gt; Design and Development by Ali Alshahrani &lt;  &gt;</span>
-        <div class="version">إصدار النسخة: 1.0.0</div>
+        <div class="version">إصدار النسخة: 1.1.0</div> <!-- تحسين رقم الإصدار -->
     </footer>
 
     <script>
@@ -196,7 +196,7 @@
         }
 
         function parseSectorData(text) {
-            const senderMatch = text.match(/-\s*(.*?)(?=\( قطاع|\+?\d{1,4}.*\):)/); // التعرف على المرسل أو رقم الجوال
+            const senderMatch = text.match(/-\s*(.*?)\s*:\s*/); // التعرف على المرسل سواء اسم أو رقم جوال
             const dateTimeMatch = text.match(/^\d{1,2}‏\/\d{1,2}‏\/\d{4}، \d{1,2}:\d{2} [ص|م]/); // التعرف على التاريخ والوقت
             const sectorMatch = text.match(/قطاع\s*\((.*?)\)/);
             const dateMatch = text.match(/\d{4}\/\d{2}\/\d{2}|\d{2}-\d{2}-\d{4}/);
