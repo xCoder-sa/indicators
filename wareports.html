@@ -82,8 +82,16 @@
         }
         footer {
             margin-top: 30px;
-            font-size: 1em;
-            color: #555;
+            font-size: 0.8em;
+            color: red;
+            text-shadow: 1px 1px 2px #000;
+        }
+        footer a {
+            color: #2196F3;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -120,7 +128,9 @@
     <button id="copyButton" class="hidden" onclick="copyTableData()">نسخ البيانات</button> <!-- زر النسخ -->
 
     <footer>
-        < / > Design and Development by Ali Alshahrani < / >
+        <span>&lt; / &gt; Design and Development by Ali Alshahrani &lt; / &gt;</span>
+        <br>
+        <a href="https://xcoder-sa.github.io/indicators/kpi.html">الانتقال إلى صفحة المؤشرات</a>
     </footer>
 
     <script>
@@ -146,8 +156,8 @@
 
             // فرز البيانات حسب التاريخ والوقت
             data.sort((a, b) => {
-                const dateA = new Date(a[1] + " " + a[2]);
-                const dateB = new Date(b[1] + " " + b[2]);
+                const dateA = new Date(formatDate(a[1]) + " " + formatTime(a[2]));
+                const dateB = new Date(formatDate(b[1]) + " " + formatTime(b[2]));
                 return dateA - dateB;
             });
 
@@ -173,9 +183,9 @@
 
         function parseSectorData(text) {
             const sectorMatch = text.match(/قطاع\s*\((.*?)\)/);
-            const dateMatch = text.match(/\d{4}\/\d{2}\/\d{2}/);
-            const fromTimeMatch = text.match(/الساعة:\s*(\d{2}:\d{2})/);
-            const toTimeMatch = text.match(/إلى\s*(\d{2}:\d{2})/);
+            const dateMatch = text.match(/\d{4}\/\d{2}\/\d{2}|\d{2}-\d{2}-\d{4}/);
+            const fromTimeMatch = text.match(/الساعة:\s*(\d{1,2}:\d{2})/);
+            const toTimeMatch = text.match(/إلى\s*(\d{1,2}:\d{2})/);
             const teamsMatch = text.match(/عدد الفرق العاملة:\s*\(\s*\d+\s*\)/);
             const rapidTeamsMatch = text.match(/عدد فرق التدخل السريع:\s*\d+/);
             const vehiclesWorkingMatch = text.match(/عدد المركبات العاملة:\s*\d+/);
@@ -200,6 +210,21 @@
                 ];
             }
             return null;
+        }
+
+        function formatDate(date) {
+            if (date.includes("-")) {
+                const [day, month, year] = date.split("-");
+                return `${year}/${month}/${day}`;
+            }
+            return date;
+        }
+
+        function formatTime(time) {
+            if (time.startsWith("0")) {
+                return time.replace(/^0+/, '');
+            }
+            return time;
         }
 
         function copyTableData() {
