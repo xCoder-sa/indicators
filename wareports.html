@@ -139,20 +139,15 @@
         <a href="https://xcoder-sa.github.io/indicators/kpi.html">📶</a>
         <br><br>
         <span>&lt; / &gt; Design and Development by Ali Alshahrani &lt;  &gt;</span>
-        <div class="version">إصدار النسخة: 1.3.3</div> <!-- تحديث رقم الإصدار -->
+        <div class="version">إصدار النسخة: 1.3.4</div> <!-- تحديث رقم الإصدار -->
     </footer>
 
     <script>
         function processData() {
             let input = document.getElementById("dataInput").value;
 
-            // تحويل جميع أنماط التواقيت المختلفة إلى صيغة موحدة HH:MM
-            input = input.replace(/الساعة[: ]?\s*(\d{1,2})[: ]?\s*(\d{2})\s*إلى\s*(\d{1,2})[: ]?\s*(\d{2})/g, (match, h1, m1, h2, m2) => {
-                return `الساعة ${h1.padStart(2, '0')}:${m1.padStart(2, '0')} إلى ${h2.padStart(2, '0')}:${m2.padStart(2, '0')}`;
-            });
-
             // إضافة "----" قبل كل سطر يحتوي على "قطاع ("
-            input = input.replace(/(قطاع\s*\()/g, "----\n$1");
+            input = input.replace(/(\d{1,2}‏\/\d{1,2}‏\/\d{4}، \d{1,2}:\d{2} [صم])/g, "\n$1");
 
             const rows = input.split("----");
 
@@ -168,28 +163,8 @@
                 }
             });
 
-            // فرز البيانات حسب التاريخ والوقت
-            data.sort((a, b) => {
-                const dateA = new Date(formatDate(a[2]) + " " + a[3]);
-                const dateB = new Date(formatDate(b[2]) + " " + b[3]);
-                return dateA - dateB;
-            });
-
             // إنشاء الصفوف بعد الفرز
             data.forEach(sectorData => {
-                // تحقق من عدد مرات ظهور "غير متوفر" في الأعمدة المحددة
-                const columnsToCheck = [6, 7, 8, 9, 10, 11, 12];
-                let unavailableCount = 0;
-                columnsToCheck.forEach(index => {
-                    if (sectorData[index] === "غير متوفر") {
-                        unavailableCount++;
-                    }
-                });
-                // إذا كانت "غير متوفر" في أكثر من خلية، تجاهل الصف
-                if (unavailableCount > 1) {
-                    return;
-                }
-
                 const tr = document.createElement("tr");
                 sectorData.forEach(dataItem => {
                     const td = document.createElement("td");
@@ -241,10 +216,6 @@
                 ];
             }
             return null;
-        }
-
-        function formatDate(date) {
-            return date;  // لا حاجة لتغيير تنسيق التاريخ، عرضه كما هو
         }
 
         function copyTableData() {
