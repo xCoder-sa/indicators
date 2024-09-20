@@ -185,7 +185,7 @@
         function parseSectorData(text) {
             const sectorMatch = text.match(/قطاع\s*\((.*?)\)/);
             const dateMatch = text.match(/\d{4}\/\d{2}\/\d{2}|\d{2}-\d{2}-\d{4}/);
-            const fromTimeMatch = text.match(/الساعة:\s*(\d{1,2}:\d{2})/); // تعديل للتعرف على التوقيت مثل 6:00 و 06:00
+            const fromTimeMatch = text.match(/الساعة\s*(\d{1,2}:\d{2})/); // تعديل للتعرف على التوقيت مثل 6:00 و 06:00
             const toTimeMatch = text.match(/إلى\s*(\d{1,2}:\d{2})/); // نفس التعديل ليشمل جميع الصيغ
             const teamsMatch = text.match(/عدد الفرق العاملة:\s*\(\s*\d+\s*\)/);
             const rapidTeamsMatch = text.match(/عدد فرق التدخل السريع:\s*\d+/);
