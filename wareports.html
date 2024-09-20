@@ -3,120 +3,244 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مؤشرات الأداء</title>
+    <title>🤖قروب قيادات الرياض</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             direction: rtl;
             text-align: center;
+            background-color: white;
+            color: #333;
         }
-        .indicator-charts {
+        h1 {
+            color: #2196F3; /* لون أزرق */
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-shadow: 0px 0px 5px #2196F3;
+        }
+        .container {
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: center;
             justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
         }
-        canvas {
-            width: 300px;
-            height: 200px;
+        textarea {
+            width: 80%;
+            height: 150px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            border: 2px solid #2196F3;
+            padding: 10px;
+            font-size: 1em;
+            background-color: white;
+            color: #333;
+            resize: none;
+            box-shadow: 0px 0px 10px #2196F3;
         }
-        .indicator-section {
-            margin-top: 40px;
+        button {
+            background-color: #2196F3; /* لون أزرق */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+            transition: 0.3s;
+            box-shadow: 0px 0px 15px #2196F3;
+        }
+        button:hover {
+            background-color: #1976D2; /* لون أزرق داكن عند التحويم */
+            box-shadow: 0px 0px 20px #1976D2;
+        }
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0px 0px 20px #2196F3;
+        }
+        table, th, td {
+            border: 1px solid #2196F3; /* لون أزرق */
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            color: #2196F3;
+        }
+        th {
+            background-color: #2196F3;
+            color: white;
+        }
+        .instruction {
+            font-size: 1em;
+            color: #2196F3;
+            margin-bottom: 15px;
+            text-shadow: 0px 0px 5px #2196F3;
+        }
+        .hidden {
+            display: none;
+        }
+        footer {
+            margin-top: 30px;
+            font-size: 0.8em;
+            color: red;
+            text-shadow: 1px 1px 2px #000;
+        }
+        footer a {
+            color: #2196F3;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
 
-<div class="indicators">
-    <h2 class="indicator-title">مؤشرات الأداء حسب القطاع</h2>
-    <div id="indicatorCharts" class="indicator-charts">
-        <div>
-            <canvas id="chart-indicator1"></canvas>
-            <div id="value-indicator1" class="indicator-value"></div>
-        </div>
-        <div>
-            <canvas id="chart-indicator2"></canvas>
-            <div id="value-indicator2" class="indicator-value"></div>
-        </div>
-        <div>
-            <canvas id="chart-indicator3"></canvas>
-            <div id="value-indicator3" class="indicator-value"></div>
-        </div>
-        <div>
-            <canvas id="chart-indicator4"></canvas>
-            <div id="value-indicator4" class="indicator-value"></div>
-        </div>
+    <h1> برمجة الأداة للإستخدام الشخصي فقط 🐪 </h1>
+
+    <div class="container">
+        <label class="instruction">أدخل رسائل كبار المسعفين هنا:</label>
+        <textarea id="dataInput" placeholder="الصق الرسائل هنا..."></textarea>
+        <button onclick="processData()">تنظيم البيانات</button>
     </div>
-</div>
 
-<!-- إضافة مؤشرات القطاعات الأخرى أسفل الصفحة -->
-<div class="indicator-section">
-    <h2 class="indicator-title">مؤشرات القطاعات الإضافية</h2>
-    <div id="additionalIndicators" class="indicator-charts">
-        <div>
-            <canvas id="chart-indicator5"></canvas>
-            <div id="value-indicator5" class="indicator-value"></div>
-        </div>
-        <div>
-            <canvas id="chart-indicator6"></canvas>
-            <div id="value-indicator6" class="indicator-value"></div>
-        </div>
-        <div>
-            <canvas id="chart-indicator7"></canvas>
-            <div id="value-indicator7" class="indicator-value"></div>
-        </div>
-    </div>
-</div>
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>القطاع</th>
+                <th>التاريخ</th>
+                <th>من الساعة</th>
+                <th>إلى الساعة</th>
+                <th>عدد الفرق العاملة</th>
+                <th>عدد فرق التدخل السريع</th>
+                <th>عدد المركبات العاملة</th>
+                <th>عدد المركبات المتعطلة</th>
+                <th>بلاغات الدعم اللوجستي المفتوحة</th>
+                <th>عدد العاملين في التنسيق والتحكم</th>
+                <th>عدد العاملين في الدعم اللوجستي</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    // بيانات مؤشرات الأداء للقطاعات
-    const sectorData = {
-        "الوسط": [12, 19, 3, 5, 2, 3],
-        "الجنوب": [7, 11, 5, 8, 3, 7],
-        "الشمال": [9, 15, 4, 6, 8, 5],
-        "الشرق": [15, 10, 7, 2, 12, 6],
-        "الغرب": [6, 9, 13, 4, 5, 10],
-        "الشمال الغربي": [8, 10, 6, 3, 9, 4],
-        "الجنوب الشرقي": [5, 7, 8, 10, 4, 2]
-    };
+    <button id="copyButton" class="hidden" onclick="copyTableData()">نسخ البيانات</button> <!-- زر النسخ -->
 
-    // أسماء القطاعات
-    const sectors = Object.keys(sectorData);
+    <footer>
+                
+        <a href="https://xcoder-sa.github.io/indicators/kpi.html">📶</a>
+        <br><br>
+        <span>&lt; / &gt; Design and Development by Ali Alshahrani &lt;  &gt;</span>
+    </footer>
 
-    // إعداد الرسوم البيانية لكل قطاع
-    function createCharts() {
-        sectors.forEach((sector, index) => {
-            const chartId = `chart-indicator${index + 1}`;
-            const ctx = document.getElementById(chartId).getContext('2d');
-            new Chart(ctx, {
-                type: 'bar', // يمكنك تغيير النوع إلى line, pie أو أي نوع آخر
-                data: {
-                    labels: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو'],
-                    datasets: [{
-                        label: `مؤشرات الأداء لـ ${sector}`,
-                        data: sectorData[sector],
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
+    <script>
+        function processData() {
+            let input = document.getElementById("dataInput").value;
+
+            // إزالة النقطتين الرأسيتين بعد كلمة "الساعة" (الساعة:06:00) ومسافة غير مرغوبة بعد الوقت
+            input = input.replace(/الساعة:\s*(\d{1,2})\s*:\s*(\d{2})/g, 'الساعة $1:$2');
+
+            // إضافة "----" قبل كل سطر يحتوي على "قطاع ("
+            input = input.replace(/(قطاع\s*\()/g, "----\n$1");
+
+            const rows = input.split("----");
+
+            const tableBody = document.querySelector("#dataTable tbody");
+            tableBody.innerHTML = ""; // تفريغ الجدول
+
+            let data = [];
+
+            rows.forEach(row => {
+                const sectorData = parseSectorData(row);
+                if (sectorData) {
+                    data.push(sectorData);
                 }
             });
-        });
-    }
 
-    // استدعاء الرسوم البيانية عند تحميل الصفحة
-    window.onload = createCharts;
-</script>
+            // فرز البيانات حسب التاريخ والوقت
+            data.sort((a, b) => {
+                const dateA = new Date(formatDate(a[1]) + " " + formatTime(a[2]));
+                const dateB = new Date(formatDate(b[1]) + " " + formatTime(b[2]));
+                return dateA - dateB;
+            });
+
+            // إنشاء الصفوف بعد الفرز
+            data.forEach(sectorData => {
+                const tr = document.createElement("tr");
+                sectorData.forEach(dataItem => {
+                    const td = document.createElement("td");
+                    td.textContent = dataItem || "غير متوفر";
+                    tr.appendChild(td);
+                });
+                tableBody.appendChild(tr);
+            });
+
+            // إظهار زر النسخ فقط إذا كانت هناك بيانات
+            const copyButton = document.getElementById("copyButton");
+            if (data.length > 0) {
+                copyButton.classList.remove("hidden");
+            } else {
+                copyButton.classList.add("hidden");
+            }
+        }
+
+        function parseSectorData(text) {
+            const sectorMatch = text.match(/قطاع\s*\((.*?)\)/);
+            const dateMatch = text.match(/\d{4}\/\d{2}\/\d{2}|\d{2}-\d{2}-\d{4}/);
+            const fromTimeMatch = text.match(/الساعة\s*(\d{1,2}:\d{2})/); // تعديل للتعرف على التوقيت مثل 6:00 و 06:00
+            const toTimeMatch = text.match(/إلى\s*(\d{1,2}:\d{2})/); // نفس التعديل ليشمل جميع الصيغ
+            const teamsMatch = text.match(/عدد الفرق العاملة:\s*\(\s*\d+\s*\)/);
+            const rapidTeamsMatch = text.match(/عدد فرق التدخل السريع:\s*\d+/);
+            const vehiclesWorkingMatch = text.match(/عدد المركبات العاملة:\s*\d+/);
+            const vehiclesBrokenMatch = text.match(/عدد المركبات المتعطلة:\s*\d+/);
+            const logisticReportsMatch = text.match(/بلاغات الدعم اللوجستي المفتوحة\s*:\s*\d+/);
+            const controlStaffMatch = text.match(/عدد العاملين في التنسيق والتحكم\s*:\s*\d+/);
+            const logisticStaffMatch = text.match(/عدد العاملين في الدعم اللوجستي\s*:\s*\d+/);
+
+            if (sectorMatch && dateMatch) {
+                return [
+                    sectorMatch[1], 
+                    dateMatch[0], 
+                    fromTimeMatch ? fromTimeMatch[1] : "غير متوفر", // تعديل هنا ليظهر الوقت الصحيح
+                    toTimeMatch ? toTimeMatch[1] : "غير متوفر",
+                    teamsMatch ? teamsMatch[0].match(/\d+/)[0] : "",
+                    rapidTeamsMatch ? rapidTeamsMatch[0].match(/\d+/)[0] : "",
+                    vehiclesWorkingMatch ? vehiclesWorkingMatch[0].match(/\d+/)[0] : "",
+                    vehiclesBrokenMatch ? vehiclesBrokenMatch[0].match(/\d+/)[0] : "",
+                    logisticReportsMatch ? logisticReportsMatch[0].match(/\d+/)[0] : "غير متوفر",
+                    controlStaffMatch ? controlStaffMatch[0].match(/\d+/)[0] : "",
+                    logisticStaffMatch ? logisticStaffMatch[0].match(/\d+/)[0] : ""
+                ];
+            }
+            return null;
+        }
+
+        function formatDate(date) {
+            if (date.includes("-")) {
+                const [day, month, year] = date.split("-");
+                return `${year}/${month}/${day}`;
+            }
+            return date;
+        }
+
+        function formatTime(time) {
+            if (time.startsWith("0")) {
+                return time.replace(/^0+/, ''); // إزالة الصفر الأول عند وجوده
+            }
+            return time; // إرجاع التوقيت كما هو عند عدم وجود صفر في البداية
+        }
+
+        function copyTableData() {
+            let table = document.querySelector("#dataTable tbody");
+            let range = document.createRange();
+            range.selectNode(table);
+            window.getSelection().removeAllRanges(); // إزالة أي تحديد سابق
+            window.getSelection().addRange(range); // تحديد محتوى الجدول
+            document.execCommand("copy"); // نسخ المحتوى
+            alert("تم نسخ البيانات بنجاح!");
+        }
+    </script>
 
 </body>
 </html>
