@@ -146,8 +146,8 @@
         function processData() {
             let input = document.getElementById("dataInput").value;
 
-            // تقسيم المدخلات بناءً على النمط
-            input = input.replace(/(\d{1,2}‏\/\d{1,2}‏\/\d{4}، \d{1,2}:\d{2} [ص|م])/g, "\n$1");
+            // إضافة "----" قبل كل سطر يحتوي على "قطاع ("
+            input = input.replace(/(\d{1,2}‏\/\d{1,2}‏\/\d{4}، \d{1,2}:\d{2} [صم])/g, "\n$1");
 
             const rows = input.split("----");
 
@@ -163,7 +163,7 @@
                 }
             });
 
-            // فرز البيانات حسب التاريخ والوقت
+            // إنشاء الصفوف بعد الفرز
             data.forEach(sectorData => {
                 const tr = document.createElement("tr");
                 sectorData.forEach(dataItem => {
@@ -189,7 +189,7 @@
             const dateTimeMatch = text.match(/(\d{1,2}‏\/\d{1,2}‏\/\d{4}، \d{1,2}:\d{2} [صم])/); // استخراج التاريخ والوقت كما هو
             const sectorMatch = text.match(/قطاع\s*\((.*?)\)/); // استخراج القطاع
             const dateMatch = text.match(/(?:\d{4}\/\d{2}\/\d{2}|\d{2}-\d{2}-\d{4})/);  // استخراج التاريخ بأي تنسيق
-            const timeMatch = text.match(/الساعة\s*(\d{2}:\d{2})\s*إلى\s*(\d{2}:\d{2})/); // استخراج التوقيت الموحد
+            const timeMatch = text.match(/الساعة[: ]?(\d{2}:\d{2})\s*إلى\s*(\d{2}:\d{2})/); // استخراج "من الساعة" و "إلى الساعة"
             const teamsMatch = text.match(/عدد الفرق العاملة[: ]*\(\s*(\d+)\s*\)/);
             const rapidTeamsMatch = text.match(/عدد فرق التدخل السريع[: ]*(\d+)/);
             const vehiclesWorkingMatch = text.match(/عدد المركبات العاملة[: ]*(\d+)/);
