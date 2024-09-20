@@ -219,6 +219,148 @@
             });
         }
 
+        // Doughnut chart for نسبة المركبات العاملة من إجمالي المركبات
+const ctxDoughnut = document.getElementById('chartDoughnut').getContext('2d');
+const doughnutChart = new Chart(ctxDoughnut, {
+    type: 'doughnut',
+    data: {
+        labels: ['مركبات عاملة', 'مركبات متعطلة'],
+        datasets: [{
+            data: [workingVehicles, totalVehicles - workingVehicles],
+            backgroundColor: ['#36a2eb', '#ff6384'],
+        }]
+    },
+    options: {
+        title: {
+            display: true,
+            text: 'نسبة المركبات العاملة من إجمالي المركبات'
+        }
+    }
+});
+// Bar chart for معدل البلاغات اللوجستية المفتوحة
+const ctxBar = document.getElementById('chartBar').getContext('2d');
+const barChart = new Chart(ctxBar, {
+    type: 'bar',
+    data: {
+        labels: ['2024/09/01', '2024/09/02', '2024/09/03', '...'], // تواريخ الأيام
+        datasets: [{
+            label: 'البلاغات اللوجستية المفتوحة',
+            data: [logisticsOpenReportDay1, logisticsOpenReportDay2, logisticsOpenReportDay3, ...],
+            backgroundColor: '#4bc0c0',
+        }]
+    },
+    options: {
+        title: {
+            display: true,
+            text: 'معدل البلاغات اللوجستية المفتوحة يوميًا'
+        },
+        scales: {
+            xAxes: [{
+                type: 'time',
+                time: {
+                    unit: 'day'
+                }
+            }],
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+
+        // Stacked bar chart for عدد الفرق العاملة وعدد فرق التدخل السريع
+const ctxStackedBar = document.getElementById('chartStackedBar').getContext('2d');
+const stackedBarChart = new Chart(ctxStackedBar, {
+    type: 'bar',
+    data: {
+        labels: ['القطاع 1', 'القطاع 2', 'القطاع 3'],
+        datasets: [{
+            label: 'فرق عاملة',
+            data: [workingTeamsSector1, workingTeamsSector2, workingTeamsSector3],
+            backgroundColor: '#ffcd56',
+        }, {
+            label: 'فرق التدخل السريع',
+            data: [rapidTeamsSector1, rapidTeamsSector2, rapidTeamsSector3],
+            backgroundColor: '#ff6384',
+        }]
+    },
+    options: {
+        title: {
+            display: true,
+            text: 'عدد الفرق العاملة وعدد فرق التدخل السريع حسب القطاع'
+        },
+        scales: {
+            xAxes: [{
+                stacked: true
+            }],
+            yAxes: [{
+                stacked: true
+            }]
+        }
+    }
+});
+
+        // Boxplot for عدد المركبات العاملة والمتعطلة (Plotly.js)
+Plotly.newPlot('chartBoxplot', [{
+    y: [workingVehiclesDay1, workingVehiclesDay2, workingVehiclesDay3],
+    type: 'box',
+    name: 'مركبات عاملة'
+}, {
+    y: [brokenVehiclesDay1, brokenVehiclesDay2, brokenVehiclesDay3],
+    type: 'box',
+    name: 'مركبات متعطلة'
+}], {
+    title: 'توزيع المركبات العاملة والمتعطلة'
+});
+
+        // Radar chart for عدد العاملين في التنسيق والتحكم وعدد العاملين في الدعم اللوجستي
+const ctxRadar = document.getElementById('chartRadar').getContext('2d');
+const radarChart = new Chart(ctxRadar, {
+    type: 'radar',
+    data: {
+        labels: ['تنسيق وتحكم', 'دعم لوجستي'],
+        datasets: [{
+            label: 'القطاع 1',
+            data: [coordinationStaffSector1, logisticsStaffSector1],
+            backgroundColor: 'rgba(179,181,198,0.2)',
+            borderColor: 'rgba(179,181,198,1)',
+        }, {
+            label: 'القطاع 2',
+            data: [coordinationStaffSector2, logisticsStaffSector2],
+            backgroundColor: 'rgba(255,99,132,0.2)',
+            borderColor: 'rgba(255,99,132,1)',
+        }]
+    },
+    options: {
+        title: {
+            display: true,
+            text: 'عدد العاملين في التنسيق والتحكم وعدد العاملين في الدعم اللوجستي'
+        }
+    }
+});
+
+        // Heatmap for عدد البلاغات اللوجستية المفتوحة على مدار الأيام
+const data = {
+    labels: ['2024/09/01', '2024/09/02', '2024/09/03', '...'],
+    datasets: [{
+        data: [
+            {x: '2024/09/01', y: 'قطاع 1', value: logisticsOpenReportDay1Sector1},
+            {x: '2024/09/02', y: 'قطاع 1', value: logisticsOpenReportDay2Sector1},
+            ...
+        ],
+        backgroundColor: (context) => {
+            const value = context.dataset.data[context.dataIndex].value;
+            return value > 10 ? '#ff0000' : '#00ff00'; // التدرج اللوني حسب عدد البلاغات
+        }
+    }]
+};
+
+// استخدم مكتبة مثل d3 أو Chart.js مع plugin لدعم الرسوم الحرارية
+
+
         // تحديث الرسوم البيانية عند تغيير المؤشر أو التاريخ
         document.getElementById('indicatorFilter').addEventListener('change', generateCharts);
         document.getElementById('startDate').addEventListener('change', generateCharts);
