@@ -210,9 +210,9 @@
 
         function parseSectorData(text) {
             // تحسين استخراج المرسل
-            const senderMatch = text.match(/^(.*?)\s*-\s*/); // التعرف على المرسل في بداية النص
+            const senderMatch = text.match(/^(.*?)(?=\s*-\s*)/); // التعرف على المرسل
             // تحسين استخراج تاريخ ووقت الإرسال
-            const dateTimeMatch = text.match(/(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}[، ,]\s*\d{1,2}:\d{2}\s*[صم])/);
+            const dateTimeMatch = text.match(/(\d{1,2}\/\d{1,2}\/\d{4}\s*[، ]\s*\d{1,2}:\d{2}\s*(?:ص|م))/);
             const sectorMatch = text.match(/قطاع\s*\((.*?)\)/);
             const dateMatch = text.match(/(\d{4}[\/\-]\d{1,2}[\/\-]\d{1,2}|\d{1,2}[\/\-]\d{1,2}[\/\-]\d{4})/);
             const timeMatch = text.match(/الساعة\s*(\d{2}:\d{2})\s*إلى\s*(\d{2}:\d{2})/); // استخراج التوقيت الموحد
@@ -226,7 +226,7 @@
 
             if (sectorMatch && dateMatch) {
                 return [
-                    senderMatch ? senderMatch[1].trim() : "غير معروف",  // المرسل
+                    senderMatch ? senderMatch[0].trim() : "غير معروف",  // المرسل
                     dateTimeMatch ? dateTimeMatch[0].trim() : "غير متوفر", // تاريخ ووقت الإرسال
                     sectorMatch[1],
                     dateMatch[1],
