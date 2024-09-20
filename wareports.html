@@ -146,15 +146,8 @@
         function processData() {
             let input = document.getElementById("dataInput").value;
 
-            // تحويل جميع أنماط التواقيت المختلفة إلى صيغة موحدة HH:MM
-            input = input.replace(/الساعة[: ]?\s*(\d{1,2})[: ]?\s*(\d{2})\s*إلى\s*(\d{1,2})[: ]?\s*(\d{2})/g, (match, h1, m1, h2, m2) => {
-                return `الساعة ${h1.padStart(2, '0')}:${m1.padStart(2, '0')} إلى ${h2.padStart(2, '0')}:${m2.padStart(2, '0')}`;
-            });
-
-            // إضافة "----" قبل كل سطر يحتوي على "قطاع ("
-            input = input.replace(/(قطاع\s*\()/g, "----\n$1");
-
-            const rows = input.split("----");
+            // تقسيم النص بناءً على "قطاع"
+            const rows = input.split(/(?:قطاع\s*\(.*?\))/g);
 
             const tableBody = document.querySelector("#dataTable tbody");
             tableBody.innerHTML = ""; // تفريغ الجدول
@@ -227,17 +220,17 @@
                 return [
                     senderMatch ? senderMatch[1].trim() : "غير معروف",  // المرسل
                     dateTimeMatch ? dateTimeMatch[1].trim() : "غير متوفر", // تاريخ ووقت الإرسال
-                    sectorMatch[1],
-                    dateMatch[0],
-                    timeMatch ? timeMatch[1] : "غير متوفر",
-                    timeMatch ? timeMatch[2] : "غير متوفر",
-                    teamsMatch ? teamsMatch[1] : "غير متوفر",
-                    rapidTeamsMatch ? rapidTeamsMatch[1] : "غير متوفر",
-                    vehiclesWorkingMatch ? vehiclesWorkingMatch[1] : "غير متوفر",
-                    vehiclesBrokenMatch ? vehiclesBrokenMatch[1] : "غير متوفر",
-                    logisticReportsMatch ? logisticReportsMatch[1] : "0",
-                    controlStaffMatch ? controlStaffMatch[1] : "غير متوفر",
-                    logisticStaffMatch ? logisticStaffMatch[1] : "غير متوفر"
+                    sectorMatch ? sectorMatch[1].trim() : "غير متوفر", // استخراج القطاع
+                    dateMatch ? dateMatch[0].trim() : "غير متوفر", // التاريخ
+                    timeMatch ? timeMatch[1] : "غير متوفر", // من الساعة
+                    timeMatch ? timeMatch[2] : "غير متوفر", // إلى الساعة
+                    teamsMatch ? teamsMatch[1] : "غير متوفر", // عدد الفرق العاملة
+                    rapidTeamsMatch ? rapidTeamsMatch[1] : "غير متوفر", // عدد فرق التدخل السريع
+                    vehiclesWorkingMatch ? vehiclesWorkingMatch[1] : "غير متوفر", // عدد المركبات العاملة
+                    vehiclesBrokenMatch ? vehiclesBrokenMatch[1] : "غير متوفر", // عدد المركبات المتعطلة
+                    logisticReportsMatch ? logisticReportsMatch[1] : "0", // بلاغات الدعم اللوجستي المفتوحة
+                    controlStaffMatch ? controlStaffMatch[1] : "غير متوفر", // عدد العاملين في التنسيق والتحكم
+                    logisticStaffMatch ? logisticStaffMatch[1] : "غير متوفر" // عدد العاملين في الدعم اللوجستي
                 ];
             }
             return null;
