@@ -118,27 +118,14 @@
                 <th>التاريخ</th>
                 <th>من الساعة</th>
                 <th>إلى الساعة</th>
-                <th colspan="2">عدد الفرق العاملة</th> <!-- تقسيم العمود إلى فرعين -->
+                <th>من</th> <!-- الفرع الأول -->
+                <th>أصل</th> <!-- الفرع الثاني -->
                 <th>عدد فرق التدخل السريع</th>
                 <th>عدد المركبات العاملة</th>
                 <th>عدد المركبات المتعطلة</th>
                 <th>بلاغات الدعم اللوجستي المفتوحة</th>
                 <th>عدد العاملين في التنسيق والتحكم</th>
                 <th>عدد العاملين في الدعم اللوجستي</th>
-            </tr>
-            <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th>من</th> <!-- الفرع الأول -->
-                <th>إلى</th> <!-- الفرع الثاني -->
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -151,7 +138,7 @@
         <a href="https://xcoder-sa.github.io/indicators/kpi.html">📶</a>
         <br><br>
         <span>&lt; / &gt; Design and Development by Ali Alshahrani &lt;  &gt;</span>
-        <div class="version">إصدار النسخة: 1.3.8</div> <!-- تحديث رقم الإصدار -->
+        <div class="version">إصدار النسخة: 1.3.9</div> <!-- تحديث رقم الإصدار -->
     </footer>
 
     <script>
@@ -285,15 +272,17 @@
             return date;
         }
 
+        // تعديل وظيفة نسخ الجدول لتجاهل الهيدر ونسخ فقط البيانات
         function copyTableData() {
-            let table = document.querySelector("#dataTable");
-            let range = document.createRange();
-            range.selectNode(table);
-            window.getSelection().removeAllRanges(); // إزالة أي تحديد سابق
-            window.getSelection().addRange(range); // تحديد محتوى الجدول
+            const table = document.querySelector("#dataTable tbody"); // نسخ الجسم فقط بدون الهيدر
+            const range = document.createRange();
+            range.selectNodeContents(table); // تحديد المحتوى من الجدول بدون الهيدر
+            const selection = window.getSelection();
+            selection.removeAllRanges(); // إزالة أي تحديد سابق
+            selection.addRange(range); // تحديد المحتوى الجديد
             document.execCommand("copy"); // نسخ المحتوى
-            window.getSelection().removeAllRanges(); // إلغاء التحديد بعد النسخ
-            alert("تم نسخ البيانات بنجاح!");
+            selection.removeAllRanges(); // إزالة التحديد بعد النسخ
+            alert("تم نسخ البيانات بنجاح!"); // رسالة تأكيد
         }
     </script>
 
