@@ -151,7 +151,7 @@
         <a href="https://xcoder-sa.github.io/indicators/kpi.html">📶</a>
         <br><br>
         <span>&lt; / &gt; Design and Development by Ali Alshahrani &lt;  &gt;</span>
-        <div class="version">إصدار النسخة: 1.3.7</div> <!-- تحديث رقم الإصدار -->
+        <div class="version">إصدار النسخة: 1.3.8</div> <!-- تحديث رقم الإصدار -->
     </footer>
 
     <script>
@@ -198,7 +198,7 @@
                     }
                 });
                 // إذا كانت "غير متوفر" في أكثر من خلية، تجاهل الصف
-                if (unavailableCount > 1) {
+                if (unavailableCount > 1 || sectorData[0] === "المشغولة والمتاحة") {
                     return;
                 }
 
@@ -221,8 +221,21 @@
         }
 
         function parseSectorData(text) {
+            // قائمة القطاعات المسموح بها
+            const validSectors = ["الجنوب", "الغرب", "الشرق", "الوسط", "الشمال"];
+            
             // تحسين استخراج المرسل والتاريخ والوقت
-            const sectorMatch = text.match(/قطاع\s*\((.*?)\)|[*]قطاع\s*(.*?)\s*[*]/); // استخراج القطاع
+            let sectorMatch = text.match(/قطاع\s*\((.*?)\)|[*]قطاع\s*(.*?)\s*[*]/); // استخراج القطاع
+            if (sectorMatch) {
+                let sectorName = sectorMatch[1] || sectorMatch[2];
+                // إزالة أي رموز أو مسافات زائدة من اسم القطاع
+                sectorName = sectorName.replace(/[^\p{L}\p{N}\s]/gu, '').trim();
+                // التحقق من صحة اسم القطاع
+                if (!validSectors.includes(sectorName)) {
+                    return null; // تجاهل الصف إذا كان القطاع غير صحيح
+                }
+            }
+
             const dateMatch = text.match(/\d{4}\/\d{2}\/\d{2}|\d{2}-\d{2}-\d{4}/);
             const timeMatch = text.match(/الساعة\s*(\d{2}:\d{2})\s*(?:إلى|الى|:|[-*])[: ]?\s*(\d{2}:\d{2})/); // استخراج التوقيت الموحد مع كافة الأنماط
             // استخراج عدد الفرق العاملة وفصل القيم في "من" و"إلى"
@@ -236,12 +249,14 @@
             const logisticStaffMatch = text.match(/عدد العاملين في الدعم اللوجستي[: ]*(\d+)/);
 
             if (sectorMatch && dateMatch) {
-                // استخراج الأرقام من عمود "عدد الفرق العاملة"
+                let sectorName = sectorMatch[1] || sectorMatch[2];
+                sectorName = sectorName.replace(/[^\p{L}\p{N}\s]/gu, '').trim(); // تنظيف اسم القطاع
+
                 const teamsFrom = teamsMatch ? teamsMatch[1] : "غير متوفر";
                 const teamsTo = teamsMatch ? teamsMatch[2] : "غير متوفر";
 
                 return [
-                    sectorMatch[1] || sectorMatch[2],  // يتعرف على القطاع سواء داخل أقواس أو بين نجوم
+                    sectorName,  // اسم القطاع
                     dateMatch[0],
                     timeMatch ? timeMatch[1] : "غير متوفر",
                     timeMatch ? timeMatch[2] : "غير متوفر",
