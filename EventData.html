@@ -13,7 +13,7 @@
             color: #333;
         }
         h1 {
-            color: #2196F3; /* لون أزرق */
+            color: #2196F3;
             font-size: 3em;
             margin-bottom: 10px;
             text-shadow: 0px 0px 5px #2196F3;
@@ -38,7 +38,7 @@
             box-shadow: 0px 0px 10px #2196F3;
         }
         button {
-            background-color: #2196F3; /* لون أزرق */
+            background-color: #2196F3;
             color: white;
             border: none;
             padding: 10px 20px;
@@ -50,7 +50,7 @@
             box-shadow: 0px 0px 15px #2196F3;
         }
         button:hover {
-            background-color: #1976D2; /* لون أزرق داكن عند التحويم */
+            background-color: #1976D2;
             box-shadow: 0px 0px 20px #1976D2;
         }
         table {
@@ -60,7 +60,7 @@
             box-shadow: 0px 0px 20px #2196F3;
         }
         table, th, td {
-            border: 1px solid #2196F3; /* لون أزرق */
+            border: 1px solid #2196F3;
         }
         th, td {
             padding: 10px;
@@ -101,7 +101,6 @@
         <thead>
             <tr>
                 <th>نوع الحدث</th>
-                <th>رمز الحالة</th>
                 <th>أرقام البلاغات</th>
                 <th>القطاع</th>
                 <th>تاريخ الحدث</th>
@@ -110,7 +109,6 @@
                 <th>انتهاء الحدث</th>
                 <th>إيجاز الوضع الراهن أثناء ورود البلاغ</th>
                 <th>عدد البلاغات المفتوحة</th>
-                <th>عدد الفرق لكامل القطاع</th>
                 <th>عدد الفرق المشاركة</th>
                 <th>عدد وأنواع الآليات المشاركة</th>
                 <th>فرق الهلال الأحمر</th>
@@ -122,6 +120,7 @@
                 <th>إبلاغ العمليات المركزية</th>
                 <th>إبلاغ العمليات المشتركة</th>
                 <th>انتهاء الحدث بالموقع</th>
+                <th>نسبة الإشغال في القطاع أثناء الحدث</th>
                 <th>أسماء المسؤولين</th>
             </tr>
         </thead>
@@ -129,7 +128,7 @@
         </tbody>
     </table>
 
-    <button id="copyButton" class="hidden" onclick="copyTableData()">نسخ البيانات</button> <!-- زر النسخ -->
+    <button id="copyButton" class="hidden" onclick="copyTableData()">نسخ البيانات</button> 
 
     <footer>
         Design and Development by Ali Alshahrani
@@ -145,7 +144,7 @@
             const rows = input.split("----");
 
             const tableBody = document.querySelector("#dataTable tbody");
-            tableBody.innerHTML = ""; // تفريغ الجدول
+            tableBody.innerHTML = ""; 
 
             rows.forEach(row => {
                 const eventData = parseEventData(row);
@@ -160,7 +159,6 @@
                 }
             });
 
-            // إظهار زر النسخ فقط إذا كانت هناك بيانات
             const copyButton = document.getElementById("copyButton");
             if (tableBody.children.length > 0) {
                 copyButton.classList.remove("hidden");
@@ -176,22 +174,19 @@
             const eventTypeMatch = text.match(/\*حدث جسيم\*/);
             data.push(eventTypeMatch ? "حادث جسيم" : null);
 
-            // استخراج رمز الحالة
-            const caseCodeMatch = text.match(/رمز الحالة\s*:\s*(\d+)/);
-            data.push(caseCodeMatch ? caseCodeMatch[1] : null);
-
             // استخراج رقم البلاغ
-            const reportNumbersMatch = text.match(/(ارقام البلاغات\s*:\s*|رقم البلاغ\s*:\s*)(\d+)/);
-            data.push(reportNumbersMatch ? reportNumbersMatch[2] : null);
+            const reportNumbersMatch = text.match(/ارقام البلاغات\s*:\s*(\d+)/);
+            data.push(reportNumbersMatch ? reportNumbersMatch[1] : null);
 
             // استخراج القطاع
             const sectorMatch = text.match(/القطاع\s*:\s*(.*)/);
             data.push(sectorMatch ? sectorMatch[1] : null);
 
-            // استخراج الوقت والتاريخ
-            const dateTimeMatch = text.match(/(\d{4}\/\d{2}\/\d{2})|(\d{2}\/\d{2}\/\d{4})|(\d{2}-\d{2}-\d{4})/);
-            data.push(dateTimeMatch ? dateTimeMatch[0] : null);
+            // استخراج التاريخ
+            const dateMatch = text.match(/(\d{4}\/\d{2}\/\d{2})|(\d{2}-\d{2}-\d{4})/);
+            data.push(dateMatch ? dateMatch[0] : null);
 
+            // استخراج الوقت
             const timeMatch = text.match(/(\d{2}:\d{2})/);
             data.push(timeMatch ? timeMatch[0] : null);
 
@@ -204,16 +199,12 @@
             data.push(endTimeMatch ? endTimeMatch[1] : null);
 
             // استخراج إيجاز الوضع الراهن
-            const currentSituationMatch = text.match(/ملخص الموقف\s*:\s*(.*)|ايجاز الوضع الراهن\s*:\s*(.*)/);
-            data.push(currentSituationMatch ? currentSituationMatch[1] || currentSituationMatch[2] : null);
+            const currentSituationMatch = text.match(/ايجاز الوضع الراهن\s*:\s*(.*)/);
+            data.push(currentSituationMatch ? currentSituationMatch[1] : null);
 
             // استخراج عدد البلاغات المفتوحة
             const openReportsMatch = text.match(/عدد البلاغات المفتوحة\s*:\s*(\d+)/);
             data.push(openReportsMatch ? openReportsMatch[1] : null);
-
-            // استخراج عدد الفرق لكامل القطاع
-            const totalTeamsMatch = text.match(/عدد الفرق لكامل القطاع\s*:\s*(\d+)/);
-            data.push(totalTeamsMatch ? totalTeamsMatch[1] : null);
 
             // استخراج عدد الفرق المشاركة
             const participatingTeamsMatch = text.match(/عدد الوحدات المشاركة\s*:\s*(\d+)/);
@@ -236,14 +227,14 @@
             data.push(firstTeamArrivalMatch ? firstTeamArrivalMatch[1] : null);
 
             // استخراج إجمالي المرضى
-            const totalPatientsMatch = text.match(/اجمالي المرضى\s*:\s*(\d+)/);
-            data.push(totalPatientsMatch ? totalPatientsMatch[1] : null);
+            const totalPatientsMatch = text.match(/اجمالي (الاصابات|المرضى)\s*:\s*(\d+)/);
+            data.push(totalPatientsMatch ? totalPatientsMatch[2] : null);
 
             // استخراج فرز المرضى حسب نظام فرز الكوارث
             const criticalPatientsMatch = text.match(/حرجة\s*:\s*(\d+)/);
             const mediumPatientsMatch = text.match(/متوسطة\s*:\s*(\d+)/);
-            const mildPatientsMatch = text.match(/طفيفة\s*:\s*(\d+)/);
-            const triage = `حرجة: ${criticalPatientsMatch ? criticalPatientsMatch[1] : 0}, متوسطة: ${mediumPatientsMatch ? mediumPatientsMatch[1] : 0}, طفيفة: ${mildPatientsMatch ? mildPatientsMatch[1] : 0}`;
+            const minorPatientsMatch = text.match(/طفيفة\s*:\s*(\d+)/);
+            const triage = `حرجة: ${criticalPatientsMatch ? criticalPatientsMatch[1] : 0}, متوسطة: ${mediumPatientsMatch ? mediumPatientsMatch[1] : 0}, طفيفة: ${minorPatientsMatch ? minorPatientsMatch[1] : 0}`;
             data.push(triage);
 
             // استخراج المستشفيات التي تم التوجيه لها
@@ -263,7 +254,7 @@
             data.push(eventEndMatch ? eventEndMatch[1] : null);
 
             // استخراج أسماء المسؤولين
-            const responsibleNamesMatch = text.match(/اسماء المسؤولين\s*:\s*(.*)/);
+            const responsibleNamesMatch = text.match(/أسماء المسؤولين\s*:\s*(.*)/);
             data.push(responsibleNamesMatch ? responsibleNamesMatch[1] : null);
 
             // إعادة البيانات فقط إذا كانت تحتوي على معلومات مهمة
@@ -277,9 +268,9 @@
             let table = document.querySelector("#dataTable tbody");
             let range = document.createRange();
             range.selectNode(table);
-            window.getSelection().removeAllRanges(); // إزالة أي تحديد سابق
-            window.getSelection().addRange(range); // تحديد محتوى الجدول
-            document.execCommand("copy"); // نسخ المحتوى
+            window.getSelection().removeAllRanges(); 
+            window.getSelection().addRange(range); 
+            document.execCommand("copy"); 
             alert("تم نسخ البيانات بنجاح!");
         }
     </script>
