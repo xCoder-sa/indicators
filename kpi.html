@@ -50,8 +50,13 @@
             text-align: right;
         }
         /* تنسيق النصوص */
-        h4 {
+        h4.section-title {
             text-align: center;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-bottom: 30px;
         }
         /* تنسيق الفروقات */
         #difference {
@@ -106,7 +111,7 @@
             <hr>
 
             <!-- القسم الخاص بعدد الإرسال في قروب الواتساب -->
-            <h4 class="text-center mb-4">عدد الإرسال في قروب الواتساب</h4>
+            <h4 class="section-title">عدد الإرسال في قروب الواتساب</h4>
             <div class="row text-center">
                 <!-- تبديل أماكن اليوم والمجموع الشهري -->
                 <div class="col-md-6 col-6 indicator">
@@ -125,7 +130,7 @@
             <hr>
 
             <!-- القسم الخاص بإحصائية شهرية للمركبات العطلانة مقابل فتح عدد طلبات الصيانة -->
-            <h4 class="text-center mb-4">إحصائية شهرية للمركبات العطلانة مقابل فتح عدد طلبات الصيانة</h4>
+            <h4 class="section-title">إحصائية شهرية للمركبات العطلانة مقابل فتح عدد طلبات الصيانة</h4>
             <div class="row text-center">
                 <div class="col-md-6 col-12 indicator">
                     <i class="fas fa-car-crash"></i>
@@ -148,7 +153,7 @@
             </div>
 
             <!-- شرائط التقدم لعرض النسب المئوية -->
-            <h4 class="mt-4">نسبة الفرق والمركبات العاملة</h4>
+            <h4 class="section-title mt-4">نسبة الفرق والمركبات العاملة</h4>
             <div class="progress-text">الفرق العاملة: <span id="teamsPercentageText">0</span>%</div>
             <div class="progress mb-3">
                 <div id="teamsProgress" class="progress-bar" role="progressbar"></div>
@@ -167,7 +172,7 @@
 
 <!-- إضافة الفوتر -->
 <footer>
-    <div class="version">إصدار النسخة: 1.5.0</div>
+    <div class="version">إصدار النسخة: 1.6.1</div>
     <span>&lt; / &gt; Design and Development by Ali Alshahrani &lt; &gt;</span>
 </footer>
 
