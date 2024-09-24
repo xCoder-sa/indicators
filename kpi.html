@@ -1,219 +1,393 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <title>خريطة تفاعلية لقطاعات الرياض</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إحصائيات الإدخالات اليومية - الإصدار 1.3</title>
-    <!-- تحميل مكتبة Chart.js وGauge plugin -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-gauge@0.1.8/dist/chartjs-gauge.min.js"></script>
+    <!-- روابط Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- رابط Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <!-- رابط Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            direction: rtl;
+            text-align: right;
         }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 24px;
-            color: #333;
-        }
-
-        .dashboard {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            margin-bottom: 40px;
-        }
-
-        .card {
-            width: 180px;
-            height: 240px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            margin: 10px;
-            text-align: center;
-            padding: 20px 10px;
-            position: relative;
-        }
-
-        .card h2 {
-            margin: 0;
-            font-size: 16px;
-            color: #666;
-        }
-
-        .stars {
-            display: inline-block;
-            position: relative;
-            font-size: 24px;
-            margin-top: 10px;
-        }
-
-        .stars::before {
-            content: '★★★★★';
-            letter-spacing: 3px;
-            background: linear-gradient(90deg, #FFD700 calc(var(--rating) * 100%), #ccc calc(var(--rating) * 100%));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: inline-block;
-        }
-
-        .circle-number {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: 6px solid #f5f5f5;
-            background: conic-gradient(#4caf50 calc(var(--rating) * 100%), #ddd calc(var(--rating) * 100%));
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 20px;
-            font-weight: bold;
-            color: #2c3e50;
-            margin-top: 10px;
-        }
-
-        .gauge-container {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            margin-bottom: 40px;
-        }
-
-        .gauge-box {
-            width: 200px;
-            margin: 20px;
-        }
-
-        canvas {
+        #map {
+            height: 600px;
             width: 100%;
-            height: 150px;
         }
-
+        .leaflet-grid-lines {
+            display: none;
+        }
+        /* تنسيق خاص بالبطاقات */
+        .card {
+            margin-top: 20px;
+        }
+        .card-header {
+            text-align: center;
+        }
+        .indicator {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .indicator i {
+            font-size: 48px;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+        .indicator h5 {
+            margin-top: 10px;
+        }
+        .progress {
+            height: 20px;
+        }
+        .progress-text {
+            margin-bottom: 5px;
+            font-weight: bold;
+            text-align: right;
+        }
+        /* تنسيق النصوص */
+        h4 {
+            text-align: center;
+        }
+        /* تنسيق الفروقات */
+        #difference {
+            font-size: 24px;
+        }
+        /* تنسيق الفوتر */
         footer {
-            margin-top: 50px;
+            margin-top: 20px;
             text-align: center;
             font-size: 14px;
-            color: #666;
+            color: #888;
         }
     </style>
 </head>
 <body>
 
-<h1>عدد الإدخالات اليومية</h1>
+<div class="container mt-4">
+    <h1 class="text-center mb-4">خريطة تفاعلية لقطاعات الرياض</h1>
+    <div id="map"></div>
 
-<div class="dashboard">
-    <div class="card">
-        <div class="circle-number" style="--rating: calc(2 / 5);">2</div>
-        <h2>الغرب</h2>
-        <div class="stars" style="--rating: calc(2 / 5);"></div>
-    </div>
-    <div class="card">
-        <div class="circle-number" style="--rating: calc(2 / 5);">2</div>
-        <h2>الجنوب</h2>
-        <div class="stars" style="--rating: calc(2 / 5);"></div>
-    </div>
-    <div class="card">
-        <div class="circle-number" style="--rating: calc(1 / 5);">1</div>
-        <h2>الشمال</h2>
-        <div class="stars" style="--rating: calc(1 / 5);"></div>
-    </div>
-    <div class="card">
-        <div class="circle-number" style="--rating: calc(3 / 5);">3</div>
-        <h2>الشرق</h2>
-        <div class="stars" style="--rating: calc(3 / 5);"></div>
-    </div>
-    <div class="card">
-        <div class="circle-number" style="--rating: calc(2 / 5);">2</div>
-        <h2>الوسط</h2>
-        <div class="stars" style="--rating: calc(2 / 5);"></div>
+    <div class="card mt-4" id="sectorInfo" style="display: none;">
+        <div class="card-header bg-primary text-white">
+            <h3 class="card-title" id="sectorName"></h3>
+        </div>
+        <div class="card-body">
+            <!-- القسم الأول من المؤشرات -->
+            <div class="row text-center">
+                <!-- إعادة ترتيب المؤشرات حسب المطلوب -->
+                <div class="col-md-3 col-6 indicator">
+                    <i class="fas fa-users"></i>
+                    <h5>متوسط عدد الفرق العاملة</h5>
+                    <p id="teams" class="display-4">0</p>
+                </div>
+                <div class="col-md-3 col-6 indicator">
+                    <i class="fas fa-car"></i>
+                    <h5>متوسط عدد المركبات العاملة</h5>
+                    <p id="cars" class="display-4">0</p>
+                </div>
+                <div class="col-md-3 col-6 indicator">
+                    <i class="fas fa-tools"></i>
+                    <h5>متوسط عدد المركبات المتعطلة</h5>
+                    <p id="brokenCars" class="display-4">0</p>
+                </div>
+                <div class="col-md-3 col-6 indicator">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h5>متوسط عدد بلاغات الأعطال</h5>
+                    <p id="reports" class="display-4">0</p>
+                </div>
+            </div>
+
+            <!-- فصل بين الأقسام -->
+            <hr>
+
+            <!-- القسم الخاص بعدد الإرسال في قروب الواتساب -->
+            <h4 class="text-center mb-4">عدد الإرسال في قروب الواتساب</h4>
+            <div class="row text-center">
+                <!-- تبديل أماكن اليوم والمجموع الشهري -->
+                <div class="col-md-6 col-6 indicator">
+                    <i class="fas fa-envelope"></i>
+                    <h5>اليوم</h5>
+                    <p id="whatsappToday" class="display-4">0</p>
+                </div>
+                <div class="col-md-6 col-6 indicator">
+                    <i class="fas fa-chart-bar"></i>
+                    <h5>المجموع الشهري</h5>
+                    <p id="whatsappMonthly" class="display-4">0</p>
+                </div>
+            </div>
+
+            <!-- فصل بين الأقسام -->
+            <hr>
+
+            <!-- القسم الخاص بإحصائية شهرية للمركبات العطلانة مقابل فتح عدد طلبات الصيانة -->
+            <h4 class="text-center mb-4">إحصائية شهرية للمركبات العطلانة مقابل فتح عدد طلبات الصيانة</h4>
+            <div class="row text-center">
+                <div class="col-md-6 col-12 indicator">
+                    <i class="fas fa-car-crash"></i>
+                    <h5>عدد المركبات المتعطلة</h5>
+                    <p id="monthlyBrokenCars" class="display-4">0</p>
+                </div>
+                <div class="col-md-6 col-12 indicator">
+                    <i class="fas fa-file-alt"></i>
+                    <h5>عدد البلاغات المفتوحة</h5>
+                    <p id="openReports" class="display-4">0</p>
+                </div>
+            </div>
+            <!-- إضافة الفرق في صف جديد -->
+            <div class="row text-center">
+                <div class="col-12 indicator">
+                    <i class="fas fa-balance-scale"></i>
+                    <h5>الفرق</h5>
+                    <p id="difference" class="display-5"></p>
+                </div>
+            </div>
+
+            <!-- شرائط التقدم لعرض النسب المئوية -->
+            <h4 class="mt-4">نسبة الفرق والمركبات العاملة</h4>
+            <div class="progress-text">الفرق العاملة: <span id="teamsPercentageText">0</span>%</div>
+            <div class="progress mb-3">
+                <div id="teamsProgress" class="progress-bar" role="progressbar"></div>
+            </div>
+            <div class="progress-text">المركبات العاملة: <span id="carsPercentageText">0</span>%</div>
+            <div class="progress mb-3">
+                <div id="carsProgress" class="progress-bar bg-success" role="progressbar"></div>
+            </div>
+            <div class="progress-text">المركبات المتعطلة: <span id="brokenCarsPercentageText">0</span>%</div>
+            <div class="progress mb-3">
+                <div id="brokenCarsProgress" class="progress-bar bg-danger" role="progressbar"></div>
+            </div>
+        </div>
     </div>
 </div>
 
-<h1>إحصائيات الإدخالات الشهرية</h1>
+<!-- إضافة الفوتر -->
+<footer>
+    <div class="version">إصدار النسخة: 1.5.0</div>
+    <span>&lt; / &gt; Design and Development by Ali Alshahrani &lt; &gt;</span>
+</footer>
 
-<div class="gauge-container">
-    <div class="gauge-box">
-        <h2>الغرب</h2>
-        <canvas id="gaugeWest"></canvas>
-    </div>
-    <div class="gauge-box">
-        <h2>الجنوب</h2>
-        <canvas id="gaugeSouth"></canvas>
-    </div>
-    <div class="gauge-box">
-        <h2>الشمال</h2>
-        <canvas id="gaugeNorth"></canvas>
-    </div>
-    <div class="gauge-box">
-        <h2>الشرق</h2>
-        <canvas id="gaugeEast"></canvas>
-    </div>
-    <div class="gauge-box">
-        <h2>الوسط</h2>
-        <canvas id="gaugeCentral"></canvas>
-    </div>
-</div>
+<!-- روابط المكتبات -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<!-- روابط Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- رابط Animate Number -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-animateNumber/0.0.14/jquery.animateNumber.min.js"></script>
+<!-- رابط Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
 <script>
-    // التأكد من تحميل المكتبات بشكل صحيح
-    window.addEventListener('load', function() {
-        // إنشاء رسوم المؤشرات الدائرية (gauge)
-        function createGauge(chartId, value, maxValue) {
-            const ctx = document.getElementById(chartId).getContext('2d');
-            new Chart(ctx, {
-                type: 'gauge',
-                data: {
-                    datasets: [{
-                        value: value,
-                        data: [maxValue],
-                        backgroundColor: ['#4caf50', '#f44336'],
-                        borderWidth: 2
-                    }]
-                },
-                options: {
-                    needle: {
-                        radiusPercentage: 2,
-                        widthPercentage: 3.2,
-                        lengthPercentage: 80,
-                        color: 'rgba(0, 0, 0, 1)'
-                    },
-                    valueLabel: {
-                        display: true
-                    },
-                    plugins: {
-                        datalabels: {
-                            display: false
-                        }
-                    }
-                }
-            });
-        }
+    var map = L.map('map').setView([24.7136, 46.6753], 10); // الرياض
 
-        // إنشاء مقاييس السرعة بناءً على البيانات المقدمة
-        createGauge('gaugeWest', 13, 14);  // الغرب
-        createGauge('gaugeSouth', 9, 10);  // الجنوب
-        createGauge('gaugeNorth', 11, 11); // الشمال
-        createGauge('gaugeEast', 13, 14);  // الشرق
-        createGauge('gaugeCentral', 7, 8); // الوسط
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; خرائط OpenStreetMap'
+    }).addTo(map);
+
+    // إضافة الإحداثيات لكل قطاع
+
+    // قطاع الغرب
+    var westCoords = [
+        [24.6529205, 46.3487609], [24.6232185, 46.3483896], [24.5766512, 46.3493916], [24.5082867, 46.3477804],
+        [24.4865889, 46.4241797], [24.4586906, 46.5224791], [24.4484591, 46.5646399], [24.4532443, 46.5680978],
+        [24.4561547, 46.5691522], [24.4601115, 46.5695085], [24.4653155, 46.5715793], [24.473537, 46.576067],
+        [24.4906628, 46.5864323], [24.5130964, 46.5981742], [24.5359783, 46.6135516], [24.5388701, 46.6608616],
+        [24.5606669, 46.6765643], [24.5762458, 46.6974447], [24.5871511, 46.6993843], [24.5909755, 46.7022165],
+        [24.6135187, 46.7002824], [24.6186217, 46.7023473], [24.6212527, 46.700996], [24.6343629, 46.7040526],
+        [24.6377496, 46.7033728], [24.6314621, 46.7030319], [24.6532467, 46.7033911], [24.6725347, 46.6900153],
+        [24.6775778, 46.6839201], [24.6753754, 46.6716551], [24.67473, 46.6589268], [24.6752767, 46.6484518],
+        [24.6770707, 46.6398649], [24.6802686, 46.6382726], [24.6883795, 46.6334183], [24.6943442, 46.6292951],
+        [24.7003086, 46.6253433], [24.7129654, 46.6154339], [24.7225253, 46.6041327], [24.7280456, 46.5968936],
+        [24.7022457, 46.5488154], [24.6817455, 46.4808702], [24.6749802, 46.4523695], [24.67004, 46.4402963],
+        [24.6650498, 46.4258715], [24.6593947, 46.4135509], [24.6575486, 46.400035], [24.6563312, 46.3940703],
+        [24.6578924, 46.3888117], [24.6555286, 46.381502], [24.6529205, 46.3487609]
+    ];
+    var westPolygon = L.polygon(westCoords, {color: 'brown'}).addTo(map);
+    westPolygon.on('click', function () {
+        displaySectorInfo(
+            "الغرب",
+            13, // متوسط عدد الفرق العاملة
+            14, // متوسط عدد المركبات العاملة
+            1,  // متوسط عدد المركبات المتعطلة
+            0,  // متوسط عدد بلاغات الأعطال
+            2,  // اليوم في الواتساب
+            64, // المجموع الشهري للواتساب
+            61, // عدد المركبات المتعطلة شهريًا
+            37, // عدد البلاغات المفتوحة
+            "24 عدد المركبات أعلى من فتح البلاغات" // الفرق
+        );
     });
-</script>
 
-<footer>
-    الإصدار 1.3
-</footer>
+    // قطاع الجنوب
+    var southCoords = [
+        [24.6374235, 46.7995443], [24.645149, 46.7952586], [24.6533351, 46.7916079], [24.6516631, 46.7872333],
+        [24.6483547, 46.7803542], [24.6430666, 46.7675342], [24.6404316, 46.7578039], [24.6393409, 46.7370429],
+        [24.6310285, 46.7218617], [24.6212527, 46.700996], [24.6155042, 46.7012482], [24.6053351, 46.7004999],
+        [24.5881658, 46.7029031], [24.560745, 46.6769932], [24.5371809, 46.6596699], [24.5379546, 46.6583792],
+        [24.5365421, 46.6457587], [24.5365347, 46.6384594], [24.5355901, 46.6315036], [24.5359783, 46.6135516],
+        [24.5267498, 46.6080252], [24.5039216, 46.5950353], [24.4820997, 46.5815636], [24.4484591, 46.5646399],
+        [24.4277701, 46.6281701], [24.4187692, 46.664147], [24.4078876, 46.7028653], [24.3909222, 46.7684127],
+        [24.0274324, 46.5216858], [23.9496425, 47.0270569], [24.1239769, 47.0723755], [24.2449242, 47.0139442],
+        [24.3325283, 46.9784566], [24.3708654, 46.9773934], [24.4546479, 46.9856578], [24.5462213, 46.9564379],
+        [24.6116622, 46.9360391], [24.670503, 46.9547911], [24.6704471, 46.9043573], [24.6703269, 46.8570352],
+        [24.6570662, 46.8567788], [24.6479249, 46.8484009], [24.6321182, 46.8028058], [24.6374235, 46.7995443]
+    ];
+
+    var southPolygon = L.polygon(southCoords, {color: 'blue'}).addTo(map);
+    southPolygon.on('click', function () {
+        displaySectorInfo(
+            "الجنوب",
+            10, // متوسط عدد الفرق العاملة
+            10, // متوسط عدد المركبات العاملة
+            1,  // متوسط عدد المركبات المتعطلة
+            0,  // متوسط عدد بلاغات الأعطال
+            4,  // اليوم في الواتساب
+            67, // المجموع الشهري للواتساب
+            68, // عدد المركبات المتعطلة شهريًا
+            41, // عدد البلاغات المفتوحة
+            "27 عدد المركبات أعلى من فتح البلاغات" // الفرق
+        );
+    });
+
+    // قطاع الشمال
+    var northCoords = [
+        [24.7590392, 46.6074414], [24.7531131, 46.6102953], [24.7512451, 46.6144356], [24.7520657, 46.6258219],
+        [24.7601771, 46.6455966], [24.7639997, 46.6598391], [24.7787082, 46.680757], [24.7815496, 46.6980211],
+        [24.787635, 46.7071998], [24.7898122, 46.7175063], [24.7947021, 46.7214962], [24.7982896, 46.7254885],
+        [24.8100647, 46.7534389], [24.8426146, 46.8492068], [24.8838706, 46.8816008], [24.9173389, 46.9357071],
+        [24.9479929, 46.9907678], [24.9824563, 46.8802406], [25.0105878, 46.7847968], [25.0477377, 46.7435561],
+        [25.071174, 46.7213979], [25.0562596, 46.7036735], [25.039607, 46.6640587], [25.0333868, 46.6410583],
+        [25.0204014, 46.6121521], [25.0078812, 46.5796453], [24.989893, 46.5319324], [24.9756882, 46.5016418],
+        [24.9266246, 46.5317761], [24.9116784, 46.5438329], [24.903582, 46.5426513], [24.8933055, 46.5493653],
+        [24.8851984, 46.5520477], [24.8774026, 46.5567897], [24.8636793, 46.5638695], [24.8390488, 46.5737004],
+        [24.8200261, 46.5842139], [24.8135498, 46.5853249], [24.7948102, 46.5932922], [24.7885375, 46.5957634],
+        [24.786596, 46.5979708], [24.7626494, 46.6040744], [24.7590392, 46.6074414]
+    ];
+
+    var northPolygon = L.polygon(northCoords, {color: 'orange'}).addTo(map);
+    northPolygon.on('click', function () {
+        displaySectorInfo(
+            "الشمال",
+            11, // متوسط عدد الفرق العاملة
+            11, // متوسط عدد المركبات العاملة
+            1,  // متوسط عدد المركبات المتعطلة
+            1,  // متوسط عدد بلاغات الأعطال
+            2,  // اليوم في الواتساب
+            59, // المجموع الشهري للواتساب
+            80, // عدد المركبات المتعطلة شهريًا
+            76, // عدد البلاغات المفتوحة
+            "4 عدد المركبات أعلى من فتح البلاغات" // الفرق
+        );
+    });
+
+    // قطاع الشرق
+    var eastCoords = [
+        [24.7370235, 46.7500585], [24.7337385, 46.7510693], [24.7302863, 46.7503432], [24.7293064, 46.7530095],
+        [24.724782, 46.7555033], [24.7211931, 46.756967], [24.7173769, 46.7585906], [24.7151027, 46.7608799],
+        [24.6339879, 46.8020792], [24.6465179, 46.8382335], [24.6537051, 46.8490925], [24.6658841, 46.8544594],
+        [24.6712625, 46.8539464], [24.6719866, 46.9572155], [24.7151462, 46.9664252], [24.9467296, 47.015275],
+        [24.9477869, 46.9947691], [25.0686836, 46.7168868], [24.9489285, 46.98768], [24.946038, 46.9819881],
+        [24.939946, 46.9714345], [24.9336687, 46.9619324], [24.9236582, 46.9407515], [24.908625, 46.9169152],
+        [24.893788, 46.9041871], [24.8777071, 46.8749776], [24.8663647, 46.8732545], [24.8575142, 46.8660389],
+        [24.8426146, 46.8492068], [24.8374287, 46.8330505], [24.8086596, 46.7551073], [24.8036264, 46.7424751],
+        [24.8002381, 46.734583], [24.7995369, 46.7323513], [24.7940755, 46.7235082], [24.740553, 46.749044],
+        [24.75879, 46.7388287], [24.7519976, 46.7421825], [24.7370235, 46.7500585]
+    ];
+
+    var eastPolygon = L.polygon(eastCoords, {color: 'green'}).addTo(map);
+    eastPolygon.on('click', function () {
+        displaySectorInfo(
+            "الشرق",
+            13, // متوسط عدد الفرق العاملة
+            13, // متوسط عدد المركبات العاملة
+            1,  // متوسط عدد المركبات المتعطلة
+            1,  // متوسط عدد بلاغات الأعطال
+            3,  // اليوم في الواتساب
+            62, // المجموع الشهري للواتساب
+            86, // عدد المركبات المتعطلة شهريًا
+            22, // عدد البلاغات المفتوحة
+            "64 عدد المركبات أعلى من فتح البلاغات" // الفرق
+        );
+    });
+
+    // قطاع الوسط
+    var centerCoords = [
+        [24.6206974, 46.7050889], [24.6246418, 46.7030999], [24.6205963, 46.6999236], [24.6206974, 46.7050889],
+        [24.6206974, 46.7050889], [24.6234237, 46.7059838], [24.6246418, 46.7030999], [24.6206974, 46.7050889],
+        [24.6205963, 46.6999236], [24.6234237, 46.7059838], [24.6398034, 46.7376478], [24.6413514, 46.7618423],
+        [24.6471079, 46.7762557], [24.6495171, 46.7822609], [24.6521255, 46.7878384], [24.6537976, 46.792213],
+        [24.7951646, 46.7221011], [24.7792415, 46.6906478], [24.7791707, 46.6813617], [24.7644621, 46.6604438],
+        [24.7550224, 46.6257828], [24.7529429, 46.6205614], [24.7510889, 46.6129345], [24.7411304, 46.6062653],
+        [24.7283815, 46.5981512], [24.7078481, 46.6219617], [24.6945349, 46.6311043], [24.688218, 46.6350765],
+        [24.6808092, 46.6393061], [24.6776113, 46.6408984], [24.6770457, 46.6447198], [24.67649, 46.6476176],
+        [24.6759342, 46.6516311], [24.6752706, 46.6599603], [24.6782543, 46.6873916], [24.6715668, 46.6925067],
+        [24.6650524, 46.7000557], [24.6502357, 46.7016627], [24.6343629, 46.7040526], [24.6282985, 46.703875],
+        [24.6246418, 46.7030999], [24.6212527, 46.700996], [24.6205963, 46.6999236]
+    ];
+    var centerPolygon = L.polygon(centerCoords, {color: 'yellow'}).addTo(map);
+    centerPolygon.on('click', function () {
+        displaySectorInfo(
+            "الوسط",
+            8,  // متوسط عدد الفرق العاملة
+            8,  // متوسط عدد المركبات العاملة
+            0,  // متوسط عدد المركبات المتعطلة
+            0,  // متوسط عدد بلاغات الأعطال
+            4,  // اليوم في الواتساب
+            65, // المجموع الشهري للواتساب
+            30, // عدد المركبات المتعطلة شهريًا
+            37, // عدد البلاغات المفتوحة
+            "7 عدد فتح البلاغات أعلى من عدد المركبات" // الفرق
+        );
+    });
+
+    // دالة لعرض المعلومات عند الضغط على قطاع
+    function displaySectorInfo(name, teams, cars, brokenCars, reports, whatsappToday, whatsappMonthly, monthlyBrokenCars, openReports, difference) {
+        document.getElementById('sectorName').textContent = name;
+        document.getElementById('sectorInfo').style.display = 'block';
+
+        // تحديث الأرقام مع تأثير العد التزايدي
+        animateNumber('#teams', teams);
+        animateNumber('#cars', cars);
+        animateNumber('#brokenCars', brokenCars);
+        animateNumber('#reports', reports);
+        animateNumber('#whatsappToday', whatsappToday);
+        animateNumber('#whatsappMonthly', whatsappMonthly);
+        animateNumber('#monthlyBrokenCars', monthlyBrokenCars);
+        animateNumber('#openReports', openReports);
+
+        // تحديث الفرق بحجم خط أصغر
+        document.getElementById('difference').textContent = difference;
+
+        // حساب النسب المئوية لشرائط التقدم
+        var totalTeams = 20; // يمكنك تعديل هذا الرقم بناءً على إجمالي الفرق المتاحة
+        var totalCars = 20; // يمكنك تعديل هذا الرقم بناءً على إجمالي المركبات المتاحة
+        var teamsPercentage = (teams / totalTeams) * 100;
+        var carsPercentage = (cars / totalCars) * 100;
+        var brokenCarsPercentage = (brokenCars / totalCars) * 100;
+
+        // تحديث النصوص الخاصة بالنسب المئوية
+        animateNumber('#teamsPercentageText', teamsPercentage.toFixed(0));
+        animateNumber('#carsPercentageText', carsPercentage.toFixed(0));
+        animateNumber('#brokenCarsPercentageText', brokenCarsPercentage.toFixed(0));
+
+        // تحديث شرائط التقدم مع تأثير تعبئة تفاعلي
+        animateProgressBar('#teamsProgress', teamsPercentage);
+        animateProgressBar('#carsProgress', carsPercentage);
+        animateProgressBar('#brokenCarsProgress', brokenCarsPercentage);
+    }
+
+    // دوال للمساعدة في التأثيرات التفاعلية
+    function animateNumber(selector, value) {
+        $(selector).animateNumber({ number: value }, 1500);
+    }
+
+    function animateProgressBar(selector, percentage) {
+        $(selector).css('width', '0%').animate({ width: percentage + '%' }, 1500);
+    }
+</script>
 
 </body>
 </html>
