@@ -69,7 +69,7 @@
             font-weight: bold;
             font-size: 14px;
         }
-        input[type="text"], input[type="date"], input[type="time"], textarea, select {
+        input[type="text"], input[type="date"], input[type="time"], input[type="datetime-local"], textarea, select {
             width: 100%;
             padding: 8px;
             margin: 5px 0 15px;
@@ -345,6 +345,135 @@
                     <textarea id="cad_program_notes" rows="4"></textarea>
                 </div>
 
+                <button onclick="copyForm()">نسخ وإرسال</button>
+            `;
+        } else if (formName === 'eco_reports') {
+            formHTML = `
+                <h2>نموذج بلاغات إيكو</h2>
+                <div class="form-section">
+                    <label for="report_date">التاريخ:</label>
+                    <input type="date" id="report_date">
+
+                    <label for="report_time">توقيت التقرير:</label>
+                    <input type="time" id="report_time">
+
+                    <label for="report_number">رقم البلاغ:</label>
+                    <input type="text" id="report_number">
+
+                    <label for="report_type">نوع البلاغ:</label>
+                    <input type="text" id="report_type">
+
+                    <label for="report_location">موقع البلاغ:</label>
+                    <input type="text" id="report_location">
+
+                    <label for="operational_sector">القطاع التشغيلي:</label>
+                    <input type="text" id="operational_sector">
+
+                    <label for="responding_units">الوحدات المستجيبة:</label>
+                    <input type="text" id="responding_units">
+
+                    <label for="response_time">زمن الاستجابة:</label>
+                    <input type="text" id="response_time">
+
+                    <label for="notes">ملاحظات:</label>
+                    <textarea id="notes" rows="4"></textarea>
+                </div>
+                <button onclick="copyForm()">نسخ وإرسال</button>
+            `;
+        } else if (formName === 'major_event') {
+            formHTML = `
+                <h2>نموذج حدث جسيم</h2>
+                <div class="form-section">
+                    <label for="event_numbers">أرقام البلاغات:</label>
+                    <input type="text" id="event_numbers">
+
+                    <label for="sector">القطاع:</label>
+                    <input type="text" id="sector">
+
+                    <label for="event_time">وقت وتاريخ الحدث:</label>
+                    <input type="datetime-local" id="event_time">
+
+                    <label for="event_details">تفاصيل الحدث:</label>
+                    <textarea id="event_details" rows="4"></textarea>
+
+                    <label for="assigned_units">الوحدات الموجهة:</label>
+                    <input type="text" id="assigned_units">
+
+                    <label for="open_reports">عدد البلاغات المفتوحة:</label>
+                    <input type="text" id="open_reports">
+
+                    <label for="teams_count">عدد الفرق (مشغولة + متاحة):</label>
+                    <input type="text" id="teams_count">
+
+                    <label for="participating_units">عدد الوحدات المشاركة:</label>
+                    <input type="text" id="participating_units">
+
+                    <label for="teams_types">أنواع الفرق المشاركة:</label>
+                    <input type="text" id="teams_types">
+
+                    <label for="other_agencies">جهات أخرى:</label>
+                    <input type="text" id="other_agencies">
+
+                    <label for="first_unit_arrival">وقت وصول أول فرقة:</label>
+                    <input type="text" id="first_unit_arrival">
+
+                    <label for="situation_summary">ملخص الموقف:</label>
+                    <textarea id="situation_summary" rows="4"></textarea>
+
+                    <label for="total_injuries">إجمالي المصابين:</label>
+                    <input type="text" id="total_injuries">
+
+                    <label for="injury_triage">فرز الإصابات:</label>
+                    <textarea id="injury_triage" rows="4"></textarea>
+
+                    <label for="deaths">وفيات:</label>
+                    <input type="text" id="deaths">
+
+                    <label for="directed_hospitals">المستشفيات الموجه لها:</label>
+                    <input type="text" id="directed_hospitals">
+
+                    <label for="operations_notification">إبلاغ العمليات:</label>
+                    <input type="text" id="operations_notification">
+
+                    <label for="event_end">انتهاء الحدث:</label>
+                    <input type="datetime-local" id="event_end">
+
+                    <label for="responsible_names">أسماء المسؤولين:</label>
+                    <input type="text" id="responsible_names">
+                </div>
+                <button onclick="copyForm()">نسخ وإرسال</button>
+            `;
+        } else if (formName === 'operational_failure') {
+            formHTML = `
+                <h2>نموذج فشل تشغيلي</h2>
+                <div class="form-section">
+                    <label for="report_number">رقم البلاغ:</label>
+                    <input type="text" id="report_number">
+
+                    <label for="event_start">بداية الحدث:</label>
+                    <input type="date" id="event_start">
+
+                    <label for="unit_failure">تعطل فرقة إسعافية:</label>
+                    <input type="text" id="unit_failure">
+
+                    <label for="failure_type">نوع العطل:</label>
+                    <input type="text" id="failure_type">
+
+                    <label for="report_type">نوع البلاغ:</label>
+                    <input type="text" id="report_type">
+
+                    <label for="damages">الأضرار:</label>
+                    <textarea id="damages" rows="4"></textarea>
+
+                    <label for="actions_taken">الإجراءات المتخذة:</label>
+                    <textarea id="actions_taken" rows="4"></textarea>
+
+                    <label for="service_impact">التأثير على الخدمة:</label>
+                    <textarea id="service_impact" rows="4"></textarea>
+
+                    <label for="event_end">نهاية الحدث:</label>
+                    <input type="date" id="event_end">
+                </div>
                 <button onclick="copyForm()">نسخ وإرسال</button>
             `;
         }
