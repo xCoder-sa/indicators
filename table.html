@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Table Formatter with Conditional Highlighting</title>
+    <title>Employee Table Formatter with Conditional Highlighting and F Shift</title>
     <style>
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -86,13 +86,13 @@ footer {
 
 <footer>
     Design and Development by Ali Alshahrani<br>
-    إصدار النسخة: 1.2
+    إصدار النسخة: 1.3
 </footer>
 
 <script>
-// Function to count shifts, excluding vacations (V) and only including 'D' and 'N' in the total calculation
+// Function to count shifts, now including "F" (24-hour shifts) and only counting 'D' and 'N' in total
 function countShifts(shiftArray) {
-    var shiftCounts = { D: 0, N: 0, WO: 0, V: 0, E: 0, VC: 0 };
+    var shiftCounts = { D: 0, N: 0, WO: 0, V: 0, E: 0, VC: 0, F: 0 };
     shiftArray.forEach(function(shift) {
         if (shiftCounts.hasOwnProperty(shift)) {
             shiftCounts[shift]++;
@@ -116,7 +116,7 @@ function parseHTMLSource() {
     for (var i = 1; i <= 31; i++) {
         table += "<th>" + i + "</th>";
     }
-    table += "<th>مناوبات صباحية (D)</th><th>مناوبات ليلية (N)</th><th>أيام الإجازة (WO)</th><th>إجازات (V)</th><th>مناوبات مسائية (E)</th><th>تغطية إجازات (VC)</th><th>إجمالي المناوبات (D و N فقط)</th></tr></thead><tbody>";
+    table += "<th>مناوبات صباحية (D)</th><th>مناوبات ليلية (N)</th><th>أيام الإجازة (WO)</th><th>إجازات (V)</th><th>مناوبات مسائية (E)</th><th>تغطية إجازات (VC)</th><th>مناوبات 24 ساعة (F)</th><th>إجمالي المناوبات (D و N فقط)</th></tr></thead><tbody>";
 
     rows.forEach(function(row) {
         var columns = row.querySelectorAll("td div");
@@ -150,6 +150,7 @@ function parseHTMLSource() {
         table += `<td>${counts.V}</td>`;
         table += `<td>${counts.E}</td>`;
         table += `<td>${counts.VC}</td>`;
+        table += `<td>${counts.F}</td>`;
         table += `<td class="${counts.Total < 16 ? 'highlight-total' : ''}">${counts.Total}</td>`;
         table += "</tr>";
     });
