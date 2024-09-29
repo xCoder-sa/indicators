@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استخراج الجدول من البلاغ</title>
+    <style>
+        table {
+            width: 50%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h2 style="text-align: center;">البلاغ وتفاصيل الوقت</h2>
+    <textarea id="reportText" rows="10" cols="100" style="display: block; margin: 20px auto;">سرد البلاغ
+ 19/09/2024 4:30 PM
+
+ CAD SYSTEM
+
+REMA6956، 6956 البراء بن أوس، 3952، حي الملز، الرياض 12836، السعودية
+
+...
+
+ 19/09/2024 4:43 PM
+
+ COMPANION
+
+Unit وسط 1 journey step updated to (RVAS) الوصول إلى موقع البلاغ
+    </textarea>
+
+    <button onclick="extractData()" style="display: block; margin: 20px auto;">استخراج الجدول</button>
+
+    <table id="reportTable">
+        <thead>
+            <tr>
+                <th>وقت بداية البلاغ</th>
+                <th>وقت وصول أول فرقة</th>
+                <th>المدة الزمنية بينهما</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td id="startTime"></td>
+                <td id="arrivalTime"></td>
+                <td id="timeDifference"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        function extractData() {
+            const reportText = document.getElementById('reportText').value;
+
+            // استخراج وقت بداية البلاغ
+            const startMatch = reportText.match(/(\d{2}\/\d{2}\/\d{4}\s\d{1,2}:\d{2}\s(?:AM|PM))/);
+            const startTime = startMatch ? startMatch[0] : '';
+
+            // استخراج وقت وصول أول فرقة
+            const arrivalMatch = reportText.match(/(\d{2}\/\d{2}\/\d{4}\s\d{1,2}:\d{2}\s(?:AM|PM)).*?الوصول إلى موقع البلاغ/);
+            const arrivalTime = arrivalMatch ? arrivalMatch[0] : '';
+
+            // حساب الفرق بين الوقتين
+            const timeDiff = calculateTimeDifference(startTime, arrivalTime);
+
+            // إدراج البيانات في الجدول
+            document.getElementById('startTime').textContent = startTime;
+            document.getElementById('arrivalTime').textContent = arrivalTime;
+            document.getElementById('timeDifference').textContent = timeDiff;
+        }
+
+        function calculateTimeDifference(startTime, arrivalTime) {
+            if (!startTime || !arrivalTime) return 'غير متوفر';
+
+            const startDate = new Date(startTime);
+            const arrivalDate = new Date(arrivalTime);
+
+            const diffInMs = arrivalDate - startDate;
+            const diffInMinutes = Math.floor(diffInMs / 60000);
+
+            return `${diffInMinutes} دقيقة`;
+        }
+    </script>
+
+</body>
+</html>
