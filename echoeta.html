@@ -6,7 +6,7 @@
     <title>استخراج الجدول من البلاغ</title>
     <style>
         table {
-            width: 50%;
+            width: 60%;
             margin: 20px auto;
             border-collapse: collapse;
         }
@@ -63,11 +63,11 @@ Unit وسط 1 journey step updated to (RVAS) الوصول إلى موقع الب
 
             // استخراج وقت بداية البلاغ
             const startMatch = reportText.match(/(\d{2}\/\d{2}\/\d{4}\s\d{1,2}:\d{2}\s(?:AM|PM))/);
-            const startTime = startMatch ? startMatch[0] : '';
+            const startTime = startMatch ? startMatch[0] : 'غير متوفر';
 
             // استخراج وقت وصول أول فرقة
             const arrivalMatch = reportText.match(/(\d{2}\/\d{2}\/\d{4}\s\d{1,2}:\d{2}\s(?:AM|PM)).*?الوصول إلى موقع البلاغ/);
-            const arrivalTime = arrivalMatch ? arrivalMatch[0] : '';
+            const arrivalTime = arrivalMatch ? arrivalMatch[1] : 'غير متوفر';
 
             // حساب الفرق بين الوقتين
             const timeDiff = calculateTimeDifference(startTime, arrivalTime);
@@ -79,7 +79,7 @@ Unit وسط 1 journey step updated to (RVAS) الوصول إلى موقع الب
         }
 
         function calculateTimeDifference(startTime, arrivalTime) {
-            if (!startTime || !arrivalTime) return 'غير متوفر';
+            if (startTime === 'غير متوفر' || arrivalTime === 'غير متوفر') return 'غير متوفر';
 
             const startDate = new Date(startTime);
             const arrivalDate = new Date(arrivalTime);
@@ -87,7 +87,7 @@ Unit وسط 1 journey step updated to (RVAS) الوصول إلى موقع الب
             const diffInMs = arrivalDate - startDate;
             const diffInMinutes = Math.floor(diffInMs / 60000);
 
-            return `${diffInMinutes} دقيقة`;
+            return diffInMinutes >= 0 ? `${diffInMinutes} دقيقة` : 'غير متوفر';
         }
     </script>
 
