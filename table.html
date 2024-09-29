@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Table Formatter with Futuristic Design</title>
+    <title>Employee Table Formatter with Conditional Highlighting</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             direction: rtl;
             text-align: center;
             padding: 20px;
-            background-color: #2b2b2b;
+            background-color: #ffffff;
             color: #e0e0e0;
         }
         textarea {
@@ -57,8 +57,11 @@
         td {
             font-size: 14px;
         }
-        h2 {
-            color: #bdbdbd;
+        .highlight {
+            background-color: rgba(255, 69, 0, 0.2); /* Light transparent orange */
+        }
+        .highlight-total {
+            background-color: rgba(255, 69, 0, 0.5); /* Slightly darker highlight for total cell */
         }
         footer {
             margin-top: 40px;
@@ -82,7 +85,7 @@
 
 <footer>
     Design and Development by Ali Alshahrani<br>
-    إصدار النسخة: 1.0
+    إصدار النسخة: 1.1
 </footer>
 
 <script>
@@ -106,7 +109,7 @@ function parseHTMLSource() {
     var doc = parser.parseFromString(inputText, "text/html");
     var rows = doc.querySelectorAll("tr"); // Select table rows
     
-    var table = "<table><thead><tr><th>الرقم</th><th>الاسم</th><th>الوظيفة</th>";
+    var table = "<table><thead><tr><th>الرقم</th><th>الاسم</th><th>الوظيفة</th><th>الرقم التسلسلي</th>";
 
     // Add numbered shift columns from 1 to 31
     for (var i = 1; i <= 31; i++) {
@@ -119,7 +122,10 @@ function parseHTMLSource() {
         var shifts = Array.from(columns).slice(4).map(function(col) { return col.innerText.trim(); }); // Extract shift details
         var counts = countShifts(shifts);
 
-        table += "<tr>";
+        // Check if total shifts are less than 16 to highlight row
+        var rowClass = counts.Total < 16 ? "highlight" : "";
+
+        table += `<tr class="${rowClass}">`;
         columns.forEach(function(column, index) {
             if (index < 4) {
                 table += "<td>" + column.innerText.trim() + "</td>";
@@ -136,14 +142,14 @@ function parseHTMLSource() {
             table += "<td></td>";
         }
 
-        // Add statistics columns
-        table += "<td>" + counts.D + "</td>";
-        table += "<td>" + counts.N + "</td>";
-        table += "<td>" + counts.WO + "</td>";
-        table += "<td>" + counts.V + "</td>";
-        table += "<td>" + counts.E + "</td>";
-        table += "<td>" + counts.VC + "</td>";
-        table += "<td>" + counts.Total + "</td>";
+        // Add statistics columns and highlight total if less than 16
+        table += `<td>${counts.D}</td>`;
+        table += `<td>${counts.N}</td>`;
+        table += `<td>${counts.WO}</td>`;
+        table += `<td>${counts.V}</td>`;
+        table += `<td>${counts.E}</td>`;
+        table += `<td>${counts.VC}</td>`;
+        table += `<td class="${counts.Total < 16 ? 'highlight-total' : ''}">${counts.Total}</td>`;
         table += "</tr>";
     });
 
