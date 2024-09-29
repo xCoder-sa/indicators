@@ -5,72 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Table Formatter with Conditional Highlighting</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            direction: rtl;
-            text-align: center;
-            padding: 20px;
-            background-color: #ffffff;
-            color: #e0e0e0;
-        }
-        textarea {
-            width: 100%;
-            height: 200px;
-            margin-bottom: 20px;
-            padding: 10px;
-            font-size: 16px;
-            background-color: #333;
-            color: #e0e0e0;
-            border: 1px solid #555;
-        }
-        button {
-            padding: 12px 24px;
-            font-size: 18px;
-            background-color: #009688;
-            color: white;
-            border: none;
-            cursor: pointer;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            transition: background-color 0.3s ease;
-        }
-        button:hover {
-            background-color: #00796b;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background-color: #424242;
-            color: white;
-        }
-        th, td {
-            border: 1px solid #555;
-            padding: 12px;
-            text-align: center;
-        }
-        th {
-            background-color: #616161;
-            font-weight: bold;
-            color: #e0e0e0;
-        }
-        td {
-            font-size: 14px;
-        }
-        .highlight {
-            background-color: rgba(255, 69, 0, 0.2); /* Light transparent orange */
-        }
-        .highlight-total {
-            background-color: rgba(255, 69, 0, 0.5); /* Slightly darker highlight for total cell */
-        }
-        footer {
-            margin-top: 40px;
-            font-size: 14px;
-            color: #bdbdbd;
-            background-color: #212121;
-            padding: 10px 0;
-            border-top: 1px solid #555;
-        }
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    direction: rtl;
+    text-align: center;
+    padding: 20px;
+    background-color: #ffffff; /* خلفية بيضاء */
+    color: #000000; /* النص باللون الأسود */
+}
+textarea {
+    width: 100%;
+    height: 200px;
+    margin-bottom: 20px;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #f9f9f9; /* خلفية صندوق النص فاتحة */
+    color: #000000; /* النص داخل الصندوق باللون الأسود */
+    border: 1px solid #ccc; /* حدود بلون رمادي فاتح */
+}
+button {
+    padding: 12px 24px;
+    font-size: 18px;
+    background-color: #009688;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+button:hover {
+    background-color: #00796b;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #ffffff; /* خلفية الجدول بيضاء */
+    color: #000000; /* لون النص في الجدول بالأسود */
+}
+th, td {
+    border: 1px solid #ddd; /* حدود بلون رمادي فاتح */
+    padding: 12px;
+    text-align: center;
+}
+th {
+    background-color: #f2f2f2; /* خلفية الرأس فاتحة */
+    font-weight: bold;
+    color: #000000; /* لون النص في الرأس أسود */
+}
+td {
+    font-size: 14px;
+    color: #000000; /* لون النص في الخلايا أسود */
+}
+.highlight {
+    background-color: rgba(255, 69, 0, 0.2); /* تظليل شفاف برتقالي فاتح */
+}
+.highlight-total {
+    background-color: rgba(255, 69, 0, 
+
     </style>
 </head>
 <body>
