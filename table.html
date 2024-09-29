@@ -62,8 +62,16 @@ td {
     background-color: rgba(255, 69, 0, 0.2); /* تظليل شفاف برتقالي فاتح */
 }
 .highlight-total {
-    background-color: rgba(255, 69, 0, 
-
+    background-color: rgba(255, 69, 0, 0.5); /* تظليل أغمق قليلاً للخلايا الإجمالية */
+}
+footer {
+    margin-top: 40px;
+    font-size: 14px;
+    color: #333333; /* النص باللون الرمادي */
+    background-color: #f9f9f9; /* خلفية الفوتر فاتحة */
+    padding: 10px 0;
+    border-top: 1px solid #ccc; /* حدود بلون رمادي فاتح */
+}
     </style>
 </head>
 <body>
@@ -78,11 +86,11 @@ td {
 
 <footer>
     Design and Development by Ali Alshahrani<br>
-    إصدار النسخة: 1.1
+    إصدار النسخة: 1.2
 </footer>
 
 <script>
-// Function to count shifts excluding vacations (V)
+// Function to count shifts, excluding vacations (V) and only including 'D' and 'N' in the total calculation
 function countShifts(shiftArray) {
     var shiftCounts = { D: 0, N: 0, WO: 0, V: 0, E: 0, VC: 0 };
     shiftArray.forEach(function(shift) {
@@ -90,8 +98,8 @@ function countShifts(shiftArray) {
             shiftCounts[shift]++;
         }
     });
-    // Exclude vacations (V) from the total
-    shiftCounts['Total'] = shiftCounts.D + shiftCounts.N + shiftCounts.WO + shiftCounts.E + shiftCounts.VC;
+    // Only count 'D' and 'N' shifts in the total
+    shiftCounts['Total'] = shiftCounts.D + shiftCounts.N;
     return shiftCounts;
 }
 
@@ -108,7 +116,7 @@ function parseHTMLSource() {
     for (var i = 1; i <= 31; i++) {
         table += "<th>" + i + "</th>";
     }
-    table += "<th>مناوبات صباحية (D)</th><th>مناوبات ليلية (N)</th><th>أيام الإجازة (WO)</th><th>إجازات (V)</th><th>مناوبات مسائية (E)</th><th>تغطية إجازات (VC)</th><th>إجمالي المناوبات (بدون الإجازات)</th></tr></thead><tbody>";
+    table += "<th>مناوبات صباحية (D)</th><th>مناوبات ليلية (N)</th><th>أيام الإجازة (WO)</th><th>إجازات (V)</th><th>مناوبات مسائية (E)</th><th>تغطية إجازات (VC)</th><th>إجمالي المناوبات (D و N فقط)</th></tr></thead><tbody>";
 
     rows.forEach(function(row) {
         var columns = row.querySelectorAll("td div");
