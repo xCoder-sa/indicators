@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Table Formatter with Futuristic Design</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            direction: rtl;
+            text-align: center;
+            padding: 20px;
+            background-color: #2b2b2b;
+            color: #e0e0e0;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 20px;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #333;
+            color: #e0e0e0;
+            border: 1px solid #555;
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 18px;
+            background-color: #009688;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #00796b;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #424242;
+            color: white;
+        }
+        th, td {
+            border: 1px solid #555;
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #616161;
+            font-weight: bold;
+            color: #e0e0e0;
+        }
+        td {
+            font-size: 14px;
+        }
+        h2 {
+            color: #bdbdbd;
+        }
+        footer {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #bdbdbd;
+            background-color: #212121;
+            padding: 10px 0;
+            border-top: 1px solid #555;
+        }
+    </style>
+</head>
+<body>
+
+<h2>لصق سورس الصفحة هنا</h2>
+<textarea id="inputText" placeholder="قم بلصق سورس الصفحة هنا..."></textarea>
+<br>
+<button onclick="parseHTMLSource()">ترتيب الجدول مع الإحصائيات</button>
+
+<h2>الجدول المرتب مع إحصائيات المناوبات:</h2>
+<div id="outputTable"></div>
+
+<footer>
+    Design and Development by Ali Alshahrani<br>
+    إصدار النسخة: 1.0
+</footer>
+
+<script>
+// Function to count shifts excluding vacations (V)
+function countShifts(shiftArray) {
+    var shiftCounts = { D: 0, N: 0, WO: 0, V: 0, E: 0, VC: 0 };
+    shiftArray.forEach(function(shift) {
+        if (shiftCounts.hasOwnProperty(shift)) {
+            shiftCounts[shift]++;
+        }
+    });
+    // Exclude vacations (V) from the total
+    shiftCounts['Total'] = shiftCounts.D + shiftCounts.N + shiftCounts.WO + shiftCounts.E + shiftCounts.VC;
+    return shiftCounts;
+}
+
+// Function to parse the pasted HTML source and extract the employee table
+function parseHTMLSource() {
+    var inputText = document.getElementById("inputText").value;
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(inputText, "text/html");
+    var rows = doc.querySelectorAll("tr"); // Select table rows
+    
+    var table = "<table><thead><tr><th>الرقم</th><th>الاسم</th><th>الوظيفة</th>";
+
+    // Add numbered shift columns from 1 to 31
+    for (var i = 1; i <= 31; i++) {
+        table += "<th>" + i + "</th>";
+    }
+    table += "<th>مناوبات صباحية (D)</th><th>مناوبات ليلية (N)</th><th>أيام الإجازة (WO)</th><th>إجازات (V)</th><th>مناوبات مسائية (E)</th><th>تغطية إجازات (VC)</th><th>إجمالي المناوبات (بدون الإجازات)</th></tr></thead><tbody>";
+
+    rows.forEach(function(row) {
+        var columns = row.querySelectorAll("td div");
+        var shifts = Array.from(columns).slice(4).map(function(col) { return col.innerText.trim(); }); // Extract shift details
+        var counts = countShifts(shifts);
+
+        table += "<tr>";
+        columns.forEach(function(column, index) {
+            if (index < 4) {
+                table += "<td>" + column.innerText.trim() + "</td>";
+            }
+        });
+
+        // Add shift details in separate numbered columns
+        shifts.forEach(function(shift) {
+            table += "<td>" + (shift || "") + "</td>";  // empty cell for empty shifts
+        });
+
+        // Fill empty cells for remaining days if there are less than 31 days of shifts
+        for (var i = shifts.length; i < 31; i++) {
+            table += "<td></td>";
+        }
+
+        // Add statistics columns
+        table += "<td>" + counts.D + "</td>";
+        table += "<td>" + counts.N + "</td>";
+        table += "<td>" + counts.WO + "</td>";
+        table += "<td>" + counts.V + "</td>";
+        table += "<td>" + counts.E + "</td>";
+        table += "<td>" + counts.VC + "</td>";
+        table += "<td>" + counts.Total + "</td>";
+        table += "</tr>";
+    });
+
+    table += "</tbody></table>";
+    document.getElementById("outputTable").innerHTML = table;
+}
+</script>
+
+</body>
+</html>
