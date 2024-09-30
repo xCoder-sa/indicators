@@ -72,8 +72,11 @@ footer {
     padding: 10px 0;
     border-top: 1px solid #ccc; /* حدود بلون رمادي فاتح */
 }
-  .gray-background {
+  .gray-border-background {
     background-color: grey;
+    display: inline;
+    padding: 5px; /* إضافة مساحة حول النص */
+    border-radius: 3px; /* جعل الزوايا مستديرة (اختياري) */
   }
 
     </style>
@@ -85,7 +88,9 @@ footer {
 <br>
 <button onclick="parseHTMLSource()">ترتيب الجدول مع الإحصائيات</button>
 
-<h2 style="background-color: grey;">الجدول المرتب مع إحصائيات المناوبات:</h2>
+<h2 style="background-color: grey; display: inline; padding: 5px; border-radius: 3px;">
+  الجدول المرتب مع إحصائيات المناوبات:
+</h2>
 <div id="outputTable"></div>
 
 <footer>
