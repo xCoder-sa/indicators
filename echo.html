@@ -25,14 +25,14 @@
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
-            background-color: #E6E6FA;
+            background-color: #4CAF50; /* اللون الأخضر */
             color: white;
             border: none;
             border-radius: 5px;
             margin-right: 10px;
         }
         button:hover {
-            background-color: #45a049;
+            background-color: #45a049; /* لون أخضر أغمق عند التمرير */
         }
         table {
             width: 100%;
@@ -46,11 +46,11 @@
             padding: 8px;
         }
         th {
-            background-color: #E6E6FA;
+            background-color: #4CAF50; /* اللون الأخضر لرؤوس الجدول */
             color: white;
         }
         .type-column {
-            background-color: #E6E6FA; /* لون الخزامى */
+            background-color: #E6E6FA; /* لون الخزامى لعمود نوع البلاغ */
         }
         tr:nth-child(even) {
             background-color: #f9f9f9;
@@ -70,8 +70,8 @@
 <body>
     <div class="container">
         <h1>أداة توزيع بلاغات ايكو</h1>
-        <textarea id="inputText" placeholder="الصق نموذج بلاغات ايكو هنا..."></textarea>
-        <button onclick="processText()">تنظيم البلاغات</button>
+        <textarea id="inputText" placeholder="الصق نص البلاغات هنا..."></textarea>
+        <button onclick="processText()">توزيع البلاغات</button>
         <button onclick="copyTable()">نسخ البيانات</button>
         <div id="tableContainer"></div>
         <div class="footer">
@@ -99,16 +99,16 @@
                 const number = match[1];
                 const start = match.index;
                 if (reports.length > 0) {
-                    // Extract the previous report's text
+                    // استخراج نص البلاغ السابق
                     const prevReport = input.substring(lastIndex, start).trim();
                     reports[reports.length - 1].text = prevReport;
                 }
-                // Initialize a new report
+                // تهيئة بلاغ جديد
                 reports.push({ number: number, text: '' });
                 lastIndex = reportRegex.lastIndex;
             }
 
-            // Add the last report
+            // إضافة البلاغ الأخير
             if (reports.length > 0) {
                 const lastReportText = input.substring(lastIndex).trim();
                 reports[reports.length - 1].text = lastReportText;
@@ -135,7 +135,7 @@
 
             reports.forEach(report => {
                 const fields = extractFields(report.text);
-                // التأكد من أن رقم البلاغ يتم تعيينه بشكل صحيح
+                // التأكد من تعيين رقم البلاغ بشكل صحيح
                 fields.number = report.number || fields.number;
 
                 table += `<tr>
