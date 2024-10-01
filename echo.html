@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>أداة توزيع بلاغات ايكو</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            text-align: center;
+        }
+        textarea {
+            width: 100%;
+            height: 500px;
+            padding: 10px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            resize: vertical;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #E6E6FA;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: white;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 8px;
+        }
+        th {
+            background-color: #E6E6FA;
+            color: white;
+        }
+        .type-column {
+            background-color: #E6E6FA; /* لون الخزامى */
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #555;
+        }
+        .container {
+            max-width: 1600px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>أداة توزيع بلاغات ايكو</h1>
+        <textarea id="inputText" placeholder="الصق نموذج بلاغات ايكو هنا..."></textarea>
+        <button onclick="processText()">تنظيم البلاغات</button>
+        <button onclick="copyTable()">نسخ البيانات</button>
+        <div id="tableContainer"></div>
+        <div class="footer">
+            Design and Development by Ali Alshahrani<br>
+            This script was created for Nawaf<br>
+            إصدار النسخة: 1.5
+        </div>
+    </div>
+
+    <script>
+        function processText() {
+            let input = document.getElementById('inputText').value;
+
+            // تحويل الأرقام العربية إلى أرقام غربية لتسهيل المعالجة
+            input = convertArabicToWestern(input);
+
+            // تعريف نمط التقسيم لكل بلاغ
+            // كل بلاغ يبدأ بـ "نموذج بلاغ ايكو" أو "رقم البلاغ"
+            const reportRegex = /(?:\*?نموذج بلاغ ايكو\*?\s*)?رقم البلاغ\s*[:\*]*\s*(\d+)/gi;
+            let reports = [];
+            let lastIndex = 0;
+            let match;
+
+            while ((match = reportRegex.exec(input)) !== null) {
+                const number = match[1];
+                const start = match.index;
+                if (reports.length > 0) {
+                    // Extract the previous report's text
+                    const prevReport = input.substring(lastIndex, start).trim();
+                    reports[reports.length - 1].text = prevReport;
+                }
+                // Initialize a new report
+                reports.push({ number: number, text: '' });
+                lastIndex = reportRegex.lastIndex;
+            }
+
+            // Add the last report
+            if (reports.length > 0) {
+                const lastReportText = input.substring(lastIndex).trim();
+                reports[reports.length - 1].text = lastReportText;
+            }
+
+            if (reports.length === 0) {
+                alert("لم يتم العثور على بلاغات. يرجى التأكد من تنسيق البلاغات بشكل صحيح.");
+                return;
+            }
+
+            let table = `<table>
+                            <thead>
+                                <tr>
+                                    <th>توقيت التقرير</th>
+                                    <th>رقم البلاغ</th>
+                                    <th>نوع البلاغ</th>
+                                    <th>موقع البلاغ</th>
+                                    <th>القطاع التشغيلي</th>
+                                    <th>الوحدات المستجيبة</th>
+                                    <th>زمن الاستجابة</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+
+            reports.forEach(report => {
+                const fields = extractFields(report.text);
+                // التأكد من أن رقم البلاغ يتم تعيينه بشكل صحيح
+                fields.number = report.number || fields.number;
+
+                table += `<tr>
+                            <td>${sanitize(fields.time)}</td>
+                            <td>${sanitize(fields.number)}</td>
+                            <td class="type-column">${sanitize(fields.type)}</td>
+                            <td>${sanitize(fields.location)}</td>
+                            <td>${sanitize(fields.sector)}</td>
+                            <td>${sanitize(fields.units)}</td>
+                            <td>${sanitize(fields.responseTime)}</td>
+                          </tr>`;
+            });
+
+            table += `</tbody></table>`;
+            document.getElementById('tableContainer').innerHTML = table;
+        }
+
+        function extractFields(text) {
+            // استخراج الحقول المختلفة باستخدام تعابير منتظمة مرنة
+            const location = getField(text, /موقع البلاغ\s*[:\*]*\s*\(?([^\n\*]+)/i);
+            const sector = getField(text, /القطاع التشغيلي\s*[:\*]*\s*([^\n\*]+)/i);
+            const units = getField(text, /الوحدات المستجيبة\s*[:\*]*\s*([^\n\*]+)/i);
+            const responseTime = getField(text, /زمن الاستجابة\s*[:\*]*\s*(\d+\s*د(?:قائق?)?)/i);
+            // نمط مرن للتوقيت يمكن أن يشمل أحرف إضافية قبل "توقيت التقرير"
+            let time = getField(text, /توقيت التقرير\s*[:\*]*\s*([\d:.]+\s*[أب]م)/i);
+            if (!time) {
+                time = getField(text, /توقيت التقرير\s*[:\*]*\s*([\d:.]+)/i);
+            }
+            const type = "نموذج بلاغ ايكو";
+
+            return {
+                number: '',
+                type: type,
+                location: location,
+                sector: sector,
+                units: units,
+                responseTime: responseTime,
+                time: time
+            };
+        }
+
+        function getField(text, regex) {
+            const match = text.match(regex);
+            return match ? match[1].trim() : '';
+        }
+
+        function sanitize(str) {
+            if (!str) return '';
+            return str.replace(/\n/g, ' ').replace(/<|>/g, '').trim();
+        }
+
+        function convertArabicToWestern(str) {
+            const arabicNumbers = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+            const westernNumbers = ['0','1','2','3','4','5','6','7','8','9'];
+            let converted = str;
+            for(let i=0; i<arabicNumbers.length; i++) {
+                const regex = new RegExp(arabicNumbers[i], 'g');
+                converted = converted.replace(regex, westernNumbers[i]);
+            }
+            return converted;
+        }
+
+        function copyTable() {
+            const table = document.querySelector('#tableContainer table');
+            if (!table) {
+                alert("لا يوجد جدول لنسخه.");
+                return;
+            }
+
+            // استخراج الصفوف بدون صف العناوين
+            const rows = Array.from(table.querySelectorAll('tbody tr'));
+            if (rows.length === 0) {
+                alert("لا يوجد بيانات لنسخها.");
+                return;
+            }
+
+            let textToCopy = '';
+            rows.forEach(row => {
+                const cells = Array.from(row.querySelectorAll('td'));
+                const rowData = cells.map(cell => cell.textContent).join('\t');
+                textToCopy += rowData + '\n';
+            });
+
+            // نسخ النص إلى الحافظة
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                alert("تم نسخ البيانات بنجاح.");
+            }).catch(err => {
+                alert("فشل في نسخ البيانات.");
+                console.error('Error in copying text: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
