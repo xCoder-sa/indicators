@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحليل رسائل المسعفين</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 20px;
+            direction: rtl;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #3498db;
+            margin-top: 20px;
+        }
+        .result {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .result div {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>تحليل رسائل المسعفين</h1>
+    <textarea id="messageInput" placeholder="ألصق الرسالة هنا..."></textarea>
+    <button onclick="processMessage()">تحليل الرسالة</button>
+    
+    <div id="result" class="result"></div>
+</div>
+
+<script>
+    function processMessage() {
+        const input = document.getElementById('messageInput').value;
+        const resultDiv = document.getElementById('result');
+        
+        // استخراج المعلومات باستخدام regex
+        const sector = input.match(/قطاع محافظة\s*\((.*?)\)/)?.[1] || "غير محدد";
+        const date = input.match(/(\d{4}\/\d{2}\/\d{2})/)?.[0] || "غير محدد";
+        const time = input.match(/الساعة:\s*(.*?)\n/)?.[1] || "غير محدد";
+        const paramedic = input.match(/كبير المسعفين المناوب:\s*(.*?)(?:\n|\*)/)?.[1] || "غير محدد";
+        const workingTeams = input.match(/عدد الفرق العاملة:\s*\((\d+)\)/)?.[1] || "غير محدد";
+        const totalTeams = input.match(/من أصل\s*\((\d+)\)/)?.[1] || "غير محدد";
+        const workingVehicles = input.match(/عدد المركبات العاملة:\s*(\d+)/)?.[1] || "غير محدد";
+        const brokenVehicles = input.match(/عدد المركبات المتعطلة:\s*(\d+)/)?.[1] || "غير محدد";
+        const logisticsReports = input.match(/بلاغات الدعم اللوجستي المفتوحة\s*:\s*(\d+)/)?.[1] || "غير محدد";
+        const coordination = input.match(/عدد العاملين في التنسيق والتحكم\s*:\s*(\d+)/)?.[1] || "غير محدد";
+        const support = input.match(/عدد العاملين في الدعم اللوجستي\s*:\s*(\d+)/)?.[1] || "غير محدد";
+        const hospitals = input.match(/قائمة المستشفيات خارج الخدمة\s*:\s*(.*?)\n/)?.[1] || "غير محدد";
+        const reports = input.match(/عدد البلاغات:\s*(\d+)/)?.[1] || "غير محدد";
+        const absences = input.match(/عدد الغياب في المناوبة:\s*\((.*?)\)/)?.[1] || "غير محدد";
+        const cadNotes = input.match(/ملاحظات برنامج الكاد\s*:\s*(.*?)\n/)?.[1] || "غير محدد";
+        
+        // عرض المعلومات في div
+        resultDiv.innerHTML = `
+            <h2>نتائج التحليل</h2>
+            <div><strong>القطاع:</strong> ${sector}</div>
+            <div><strong>التاريخ:</strong> ${date}</div>
+            <div><strong>الساعة:</strong> ${time}</div>
+            <div><strong>كبير المسعفين المناوب:</strong> ${paramedic}</div>
+            <div><strong>عدد الفرق العاملة:</strong> ${workingTeams} من أصل ${totalTeams}</div>
+            <div><strong>عدد المركبات العاملة:</strong> ${workingVehicles}</div>
+            <div><strong>عدد المركبات المتعطلة:</strong> ${brokenVehicles}</div>
+            <div><strong>بلاغات الدعم اللوجستي المفتوحة:</strong> ${logisticsReports}</div>
+            <div><strong>عدد العاملين في التنسيق والتحكم:</strong> ${coordination}</div>
+            <div><strong>عدد العاملين في الدعم اللوجستي:</strong> ${support}</div>
+            <div><strong>قائمة المستشفيات خارج الخدمة:</strong> ${hospitals}</div>
+            <div><strong>عدد البلاغات:</strong> ${reports}</div>
+            <div><strong>عدد الغياب في المناوبة:</strong> ${absences}</div>
+            <div><strong>ملاحظات برنامج الكاد:</strong> ${cadNotes}</div>
+        `;
+    }
+</script>
+
+</body>
+</html>
