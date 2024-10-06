@@ -4,149 +4,136 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لوحة تحكم الإسعاف</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f0f4f8;
+            background-color: #f9f9f9;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             direction: rtl;
         }
         .dashboard {
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            min-height: 100vh;
         }
         .sidebar {
             background-color: #ffffff;
-            padding: 20px;
+            padding: 15px;
             color: #333;
             text-align: center;
             transition: width 0.3s;
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
             position: fixed;
             top: 0;
             bottom: 0;
             right: 0;
-            width: 250px;
+            width: 240px;
             overflow-y: auto;
+            border-left: 1px solid #ddd;
         }
         .sidebar h1 {
-            font-size: 24px;
-            margin-bottom: 30px;
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #3498db;
         }
         .sidebar ul {
             list-style-type: none;
             padding: 0;
+            margin: 0;
         }
         .sidebar ul li {
             margin-bottom: 15px;
         }
         .sidebar ul li a {
-            display: flex;
-            align-items: center;
-            padding: 12px;
-            color: #333;
+            display: block;
+            padding: 10px;
+            color: #3498db;
             text-decoration: none;
-            background-color: #ecf0f1;
-            border-radius: 8px;
-            font-size: 16px;
+            border-radius: 4px;
             transition: background-color 0.3s;
         }
         .sidebar ul li a:hover {
-            background-color: #bdc3c7;
-        }
-        .sidebar ul li a i {
-            margin-left: 10px;
+            background-color: #3498db;
+            color: white;
         }
         .container {
             flex: 1;
-            padding: 30px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            margin-right: 270px;
-            overflow-y: auto;
+            padding: 20px;
+            margin-right: 260px;
+            background-color: #f4f4f4;
+            min-height: 100vh;
         }
         h2 {
-            color: #3498db;
-            font-size: 24px;
+            color: #333;
+            font-size: 22px;
             margin-bottom: 20px;
             text-align: center;
         }
         label {
-            margin-top: 10px;
             display: block;
-            color: #333;
+            color: #555;
+            margin-top: 10px;
             font-weight: bold;
-            font-size: 15px;
+            font-size: 14px;
         }
-        input[type="text"], input[type="date"], input[type="time"], input[type="datetime-local"], textarea, select {
+        input, select, textarea {
             width: 100%;
             padding: 10px;
             margin: 5px 0 15px;
             border: 1px solid #ccc;
-            border-radius: 6px;
+            border-radius: 4px;
             font-size: 14px;
-            transition: border-color 0.3s;
-        }
-        input[type="text"]:focus, input[type="date"]:focus, input[type="time"]:focus, select:focus {
-            border-color: #3498db;
-            outline: none;
         }
         button {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             background-color: #3498db;
             border: none;
-            border-radius: 6px;
+            border-radius: 4px;
             color: white;
             font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
         button:hover {
-            background-color: #1d6a9c;
-        }
-        .form-section {
-            margin-bottom: 30px;
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            background-color: #2980b9;
         }
 
-        /* Sidebar Toggle for mobile */
+        .form-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
         .sidebar-toggler {
             display: none;
             background-color: #3498db;
             color: white;
             padding: 10px;
-            border-radius: 8px;
             position: fixed;
             top: 10px;
             right: 10px;
-            z-index: 999;
+            z-index: 1000;
+            border: none;
+            border-radius: 4px;
             cursor: pointer;
         }
 
         @media (max-width: 768px) {
             .sidebar {
                 width: 0;
-                overflow: hidden;
                 transition: width 0.3s;
             }
-
             .sidebar.active {
-                width: 250px;
+                width: 240px;
             }
-
             .container {
                 margin-right: 0;
             }
-
             .sidebar-toggler {
                 display: block;
             }
@@ -156,21 +143,21 @@
 <body>
 
 <!-- Sidebar Toggle Button for Mobile -->
-<div class="sidebar-toggler" onclick="toggleSidebar()">☰</div>
+<button class="sidebar-toggler" onclick="toggleSidebar()">☰</button>
 
 <div class="dashboard">
     <!-- الشريط الجانبي -->
     <div class="sidebar" id="sidebar">
         <h1>لوحة التحكم</h1>
         <ul>
-            <li><a href="#" onclick="loadForm('senior_paramedic')"><i class="fas fa-user-md"></i> نموذج كبار المسعفين (داخلي)</a></li>
-            <li><a href="#" onclick="loadForm('rapid_response_reports')"><i class="fas fa-car-crash"></i> نموذج بلاغات التدخل السريع</a></li>
-            <li><a href="#" onclick="loadForm('senior_paramedic_outside')"><i class="fas fa-user-md"></i> نموذج كبار المسعفين (خارجي)</a></li>
-            <li><a href="#" onclick="loadForm('operational_failure')"><i class="fas fa-exclamation-triangle"></i> نموذج فشل تشغيلي</a></li>
-            <li><a href="#" onclick="loadForm('eco_reports')"><i class="fas fa-file-alt"></i> نموذج بلاغات إيكو</a></li>
-            <li><a href="#" onclick="loadForm('major_event')"><i class="fas fa-calendar-alt"></i> نموذج حدث جسيم</a></li>
-            <li><a href="#" onclick="loadForm('support_request')"><i class="fas fa-handshake"></i> طلب تفعيل خطة المساندة</a></li>
-            <li><a href="#" onclick="loadForm('support_activation')"><i class="fas fa-check-circle"></i> قبول تفعيل خطة المساندة</a></li>
+            <li><a href="#" onclick="loadForm('senior_paramedic')">نموذج كبار المسعفين (داخلي)</a></li>
+            <li><a href="#" onclick="loadForm('rapid_response_reports')">نموذج بلاغات التدخل السريع</a></li>
+            <li><a href="#" onclick="loadForm('senior_paramedic_outside')">نموذج كبار المسعفين (خارجي)</a></li>
+            <li><a href="#" onclick="loadForm('operational_failure')">نموذج فشل تشغيلي</a></li>
+            <li><a href="#" onclick="loadForm('eco_reports')">نموذج بلاغات إيكو</a></li>
+            <li><a href="#" onclick="loadForm('major_event')">نموذج حدث جسيم</a></li>
+            <li><a href="#" onclick="loadForm('support_request')">طلب تفعيل خطة المساندة</a></li>
+            <li><a href="#" onclick="loadForm('support_activation')">قبول تفعيل خطة المساندة</a></li>
         </ul>
     </div>
 
@@ -194,7 +181,7 @@
                 <h2>نموذج كبار المسعفين</h2>
                 <div class="form-section">
                     <label for="sector">اختر القطاع:</label>
-                    <select id="sector" onchange="toggleOtherSectorInput()" class="form-control">
+                    <select id="sector" class="form-control">
                         <option value="الوسط">الوسط</option>
                         <option value="الجنوب">الجنوب</option>
                         <option value="الشرق">الشرق</option>
@@ -202,10 +189,9 @@
                         <option value="الشمال">الشمال</option>
                         <option value="other">أخرى</option>
                     </select>
-                    <input type="text" id="other_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;" class="form-control">
 
                     <label for="date">التاريخ:</label>
-                    <input type="date" id="date" readonly class="form-control">
+                    <input type="date" id="date" class="form-control">
 
                     <label for="time">التوقيت الحالي:</label>
                     <select id="time" class="form-control">
@@ -220,140 +206,12 @@
 
                     <label for="total_teams">من أصل:</label>
                     <input type="text" id="total_teams" class="form-control">
-
-                    <div class="input-row">
-                        <div class="input-small">
-                            <label for="rapid_response_teams">عدد فرق التدخل السريع:</label>
-                            <input type="text" id="rapid_response_teams" class="form-control">
-                        </div>
-                        <div class="input-small">
-                            <label for="operating_vehicles">عدد المركبات العاملة:</label>
-                            <input type="text" id="operating_vehicles" class="form-control">
-                        </div>
-                        <div class="input-small">
-                            <label for="broken_vehicles">عدد المركبات المتعطلة:</label>
-                            <input type="text" id="broken_vehicles" class="form-control">
-                        </div>
-                        <div class="input-small">
-                            <label for="reserve_vehicles">عدد المركبات الاحتياط:</label>
-                            <input type="text" id="reserve_vehicles" class="form-control">
-                        </div>
-                    </div>
-
-                    <label for="open_logistics_reports">بلاغات الدعم اللوجستي المفتوحة:</label>
-                    <input type="text" id="open_logistics_reports" class="form-control">
-
-                    <label for="coordination_teams">عدد العاملين في التنسيق والتحكم:</label>
-                    <input type="text" id="coordination_teams" class="form-control">
-
-                    <label for="logistics_support_teams">عدد العاملين في الدعم اللوجستي:</label>
-                    <input type="text" id="logistics_support_teams" class="form-control">
-
-                    <label for="hospitals_out_of_service">قائمة المستشفيات خارج الخدمة:</label>
-                    <input type="text" id="hospitals_out_of_service" class="form-control">
-
-                    <h2>الطلب</h2>
-
-                    <label for="eco_reports">عدد بلاغات إنعاش إيكو:</label>
-                    <input type="text" id="eco_reports" class="form-control">
-
-                    <label for="delta_reports">عدد بلاغات دلتا:</label>
-                    <input type="text" id="delta_reports" class="form-control">
-
-                    <label for="charlie_reports">عدد بلاغات تشارلي:</label>
-                    <input type="text" id="charlie_reports" class="form-control">
-
-                    <label for="bravo_reports">عدد بلاغات برافو:</label>
-                    <input type="text" id="bravo_reports" class="form-control">
-
-                    <label for="alpha_reports">عدد بلاغات ألفا:</label>
-                    <input type="text" id="alpha_reports" class="form-control">
-
-                    <label for="omega_reports">عدد بلاغات أوميغا:</label>
-                    <input type="text" id="omega_reports" class="form-control">
-
-                    <label for="catheter_reports">عدد بلاغات القسطرة:</label>
-                    <input type="text" id="catheter_reports" class="form-control">
-
-                    <label for="stroke_reports">عدد بلاغات السكتة الدماغية:</label>
-                    <input type="text" id="stroke_reports" class="form-control">
-
-                    <h2>البلاغات</h2>
-
-                    <label for="total_reports">إجمالي بلاغات القطاع:</label>
-                    <input type="text" id="total_reports" class="form-control">
-
-                    <label for="government_transfers">عدد الحالات المنقولة للقطاع الحكومي:</label>
-                    <input type="text" id="government_transfers" class="form-control">
-
-                    <label for="private_transfers">عدد الحالات المنقولة للقطاع الخاص:</label>
-                    <input type="text" id="private_transfers" class="form-control">
-
-                    <label for="untransferred_cases">عدد الحالات الغير منقولة:</label>
-                    <input type="text" id="untransferred_cases" class="form-control">
-
-                    <label for="paper_reports">عدد البلاغات المدونة ورقياً:</label>
-                    <input type="text" id="paper_reports" class="form-control">
-
-                    <h2>المخرجات</h2>
-
-                    <label for="waiting_time">متوسط زمن الانتظار في قائمة الترحيل:</label>
-                    <input type="text" id="waiting_time" class="form-control">
-
-                    <label for="top_team">اعلى فرقة اسعافيه في عدد البلاغات:</label>
-                    <input type="text" id="top_team" class="form-control">
-
-                    <label for="average_reports">متوسط عدد البلاغات للفرق الاسعافية:</label>
-                    <input type="text" id="average_reports" class="form-control">
-
-                    <label for="response_rate">نسبة زمن الاستجابة خلال 8 دقائق للبلاغات الساخنة:</label>
-                    <input type="text" id="response_rate" class="form-control">
-
-                    <label for="average_response_time">متوسط زمن الاستجابة لبلاغات الحوادث المرورية الساخنة:</label>
-                    <input type="text" id="average_response_time" class="form-control">
-
-                    <label for="response_time_to_intervention">زمن الاستجابة حتى المباشرة:</label>
-                    <input type="text" id="response_time_to_intervention" class="form-control">
-
-                    <h2>ملاحظات النوبة</h2>
-
-                    <label for="absence_in_shift">عدد الغياب في المناوبة:</label>
-                    <input type="text" id="absence_in_shift" class="form-control">
-
-                    <label for="cad_program_notes">ملاحظات برنامج الكاد:</label>
-                    <textarea id="cad_program_notes" rows="4" class="form-control"></textarea>
                 </div>
-                <button class="btn btn-primary btn-block" onclick="sendWhatsAppMessage('senior_paramedic')">إرسال النموذج بالواتساب</button>
+                <button class="btn btn-primary btn-block">إرسال النموذج بالواتساب</button>
             `;
         }
 
         formContainer.innerHTML = formHTML;
-
-        updateDateTime(formName);
-    }
-
-    function updateDateTime(formName) {
-        const today = new Date().toISOString().split('T')[0];
-        const dateInputs = document.querySelectorAll("input[type='date']");
-        dateInputs.forEach(input => {
-            input.value = today;
-        });
-    }
-
-    function toggleOtherSectorInput() {
-        const sectorSelect = document.getElementById("sector");
-        const otherSectorInput = document.getElementById("other_sector");
-        if (sectorSelect.value === "other") {
-            otherSectorInput.style.display = "block";
-        } else {
-            otherSectorInput.style.display = "none";
-        }
-    }
-
-    function sendWhatsAppMessage(formName) {
-        const formText = `تم إرسال النموذج: ${formName}`;
-        alert(formText);
-        // Place your WhatsApp integration code here
     }
 
     document.addEventListener("DOMContentLoaded", function () {
