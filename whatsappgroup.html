@@ -297,7 +297,7 @@
                     <label for="cad_program_notes">ملاحظات برنامج الكاد:</label>
                     <textarea id="cad_program_notes" rows="4"></textarea>
                 </div>
-                <button onclick="sendWhatsAppMessage('senior_paramedic')">حفظ البيانات</button>
+                <button onclick="sendWhatsAppMessage('senior_paramedic')">إرسال النموذج بالواتساب</button>
             `;
         } else if (formName === 'operational_failure') {
             formHTML = `
@@ -345,7 +345,7 @@
                         <input type="text" id="end_minute" placeholder="الدقيقة" style="width: 45px;">
                     </div>
                 </div>
-                <button onclick="sendWhatsAppMessage('operational_failure')">حفظ البيانات</button>
+                <button onclick="sendWhatsAppMessage('operational_failure')">إرسال النموذج بالواتساب</button>
             `;
         } else if (formName === 'eco_reports') {
             formHTML = `
@@ -387,7 +387,7 @@
                     <label for="notes">ملاحظات:</label>
                     <textarea id="notes" rows="4"></textarea>
                 </div>
-                <button onclick="sendWhatsAppMessage('eco_reports')">حفظ البيانات</button>
+                <button onclick="sendWhatsAppMessage('eco_reports')">إرسال النموذج بالواتساب</button>
             `;
         } else if (formName === 'major_event') {
             formHTML = `
@@ -481,7 +481,7 @@
                     <label for="area_leader">قائد المنطقة المناوب:</label>
                     <input type="text" id="area_leader">
                 </div>
-                <button onclick="sendWhatsAppMessage('major_event')">حفظ البيانات</button>
+                <button onclick="sendWhatsAppMessage('major_event')">إرسال النموذج بالواتساب</button>
             `;
         } else if (formName === 'support_request') {
             formHTML = `
@@ -536,7 +536,7 @@
                     <label for="senior_paramedic_name">اسم كبير المسعفين:</label>
                     <input type="text" id="senior_paramedic_name">
                 </div>
-                <button onclick="sendWhatsAppMessage('support_request')">حفظ البيانات</button>
+                <button onclick="sendWhatsAppMessage('support_request')">إرسال النموذج بالواتساب</button>
             `;
         } else if (formName === 'support_activation') {
             formHTML = `
@@ -597,7 +597,7 @@
                     <label for="region_leader_name">اسم قائد المنطقة:</label>
                     <input type="text" id="region_leader_name">
                 </div>
-                <button onclick="sendWhatsAppMessage('support_activation')">حفظ البيانات</button>
+                <button onclick="sendWhatsAppMessage('support_activation')">إرسال النموذج بالواتساب</button>
             `;
         }
 
@@ -641,7 +641,7 @@ function saveForm(formName) {
             const response = JSON.parse(xhr.responseText);
             if (response.status === 'success') {
                 copyForm(formName);
-                alert("تم حفظ البيانات بنجاح!");
+                alert("تم إرسال النموذج بالواتساب بنجاح!");
             } else {
                 alert("حدث خطأ: " + response.message);
             }
