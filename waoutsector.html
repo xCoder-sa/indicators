@@ -6,150 +6,203 @@
     <title>لوحة تحكم الإسعاف</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* إعدادات عامة */
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #eef3f7;
+            background-color: #f5f7fa;
             margin: 0;
             padding: 0;
             direction: rtl;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
         }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 20px;
+        }
+
         .dashboard {
             display: grid;
             grid-template-columns: 250px 1fr;
             grid-template-rows: auto 1fr;
-            height: 100vh;
-            transition: all 0.3s ease;
+            height: 100%;
         }
+
+        /* الشريط الجانبي */
         .sidebar {
-            background-color: #2c3e50;
-            color: white;
+            background-color: #34495e;
             padding: 20px;
+            color: white;
             box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
         }
-        .sidebar h1 {
-            font-size: 26px;
+
+        .sidebar h2 {
+            font-size: 22px;
             margin-bottom: 30px;
-            color: #ecf0f1;
         }
+
         .sidebar ul {
             list-style-type: none;
             padding: 0;
         }
+
         .sidebar ul li {
             margin-bottom: 15px;
         }
+
         .sidebar ul li a {
             display: flex;
             align-items: center;
             padding: 12px;
-            color: #ecf0f1;
+            color: white;
             text-decoration: none;
-            background-color: #34495e;
+            background-color: #2c3e50;
             border-radius: 8px;
-            font-size: 16px;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s ease;
         }
+
         .sidebar ul li a:hover {
             background-color: #1abc9c;
         }
+
         .sidebar ul li a i {
             margin-left: 10px;
         }
-        .container {
+
+        /* المحتوى الرئيسي */
+        .content {
             padding: 30px;
             background-color: white;
             border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            overflow-y: auto;
             margin: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
+
         h2 {
-            color: #3498db;
+            color: #2c3e50;
             font-size: 24px;
             margin-bottom: 20px;
         }
-        label {
-            display: block;
-            margin-top: 10px;
-            color: #2c3e50;
-            font-weight: bold;
-            font-size: 15px;
-        }
-        input[type="text"], input[type="date"], input[type="time"], input[type="datetime-local"], textarea, select {
-            width: 100%;
-            padding: 12px;
-            margin: 5px 0 20px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 15px;
-            transition: border-color 0.3s;
-        }
-        input[type="text"]:focus, input[type="date"]:focus, input[type="time"]:focus, select:focus {
-            border-color: #1abc9c;
-            outline: none;
-        }
+
+        /* الأزرار */
         button {
-            width: 100%;
-            padding: 15px;
-            background-color: #3498db;
+            padding: 12px;
+            background-color: #1abc9c;
             border: none;
-            border-radius: 6px;
             color: white;
             font-size: 16px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s ease;
         }
+
         button:hover {
-            background-color: #1abc9c;
+            background-color: #16a085;
         }
+
+        /* الشريط الجانبي القابل للإخفاء */
+        .menu-btn {
+            display: none;
+            background-color: #34495e;
+            color: white;
+            padding: 10px;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        /* النماذج */
+        label {
+            margin-top: 10px;
+            display: block;
+            font-size: 16px;
+            color: #2c3e50;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #1abc9c;
+        }
+
         .form-section {
             background-color: #f9f9f9;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
-        /* Responsive Design */
+        /* التصميم المتجاوب */
         @media (max-width: 768px) {
             .dashboard {
                 grid-template-columns: 1fr;
             }
+
             .sidebar {
-                grid-row: 1;
-                grid-column: 1;
-                width: 100%;
-                text-align: center;
+                display: none;
             }
-            .container {
-                grid-row: 2;
-                grid-column: 1;
-                padding: 15px;
+
+            .menu-btn {
+                display: block;
             }
         }
     </style>
 </head>
 <body>
 
+<!-- الشريط العلوي -->
+<header>
+    لوحة تحكم الإسعاف
+</header>
+
+<!-- زر إظهار الشريط الجانبي عند تصغير الشاشة -->
+<button class="menu-btn" onclick="toggleSidebar()">القائمة</button>
+
+<!-- محتويات الصفحة -->
 <div class="dashboard">
-    <div class="sidebar">
-        <h1>لوحة التحكم</h1>
+    <!-- الشريط الجانبي -->
+    <div class="sidebar" id="sidebar">
+        <h2>القائمة الرئيسية</h2>
         <ul>
-            <li><a href="#" onclick="loadForm('senior_paramedic')"><i class="fas fa-user-md"></i> نموذج كبار المسعفين (داخلي)</a></li>
-            <li><a href="#" onclick="loadForm('rapid_response_reports')"><i class="fas fa-car-crash"></i> نموذج بلاغات التدخل السريع</a></li>
-            <li><a href="#" onclick="loadForm('operational_failure')"><i class="fas fa-exclamation-triangle"></i> نموذج فشل تشغيلي</a></li>
+            <li><a href="#" onclick="loadForm('نموذج 1')"><i class="fas fa-user-md"></i> نموذج كبار المسعفين</a></li>
+            <li><a href="#" onclick="loadForm('نموذج 2')"><i class="fas fa-car-crash"></i> نموذج بلاغات التدخل السريع</a></li>
+            <li><a href="#" onclick="loadForm('نموذج 3')"><i class="fas fa-exclamation-triangle"></i> نموذج فشل تشغيلي</a></li>
         </ul>
     </div>
-    <div class="container" id="form-container">
-        <!-- المحتوى الرئيسي -->
+
+    <!-- المحتوى الرئيسي -->
+    <div class="content" id="content">
+        <h2>مرحبًا بك في لوحة تحكم الإسعاف</h2>
+        <p>اختر نموذجًا من القائمة للبدء.</p>
     </div>
 </div>
 
 <script>
+    // إظهار/إخفاء الشريط الجانبي عند استخدام الهواتف المحمولة
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        sidebar.style.display = sidebar.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // تحميل نموذج عند النقر على رابط في الشريط الجانبي
     function loadForm(formName) {
-        // مثال لتحميل نموذج بناءً على الرابط الذي تم النقر عليه
-        const formContainer = document.getElementById('form-container');
-        formContainer.innerHTML = `<h2>${formName}</h2><p>هنا يظهر محتوى النموذج.</p>`;
+        const content = document.getElementById('content');
+        content.innerHTML = `<h2>${formName}</h2><p>هنا يمكنك عرض أو تعديل ${formName}.</p>`;
     }
 </script>
 
