@@ -1139,6 +1139,8 @@ function sendWhatsAppMessage(formName) {
         formText += `اسم كبير المسعفين: ${document.getElementById('senior_paramedic_name').value}\n`;
     }
 
+	
+    console.log(formText); // تأكيد عرض البيانات المجمعة
     const encodedText = encodeURIComponent(formText);
     const whatsappUrl = `https://wa.me/?text=${encodedText}`;
 
