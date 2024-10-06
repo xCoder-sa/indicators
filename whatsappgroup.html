@@ -199,39 +199,38 @@
     justify-content: flex-start;
     direction: rtl;
     gap: 10px;
-    flex-wrap: wrap;  /* لجعل العناصر تلتف في حال صغر الشاشة */
+    flex-wrap: wrap;  /* لتجنب الالتفاف غير الضروري */
 }
 
 .form-group label {
     white-space: nowrap;
-    margin: 0 5px;
+    margin: 0 5px 0 0;  /* إلغاء المسافة السفلية بين التسمية */
+    padding: 0;  /* إلغاء الحشو غير الضروري */
 }
 
 .form-group input {
     width: 150px;
-    padding: 10px;  /* زيادة المساحة داخل الحقول */
+    padding: 5px;
     text-align: right;
-    font-size: 16px;  /* تكبير النص داخل الحقول */
-    height: 15px;  /* زيادة ارتفاع مربع الكتابة */
+    height: 40px;  /* ضبط ارتفاع الحقول */
 }
 
 /* تصميم متجاوب لشاشات الهواتف المحمولة */
 @media (max-width: 600px) {
     .form-group {
-        flex-direction: column;  /* لجعل العناصر تظهر فوق بعضها البعض على الشاشات الصغيرة */
-        align-items: flex-start;  /* لجعل التسمية والإدخال بمحاذاة صحيحة */
+        flex-direction: column;  /* جعل العناصر فوق بعضها على الشاشات الصغيرة */
+        align-items: flex-start;  /* ضمان محاذاة صحيحة */
     }
 
     .form-group input {
-        width: 100%;  /* جعل حقول الإدخال تأخذ عرض الشاشة كاملاً */
-        height: 20px;  /* ارتفاع أكبر على الشاشات الصغيرة */
+        width: 100%;  /* ملء الشاشة للحقول على الشاشات الصغيرة */
+        height: 45px;  /* زيادة ارتفاع الحقول على الشاشات الصغيرة */
     }
 
     .form-group label {
-        margin-bottom: 5px;  /* مسافة بين التسمية وحقل الإدخال في التصميم العمودي */
+        margin-bottom: 5px;  /* مسافة صغيرة بين التسمية والحقل */
     }
 }
-
 
     </style>
 </head>
