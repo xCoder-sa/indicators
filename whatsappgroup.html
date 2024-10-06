@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة تحكم الإسعاف</title>
+    <title>لوحة تحكم القيادات</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
@@ -215,43 +215,49 @@
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
-.input-row {
-    display: flex;
-    gap: 10px; /* مسافة بين العناصر في الوضع العادي */
-    flex-wrap: wrap; /* للسماح بتوزيع العناصر على عدة أسطر عند ضيق الشاشة */
-}
-
-.input-small {
-    flex: 1;
-    min-width: 150px; /* عرض أدنى للحقول */
-    margin-bottom: 10px; /* إضافة مسافة بين الحقول في الأسفل */
-}
-
-.input-small label {
-    display: block;
-    margin-bottom: 5px; /* مسافة صغيرة بين التسمية ومربع الإدخال */
-}
-
-.input-small input {
-    width: 100%; /* جعل الحقول تأخذ العرض الكامل المتاح */
-    padding: 8px; /* إضافة مسافة داخل الحقول */
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box; /* لضمان حساب الحشو ضمن عرض العنصر */
-}
-
-/* تصميم متجاوب لشاشات الهواتف المحمولة */
-@media (max-width: 767px) {
-    .input-row {
-        flex-direction: column; /* جعل الحقول تظهر بشكل عمودي على الشاشات الصغيرة */
-        gap: 15px; /* زيادة المسافة بين الحقول في الهواتف */
-    }
-
-    .input-small {
-        width: 100%; /* جعل كل حقل يأخذ عرض الشاشة بالكامل */
-    }
-}
-
+	.input-row {
+	    display: flex;
+	    gap: 10px; /* مسافة بين العناصر */
+	    flex-wrap: wrap; /* السماح للعناصر بالالتفاف إذا ضاقت المساحة */
+	}
+	
+	.input-small {
+	    flex: 1;
+	    min-width: 150px;
+	    margin-bottom: 10px;
+	}
+	
+	.input-small label {
+	    display: block;
+	    margin-bottom: 5px;
+	}
+	
+	.input-small input {
+	    width: 100%;
+	    padding: 8px;
+	    border: 1px solid #ccc;
+	    border-radius: 4px;
+	    box-sizing: border-box;
+	}
+	
+	/* تصميم متجاوب لشاشات الهواتف المحمولة */
+	@media (max-width: 767px) {
+	    .input-row {
+	        display: flex;
+	        flex-direction: row; /* ترتيب الحقول في صف حتى على الشاشات الصغيرة */
+	        gap: 5px; /* تقليل المسافة بين الحقول */
+	    }
+	
+	    .input-small {
+	        flex: 1;
+	        min-width: 100px; /* ضبط عرض الحقول */
+	        margin-bottom: 5px; /* تقليل المسافة أسفل الحقول */
+	    }
+	
+	    .input-small input {
+	        padding: 6px; /* تقليل الحشو الداخلي لتوفير مساحة */
+	    }
+	}
 
     </style>
 </head>
@@ -259,7 +265,6 @@
 
     <!-- شريط التنقل العلوي -->
     <nav class="navbar">
-        <div class="logo">لوحة التحكم</div>
         <div class="menu-header">القائمة</div> <!-- العنوان الجديد -->
         <ul class="menu" id="menu">
             <li><a href="#" onclick="loadForm('senior_paramedic')" class="menu-item"><i class="fas fa-user-md"></i> نموذج كبار المسعفين (داخلي)</a></li>
