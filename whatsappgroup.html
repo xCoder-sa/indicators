@@ -139,12 +139,15 @@
     <div class="sidebar">
         <h1>لوحة التحكم</h1>
         <ul>
-            <li><a href="#" onclick="loadForm('senior_paramedic')"><i class="fas fa-user-md"></i> نموذج كبار المسعفين</a></li>
+            <li><a href="#" onclick="loadForm('senior_paramedic')"><i class="fas fa-user-md"></i> نموذج كبار المسعفين (داخلي)</a></li>
+	    <li><a href="#" onclick="loadForm('senior_paramedic_outside')"><i class="fas fa-check-circle"></i> نموذج كبار المسعفين (خارجي)</a></li>
             <li><a href="#" onclick="loadForm('operational_failure')"><i class="fas fa-exclamation-triangle"></i> نموذج فشل تشغيلي</a></li>
             <li><a href="#" onclick="loadForm('eco_reports')"><i class="fas fa-file-alt"></i> نموذج بلاغات إيكو</a></li>
             <li><a href="#" onclick="loadForm('major_event')"><i class="fas fa-calendar-alt"></i> نموذج حدث جسيم</a></li>
             <li><a href="#" onclick="loadForm('support_request')"><i class="fas fa-handshake"></i> طلب تفعيل خطة المساندة</a></li>
             <li><a href="#" onclick="loadForm('support_activation')"><i class="fas fa-check-circle"></i> قبول تفعيل خطة المساندة</a></li>
+
+		
         </ul>
     </div>
 
@@ -778,7 +781,43 @@ function getFormData(formName) {
         data.units_out_of_order = document.getElementById('units_out_of_order')?.value || '';
         data.working_teams_shift = document.getElementById('working_teams_shift')?.value || '';
         data.challenges = document.getElementById('challenges')?.value || '';
-
+	        } else if (formName === 'senior_paramedic_outside') {
+        // جمع بيانات نموذج كبار المسعفين الخارجي 
+        data.sector = document.getElementById('sector')?.value || '';
+        data.other_sector = document.getElementById('other_sector')?.value || '';
+        data.date = document.getElementById('date')?.value || '';
+        data.time = document.getElementById('time')?.value || '';
+        data.working_teams = document.getElementById('working_teams')?.value || '';
+        data.total_teams = document.getElementById('total_teams')?.value || '';
+        data.rapid_response_teams = document.getElementById('rapid_response_teams')?.value || '';
+        data.operating_vehicles = document.getElementById('operating_vehicles')?.value || '';
+        data.broken_vehicles = document.getElementById('broken_vehicles')?.value || '';
+        data.reserve_vehicles = document.getElementById('reserve_vehicles')?.value || '';
+        data.open_logistics_reports = document.getElementById('open_logistics_reports')?.value || '';
+        data.coordination_teams = document.getElementById('coordination_teams')?.value || '';
+        data.logistics_support_teams = document.getElementById('logistics_support_teams')?.value || '';
+        data.hospitals_out_of_service = document.getElementById('hospitals_out_of_service')?.value || '';
+        data.eco_reports = document.getElementById('eco_reports')?.value || '';
+        data.delta_reports = document.getElementById('delta_reports')?.value || '';
+        data.charlie_reports = document.getElementById('charlie_reports')?.value || '';
+        data.bravo_reports = document.getElementById('bravo_reports')?.value || '';
+        data.alpha_reports = document.getElementById('alpha_reports')?.value || '';
+        data.omega_reports = document.getElementById('omega_reports')?.value || '';
+        data.catheter_reports = document.getElementById('catheter_reports')?.value || '';
+        data.stroke_reports = document.getElementById('stroke_reports')?.value || '';
+        data.total_reports = document.getElementById('total_reports')?.value || '';
+        data.government_transfers = document.getElementById('government_transfers')?.value || '';
+        data.private_transfers = document.getElementById('private_transfers')?.value || '';
+        data.untransferred_cases = document.getElementById('untransferred_cases')?.value || '';
+        data.paper_reports = document.getElementById('paper_reports')?.value || '';
+        data.waiting_time = document.getElementById('waiting_time')?.value || '';
+        data.top_team = document.getElementById('top_team')?.value || '';
+        data.average_reports = document.getElementById('average_reports')?.value || '';
+        data.response_rate = document.getElementById('response_rate')?.value || '';
+        data.average_response_time = document.getElementById('average_response_time')?.value || '';
+        data.response_time_to_intervention = document.getElementById('response_time_to_intervention')?.value || '';
+        data.absence_in_shift = document.getElementById('absence_in_shift')?.value || '';
+        data.units_notes = document.getElementById('units_notes')?.value || '';
         // جمع بيانات البلاغات الإسعافية المرتبطة
         const reportNumbers = document.querySelectorAll('.report-number');
         const reportTypes = document.querySelectorAll('.report-type');
@@ -862,6 +901,38 @@ function sendWhatsAppMessage(formName) {
         formText += `\n=== ملاحظات النوبة ===\n`;
         formText += `عدد الغياب في المناوبة: ${document.getElementById('absence_in_shift').value}\n`;
         formText += `ملاحظات برنامج الكاد: ${document.getElementById('cad_program_notes').value}\n`;
+	        } else if (formName === 'senior_paramedic_outside') {
+        formText += `===  نموذج كبار المسعفين خارجي ===\n\n`;
+        if (document.getElementById('sector').value !== 'other') {
+        formText += `القطاع: ${document.getElementById('sector').value}\n`;
+	formText += `التاريخ: ${document.getElementById('date').value}\n`;
+        formText += `التوقيت الحالي: ${document.getElementById('time').value}\n`;
+        formText += `عدد الفرق العاملة: ${document.getElementById('working_teams').value} من أصل: ${document.getElementById('total_teams').value}\n`;
+        formText += `عدد فرق التدخل السريع: ${document.getElementById('rapid_response_teams').value}\n`;
+        formText += `عدد المركبات العاملة: ${document.getElementById('operating_vehicles').value}\n`;
+        formText += `عدد المركبات المتعطلة: ${document.getElementById('broken_vehicles').value}\n`;
+        formText += `عدد المركبات الاحتياط: ${document.getElementById('reserve_vehicles').value}\n`;
+        formText += `بلاغات الدعم اللوجستي المفتوحة: ${document.getElementById('open_logistics_reports').value}\n`;
+        formText += `عدد العاملين في التنسيق والتحكم: ${document.getElementById('coordination_teams').value}\n`;
+        formText += `عدد العاملين في الدعم اللوجستي: ${document.getElementById('logistics_support_teams').value}\n`;
+        formText += `قائمة المستشفيات خارج الخدمة: ${document.getElementById('hospitals_out_of_service').value}\n`;
+        formText += `\n=== البلاغات ===\n`;
+        formText += `إجمالي بلاغات القطاع: ${document.getElementById('total_reports').value}\n`;
+        // البلاغات الإسعافية المرتبطة
+        formText += `\n=== البلاغات الإسعافية المرتبطة ===\n`;
+        const reportNumbers = document.querySelectorAll('.report-number');
+        const reportTypes = document.querySelectorAll('.report-type');
+        reportNumbers.forEach((number, index) => {
+            formText += `رقم البلاغ: ${number.value}, نوع البلاغ: ${reportTypes[index].value}\n, زمن الاستجابة: ${number.value}`;
+        });
+
+        formText += `\n=== المخرجات ===\n`;
+        formText += `متوسط زمن الاستجابة للبلاغات: ${document.getElementById('waiting_time').value}\n`;
+        formText += `\n=== ملاحظات النوبة ===\n`;
+        formText += `عدد الغياب في المناوبة: ${document.getElementById('absence_in_shift').value}\n`;
+        formText += `نقاط اسعافية مكشوفة: ${document.getElementById('units_notes').value}\n`;
+	formText += `\nاسم كبير المسعفين: ${document.getElementById('senior_paramedic_name').value}\n`;
+
     } else if (formName === 'operational_failure') {
         formText += `=== نموذج فشل تشغيلي ===\n\n`;
         if (document.getElementById('sector').value !== 'other') {
