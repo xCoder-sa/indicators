@@ -297,7 +297,7 @@
                     <label for="cad_program_notes">ملاحظات برنامج الكاد:</label>
                     <textarea id="cad_program_notes" rows="4"></textarea>
                 </div>
-                <button onclick="saveForm('senior_paramedic')">حفظ البيانات</button>
+                <button onclick="sendWhatsAppMessage('senior_paramedic')">حفظ البيانات</button>
             `;
         } else if (formName === 'operational_failure') {
             formHTML = `
@@ -345,7 +345,7 @@
                         <input type="text" id="end_minute" placeholder="الدقيقة" style="width: 45px;">
                     </div>
                 </div>
-                <button onclick="saveForm('operational_failure')">حفظ البيانات</button>
+                <button onclick="sendWhatsAppMessage('operational_failure')">حفظ البيانات</button>
             `;
         } else if (formName === 'eco_reports') {
             formHTML = `
@@ -387,7 +387,7 @@
                     <label for="notes">ملاحظات:</label>
                     <textarea id="notes" rows="4"></textarea>
                 </div>
-                <button onclick="saveForm('eco_reports')">حفظ البيانات</button>
+                <button onclick="sendWhatsAppMessage('eco_reports')">حفظ البيانات</button>
             `;
         } else if (formName === 'major_event') {
             formHTML = `
@@ -481,7 +481,7 @@
                     <label for="area_leader">قائد المنطقة المناوب:</label>
                     <input type="text" id="area_leader">
                 </div>
-                <button onclick="saveForm('major_event')">حفظ البيانات</button>
+                <button onclick="sendWhatsAppMessage('major_event')">حفظ البيانات</button>
             `;
         } else if (formName === 'support_request') {
             formHTML = `
@@ -536,7 +536,7 @@
                     <label for="senior_paramedic_name">اسم كبير المسعفين:</label>
                     <input type="text" id="senior_paramedic_name">
                 </div>
-                <button onclick="saveForm('support_request')">حفظ البيانات</button>
+                <button onclick="sendWhatsAppMessage('support_request')">حفظ البيانات</button>
             `;
         } else if (formName === 'support_activation') {
             formHTML = `
@@ -597,7 +597,7 @@
                     <label for="region_leader_name">اسم قائد المنطقة:</label>
                     <input type="text" id="region_leader_name">
                 </div>
-                <button onclick="saveForm('support_activation')">حفظ البيانات</button>
+                <button onclick="sendWhatsAppMessage('support_activation')">حفظ البيانات</button>
             `;
         }
 
@@ -810,7 +810,7 @@ function getFormData(formName) {
 }
 
 		//اوامر نسخ النماذج من هنا تبداء
-function copyForm(formName) {
+function sendWhatsAppMessage(formName) {
     let formText = '';
 
     if (formName === 'senior_paramedic') {
@@ -939,32 +939,11 @@ function copyForm(formName) {
         formText += `اسم قائد المنطقة: ${document.getElementById('region_leader_name').value}\n`;
     }
 
-    // نسخ النص
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(formText).then(() => {
-            showCopyNotification();
-        }).catch(err => {
-            fallbackCopyText(formText);
-        });
-    } else {
-        fallbackCopyText(formText);
-    }
-}
+    const encodedText = encodeURIComponent(formText);
+    const whatsappUrl = `https://wa.me/?text=${encodedText}`;
 
-function fallbackCopyText(text) {
-    const textarea = document.createElement('textarea');
-    textarea.value = text;
-    textarea.style.position = 'fixed';
-    textarea.style.top = '-9999px';
-    document.body.appendChild(textarea);
-    textarea.select();
-    try {
-        document.execCommand('copy');
-        showCopyNotification();
-    } catch (err) {
-        alert('فشل نسخ البيانات. الرجاء نسخها يدويًا.');
-    }
-    document.body.removeChild(textarea);
+    // فتح الرابط في نافذة جديدة
+    window.open(whatsappUrl, '_blank');
 }
 
 function showCopyNotification() {
@@ -993,3 +972,4 @@ function showCopyNotification() {
 
 </body>
 </html>
+
