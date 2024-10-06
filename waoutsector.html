@@ -6,87 +6,78 @@
     <title>لوحة تحكم الإسعاف</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* تحسينات التصميم */
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f4f7fc;
+            background-color: #f0f4f8;
             margin: 0;
             padding: 0;
             direction: rtl;
-            color: #333;
         }
-
         .dashboard {
             display: flex;
-            min-height: 100vh;
-            flex-direction: column;
-            background-color: #ecf0f1;
+            height: 100vh;
+            overflow: hidden;
         }
-
         .sidebar {
-            width: 250px;
-            background-color: #3498db;
+            background-color: #ffffff;
             padding: 20px;
-            color: #fff;
+            color: #333;
+            text-align: left;
+            width: 250px;
+            transition: transform 0.3s ease-in-out;
             box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+            position: fixed;
+            height: 100%;
+            z-index: 1000;
         }
-
-        .sidebar.closed {
+        .sidebar.hidden {
             transform: translateX(-100%);
         }
-
         .sidebar h1 {
             font-size: 24px;
             margin-bottom: 30px;
+            text-align: center;
         }
-
         .sidebar ul {
             list-style-type: none;
             padding: 0;
         }
-
         .sidebar ul li {
             margin-bottom: 15px;
         }
-
         .sidebar ul li a {
             display: flex;
             align-items: center;
             padding: 12px;
-            color: #fff;
+            color: #333;
             text-decoration: none;
-            background-color: #2980b9;
+            background-color: #ecf0f1;
             border-radius: 8px;
+            font-size: 16px;
             transition: background-color 0.3s;
         }
-
         .sidebar ul li a:hover {
-            background-color: #1d6a9c;
+            background-color: #bdc3c7;
         }
-
         .sidebar ul li a i {
             margin-left: 10px;
         }
-
         .container {
             flex: 1;
             padding: 30px;
             background-color: #fff;
-            margin: 10px;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             overflow-y: auto;
-            transition: margin-left 0.3s ease;
+            margin-left: 250px;
+            transition: margin-left 0.3s ease-in-out;
         }
-
         h2 {
             color: #3498db;
             font-size: 24px;
             margin-bottom: 20px;
             text-align: center;
         }
-
         label {
             margin-top: 10px;
             display: block;
@@ -94,7 +85,6 @@
             font-weight: bold;
             font-size: 15px;
         }
-
         input[type="text"], input[type="date"], input[type="time"], input[type="datetime-local"], textarea, select {
             width: 100%;
             padding: 10px;
@@ -104,12 +94,10 @@
             font-size: 14px;
             transition: border-color 0.3s;
         }
-
         input[type="text"]:focus, input[type="date"]:focus, input[type="time"]:focus, select:focus {
             border-color: #3498db;
             outline: none;
         }
-
         button {
             width: 100%;
             padding: 12px;
@@ -121,12 +109,16 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
-
         button:hover {
             background-color: #1d6a9c;
         }
-
-        /* تحسين المظهر العام للنماذج */
+        .copy-notification {
+            display: none;
+            text-align: center;
+            color: green;
+            font-size: 14px;
+            margin-top: 15px;
+        }
         .form-section {
             margin-bottom: 30px;
             background-color: #f9f9f9;
@@ -134,133 +126,491 @@
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
-
-        /* زر القائمة للهواتف المحمولة */
-        .menu-toggle {
+        /* Hamburger Menu */
+        .hamburger {
             display: none;
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 30px;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            font-size: 24px;
+            color: #333;
+            z-index: 1100;
             cursor: pointer;
-            color: #3498db;
         }
-
-        @media (max-width: 768px) {
-            .menu-toggle {
-                display: block;
+        /* Responsive design */
+        @media (max-width: 767px) {
+            .sidebar {
+                transform: translateX(-100%);
             }
-
-
-            .sidebar.open {
+            .sidebar.visible {
                 transform: translateX(0);
             }
-
             .container {
-                margin: 0;
+                margin-left: 0;
                 padding: 20px;
             }
-        }
-
-        /* تحسين الشريط الجانبي ليكون قابلاً للطي */
-        .container.with-sidebar {
-            margin-left: 250px; /* تعديل المسافة */
-        }
-
-        .container.full-width {
-            margin-left: 0;
+            .hamburger {
+                display: block;
+            }
         }
     </style>
 </head>
 <body>
 
-<!-- زر القائمة في الهواتف المحمولة -->
-<div class="menu-toggle" id="menuToggle">
-    <i class="fas fa-bars"></i>
-</div>
-
-<div class="dashboard">
-    <!-- الشريط الجانبي -->
-    <div class="sidebar" id="sidebar">
-        <h1>لوحة التحكم</h1>
-        <ul>
-            <li><a href="#" onclick="loadForm('senior_paramedic')"><i class="fas fa-user-md"></i> كبار المسعفين</a></li>
-            <li><a href="#" onclick="loadForm('rapid_response_reports')"><i class="fas fa-car-crash"></i> بلاغات التدخل السريع</a></li>
-            <li><a href="#" onclick="loadForm('senior_paramedic_outside')"><i class="fas fa-user-md"></i> كبار المسعفين (خارجي)</a></li>
-            <li><a href="#" onclick="loadForm('operational_failure')"><i class="fas fa-exclamation-triangle"></i> فشل تشغيلي</a></li>
-            <li><a href="#" onclick="loadForm('eco_reports')"><i class="fas fa-file-alt"></i> بلاغات إيكو</a></li>
-            <li><a href="#" onclick="loadForm('major_event')"><i class="fas fa-calendar-alt"></i> حدث جسيم</a></li>
-            <li><a href="#" onclick="loadForm('support_request')"><i class="fas fa-handshake"></i> تفعيل خطة المساندة</a></li>
-            <li><a href="#" onclick="loadForm('support_activation')"><i class="fas fa-check-circle"></i> قبول خطة المساندة</a></li>
-        </ul>
+    <!-- Hamburger Menu Icon -->
+    <div class="hamburger" id="hamburger">
+        <i class="fas fa-bars"></i>
     </div>
 
-    <!-- المحتوى الرئيسي -->
-    <div class="container with-sidebar" id="form-container">
-        <!-- النموذج الحالي يظهر هنا -->
+    <div class="dashboard">
+        <!-- الشريط الجانبي -->
+        <div class="sidebar" id="sidebar">
+            <h1>لوحة التحكم</h1>
+            <ul>
+                <li><a href="#" onclick="loadForm('senior_paramedic')"><i class="fas fa-user-md"></i> نموذج كبار المسعفين (داخلي)</a></li>
+                <li><a href="#" onclick="loadForm('rapid_response_reports')"><i class="fas fa-car-crash"></i> نموذج بلاغات التدخل السريع</a></li>
+                <li><a href="#" onclick="loadForm('senior_paramedic_outside')"><i class="fas fa-user-md"></i> نموذج كبار المسعفين (خارجي)</a></li>
+                <li><a href="#" onclick="loadForm('operational_failure')"><i class="fas fa-exclamation-triangle"></i> نموذج فشل تشغيلي</a></li>
+                <li><a href="#" onclick="loadForm('eco_reports')"><i class="fas fa-file-alt"></i> نموذج بلاغات إيكو</a></li>
+                <li><a href="#" onclick="loadForm('major_event')"><i class="fas fa-calendar-alt"></i> نموذج حدث جسيم</a></li>
+                <li><a href="#" onclick="loadForm('support_request')"><i class="fas fa-handshake"></i> طلب تفعيل خطة المساندة</a></li>
+                <li><a href="#" onclick="loadForm('support_activation')"><i class="fas fa-check-circle"></i> قبول تفعيل خطة المساندة</a></li>
+            </ul>
+        </div>
+
+        <!-- المحتوى الرئيسي -->
+        <div class="container" id="form-container">
+            <!-- النموذج الحالي يظهر هنا -->
+        </div>
     </div>
-</div>
 
-<script>
-    // لفتح وإغلاق القائمة الجانبية في الهواتف المحمولة وأجهزة الكمبيوتر
-    const menuToggle = document.getElementById('menuToggle');
-    const sidebar = document.getElementById('sidebar');
-    const container = document.getElementById('form-container');
+    <div class="copy-notification" id="copyNotification">
+        تم النسخ بنجاح! يمكنك الآن إرسالها في قروب القيادات.
+    </div>
 
-    menuToggle.addEventListener('click', function() {
-        sidebar.classList.toggle('open');
-        if (sidebar.classList.contains('open')) {
-            container.classList.remove('full-width');
-            container.classList.add('with-sidebar');
-        } else {
-            container.classList.remove('with-sidebar');
-            container.classList.add('full-width');
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const hamburger = document.getElementById('hamburger');
+        const container = document.querySelector('.container');
+
+        // تفعيل أو إخفاء الشريط الجانبي عند النقر على الهامبرجر
+        hamburger.addEventListener('click', () => {
+            sidebar.classList.toggle('visible');
+        });
+
+        // إخفاء الشريط الجانبي عند النقر خارج الشريط الجانبي
+        document.addEventListener('click', function(event) {
+            if (!sidebar.contains(event.target) && !hamburger.contains(event.target) && sidebar.classList.contains('visible')) {
+                sidebar.classList.remove('visible');
+            }
+        });
+
+        function loadForm(formName) {
+            const formContainer = document.getElementById('form-container');
+            let formHTML = '';
+
+            if (formName === 'senior_paramedic') {
+                formHTML = `
+                    <h2>نموذج كبار المسعفين</h2>
+                    <div class="form-section">
+                        <label for="sector">اختر القطاع:</label>
+                        <select id="sector" onchange="toggleOtherSectorInput()">
+                            <option value="الوسط">الوسط</option>
+                            <option value="الجنوب">الجنوب</option>
+                            <option value="الشرق">الشرق</option>
+                            <option value="الغرب">الغرب</option>
+                            <option value="الشمال">الشمال</option>
+                            <option value="other">أخرى</option>
+                        </select>
+                        <input type="text" id="other_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
+
+                        <label for="date">التاريخ:</label>
+                        <input type="date" id="date" readonly>
+
+                        <label for="time">التوقيت الحالي:</label>
+                        <select id="time">
+                            <option value="0:00 إلى 6:00">0:00 إلى 6:00</option>
+                            <option value="6:00 إلى 12:00">6:00 إلى 12:00</option>
+                            <option value="12:00 إلى 18:00">12:00 إلى 18:00</option>
+                            <option value="18:00 إلى 0:00">18:00 إلى 0:00</option>
+                        </select>
+
+                        <label for="working_teams">عدد الفرق العاملة:</label>
+                        <input type="text" id="working_teams">
+
+                        <label for="total_teams">من أصل:</label>
+                        <input type="text" id="total_teams">
+
+                        <div class="input-row">
+                            <div class="input-small">
+                                <label for="rapid_response_teams">عدد فرق التدخل السريع:</label>
+                                <input type="text" id="rapid_response_teams">
+                            </div>
+                            <div class="input-small">
+                                <label for="operating_vehicles">عدد المركبات العاملة:</label>
+                                <input type="text" id="operating_vehicles">
+                            </div>
+                            <div class="input-small">
+                                <label for="broken_vehicles">عدد المركبات المتعطلة:</label>
+                                <input type="text" id="broken_vehicles">
+                            </div>
+                            <div class="input-small">
+                                <label for="reserve_vehicles">عدد المركبات الاحتياط:</label>
+                                <input type="text" id="reserve_vehicles">
+                            </div>
+                        </div>
+
+                        <label for="open_logistics_reports">بلاغات الدعم اللوجستي المفتوحة:</label>
+                        <input type="text" id="open_logistics_reports">
+
+                        <label for="coordination_teams">عدد العاملين في التنسيق والتحكم:</label>
+                        <input type="text" id="coordination_teams">
+
+                        <label for="logistics_support_teams">عدد العاملين في الدعم اللوجستي:</label>
+                        <input type="text" id="logistics_support_teams">
+
+                        <label for="hospitals_out_of_service">قائمة المستشفيات خارج الخدمة:</label>
+                        <input type="text" id="hospitals_out_of_service">
+
+                        <h2>الطلب</h2>
+
+                        <label for="eco_reports">عدد بلاغات إنعاش إيكو:</label>
+                        <input type="text" id="eco_reports">
+
+                        <label for="delta_reports">عدد بلاغات دلتا:</label>
+                        <input type="text" id="delta_reports">
+
+                        <label for="charlie_reports">عدد بلاغات تشارلي:</label>
+                        <input type="text" id="charlie_reports">
+
+                        <label for="bravo_reports">عدد بلاغات برافو:</label>
+                        <input type="text" id="bravo_reports">
+
+                        <label for="alpha_reports">عدد بلاغات ألفا:</label>
+                        <input type="text" id="alpha_reports">
+
+                        <label for="omega_reports">عدد بلاغات أوميغا:</label>
+                        <input type="text" id="omega_reports">
+
+                        <label for="catheter_reports">عدد بلاغات القسطرة:</label>
+                        <input type="text" id="catheter_reports">
+
+                        <label for="stroke_reports">عدد بلاغات السكتة الدماغية:</label>
+                        <input type="text" id="stroke_reports">
+
+                        <h2>البلاغات</h2>
+
+                        <label for="total_reports">إجمالي بلاغات القطاع:</label>
+                        <input type="text" id="total_reports">
+
+                        <label for="government_transfers">عدد الحالات المنقولة للقطاع الحكومي:</label>
+                        <input type="text" id="government_transfers">
+
+                        <label for="private_transfers">عدد الحالات المنقولة للقطاع الخاص:</label>
+                        <input type="text" id="private_transfers">
+
+                        <label for="untransferred_cases">عدد الحالات الغير منقولة:</label>
+                        <input type="text" id="untransferred_cases">
+
+                        <label for="paper_reports">عدد البلاغات المدونة ورقياً:</label>
+                        <input type="text" id="paper_reports">
+
+                        <h2>المخرجات</h2>
+
+                        <label for="waiting_time">متوسط زمن الانتظار في قائمة الترحيل:</label>
+                        <input type="text" id="waiting_time">
+
+                        <label for="top_team">اعلى فرقة اسعافيه في عدد البلاغات:</label>
+                        <input type="text" id="top_team">
+
+                        <label for="average_reports">متوسط عدد البلاغات للفرق الاسعافية:</label>
+                        <input type="text" id="average_reports">
+
+                        <label for="response_rate">نسبة زمن الاستجابة خلال 8 دقائق للبلاغات الساخنة:</label>
+                        <input type="text" id="response_rate">
+
+                        <label for="average_response_time">متوسط زمن الاستجابة لبلاغات الحوادث المرورية الساخنة:</label>
+                        <input type="text" id="average_response_time">
+
+                        <label for="response_time_to_intervention">زمن الاستجابة حتى المباشرة:</label>
+                        <input type="text" id="response_time_to_intervention">
+
+                        <h2>ملاحظات النوبة</h2>
+
+                        <label for="absence_in_shift">عدد الغياب في المناوبة:</label>
+                        <input type="text" id="absence_in_shift">
+
+                        <label for="cad_program_notes">ملاحظات برنامج الكاد:</label>
+                        <textarea id="cad_program_notes" rows="4"></textarea>
+                    </div>
+                    <button onclick="sendWhatsAppMessage('senior_paramedic')">إرسال النموذج بالواتساب</button>
+                `;
+            }
+            // ... (استمر في إضافة النماذج الأخرى بنفس الطريقة)
+            else if (formName === 'rapid_response_reports') {
+                formHTML = `
+                    <h2>نموذج بلاغات التدخل السريع</h2>
+                    <div class="form-section">
+                        <label for="sector_west">قطاع عمليات الغرب:</label>
+                        <input type="text" id="sector_west" placeholder="أدخل العدد">
+
+                        <label for="sector_east">قطاع عمليات الشرق:</label>
+                        <input type="text" id="sector_east" placeholder="أدخل العدد">
+
+                        <label for="sector_central">قطاع عمليات الوسط:</label>
+                        <input type="text" id="sector_central" placeholder="أدخل العدد">
+
+                        <label for="sector_north">قطاع عمليات الشمال:</label>
+                        <input type="text" id="sector_north" placeholder="أدخل العدد">
+
+                        <label for="sector_south">قطاع عمليات الجنوب:</label>
+                        <input type="text" id="sector_south" placeholder="أدخل العدد">
+                    </div>
+                    <button onclick="sendWhatsAppMessage('rapid_response_reports')">إرسال النموذج بالواتساب</button>
+                `;
+            }
+            // يمكنك متابعة إضافة النماذج الأخرى هنا...
+
+            formContainer.innerHTML = formHTML;
+
+            updateDateTime(formName);
         }
-    });
 
-    function loadForm(formName) {
-        const formContainer = document.getElementById('form-container');
-        let formHTML = '';
+        function updateDateTime(formName) {
+            const today = new Date().toISOString().split('T')[0];
 
-        if (formName === 'senior_paramedic') {
-            formHTML = `
-                <h2>نموذج كبار المسعفين</h2>
-                <div class="form-section">
-                    <label for="sector">اختر القطاع:</label>
-                    <select id="sector">
-                        <option value="الوسط">الوسط</option>
-                        <option value="الجنوب">الجنوب</option>
-                        <option value="الشرق">الشرق</option>
-                        <option value="الغرب">الغرب</option>
-                        <option value="الشمال">الشمال</option>
+            const dateInputs = document.querySelectorAll("input[type='date']");
+            dateInputs.forEach(input => {
+                input.value = today;
+            });
+        }
+
+        function addReportField() {
+            const reportsContainer = document.getElementById('reports-container');
+            const newField = `
+                <div class="input-pair">
+                    <input type="text" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
+                    <select class="report-type" style="width: 120px;">
+                        <option value="إيكو">إيكو</option>
+                        <option value="دلتا">دلتا</option>
+                        <option value="تشارلي">تشارلي</option>
+                        <option value="برافو">برافو</option>
                     </select>
-
-                    <label for="date">التاريخ:</label>
-                    <input type="date" id="date">
-
-                    <label for="time">التوقيت:</label>
-                    <input type="time" id="time">
-
-                    <label for="working_teams">عدد الفرق العاملة:</label>
-                    <input type="text" id="working_teams">
-                    
-                    <button onclick="closeSidebar()">إرسال</button>
                 </div>
             `;
+            reportsContainer.insertAdjacentHTML('beforeend', newField);
         }
 
-        formContainer.innerHTML = formHTML;
-    }
+        function relatedreports() {
+            const reportsContainer = document.getElementById('reports-container');
+            const newField = `
+                <div class="input-pair">
+                    <input type="text" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
+                    <select class="report-type" style="width: 120px;">
+                        <option value="إيكو">إيكو</option>
+                        <option value="دلتا">دلتا</option>
+                        <option value="تشارلي">تشارلي</option>
+                        <option value="برافو">برافو</option>
+                    </select>
+                    <input type="text" placeholder="زمن الاستجابة" class="waiting_time" style="width: 120px;">
+                </div>
+            `;
+            reportsContainer.insertAdjacentHTML('beforeend', newField);
+        }
 
-    // إغلاق الشريط الجانبي بعد اختيار النموذج
-    function closeSidebar() {
-        sidebar.classList.remove('open');
-        container.classList.add('full-width');
-    }
+        function saveForm(formName) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', `save_data.php?form=${formName}`, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
 
-    // تحميل النموذج الافتراضي عند فتح الصفحة
-    loadForm('senior_paramedic');
-</script>
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    if (response.status === 'success') {
+                        copyForm(formName);
+                        alert("تم إرسال النموذج بالواتساب بنجاح!");
+                    } else {
+                        alert("حدث خطأ: " + response.message);
+                    }
+                }
+            };
+
+            xhr.onerror = function () {
+                alert("فشل الاتصال بالخادم. الرجاء المحاولة مرة أخرى.");
+            };
+
+            const data = getFormData(formName);
+
+            // تحقق إذا كانت البيانات غير كاملة
+            if (!data || Object.keys(data).length === 0) {
+                alert("البيانات المدخلة غير صحيحة.");
+                return;
+            }
+
+            xhr.send(JSON.stringify(data));
+        }
+
+        function getFormData(formName) {
+            const data = {};
+
+            if (formName === 'senior_paramedic') {
+                data.sector = document.getElementById('sector')?.value || '';
+                data.other_sector = document.getElementById('other_sector')?.value || '';
+                data.date = document.getElementById('date')?.value || '';
+                data.time = document.getElementById('time')?.value || '';
+                data.working_teams = document.getElementById('working_teams')?.value || '';
+                data.total_teams = document.getElementById('total_teams')?.value || '';
+                data.rapid_response_teams = document.getElementById('rapid_response_teams')?.value || '';
+                data.operating_vehicles = document.getElementById('operating_vehicles')?.value || '';
+                data.broken_vehicles = document.getElementById('broken_vehicles')?.value || '';
+                data.reserve_vehicles = document.getElementById('reserve_vehicles')?.value || '';
+                data.open_logistics_reports = document.getElementById('open_logistics_reports')?.value || '';
+                data.coordination_teams = document.getElementById('coordination_teams')?.value || '';
+                data.logistics_support_teams = document.getElementById('logistics_support_teams')?.value || '';
+                data.hospitals_out_of_service = document.getElementById('hospitals_out_of_service')?.value || '';
+                data.eco_reports = document.getElementById('eco_reports')?.value || '';
+                data.delta_reports = document.getElementById('delta_reports')?.value || '';
+                data.charlie_reports = document.getElementById('charlie_reports')?.value || '';
+                data.bravo_reports = document.getElementById('bravo_reports')?.value || '';
+                data.alpha_reports = document.getElementById('alpha_reports')?.value || '';
+                data.omega_reports = document.getElementById('omega_reports')?.value || '';
+                data.catheter_reports = document.getElementById('catheter_reports')?.value || '';
+                data.stroke_reports = document.getElementById('stroke_reports')?.value || '';
+                data.total_reports = document.getElementById('total_reports')?.value || '';
+                data.government_transfers = document.getElementById('government_transfers')?.value || '';
+                data.private_transfers = document.getElementById('private_transfers')?.value || '';
+                data.untransferred_cases = document.getElementById('untransferred_cases')?.value || '';
+                data.paper_reports = document.getElementById('paper_reports')?.value || '';
+                data.waiting_time = document.getElementById('waiting_time')?.value || '';
+                data.top_team = document.getElementById('top_team')?.value || '';
+                data.average_reports = document.getElementById('average_reports')?.value || '';
+                data.response_rate = document.getElementById('response_rate')?.value || '';
+                data.average_response_time = document.getElementById('average_response_time')?.value || '';
+                data.response_time_to_intervention = document.getElementById('response_time_to_intervention')?.value || '';
+                data.absence_in_shift = document.getElementById('absence_in_shift')?.value || '';
+                data.cad_program_notes = document.getElementById('cad_program_notes')?.value || '';
+            }
+            // استمر في جمع بيانات النماذج الأخرى بنفس الطريقة...
+
+            return data;
+        }
+
+        // أوامر نسخ النماذج من هنا تبدأ
+        function sendWhatsAppMessage(formName) {
+            let formText = '';
+
+            if (formName === 'senior_paramedic') {
+                formText += `=== نموذج كبار المسعفين ===\n\n`;
+                if (document.getElementById('sector').value !== 'other') {
+                    formText += `القطاع: ${document.getElementById('sector').value}\n`;
+                } else {
+                    formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
+                }
+                formText += `التاريخ: ${document.getElementById('date').value}\n`;
+                formText += `التوقيت الحالي: ${document.getElementById('time').value}\n`;
+                formText += `عدد الفرق العاملة: ${document.getElementById('working_teams').value} من أصل: ${document.getElementById('total_teams').value}\n`;
+                formText += `عدد فرق التدخل السريع: ${document.getElementById('rapid_response_teams').value}\n`;
+                formText += `عدد المركبات العاملة: ${document.getElementById('operating_vehicles').value}\n`;
+                formText += `عدد المركبات المتعطلة: ${document.getElementById('broken_vehicles').value}\n`;
+                formText += `عدد المركبات الاحتياط: ${document.getElementById('reserve_vehicles').value}\n`;
+                formText += `بلاغات الدعم اللوجستي المفتوحة: ${document.getElementById('open_logistics_reports').value}\n`;
+                formText += `عدد العاملين في التنسيق والتحكم: ${document.getElementById('coordination_teams').value}\n`;
+                formText += `عدد العاملين في الدعم اللوجستي: ${document.getElementById('logistics_support_teams').value}\n`;
+                formText += `قائمة المستشفيات خارج الخدمة: ${document.getElementById('hospitals_out_of_service').value}\n`;
+                formText += `\n=== الطلب ===\n`;
+                formText += `عدد بلاغات إنعاش إيكو: ${document.getElementById('eco_reports').value}\n`;
+                formText += `عدد بلاغات دلتا: ${document.getElementById('delta_reports').value}\n`;
+                formText += `عدد بلاغات تشارلي: ${document.getElementById('charlie_reports').value}\n`;
+                formText += `عدد بلاغات برافو: ${document.getElementById('bravo_reports').value}\n`;
+                formText += `عدد بلاغات ألفا: ${document.getElementById('alpha_reports').value}\n`;
+                formText += `عدد بلاغات أوميغا: ${document.getElementById('omega_reports').value}\n`;
+                formText += `عدد بلاغات القسطرة: ${document.getElementById('catheter_reports').value}\n`;
+                formText += `عدد بلاغات السكتة الدماغية: ${document.getElementById('stroke_reports').value}\n\n`;
+                formText += `\n=== البلاغات ===\n`;
+                formText += `إجمالي بلاغات القطاع: ${document.getElementById('total_reports').value}\n`;
+                formText += `عدد الحالات المنقولة للقطاع الحكومي: ${document.getElementById('government_transfers').value}\n`;
+                formText += `عدد الحالات المنقولة للقطاع الخاص: ${document.getElementById('private_transfers').value}\n`;
+                formText += `عدد الحالات الغير منقولة: ${document.getElementById('untransferred_cases').value}\n`;
+                formText += `عدد البلاغات المدونة ورقياً: ${document.getElementById('paper_reports').value}\n`;
+                formText += `\n=== المخرجات ===\n`;
+                formText += `متوسط زمن الانتظار في قائمة الترحيل: ${document.getElementById('waiting_time').value}\n`;
+                formText += `اعلى فرقة اسعافيه في عدد البلاغات: ${document.getElementById('top_team').value}\n`;
+                formText += `متوسط عدد البلاغات للفرق الاسعافية: ${document.getElementById('average_reports').value}\n`;
+                formText += `نسبة زمن الاستجابة خلال 8 دقائق للبلاغات الساخنة: ${document.getElementById('response_rate').value}\n`;
+                formText += `متوسط زمن الاستجابة لبلاغات الحوادث المرورية الساخنة: ${document.getElementById('average_response_time').value}\n`;
+                formText += `زمن الاستجابة حتى المباشرة: ${document.getElementById('response_time_to_intervention').value}\n\n`;
+                formText += `\n=== ملاحظات النوبة ===\n`;
+                formText += `عدد الغياب في المناوبة: ${document.getElementById('absence_in_shift').value}\n`;
+                formText += `ملاحظات برنامج الكاد: ${document.getElementById('cad_program_notes').value}\n`;
+            }
+            // ... (استمر في إضافة النصوص للنماذج الأخرى بنفس الطريقة)
+            else if (formName === 'rapid_response_reports') {
+                formText += `=== نموذج بلاغات التدخل السريع ===\n\n`;
+                formText += `قطاع عمليات الغرب: ${document.getElementById('sector_west').value}\n`;
+                formText += `قطاع عمليات الشرق: ${document.getElementById('sector_east').value}\n`;
+                formText += `قطاع عمليات الوسط: ${document.getElementById('sector_central').value}\n`;
+                formText += `قطاع عمليات الشمال: ${document.getElementById('sector_north').value}\n`;
+                formText += `قطاع عمليات الجنوب: ${document.getElementById('sector_south').value}\n`;
+            }
+
+            console.log(formText); // تأكيد عرض البيانات المجمعة
+            const encodedText = encodeURIComponent(formText);
+            const whatsappUrl = `https://wa.me/?text=${encodedText}`;
+
+            // فتح الرابط في نافذة جديدة
+            window.open(whatsappUrl, '_blank');
+        }
+
+        function showCopyNotification() {
+            const notification = document.getElementById('copyNotification');
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        function toggleOtherSectorInput() {
+            const sectorSelect = document.getElementById("sector");
+            const otherSectorInput = document.getElementById("other_sector");
+            if (sectorSelect.value === "other") {
+                otherSectorInput.style.display = "block";
+            } else {
+                otherSectorInput.style.display = "none";
+            }
+        }
+
+        function selectCurrentTime() {
+            // الحصول على التوقيت الحالي حسب توقيت السعودية (UTC+3)
+            const currentTime = new Date().toLocaleString("en-US", {timeZone: "Asia/Riyadh"});
+            const hours = new Date(currentTime).getHours();
+
+            let selectedOption = '';
+
+            // تحديد الفترة الزمنية بناءً على الساعة الحالية
+            if (hours >= 0 && hours < 6) {
+                selectedOption = "0:00 إلى 6:00";
+            } else if (hours >= 6 && hours < 12) {
+                selectedOption = "6:00 إلى 12:00";
+            } else if (hours >= 12 && hours < 18) {
+                selectedOption = "12:00 إلى 18:00";
+            } else if (hours >= 18 && hours < 24) {
+                selectedOption = "18:00 إلى 0:00";
+            }
+
+            // العثور على جميع عناصر الـ select التي تحتوي على التوقيت
+            const timeSelects = document.querySelectorAll('select[id="time"]');
+            
+            // تطبيق التوقيت المحدد على جميع النماذج
+            timeSelects.forEach(function(timeSelect) {
+                timeSelect.value = selectedOption;
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            loadForm('senior_paramedic'); // تحميل النموذج الافتراضي
+            selectCurrentTime(); // تحديد التوقيت الحالي تلقائياً
+        });
+    </script>
 
 </body>
 </html>
