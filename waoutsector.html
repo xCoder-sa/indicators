@@ -47,9 +47,14 @@
             padding: 8px 12px;
             border-radius: 4px;
             transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
         }
         .navbar .menu li a:hover {
             background-color: #ecf0f1;
+        }
+        .navbar .menu li a i {
+            margin-left: 8px;
         }
         /* أيقونة الهامبرجر للهواتف */
         .hamburger {
@@ -58,35 +63,28 @@
             color: #333;
             cursor: pointer;
         }
-        /* القائمة المنسدلة */
-        .dropdown {
-            display: none;
-            position: absolute;
-            top: 60px;
-            right: 20px;
-            background-color: #ffffff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            border-radius: 4px;
-            width: 200px;
-            z-index: 999;
-        }
-        .dropdown ul {
-            list-style-type: none;
-            padding: 10px 0;
-            margin: 0;
-        }
-        .dropdown ul li {
-            padding: 8px 20px;
-        }
-        .dropdown ul li a {
-            display: block;
-            width: 100%;
-            color: #333;
-            text-decoration: none;
-            transition: background-color 0.3s;
-        }
-        .dropdown ul li a:hover {
-            background-color: #ecf0f1;
+        /* القائمة المنسدلة على الهواتف */
+        @media (max-width: 767px) {
+            .navbar .menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px; /* ارتفاع شريط التنقل */
+                right: 20px;
+                background-color: #ffffff;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                border-radius: 4px;
+                width: 200px;
+            }
+            .navbar .menu.active {
+                display: flex;
+            }
+            .navbar .menu li {
+                margin: 10px 0;
+            }
+            .hamburger {
+                display: block;
+            }
         }
         /* المحتوى الرئيسي */
         .container {
@@ -111,7 +109,7 @@
             font-weight: bold;
             font-size: 15px;
         }
-        input[type="text"], input[type="date"], input[type="time"], input[type="datetime-local"], textarea, select {
+        input[type="text"], input[type="date"], textarea, select {
             width: 100%;
             padding: 10px;
             margin: 5px 0 15px;
@@ -120,7 +118,7 @@
             font-size: 14px;
             transition: border-color 0.3s;
         }
-        input[type="text"]:focus, input[type="date"]:focus, input[type="time"]:focus, select:focus {
+        input[type="text"]:focus, input[type="date"]:focus, select:focus {
             border-color: #3498db;
             outline: none;
         }
@@ -152,25 +150,15 @@
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
-        /* Responsive design */
-        @media (max-width: 767px) {
-            .navbar .menu {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 60px;
-                right: 20px;
-                background-color: #ffffff;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-                border-radius: 4px;
-                width: 200px;
-            }
-            .navbar .menu.active {
-                display: flex;
-            }
-            .hamburger {
-                display: block;
-            }
+        /* تصميم خاص بالمدخلات الصغيرة داخل النماذج */
+        .input-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .input-small {
+            flex: 1;
+            min-width: 120px;
         }
     </style>
 </head>
@@ -194,20 +182,6 @@
         </div>
     </nav>
 
-    <!-- القائمة المنسدلة على الهواتف -->
-    <div class="dropdown" id="dropdown">
-        <ul>
-            <li><a href="#" onclick="loadForm('senior_paramedic')"><i class="fas fa-user-md"></i> نموذج كبار المسعفين (داخلي)</a></li>
-            <li><a href="#" onclick="loadForm('rapid_response_reports')"><i class="fas fa-car-crash"></i> نموذج بلاغات التدخل السريع</a></li>
-            <li><a href="#" onclick="loadForm('senior_paramedic_outside')"><i class="fas fa-user-md"></i> نموذج كبار المسعفين (خارجي)</a></li>
-            <li><a href="#" onclick="loadForm('operational_failure')"><i class="fas fa-exclamation-triangle"></i> نموذج فشل تشغيلي</a></li>
-            <li><a href="#" onclick="loadForm('eco_reports')"><i class="fas fa-file-alt"></i> نموذج بلاغات إيكو</a></li>
-            <li><a href="#" onclick="loadForm('major_event')"><i class="fas fa-calendar-alt"></i> نموذج حدث جسيم</a></li>
-            <li><a href="#" onclick="loadForm('support_request')"><i class="fas fa-handshake"></i> طلب تفعيل خطة المساندة</a></li>
-            <li><a href="#" onclick="loadForm('support_activation')"><i class="fas fa-check-circle"></i> قبول تفعيل خطة المساندة</a></li>
-        </ul>
-    </div>
-
     <!-- المحتوى الرئيسي -->
     <div class="container" id="form-container">
         <!-- النموذج الحالي يظهر هنا -->
@@ -220,23 +194,17 @@
     <script>
         const hamburger = document.getElementById('hamburger');
         const menu = document.getElementById('menu');
-        const dropdown = document.getElementById('dropdown');
 
         // تفعيل أو إخفاء القائمة على الهواتف عند النقر على الهامبرجر
-        hamburger.addEventListener('click', () => {
-            dropdown.classList.toggle('active');
-            if (dropdown.classList.contains('active')) {
-                dropdown.style.display = 'block';
-            } else {
-                dropdown.style.display = 'none';
-            }
+        hamburger.addEventListener('click', (e) => {
+            e.stopPropagation(); // منع النقر من الانتشار إلى المستمعات الأخرى
+            menu.classList.toggle('active');
         });
 
         // إخفاء القائمة عند النقر خارجها
         document.addEventListener('click', function(event) {
-            if (!dropdown.contains(event.target) && !hamburger.contains(event.target)) {
-                dropdown.classList.remove('active');
-                dropdown.style.display = 'none';
+            if (!menu.contains(event.target) && !hamburger.contains(event.target)) {
+                menu.classList.remove('active');
             }
         });
 
@@ -381,7 +349,7 @@
                     <button onclick="sendWhatsAppMessage('senior_paramedic')">إرسال النموذج بالواتساب</button>
                 `;
             }
-            // ... (استمر في إضافة النماذج الأخرى بنفس الطريقة)
+            // أضف بقية النماذج هنا بنفس الطريقة
             else if (formName === 'rapid_response_reports') {
                 formHTML = `
                     <h2>نموذج بلاغات التدخل السريع</h2>
@@ -506,7 +474,7 @@
                         <input type="text" id="absence_in_shift">
                         <label for="units_notes">نقاط اسعافية مكشوفة:</label>
                         <input type="text" id="units_notes">
-                        <label for="senior_paramedic_name"> كبير المسعفين المناوب:</label>
+                        <label for="senior_paramedic_name">اسم كبير المسعفين المناوب:</label>
                         <textarea id="senior_paramedic_name" rows="4"></textarea>
                     </div>
                     <button onclick="sendWhatsAppMessage('senior_paramedic_outside')">إرسال النموذج بالواتساب</button>
