@@ -404,7 +404,425 @@
                     <button onclick="sendWhatsAppMessage('rapid_response_reports')">إرسال النموذج بالواتساب</button>
                 `;
             }
-            // يمكنك متابعة إضافة النماذج الأخرى هنا...
+            else if (formName === 'senior_paramedic_outside') {
+                formHTML = `
+                    <h2>نموذج كبار المسعفين (خارجي)</h2>
+                    <div class="form-section">
+                        <label for="sector">اختر القطاع:</label>
+                        <select id="sector" onchange="toggleOtherSectorInput()">
+                            <option value="رماح">رماح</option>
+                            <option value="الافلاج">الافلاج</option>
+                            <option value="الخرج">الخرج</option>
+                            <option value="الدرعية">الدرعية</option>
+                            <option value="الدوادمي">الدوادمي</option>
+                            <option value="الزلفي">الزلفي</option>
+                            <option value="الغاط">الغاط</option>
+                            <option value="القويعية">القويعية</option>
+                            <option value="المجمعة">المجمعة</option>
+                            <option value="المزاحمية">المزاحمية</option>
+                            <option value="حوطة بني تميم">حوطة بني تميم</option>
+                            <option value="شقراء">شقراء</option>
+                            <option value="عفيف">عفيف</option>
+                            <option value="وادي الدواسر">وادي الدواسر</option>
+                            <option value="other">أخرى</option>
+                        </select>
+                        <input type="text" id="other_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
+
+                        <label for="date">التاريخ:</label>
+                        <input type="date" id="date" readonly>
+
+                        <label for="time">التوقيت الحالي:</label>
+                        <select id="time">
+                            <option value="09:00 إلى 15:00">09:00 إلى 15:00</option>
+                            <option value="15:00 إلى 21:00">15:00 إلى 21:00</option>
+                            <option value="21:00 إلى 03:00">21:00 إلى 03:00</option>
+                            <option value="03:00 إلى 09:00">03:00 إلى 09:00</option>
+                        </select>
+
+                        <label for="working_teams">عدد الفرق العاملة:</label>
+                        <input type="text" id="working_teams">
+
+                        <label for="total_teams">من أصل:</label>
+                        <input type="text" id="total_teams">
+
+                        <div class="input-row">
+                            <div class="input-small">
+                                <label for="rapid_response_teams">عدد فرق التدخل السريع:</label>
+                                <input type="text" id="rapid_response_teams">
+                            </div>
+                            <div class="input-small">
+                                <label for="operating_vehicles">عدد المركبات العاملة:</label>
+                                <input type="text" id="operating_vehicles">
+                            </div>
+                            <div class="input-small">
+                                <label for="broken_vehicles">عدد المركبات المتعطلة:</label>
+                                <input type="text" id="broken_vehicles">
+                            </div>
+                            <div class="input-small">
+                                <label for="reserve_vehicles">عدد المركبات الاحتياط:</label>
+                                <input type="text" id="reserve_vehicles">
+                            </div>
+                        </div>
+
+                        <label for="open_logistics_reports">بلاغات الدعم اللوجستي المفتوحة:</label>
+                        <input type="text" id="open_logistics_reports">
+
+                        <label for="coordination_teams">عدد العاملين في التنسيق والتحكم:</label>
+                        <input type="text" id="coordination_teams">
+
+                        <label for="logistics_support_teams">عدد العاملين في الدعم اللوجستي:</label>
+                        <input type="text" id="logistics_support_teams">
+
+                        <label for="hospitals_out_of_service">قائمة المستشفيات خارج الخدمة:</label>
+                        <input type="text" id="hospitals_out_of_service">
+
+                        <h2>البلاغات</h2>
+
+                        <label for="total_reports">إجمالي بلاغات القطاع:</label>
+                        <input type="text" id="total_reports">
+
+                        <label for="related_reports">البلاغات:</label>
+                        <div id="reports-container">
+                            <div class="input-pair">
+                                <input type="text" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
+                                <select class="report-type" style="width: 120px;">
+                                    <option value="إيكو">إيكو</option>
+                                    <option value="دلتا">دلتا</option>
+                                    <option value="تشارلي">تشارلي</option>
+                                    <option value="برافو">برافو</option>
+                                </select>
+                                <input type="text" placeholder="زمن الاستجابة" class="waiting_time" style="width: 120px;">
+                            </div>
+                        </div>
+                        <button type="button" onclick="relatedreports()">إضافة بلاغ آخر</button>
+
+                        <h2>المخرجات</h2>
+                        <label for="absence_in_shift">متوسط زمن الاستجابة:</label>
+                        <input type="text" id="response_time_to_intervention">
+
+                        <h2>ملاحظات النوبة</h2>
+
+                        <label for="absence_in_shift">عدد الغياب في المناوبة:</label>
+                        <input type="text" id="absence_in_shift">
+                        <label for="units_notes">نقاط اسعافية مكشوفة:</label>
+                        <input type="text" id="units_notes">
+                        <label for="senior_paramedic_name"> كبير المسعفين المناوب:</label>
+                        <textarea id="senior_paramedic_name" rows="4"></textarea>
+                    </div>
+                    <button onclick="sendWhatsAppMessage('senior_paramedic_outside')">إرسال النموذج بالواتساب</button>
+                `;
+            }
+            else if (formName === 'operational_failure') {
+                formHTML = `
+                    <h2>نموذج فشل تشغيلي</h2>
+                    <div class="form-section">
+                        <label for="sector">اختر القطاع:</label>
+                        <select id="sector" onchange="toggleOtherSectorInput()">
+                            <option value="الوسط">الوسط</option>
+                            <option value="الجنوب">الجنوب</option>
+                            <option value="الشرق">الشرق</option>
+                            <option value="الغرب">الغرب</option>
+                            <option value="الشمال">الشمال</option>
+                            <option value="other">أخرى</option>
+                        </select>
+                        <input type="text" id="other_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
+
+                        <label for="report_number">رقم البلاغ:</label>
+                        <input type="text" id="report_number">
+
+                        <label for="event_start">بداية الحدث (الساعة والدقيقة):</label>
+                        <div class="input-row">
+                            <input type="text" id="start_hour" placeholder="الساعة" style="width: 45px;">
+                            <input type="text" id="start_minute" placeholder="الدقيقة" style="width: 45px;">
+                        </div>
+
+                        <label for="unit_failure">تعطل فرقة إسعافية:</label>
+                        <input type="text" id="unit_failure">
+
+                        <label for="failure_type">نوع العطل:</label>
+                        <input type="text" id="failure_type">
+
+                        <label for="report_type">نوع البلاغ:</label>
+                        <input type="text" id="report_type">
+
+                        <label for="damages">الأضرار:</label>
+                        <textarea id="damages" rows="4"></textarea>
+
+                        <label for="actions_taken">الإجراءات المتخذة:</label>
+                        <textarea id="actions_taken" rows="4"></textarea>
+
+                        <label for="service_impact">التأثير على الخدمة:</label>
+                        <textarea id="service_impact" rows="4"></textarea>
+
+                        <label for="event_end">نهاية الحدث (الساعة والدقيقة):</label>
+                        <div class="input-row">
+                            <input type="text" id="end_hour" placeholder="الساعة" style="width: 45px;">
+                            <input type="text" id="end_minute" placeholder="الدقيقة" style="width: 45px;">
+                        </div>
+                    </div>
+                    <button onclick="sendWhatsAppMessage('operational_failure')">إرسال النموذج بالواتساب</button>
+                `;
+            }
+            else if (formName === 'eco_reports') {
+                formHTML = `
+                    <h2>نموذج بلاغات إيكو</h2>
+                    <div class="form-section">
+                        <label for="report_date">التاريخ:</label>
+                        <input type="date" id="report_date" readonly>
+
+                        <label for="report_time">توقيت التقرير (الساعة والدقيقة):</label>
+                        <div class="input-row">
+                            <input type="text" id="report_hour" placeholder="الساعة" style="width: 45px;">
+                            <input type="text" id="report_minute" placeholder="الدقيقة" style="width: 45px;">
+                        </div>
+
+                        <label for="report_number">رقم البلاغ:</label>
+                        <input type="text" id="report_number">
+
+                        <label for="report_type">نوع البلاغ:</label>
+                        <input type="text" id="report_type">
+
+                        <label for="report_location">موقع البلاغ:</label>
+                        <input type="text" id="report_location">
+
+                        <label for="operational_sector">القطاع التشغيلي:</label>
+                        <select id="operational_sector" required onchange="toggleOtherSectorInput()">
+                            <option value="الوسط">الوسط</option>
+                            <option value="الجنوب">الجنوب</option>
+                            <option value="الشرق">الشرق</option>
+                            <option value="الغرب">الغرب</option>
+                            <option value="الشمال">الشمال</option>
+                            <option value="other">أخرى</option>
+                        </select>
+                        <input type="text" id="other_operational_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
+
+                        <label for="responding_units">الوحدات المستجيبة:</label>
+                        <input type="text" id="responding_units">
+
+                        <label for="response_time">زمن الاستجابة (دقائق):</label>
+                        <input type="text" id="response_time">
+
+                        <label for="notes">ملاحظات:</label>
+                        <textarea id="notes" rows="4"></textarea>
+                    </div>
+                    <button onclick="sendWhatsAppMessage('eco_reports')">إرسال النموذج بالواتساب</button>
+                `;
+            }
+            else if (formName === 'major_event') {
+                formHTML = `
+                    <h2>نموذج حدث جسيم</h2>
+                    <div class="form-section">
+                        <label for="sector">القطاع:</label>
+                        <select id="sector" onchange="toggleOtherSectorInput()">
+                            <option value="الوسط">الوسط</option>
+                            <option value="الجنوب">الجنوب</option>
+                            <option value="الشرق">الشرق</option>
+                            <option value="الغرب">الغرب</option>
+                            <option value="الشمال">الشمال</option>
+                            <option value="other">أخرى</option>
+                        </select>
+                        <input type="text" id="other_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
+
+                        <label for="event_time">وقت وتاريخ الحدث:</label>
+                        <input type="date" id="event_time" readonly>
+                        <div class="input-row">
+                            <input type="text" id="event_hour" placeholder="الساعة" style="width: 45px;">
+                            <input type="text" id="event_minute" placeholder="الدقيقة" style="width: 45px;">
+                        </div>
+
+                        <label for="event_details">تفاصيل الحدث:</label>
+                        <textarea id="event_details" rows="4"></textarea>
+
+                        <label for="assigned_units">إيجاز الوضع الراهن أثناء ورود البلاغ:</label>
+                        <textarea id="assigned_units" rows="4"></textarea>
+
+                        <label for="teams_count">عدد الفرق لكامل القطاع (المشغولة والمتاحة):</label>
+                        <input type="text" id="teams_count">
+
+                        <label for="deployment">الانتشار:</label>
+                        <input type="text" id="deployment">
+
+                        <label for="team_types">أنواع الفرق المشاركة:</label>
+                        <input type="text" id="team_types">
+
+                        <label for="saudi_red_crescent">الهلال الأحمر:</label>
+                        <input type="text" id="saudi_red_crescent">
+
+                        <label for="health_ministry">وزارة الصحة:</label>
+                        <input type="text" id="health_ministry">
+
+                        <label for="other_authorities">جهات أخرى:</label>
+                        <input type="text" id="other_authorities">
+
+                        <label for="injury_triage">فرز الإصابات:</label>
+                        <div class="input-row">
+                            <input type="text" id="critical_injuries" placeholder="حرجة" style="width: 45px;">
+                            <input type="text" id="moderate_injuries" placeholder="متوسطة" style="width: 45px;">
+                            <input type="text" id="minor_injuries" placeholder="طفيفة" style="width: 45px;">
+                            <input type="text" id="deaths" placeholder="وفاة" style="width: 45px;">
+                        </div>
+
+                        <label for="nationalities">الجنسيات:</label>
+                        <div class="input-row">
+                            <input type="text" id="saudi_nationality" placeholder="سعودي" style="width: 45px;">
+                            <input type="text" id="non_saudi_nationality" placeholder="غير سعودي" style="width: 45px;">
+                            <input type="text" id="unknown_nationality" placeholder="غير معروف" style="width: 45px;">
+                        </div>
+
+                        <label for="children_count">عدد الأطفال:</label>
+                        <input type="text" id="children_count">
+
+                        <label for="central_operations_notification">إبلاغ العمليات المركزية:</label>
+                        <input type="checkbox" id="central_operations_yes"> نعم
+                        <input type="checkbox" id="central_operations_no"> لا
+
+                        <label for="joint_operations_notification">إبلاغ العمليات المشتركة:</label>
+                        <input type="checkbox" id="joint_operations_yes"> نعم
+                        <input type="checkbox" id="joint_operations_no"> لا
+
+                        <label for="event_end">انتهاء الحدث:</label>
+                        <div class="input-row">
+                            <input type="text" id="end_hour" placeholder="الساعة" style="width: 45px;">
+                            <input type="text" id="end_minute" placeholder="الدقيقة" style="width: 45px;">
+                        </div>
+
+                        <h2>المسؤولين</h2>
+
+                        <label for="field_leader">قائد الحدث الميداني:</label>
+                        <input type="text" id="field_leader">
+
+                        <label for="operational_control">التحكم العملياتي:</label>
+                        <input type="text" id="operational_control">
+
+                        <label for="response_coordination">تنسيق الاستجابة:</label>
+                        <input type="text" id="response_coordination">
+
+                        <label for="area_leader">قائد المنطقة المناوب:</label>
+                        <input type="text" id="area_leader">
+                    </div>
+                    <button onclick="sendWhatsAppMessage('major_event')">إرسال النموذج بالواتساب</button>
+                `;
+            }
+            else if (formName === 'support_request') {
+                formHTML = `
+                    <h2>طلب تفعيل خطة المساندة والدعم المتبادل</h2>
+                    <div class="form-section">
+                        <label for="sector">القطاع:</label>
+                        <select id="sector" onchange="toggleOtherSectorInput()">
+                            <option value="الوسط">الوسط</option>
+                            <option value="الجنوب">الجنوب</option>
+                            <option value="الشرق">الشرق</option>
+                            <option value="الغرب">الغرب</option>
+                            <option value="الشمال">الشمال</option>
+                            <option value="other">أخرى</option>
+                        </select>
+                        <input type="text" id="other_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
+
+                        <label for="report_time">توقيت طلب الدعم (الساعة والدقيقة):</label>
+                        <div class="input-row">
+                            <input type="text" id="report_hour" placeholder="الساعة" style="width: 45px;">
+                            <input type="text" id="report_minute" placeholder="الدقيقة" style="width: 45px;">
+                        </div>
+
+                        <label for="units_linked">عدد الوحدات المرتبطة ببلاغ:</label>
+                        <input type="text" id="units_linked">
+
+                        <label for="units_ready">عدد الوحدات الجاهزة:</label>
+                        <input type="text" id="units_ready">
+
+                        <label for="units_out_of_order">عدد الوحدات الخارجة عن الجاهزية:</label>
+                        <input type="text" id="units_out_of_order">
+
+                        <label for="working_teams_shift">عدد فرق القطاع العاملة أثناء المناوبة:</label>
+                        <input type="text" id="working_teams_shift">
+
+                        <label for="challenges">التحديات والاجراءات المتخذة:</label>
+                        <textarea id="challenges" rows="4" placeholder="1- ...&#10;2- ..."></textarea>
+
+                        <label for="related_reports">في حال كان طلب الدعم مرتبط ببلاغات إسعافية:</label>
+                        <div id="reports-container">
+                            <div class="input-pair">
+                                <input type="text" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
+                                <select class="report-type" style="width: 120px;">
+                                    <option value="إيكو">إيكو</option>
+                                    <option value="دلتا">دلتا</option>
+                                    <option value="تشارلي">تشارلي</option>
+                                    <option value="برافو">برافو</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="button" onclick="addReportField()">إضافة بلاغ آخر</button>
+
+                        <label for="senior_paramedic_name">اسم كبير المسعفين:</label>
+                        <input type="text" id="senior_paramedic_name">
+                    </div>
+                    <button onclick="sendWhatsAppMessage('support_request')">إرسال النموذج بالواتساب</button>
+                `;
+            }
+            else if (formName === 'support_activation') {
+                formHTML = `
+                    <h2>نموذج قبول تفعيل خطة المساندة والدعم المتبادل</h2>
+                    <div class="form-section">
+                        <label for="support_status">حالة الدعم:</label>
+                        <select id="support_status">
+                            <option value="الموافقة">الموافقة</option>
+                            <option value="الرفض">الرفض</option>
+                        </select>
+
+                        <label for="support_reasons">أسباب القبول أو الرفض:</label>
+                        <textarea id="support_reasons" rows="4"></textarea>
+
+                        <label for="support_sector">القطاع الداعم:</label>
+                        <select id="support_sector" onchange="toggleOtherSectorInput()">
+                            <option value="الوسط">الوسط</option>
+                            <option value="الجنوب">الجنوب</option>
+                            <option value="الشرق">الشرق</option>
+                            <option value="الغرب">الغرب</option>
+                            <option value="الشمال">الشمال</option>
+                            <option value="other">أخرى</option>
+                        </select>
+                        <input type="text" id="other_support_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
+
+                        <label for="supported_sector">القطاع المدعوم:</label>
+                        <select id="supported_sector" onchange="toggleOtherSectorInput()">
+                            <option value="الوسط">الوسط</option>
+                            <option value="الجنوب">الجنوب</option>
+                            <option value="الشرق">الشرق</option>
+                            <option value="الغرب">الغرب</option>
+                            <option value="الشمال">الشمال</option>
+                            <option value="other">أخرى</option>
+                        </select>
+                        <input type="text" id="other_supported_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
+
+                        <label for="dispatch_time">توقيت تحريك الدعم (الساعة والدقيقة):</label>
+                        <div class="input-row">
+                            <input type="text" id="dispatch_hour" placeholder="الساعة" style="width: 45px;">
+                            <input type="text" id="dispatch_minute" placeholder="الدقيقة" style="width: 45px;">
+                        </div>
+
+                        <label for="arrival_time">توقيت وصول الدعم (الساعة والدقيقة):</label>
+                        <div class="input-row">
+                            <input type="text" id="arrival_hour" placeholder="الساعة" style="width: 45px;">
+                            <input type="text" id="arrival_minute" placeholder="الدقيقة" style="width: 45px;">
+                        </div>
+
+                        <label for="support_teams_count">عدد الفرق الداعمة:</label>
+                        <input type="text" id="support_teams_count">
+
+                        <label for="end_time">توقيت انتهاء الدعم (الساعة والدقيقة):</label>
+                        <div class="input-row">
+                            <input type="text" id="end_hour" placeholder="الساعة" style="width: 45px;">
+                            <input type="text" id="end_minute" placeholder="الدقيقة" style="width: 45px;">
+                        </div>
+
+                        <label for="region_leader_name">اسم قائد المنطقة:</label>
+                        <input type="text" id="region_leader_name">
+                    </div>
+                    <button onclick="sendWhatsAppMessage('support_activation')">إرسال النموذج بالواتساب</button>
+                `;
+            }
+
+            // إضافة بقية النماذج هنا بنفس الطريقة...
 
             formContainer.innerHTML = formHTML;
 
@@ -587,6 +1005,7 @@
                 formText += `قطاع عمليات الشمال: ${document.getElementById('sector_north').value}\n`;
                 formText += `قطاع عمليات الجنوب: ${document.getElementById('sector_south').value}\n`;
             }
+            // أضف باقي النماذج هنا...
 
             console.log(formText); // تأكيد عرض البيانات المجمعة
             const encodedText = encodeURIComponent(formText);
@@ -605,13 +1024,18 @@
         }
 
         function toggleOtherSectorInput() {
-            const sectorSelect = document.getElementById("sector");
-            const otherSectorInput = document.getElementById("other_sector");
-            if (sectorSelect.value === "other") {
-                otherSectorInput.style.display = "block";
-            } else {
-                otherSectorInput.style.display = "none";
-            }
+            const sectorSelects = document.querySelectorAll('select');
+            sectorSelects.forEach(select => {
+                if (select.id.includes('sector')) {
+                    const otherSectorInputId = select.id.includes('support') ? `other_${select.id}` : 'other_sector';
+                    const otherSectorInput = document.getElementById(otherSectorInputId);
+                    if (select.value === "other") {
+                        otherSectorInput.style.display = "block";
+                    } else {
+                        otherSectorInput.style.display = "none";
+                    }
+                }
+            });
         }
 
         function selectCurrentTime() {
