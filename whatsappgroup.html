@@ -911,6 +911,7 @@ function getFormData(formName) {
         // جمع بيانات البلاغات الإسعافية المرتبطة
         const reportNumbers = document.querySelectorAll('.report-number');
         const reportTypes = document.querySelectorAll('.report-type');
+        const waiting_time = document.querySelectorAll('.waiting_time');
         data.reports = [];
         reportNumbers.forEach((number, index) => {
             if (number.value && reportTypes[index].value) {
