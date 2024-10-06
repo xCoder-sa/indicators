@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تحليل الرسائل وفرز البيانات</title>
+    <title>لوحة تحكم الإسعاف</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -12,112 +14,355 @@
             padding: 20px;
             direction: rtl;
         }
-        .input-section {
-            margin-bottom: 20px;
+        .dashboard {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
         }
-        textarea {
+        .sidebar {
+            background-color: #ffffff;
+            padding: 20px;
+            color: #333;
+            text-align: center;
+            transition: width 0.3s;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            width: 250px;
+            overflow-y: auto;
+        }
+        .sidebar h1 {
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            margin-bottom: 15px;
+        }
+        .sidebar ul li a {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            color: #333;
+            text-decoration: none;
+            background-color: #ecf0f1;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .sidebar ul li a:hover {
+            background-color: #bdc3c7;
+        }
+        .sidebar ul li a i {
+            margin-left: 10px;
+        }
+        .container {
+            flex: 1;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-right: 270px;
+            overflow-y: auto;
+        }
+        h2 {
+            color: #3498db;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        label {
+            margin-top: 10px;
+            display: block;
+            color: #333;
+            font-weight: bold;
+            font-size: 15px;
+        }
+        input[type="text"], input[type="date"], input[type="time"], input[type="datetime-local"], textarea, select {
             width: 100%;
-            height: 150px;
             padding: 10px;
+            margin: 5px 0 15px;
             border: 1px solid #ccc;
             border-radius: 6px;
             font-size: 14px;
-            resize: none;
+            transition: border-color 0.3s;
+        }
+        input[type="text"]:focus, input[type="date"]:focus, input[type="time"]:focus, select:focus {
+            border-color: #3498db;
+            outline: none;
         }
         button {
-            padding: 10px 20px;
+            width: 100%;
+            padding: 12px;
             background-color: #3498db;
             border: none;
-            color: white;
-            cursor: pointer;
             border-radius: 6px;
+            color: white;
             font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
         button:hover {
             background-color: #1d6a9c;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+        .form-section {
+            margin-bottom: 30px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-        }
-        th {
+
+        /* Sidebar Toggle for mobile */
+        .sidebar-toggler {
+            display: none;
             background-color: #3498db;
             color: white;
+            padding: 10px;
+            border-radius: 8px;
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 999;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 0;
+                overflow: hidden;
+                transition: width 0.3s;
+            }
+
+            .sidebar.active {
+                width: 250px;
+            }
+
+            .container {
+                margin-right: 0;
+            }
+
+            .sidebar-toggler {
+                display: block;
+            }
         }
     </style>
 </head>
 <body>
 
-    <h2>تحليل الرسائل وفرز البيانات</h2>
+<!-- Sidebar Toggle Button for Mobile -->
+<div class="sidebar-toggler" onclick="toggleSidebar()">☰</div>
 
-    <div class="input-section">
-        <textarea id="messages" placeholder="الصق الرسائل هنا..."></textarea>
-        <button onclick="processMessages()">تحليل الرسائل</button>
+<div class="dashboard">
+    <!-- الشريط الجانبي -->
+    <div class="sidebar" id="sidebar">
+        <h1>لوحة التحكم</h1>
+        <ul>
+            <li><a href="#" onclick="loadForm('senior_paramedic')"><i class="fas fa-user-md"></i> نموذج كبار المسعفين (داخلي)</a></li>
+            <li><a href="#" onclick="loadForm('rapid_response_reports')"><i class="fas fa-car-crash"></i> نموذج بلاغات التدخل السريع</a></li>
+            <li><a href="#" onclick="loadForm('senior_paramedic_outside')"><i class="fas fa-user-md"></i> نموذج كبار المسعفين (خارجي)</a></li>
+            <li><a href="#" onclick="loadForm('operational_failure')"><i class="fas fa-exclamation-triangle"></i> نموذج فشل تشغيلي</a></li>
+            <li><a href="#" onclick="loadForm('eco_reports')"><i class="fas fa-file-alt"></i> نموذج بلاغات إيكو</a></li>
+            <li><a href="#" onclick="loadForm('major_event')"><i class="fas fa-calendar-alt"></i> نموذج حدث جسيم</a></li>
+            <li><a href="#" onclick="loadForm('support_request')"><i class="fas fa-handshake"></i> طلب تفعيل خطة المساندة</a></li>
+            <li><a href="#" onclick="loadForm('support_activation')"><i class="fas fa-check-circle"></i> قبول تفعيل خطة المساندة</a></li>
+        </ul>
     </div>
 
-    <table id="resultTable">
-        <thead>
-            <tr>
-                <th>القطاع</th>
-                <th>التاريخ</th>
-                <th>الوقت</th>
-                <th>كبير المسعفين</th>
-                <th>عدد الفرق العاملة</th>
-                <th>عدد المركبات العاملة</th>
-                <th>عدد المركبات المتعطلة</th>
-                <th>عدد البلاغات</th>
-                <th>عدد الغياب</th>
-                <th>ملاحظات الكاد</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <!-- المحتوى الرئيسي -->
+    <div class="container" id="form-container">
+        <!-- النموذج الحالي يظهر هنا -->
+    </div>
+</div>
 
-    <script>
-        function processMessages() {
-            const messages = document.getElementById('messages').value.split('[٢');
-            const resultTableBody = document.querySelector("#resultTable tbody");
-            resultTableBody.innerHTML = ''; // Clear previous results
+<script>
+    function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('active');
+    }
 
-            messages.forEach(message => {
-                if (message.trim() === '') return;
+    function loadForm(formName) {
+        const formContainer = document.getElementById('form-container');
+        let formHTML = '';
 
-                const sectorMatch = message.match(/قطاع محافظة \((.+?)\)/);
-                const dateMatch = message.match(/\d{4}\/\d{2}\/\d{2}/);
-                const timeMatch = message.match(/الساعة: (.+?) إلى (.+?)(\n|$)/);
-                const supervisorMatch = message.match(/كبير المسعفين المناوب:\n?(.+)/);
-                const workingTeamsMatch = message.match(/عدد الفرق العاملة:\((\d+) من أصل (\d+)\)/);
-                const vehiclesWorkingMatch = message.match(/عدد المركبات العاملة: (\d+)/);
-                const vehiclesBrokenMatch = message.match(/عدد المركبات المتعطلة: (\d+)/);
-                const reportsMatch = message.match(/عدد البلاغات: (\d+)/);
-                const absenceMatch = message.match(/عدد الغياب في المناوبة:\n?\(?\s?(.+?)\s?\)?\n/);
-                const cadNotesMatch = message.match(/ملاحظات برنامج الكاد :\n?(1-.+?)(\n|$)/);
+        if (formName === 'senior_paramedic') {
+            formHTML = `
+                <h2>نموذج كبار المسعفين</h2>
+                <div class="form-section">
+                    <label for="sector">اختر القطاع:</label>
+                    <select id="sector" onchange="toggleOtherSectorInput()" class="form-control">
+                        <option value="الوسط">الوسط</option>
+                        <option value="الجنوب">الجنوب</option>
+                        <option value="الشرق">الشرق</option>
+                        <option value="الغرب">الغرب</option>
+                        <option value="الشمال">الشمال</option>
+                        <option value="other">أخرى</option>
+                    </select>
+                    <input type="text" id="other_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;" class="form-control">
 
-                const row = document.createElement('tr');
-                
-                row.innerHTML = `
-                    <td>${sectorMatch ? sectorMatch[1] : 'غير متوفر'}</td>
-                    <td>${dateMatch ? dateMatch[0] : 'غير متوفر'}</td>
-                    <td>${timeMatch ? timeMatch[1] + ' إلى ' + timeMatch[2] : 'غير متوفر'}</td>
-                    <td>${supervisorMatch ? supervisorMatch[1].trim() : 'غير متوفر'}</td>
-                    <td>${workingTeamsMatch ? workingTeamsMatch[1] : 'غير متوفر'}</td>
-                    <td>${vehiclesWorkingMatch ? vehiclesWorkingMatch[1] : 'غير متوفر'}</td>
-                    <td>${vehiclesBrokenMatch ? vehiclesBrokenMatch[1] : 'غير متوفر'}</td>
-                    <td>${reportsMatch ? reportsMatch[1] : 'غير متوفر'}</td>
-                    <td>${absenceMatch ? absenceMatch[1] : 'غير متوفر'}</td>
-                    <td>${cadNotesMatch ? cadNotesMatch[1].trim() : 'غير متوفر'}</td>
-                `;
+                    <label for="date">التاريخ:</label>
+                    <input type="date" id="date" readonly class="form-control">
 
-                resultTableBody.appendChild(row);
-            });
+                    <label for="time">التوقيت الحالي:</label>
+                    <select id="time" class="form-control">
+                        <option value="0:00 إلى 6:00">0:00 إلى 6:00</option>
+                        <option value="6:00 إلى 12:00">6:00 إلى 12:00</option>
+                        <option value="12:00 إلى 18:00">12:00 إلى 18:00</option>
+                        <option value="18:00 إلى 0:00">18:00 إلى 0:00</option>
+                    </select>
+
+                    <label for="working_teams">عدد الفرق العاملة:</label>
+                    <input type="text" id="working_teams" class="form-control">
+
+                    <label for="total_teams">من أصل:</label>
+                    <input type="text" id="total_teams" class="form-control">
+
+                    <div class="input-row">
+                        <div class="input-small">
+                            <label for="rapid_response_teams">عدد فرق التدخل السريع:</label>
+                            <input type="text" id="rapid_response_teams" class="form-control">
+                        </div>
+                        <div class="input-small">
+                            <label for="operating_vehicles">عدد المركبات العاملة:</label>
+                            <input type="text" id="operating_vehicles" class="form-control">
+                        </div>
+                        <div class="input-small">
+                            <label for="broken_vehicles">عدد المركبات المتعطلة:</label>
+                            <input type="text" id="broken_vehicles" class="form-control">
+                        </div>
+                        <div class="input-small">
+                            <label for="reserve_vehicles">عدد المركبات الاحتياط:</label>
+                            <input type="text" id="reserve_vehicles" class="form-control">
+                        </div>
+                    </div>
+
+                    <label for="open_logistics_reports">بلاغات الدعم اللوجستي المفتوحة:</label>
+                    <input type="text" id="open_logistics_reports" class="form-control">
+
+                    <label for="coordination_teams">عدد العاملين في التنسيق والتحكم:</label>
+                    <input type="text" id="coordination_teams" class="form-control">
+
+                    <label for="logistics_support_teams">عدد العاملين في الدعم اللوجستي:</label>
+                    <input type="text" id="logistics_support_teams" class="form-control">
+
+                    <label for="hospitals_out_of_service">قائمة المستشفيات خارج الخدمة:</label>
+                    <input type="text" id="hospitals_out_of_service" class="form-control">
+
+                    <h2>الطلب</h2>
+
+                    <label for="eco_reports">عدد بلاغات إنعاش إيكو:</label>
+                    <input type="text" id="eco_reports" class="form-control">
+
+                    <label for="delta_reports">عدد بلاغات دلتا:</label>
+                    <input type="text" id="delta_reports" class="form-control">
+
+                    <label for="charlie_reports">عدد بلاغات تشارلي:</label>
+                    <input type="text" id="charlie_reports" class="form-control">
+
+                    <label for="bravo_reports">عدد بلاغات برافو:</label>
+                    <input type="text" id="bravo_reports" class="form-control">
+
+                    <label for="alpha_reports">عدد بلاغات ألفا:</label>
+                    <input type="text" id="alpha_reports" class="form-control">
+
+                    <label for="omega_reports">عدد بلاغات أوميغا:</label>
+                    <input type="text" id="omega_reports" class="form-control">
+
+                    <label for="catheter_reports">عدد بلاغات القسطرة:</label>
+                    <input type="text" id="catheter_reports" class="form-control">
+
+                    <label for="stroke_reports">عدد بلاغات السكتة الدماغية:</label>
+                    <input type="text" id="stroke_reports" class="form-control">
+
+                    <h2>البلاغات</h2>
+
+                    <label for="total_reports">إجمالي بلاغات القطاع:</label>
+                    <input type="text" id="total_reports" class="form-control">
+
+                    <label for="government_transfers">عدد الحالات المنقولة للقطاع الحكومي:</label>
+                    <input type="text" id="government_transfers" class="form-control">
+
+                    <label for="private_transfers">عدد الحالات المنقولة للقطاع الخاص:</label>
+                    <input type="text" id="private_transfers" class="form-control">
+
+                    <label for="untransferred_cases">عدد الحالات الغير منقولة:</label>
+                    <input type="text" id="untransferred_cases" class="form-control">
+
+                    <label for="paper_reports">عدد البلاغات المدونة ورقياً:</label>
+                    <input type="text" id="paper_reports" class="form-control">
+
+                    <h2>المخرجات</h2>
+
+                    <label for="waiting_time">متوسط زمن الانتظار في قائمة الترحيل:</label>
+                    <input type="text" id="waiting_time" class="form-control">
+
+                    <label for="top_team">اعلى فرقة اسعافيه في عدد البلاغات:</label>
+                    <input type="text" id="top_team" class="form-control">
+
+                    <label for="average_reports">متوسط عدد البلاغات للفرق الاسعافية:</label>
+                    <input type="text" id="average_reports" class="form-control">
+
+                    <label for="response_rate">نسبة زمن الاستجابة خلال 8 دقائق للبلاغات الساخنة:</label>
+                    <input type="text" id="response_rate" class="form-control">
+
+                    <label for="average_response_time">متوسط زمن الاستجابة لبلاغات الحوادث المرورية الساخنة:</label>
+                    <input type="text" id="average_response_time" class="form-control">
+
+                    <label for="response_time_to_intervention">زمن الاستجابة حتى المباشرة:</label>
+                    <input type="text" id="response_time_to_intervention" class="form-control">
+
+                    <h2>ملاحظات النوبة</h2>
+
+                    <label for="absence_in_shift">عدد الغياب في المناوبة:</label>
+                    <input type="text" id="absence_in_shift" class="form-control">
+
+                    <label for="cad_program_notes">ملاحظات برنامج الكاد:</label>
+                    <textarea id="cad_program_notes" rows="4" class="form-control"></textarea>
+                </div>
+                <button class="btn btn-primary btn-block" onclick="sendWhatsAppMessage('senior_paramedic')">إرسال النموذج بالواتساب</button>
+            `;
         }
-    </script>
+
+        formContainer.innerHTML = formHTML;
+
+        updateDateTime(formName);
+    }
+
+    function updateDateTime(formName) {
+        const today = new Date().toISOString().split('T')[0];
+        const dateInputs = document.querySelectorAll("input[type='date']");
+        dateInputs.forEach(input => {
+            input.value = today;
+        });
+    }
+
+    function toggleOtherSectorInput() {
+        const sectorSelect = document.getElementById("sector");
+        const otherSectorInput = document.getElementById("other_sector");
+        if (sectorSelect.value === "other") {
+            otherSectorInput.style.display = "block";
+        } else {
+            otherSectorInput.style.display = "none";
+        }
+    }
+
+    function sendWhatsAppMessage(formName) {
+        const formText = `تم إرسال النموذج: ${formName}`;
+        alert(formText);
+        // Place your WhatsApp integration code here
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        loadForm('senior_paramedic');
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
