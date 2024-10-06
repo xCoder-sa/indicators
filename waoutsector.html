@@ -29,6 +29,11 @@
             padding: 20px;
             color: #fff;
             box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar.closed {
+            transform: translateX(-100%);
         }
 
         .sidebar h1 {
@@ -129,27 +134,50 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
-        /* استجابة التصميم */
-        @media (min-width: 768px) {
-            .dashboard {
-                flex-direction: row;
+        /* زر القائمة للهواتف المحمولة */
+        .menu-toggle {
+            display: none;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #3498db;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
             }
 
             .sidebar {
-                text-align: left;
+                position: absolute;
+                height: 100%;
+                z-index: 100;
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
             }
 
             .container {
-                margin-left: 10px;
+                margin: 0;
+                padding: 20px;
             }
         }
     </style>
 </head>
 <body>
 
+<!-- زر القائمة في الهواتف المحمولة -->
+<div class="menu-toggle" id="menuToggle">
+    <i class="fas fa-bars"></i>
+</div>
+
 <div class="dashboard">
     <!-- الشريط الجانبي -->
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
         <h1>لوحة التحكم</h1>
         <ul>
             <li><a href="#" onclick="loadForm('senior_paramedic')"><i class="fas fa-user-md"></i> كبار المسعفين</a></li>
@@ -170,6 +198,14 @@
 </div>
 
 <script>
+    // لفتح وإغلاق القائمة الجانبية في الهواتف المحمولة
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+
+    menuToggle.addEventListener('click', function() {
+        sidebar.classList.toggle('open');
+    });
+
     function loadForm(formName) {
         const formContainer = document.getElementById('form-container');
         let formHTML = '';
