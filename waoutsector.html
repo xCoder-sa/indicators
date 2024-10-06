@@ -80,12 +80,17 @@
 
         input, select, textarea {
             width: 100%;
-            padding: 10px;
+            padding: 8px;
             margin-top: 10px;
             margin-bottom: 15px;
             border: 1px solid #ddd;
             border-radius: 6px;
             font-size: 14px;
+            max-width: 100%;
+        }
+
+        input[type="text"], input[type="date"], select {
+            height: 35px; /* حجم موحد لجميع الحقول */
         }
 
         input:focus, select:focus, textarea:focus {
