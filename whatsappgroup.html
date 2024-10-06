@@ -384,13 +384,13 @@
                     <div id="reports-container">
                         <div class="input-pair">
                             <input type="text" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
-                            <input type="text" placeholder="زمن الاستجابة" class="waiting_time" style="width: 120px;">
                             <select class="report-type" style="width: 120px;">
                                 <option value="إيكو">إيكو</option>
                                 <option value="دلتا">دلتا</option>
                                 <option value="تشارلي">تشارلي</option>
                                 <option value="برافو">برافو</option>
                             </select>
+                	 <input type="text" placeholder="زمن الاستجابة" class="waiting_time" style="width: 120px;">
 
                         </div>
                     </div>
@@ -1031,7 +1031,7 @@ function sendWhatsAppMessage(formName) {
         formText += `\n=== البلاغات الإسعافية المرتبطة ===\n`;
         const reportNumbers = document.querySelectorAll('.report-number');
         const reportTypes = document.querySelectorAll('.report-type');
-        const reportTypes = document.querySelectorAll('.waiting_time');
+        const waiting_time = document.querySelectorAll('.waiting_time');
         reportNumbers.forEach((number, index) => {
             formText += `رقم البلاغ: ${number.value}, نوع البلاغ: ${reportTypes[index].value}\n, زمن الاستجابة: ${number.value}`;
         });
