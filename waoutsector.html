@@ -67,6 +67,7 @@
 
         .sidebar ul li a i {
             margin-left: 10px;
+            margin-right: 10px; /* تعديل المسافة بين الأيقونة والنص */
         }
 
         .container {
@@ -151,6 +152,7 @@
             }
 
             .sidebar {
+                width: 70%; /* تعديل العرض في الهواتف المحمولة */
                 position: absolute;
                 height: 100%;
                 z-index: 100;
@@ -232,12 +234,17 @@
                     <label for="working_teams">عدد الفرق العاملة:</label>
                     <input type="text" id="working_teams">
                     
-                    <button>إرسال</button>
+                    <button onclick="closeSidebar()">إرسال</button>
                 </div>
             `;
         }
 
         formContainer.innerHTML = formHTML;
+    }
+
+    // إغلاق الشريط الجانبي بعد اختيار النموذج
+    function closeSidebar() {
+        sidebar.classList.remove('open');
     }
 
     // تحميل النموذج الافتراضي عند فتح الصفحة
