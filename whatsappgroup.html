@@ -980,6 +980,14 @@ function getFormData(formName) {
         data.end_hour = document.getElementById('end_hour')?.value || '';
         data.end_minute = document.getElementById('end_minute')?.value || '';
         data.region_leader_name = document.getElementById('region_leader_name')?.value || '';
+  } else if (formName === 'rapid_response_reports') {
+        // جمع بيانات نموذج "بلاغات التدخل السريع"
+        data.sector_west = document.getElementById('sector_west')?.value || '';
+        data.sector_east = document.getElementById('sector_east')?.value || '';
+        data.sector_central = document.getElementById('sector_central')?.value || '';
+        data.sector_north = document.getElementById('sector_north')?.value || '';
+        data.sector_south = document.getElementById('sector_south')?.value || '';
+
     }
 
     return data;
