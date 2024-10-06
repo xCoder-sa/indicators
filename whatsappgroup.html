@@ -1209,9 +1209,38 @@ function showCopyNotification() {
         }
     }
 
-    document.addEventListener("DOMContentLoaded", function () {
-        loadForm('senior_paramedic');
+function selectCurrentTime() {
+    // الحصول على التوقيت الحالي حسب توقيت السعودية (UTC+3)
+    const currentTime = new Date().toLocaleString("en-US", {timeZone: "Asia/Riyadh"});
+    const hours = new Date(currentTime).getHours();
+
+    let selectedOption = '';
+
+    // تحديد الفترة الزمنية بناءً على الساعة الحالية
+    if (hours >= 0 && hours < 6) {
+        selectedOption = "0:00 إلى 6:00";
+    } else if (hours >= 6 && hours < 12) {
+        selectedOption = "6:00 إلى 12:00";
+    } else if (hours >= 12 && hours < 18) {
+        selectedOption = "12:00 إلى 18:00";
+    } else if (hours >= 18 && hours < 24) {
+        selectedOption = "18:00 إلى 0:00";
+    }
+
+    // العثور على جميع عناصر الـ select التي تحتوي على التوقيت
+    const timeSelects = document.querySelectorAll('select[id="time"]');
+    
+    // تطبيق التوقيت المحدد على جميع النماذج
+    timeSelects.forEach(function(timeSelect) {
+        timeSelect.value = selectedOption;
     });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    loadForm('senior_paramedic'); // تحميل النموذج الافتراضي
+    selectCurrentTime(); // تحديد التوقيت الحالي تلقائياً
+});
+    
 </script>
 
 </body>
