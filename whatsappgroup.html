@@ -823,7 +823,7 @@ function sendWhatsAppMessage(formName) {
         formText += `=== نموذج كبار المسعفين ===\n\n`;
         formText += `القطاع: ${document.getElementById('sector').value}\n`;
         if (document.getElementById('sector').value === 'other') {
-            formText += `القطاع الآخر: ${document.getElementById('other_sector').value}\n`;
+            formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
         }
 	formText += `التاريخ: ${document.getElementById('date').value}\n`;
         formText += `التوقيت الحالي: ${document.getElementById('time').value}\n`;
@@ -865,7 +865,7 @@ function sendWhatsAppMessage(formName) {
         formText += `=== نموذج فشل تشغيلي ===\n\n`;
         formText += `القطاع: ${document.getElementById('sector').value}\n`;
         if (document.getElementById('sector').value === 'other') {
-            formText += `القطاع الآخر: ${document.getElementById('other_sector').value}\n`;
+            formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
         }
 	formText += `رقم البلاغ: ${document.getElementById('report_number').value}\n`;
         formText += `بداية الحدث: ${document.getElementById('start_hour').value}:${document.getElementById('start_minute').value}\n`;
@@ -891,7 +891,7 @@ function sendWhatsAppMessage(formName) {
         formText += `=== نموذج حدث جسيم ===\n\n`;
         formText += `القطاع: ${document.getElementById('sector').value}\n`;
         if (document.getElementById('sector').value === 'other') {
-            formText += `القطاع الآخر: ${document.getElementById('other_sector').value}\n`;
+            formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
         }
         formText += `وقت وتاريخ الحدث: ${document.getElementById('event_time').value} ${document.getElementById('event_hour').value}:${document.getElementById('event_minute').value}\n`;
         formText += `تفاصيل الحدث: ${document.getElementById('event_details').value}\n`;
@@ -923,7 +923,7 @@ function sendWhatsAppMessage(formName) {
         formText += `=== طلب تفعيل خطة المساندة والدعم المتبادل ===\n\n`;
         formText += `القطاع: ${document.getElementById('sector').value}\n`;
         if (document.getElementById('sector').value === 'other') {
-            formText += `القطاع الآخر: ${document.getElementById('other_sector').value}\n`;
+            formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
         }
         formText += `توقيت طلب الدعم: ${document.getElementById('report_hour').value}:${document.getElementById('report_minute').value}\n`;
         formText += `عدد الوحدات المرتبطة ببلاغ: ${document.getElementById('units_linked').value}\n`;
