@@ -193,14 +193,23 @@
             flex: 1;
             min-width: 100px;
         }
-label, input {
-    display: inline-block;
-    margin-right: 10px;  /* مسافة بين العناصر */
-    text-align: right;  /* لجعل النص داخل حقول الإدخال محاذاة إلى اليمين */
+.form-group {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;  /* لضمان ظهور العناصر بجانب بعضها البعض */
+    direction: rtl;  /* لجعل اتجاه النص من اليمين إلى اليسار */
+    gap: 10px; /* مسافة بين العناصر */
 }
 
-div {
-    direction: rtl;  /* لجعل اتجاه النصوص من اليمين إلى اليسار */
+.form-group label {
+    white-space: nowrap;  /* لمنع النص من الانتقال إلى سطر جديد */
+    margin: 0 5px; /* مسافة صغيرة بين النص وحقول الإدخال */
+}
+
+.form-group input {
+    width: 150px;  /* تحديد عرض مناسب لحقول الإدخال */
+    padding: 5px;  /* إضافة مسافة داخل حقول الإدخال */
+    text-align: right;  /* محاذاة النص داخل الحقول إلى اليمين */
 }
 
     </style>
@@ -286,10 +295,10 @@ div {
                         <option value="18:00 إلى 0:00">18:00 إلى 0:00</option>
                     </select>
 
-                   <div>
+                   <div class="form-group">
     <label for="working_teams">عدد الفرق العاملة:</label>
     <input type="text" id="working_teams">
-  
+
     <label for="total_teams">من أصل:</label>
     <input type="text" id="total_teams">
 </div>
