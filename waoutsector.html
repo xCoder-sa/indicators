@@ -63,19 +63,23 @@
             .navbar .menu {
                 display: none;
                 flex-direction: column;
-                position: absolute;
-                top: 60px;
-                right: 20px;
+                position: fixed;
+                top: 0;
+                right: 0;
+                height: 100%;
+                width: 250px;
                 background-color: #ffffff;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-                border-radius: 4px;
-                width: 200px;
+                box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+                padding-top: 60px;
+                transition: transform 0.3s ease-in-out;
+                transform: translateX(100%);
+                z-index: 999;
             }
             .navbar .menu.active {
-                display: flex;
+                transform: translateX(0);
             }
             .navbar .menu li {
-                margin: 10px 0;
+                margin: 20px 0;
                 text-align: center;
             }
             .hamburger {
@@ -84,7 +88,7 @@
         }
         /* المحتوى الرئيسي */
         .container {
-            padding: 100px 20px 20px 20px; /* إضافة مساحة لشريط التنقل العلوي */
+            padding: 80px 20px 20px 20px; /* زيادة padding-top للعلامة الثابتة */
             max-width: 1200px;
             margin: 0 auto;
             background-color: #fff;
@@ -210,6 +214,7 @@
 
             if (formName === 'senior_paramedic') {
                 formHTML = `
+
                     <h2>نموذج كبار المسعفين</h2>
                     <div class="form-section">
                         <label for="sector">اختر القطاع:</label>
