@@ -6,44 +6,39 @@
     <title>لوحة تحكم الإسعاف</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* تحسينات التصميم */
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f0f4f8;
+            background-color: #f4f7fc;
             margin: 0;
             padding: 0;
             direction: rtl;
-            display: flex;
-            height: 100vh;
+            color: #333;
         }
 
         .dashboard {
             display: flex;
+            min-height: 100vh;
             flex-direction: column;
-            width: 100%;
+            background-color: #ecf0f1;
         }
 
         .sidebar {
-            background-color: #ffffff;
-            padding: 20px;
             width: 250px;
-            height: 100%;
+            background-color: #3498db;
+            padding: 20px;
+            color: #fff;
             box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1000;
         }
 
         .sidebar h1 {
             font-size: 24px;
             margin-bottom: 30px;
-            color: #333;
         }
 
         .sidebar ul {
             list-style-type: none;
             padding: 0;
-            margin: 0;
         }
 
         .sidebar ul li {
@@ -54,16 +49,15 @@
             display: flex;
             align-items: center;
             padding: 12px;
-            color: #333;
+            color: #fff;
             text-decoration: none;
-            background-color: #ecf0f1;
+            background-color: #2980b9;
             border-radius: 8px;
-            font-size: 16px;
             transition: background-color 0.3s;
         }
 
         .sidebar ul li a:hover {
-            background-color: #bdc3c7;
+            background-color: #1d6a9c;
         }
 
         .sidebar ul li a i {
@@ -71,12 +65,12 @@
         }
 
         .container {
-            margin-left: 270px;
+            flex: 1;
             padding: 30px;
             background-color: #fff;
+            margin: 10px;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            width: calc(100% - 270px);
             overflow-y: auto;
         }
 
@@ -95,12 +89,7 @@
             font-size: 15px;
         }
 
-        input[type="text"],
-        input[type="date"],
-        input[type="time"],
-        input[type="datetime-local"],
-        textarea,
-        select {
+        input[type="text"], input[type="date"], input[type="time"], input[type="datetime-local"], textarea, select {
             width: 100%;
             padding: 10px;
             margin: 5px 0 15px;
@@ -110,10 +99,7 @@
             transition: border-color 0.3s;
         }
 
-        input[type="text"]:focus,
-        input[type="date"]:focus,
-        input[type="time"]:focus,
-        select:focus {
+        input[type="text"]:focus, input[type="date"]:focus, input[type="time"]:focus, select:focus {
             border-color: #3498db;
             outline: none;
         }
@@ -134,14 +120,7 @@
             background-color: #1d6a9c;
         }
 
-        .copy-notification {
-            display: none;
-            text-align: center;
-            color: green;
-            font-size: 14px;
-            margin-top: 15px;
-        }
-
+        /* تحسين المظهر العام للنماذج */
         .form-section {
             margin-bottom: 30px;
             background-color: #f9f9f9;
@@ -150,18 +129,18 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
-        /* Responsive design */
-        @media (max-width: 768px) {
+        /* استجابة التصميم */
+        @media (min-width: 768px) {
+            .dashboard {
+                flex-direction: row;
+            }
+
             .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-                text-align: center;
+                text-align: left;
             }
 
             .container {
-                margin-left: 0;
-                width: 100%;
+                margin-left: 10px;
             }
         }
     </style>
@@ -173,14 +152,14 @@
     <div class="sidebar">
         <h1>لوحة التحكم</h1>
         <ul>
-            <li><a href="#" onclick="loadForm('senior_paramedic')"><i class="fas fa-user-md"></i> نموذج كبار المسعفين (داخلي)</a></li>
-            <li><a href="#" onclick="loadForm('rapid_response_reports')"><i class="fas fa-car-crash"></i> نموذج بلاغات التدخل السريع</a></li>
-            <li><a href="#" onclick="loadForm('senior_paramedic_outside')"><i class="fas fa-user-md"></i> نموذج كبار المسعفين (خارجي)</a></li>
-            <li><a href="#" onclick="loadForm('operational_failure')"><i class="fas fa-exclamation-triangle"></i> نموذج فشل تشغيلي</a></li>
-            <li><a href="#" onclick="loadForm('eco_reports')"><i class="fas fa-file-alt"></i> نموذج بلاغات إيكو</a></li>
-            <li><a href="#" onclick="loadForm('major_event')"><i class="fas fa-calendar-alt"></i> نموذج حدث جسيم</a></li>
-            <li><a href="#" onclick="loadForm('support_request')"><i class="fas fa-handshake"></i> طلب تفعيل خطة المساندة</a></li>
-            <li><a href="#" onclick="loadForm('support_activation')"><i class="fas fa-check-circle"></i> قبول تفعيل خطة المساندة</a></li>
+            <li><a href="#" onclick="loadForm('senior_paramedic')"><i class="fas fa-user-md"></i> كبار المسعفين</a></li>
+            <li><a href="#" onclick="loadForm('rapid_response_reports')"><i class="fas fa-car-crash"></i> بلاغات التدخل السريع</a></li>
+            <li><a href="#" onclick="loadForm('senior_paramedic_outside')"><i class="fas fa-user-md"></i> كبار المسعفين (خارجي)</a></li>
+            <li><a href="#" onclick="loadForm('operational_failure')"><i class="fas fa-exclamation-triangle"></i> فشل تشغيلي</a></li>
+            <li><a href="#" onclick="loadForm('eco_reports')"><i class="fas fa-file-alt"></i> بلاغات إيكو</a></li>
+            <li><a href="#" onclick="loadForm('major_event')"><i class="fas fa-calendar-alt"></i> حدث جسيم</a></li>
+            <li><a href="#" onclick="loadForm('support_request')"><i class="fas fa-handshake"></i> تفعيل خطة المساندة</a></li>
+            <li><a href="#" onclick="loadForm('support_activation')"><i class="fas fa-check-circle"></i> قبول خطة المساندة</a></li>
         </ul>
     </div>
 
@@ -188,10 +167,6 @@
     <div class="container" id="form-container">
         <!-- النموذج الحالي يظهر هنا -->
     </div>
-</div>
-
-<div class="copy-notification" id="copyNotification">
-    تم النسخ بنجاح! يمكنك الآن إرسالها في قروب القيادات.
 </div>
 
 <script>
@@ -204,97 +179,33 @@
                 <h2>نموذج كبار المسعفين</h2>
                 <div class="form-section">
                     <label for="sector">اختر القطاع:</label>
-                    <select id="sector" onchange="toggleOtherSectorInput()">
+                    <select id="sector">
                         <option value="الوسط">الوسط</option>
                         <option value="الجنوب">الجنوب</option>
                         <option value="الشرق">الشرق</option>
                         <option value="الغرب">الغرب</option>
                         <option value="الشمال">الشمال</option>
-                        <option value="other">أخرى</option>
                     </select>
-                    <input type="text" id="other_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
 
                     <label for="date">التاريخ:</label>
-                    <input type="date" id="date" readonly>
+                    <input type="date" id="date">
 
-                    <label for="time">التوقيت الحالي:</label>
-                    <select id="time">
-                        <option value="0:00 إلى 6:00">0:00 إلى 6:00</option>
-                        <option value="6:00 إلى 12:00">6:00 إلى 12:00</option>
-                        <option value="12:00 إلى 18:00">12:00 إلى 18:00</option>
-                        <option value="18:00 إلى 0:00">18:00 إلى 0:00</option>
-                    </select>
+                    <label for="time">التوقيت:</label>
+                    <input type="time" id="time">
 
                     <label for="working_teams">عدد الفرق العاملة:</label>
                     <input type="text" id="working_teams">
-
-                    <label for="total_teams">من أصل:</label>
-                    <input type="text" id="total_teams">
-
-                    <div class="input-row">
-                        <div class="input-small">
-                            <label for="rapid_response_teams">عدد فرق التدخل السريع:</label>
-                            <input type="text" id="rapid_response_teams">
-                        </div>
-                        <div class="input-small">
-                            <label for="operating_vehicles">عدد المركبات العاملة:</label>
-                            <input type="text" id="operating_vehicles">
-                        </div>
-                        <div class="input-small">
-                            <label for="broken_vehicles">عدد المركبات المتعطلة:</label>
-                            <input type="text" id="broken_vehicles">
-                        </div>
-                        <div class="input-small">
-                            <label for="reserve_vehicles">عدد المركبات الاحتياط:</label>
-                            <input type="text" id="reserve_vehicles">
-                        </div>
-                    </div>
-
-                    <label for="open_logistics_reports">بلاغات الدعم اللوجستي المفتوحة:</label>
-                    <input type="text" id="open_logistics_reports">
-
-                    <label for="coordination_teams">عدد العاملين في التنسيق والتحكم:</label>
-                    <input type="text" id="coordination_teams">
-
-                    <label for="logistics_support_teams">عدد العاملين في الدعم اللوجستي:</label>
-                    <input type="text" id="logistics_support_teams">
-
-                    <label for="hospitals_out_of_service">قائمة المستشفيات خارج الخدمة:</label>
-                    <input type="text" id="hospitals_out_of_service">
+                    
+                    <button>إرسال</button>
                 </div>
-                <button onclick="sendWhatsAppMessage('senior_paramedic')">إرسال النموذج بالواتساب</button>
             `;
         }
-        
+
         formContainer.innerHTML = formHTML;
-        updateDateTime(formName);
     }
 
-    function updateDateTime(formName) {
-        const today = new Date().toISOString().split('T')[0];
-
-        const dateInputs = document.querySelectorAll("input[type='date']");
-        dateInputs.forEach(input => {
-            input.value = today;
-        });
-    }
-
-    function sendWhatsAppMessage(formName) {
-        let formText = `=== ${formName} ===\n\n`;
-        formText += `التاريخ: ${document.getElementById('date').value}\n`;
-
-        // تأكيد عرض البيانات المجمعة
-        console.log(formText);
-        const encodedText = encodeURIComponent(formText);
-        const whatsappUrl = `https://wa.me/?text=${encodedText}`;
-
-        // فتح الرابط في نافذة جديدة
-        window.open(whatsappUrl, '_blank');
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
-        loadForm('senior_paramedic'); // تحميل النموذج الافتراضي
-    });
+    // تحميل النموذج الافتراضي عند فتح الصفحة
+    loadForm('senior_paramedic');
 </script>
 
 </body>
