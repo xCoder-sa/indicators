@@ -1007,42 +1007,6 @@ function sendWhatsAppMessage(formName) {
         formText += `\n=== ملاحظات النوبة ===\n`;
         formText += `عدد الغياب في المناوبة: ${document.getElementById('absence_in_shift').value}\n`;
         formText += `ملاحظات برنامج الكاد: ${document.getElementById('cad_program_notes').value}\n`;
-	        } else if (formName === 'senior_paramedic_outside') {
-        formText += `===  نموذج كبار المسعفين خارجي ===\n\n`;
-        if (document.getElementById('sector').value !== 'other') {
-    formText += `القطاع: ${document.getElementById('sector').value}\n`;
-} else {
-    formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
-}
-	formText += `التاريخ: ${document.getElementById('date').value}\n`;
-        formText += `التوقيت الحالي: ${document.getElementById('time').value}\n`;
-        formText += `عدد الفرق العاملة: ${document.getElementById('working_teams').value} من أصل: ${document.getElementById('total_teams').value}\n`;
-        formText += `عدد فرق التدخل السريع: ${document.getElementById('rapid_response_teams').value}\n`;
-        formText += `عدد المركبات العاملة: ${document.getElementById('operating_vehicles').value}\n`;
-        formText += `عدد المركبات المتعطلة: ${document.getElementById('broken_vehicles').value}\n`;
-        formText += `عدد المركبات الاحتياط: ${document.getElementById('reserve_vehicles').value}\n`;
-        formText += `بلاغات الدعم اللوجستي المفتوحة: ${document.getElementById('open_logistics_reports').value}\n`;
-        formText += `عدد العاملين في التنسيق والتحكم: ${document.getElementById('coordination_teams').value}\n`;
-        formText += `عدد العاملين في الدعم اللوجستي: ${document.getElementById('logistics_support_teams').value}\n`;
-        formText += `قائمة المستشفيات خارج الخدمة: ${document.getElementById('hospitals_out_of_service').value}\n`;
-        formText += `\n=== البلاغات ===\n`;
-        formText += `إجمالي بلاغات القطاع: ${document.getElementById('total_reports').value}\n`;
-        // البلاغات الإسعافية المرتبطة
-        formText += `\n=== البلاغات الإسعافية المرتبطة ===\n`;
-        const reportNumbers = document.querySelectorAll('.report-number');
-        const reportTypes = document.querySelectorAll('.report-type');
-        const waiting_time = document.querySelectorAll('.waiting_time');
-        reportNumbers.forEach((number, index) => {
-            formText += `رقم البلاغ: ${number.value}, نوع البلاغ: ${reportTypes[index].value}\n, زمن الاستجابة: ${number.value}`;
-        });
-
-        formText += `\n=== المخرجات ===\n`;
-        formText += `متوسط زمن الاستجابة للبلاغات: ${document.getElementById('waiting_time').value}\n`;
-        formText += `\n=== ملاحظات النوبة ===\n`;
-        formText += `عدد الغياب في المناوبة: ${document.getElementById('absence_in_shift').value}\n`;
-        formText += `نقاط اسعافية مكشوفة: ${document.getElementById('units_notes').value}\n`;
-	formText += `\nاسم كبير المسعفين: ${document.getElementById('senior_paramedic_name').value}\n`;
-
     } else if (formName === 'operational_failure') {
         formText += `=== نموذج فشل تشغيلي ===\n\n`;
         if (document.getElementById('sector').value !== 'other') {
@@ -1137,6 +1101,41 @@ function sendWhatsAppMessage(formName) {
         formText += `عدد الفرق الداعمة: ${document.getElementById('support_teams_count').value}\n`;
         formText += `توقيت انتهاء الدعم: ${document.getElementById('end_hour').value}:${document.getElementById('end_minute').value}\n`;
         formText += `اسم قائد المنطقة: ${document.getElementById('region_leader_name').value}\n`;
+		        } else if (formName === 'senior_paramedic_outside') {
+        formText += `===  نموذج كبار المسعفين خارجي ===\n\n`;
+        if (document.getElementById('sector').value !== 'other') {
+    formText += `القطاع: ${document.getElementById('sector').value}\n`;
+} else {
+    formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
+}
+	formText += `التاريخ: ${document.getElementById('date').value}\n`;
+        formText += `التوقيت الحالي: ${document.getElementById('time').value}\n`;
+        formText += `عدد الفرق العاملة: ${document.getElementById('working_teams').value} من أصل: ${document.getElementById('total_teams').value}\n`;
+        formText += `عدد فرق التدخل السريع: ${document.getElementById('rapid_response_teams').value}\n`;
+        formText += `عدد المركبات العاملة: ${document.getElementById('operating_vehicles').value}\n`;
+        formText += `عدد المركبات المتعطلة: ${document.getElementById('broken_vehicles').value}\n`;
+        formText += `عدد المركبات الاحتياط: ${document.getElementById('reserve_vehicles').value}\n`;
+        formText += `بلاغات الدعم اللوجستي المفتوحة: ${document.getElementById('open_logistics_reports').value}\n`;
+        formText += `عدد العاملين في التنسيق والتحكم: ${document.getElementById('coordination_teams').value}\n`;
+        formText += `عدد العاملين في الدعم اللوجستي: ${document.getElementById('logistics_support_teams').value}\n`;
+        formText += `قائمة المستشفيات خارج الخدمة: ${document.getElementById('hospitals_out_of_service').value}\n`;
+        formText += `\n=== البلاغات ===\n`;
+        formText += `إجمالي بلاغات القطاع: ${document.getElementById('total_reports').value}\n`;
+        // البلاغات الإسعافية المرتبطة
+        formText += `\n=== البلاغات الإسعافية المرتبطة ===\n`;
+        const reportNumbers = document.querySelectorAll('.report-number');
+        const reportTypes = document.querySelectorAll('.report-type');
+        const waiting_time = document.querySelectorAll('.waiting_time');
+        reportNumbers.forEach((number, index) => {
+            formText += `رقم البلاغ: ${number.value}, نوع البلاغ: ${reportTypes[index].value}\n, زمن الاستجابة: ${number.value}`;
+        });
+
+        formText += `\n=== المخرجات ===\n`;
+        formText += `متوسط زمن الاستجابة للبلاغات: ${document.getElementById('waiting_time').value}\n`;
+        formText += `\n=== ملاحظات النوبة ===\n`;
+        formText += `عدد الغياب في المناوبة: ${document.getElementById('absence_in_shift').value}\n`;
+        formText += `نقاط اسعافية مكشوفة: ${document.getElementById('units_notes').value}\n`;
+	formText += `\nاسم كبير المسعفين: ${document.getElementById('senior_paramedic_name').value}\n`;
     }
 
     const encodedText = encodeURIComponent(formText);
