@@ -265,7 +265,6 @@
 
     <!-- شريط التنقل العلوي -->
     <nav class="navbar">
-        <div class="menu-header">القائمة</div> <!-- العنوان الجديد -->
         <ul class="menu" id="menu">
             <li><a href="#" onclick="loadForm('senior_paramedic')" class="menu-item"><i class="fas fa-user-md"></i> نموذج كبار المسعفين (داخلي)</a></li>
             <li><a href="#" onclick="loadForm('rapid_response_reports')" class="menu-item"><i class="fas fa-car-crash"></i> نموذج بلاغات التدخل السريع</a></li>
@@ -341,11 +340,16 @@
                         <option value="18:00 إلى 0:00">18:00 إلى 0:00</option>
                     </select>
 
+                        <div class="input-row">
+                        <div class="input-small">
                             <label for="working_teams">عدد الفرق العاملة:</label>
                             <input type="text" id="working_teams">
-
-                            <label for="total_teams">من أصل:</label>
+                        </div>
+                        <div class="input-small">
+			<label for="total_teams">من أصل:</label>
                             <input type="text" id="total_teams">
+                        </div>
+                    </div>
 			    
                         <div class="input-row">
                         <div class="input-small">
