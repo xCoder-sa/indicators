@@ -31,6 +31,15 @@
             font-weight: bold;
             color: #3498db;
         }
+        .menu-header {
+            display: none; /* سيتم عرضه فقط على الشاشات الصغيرة */
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px 20px;
+            background-color: #ffffff;
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
         .navbar .menu {
             display: flex;
             list-style-type: none;
@@ -47,6 +56,11 @@
             padding: 8px 12px;
             border-radius: 4px;
             transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        .navbar .menu li a i {
+            margin-left: 5px;
         }
         .navbar .menu li a:hover {
             background-color: #ecf0f1;
@@ -58,33 +72,46 @@
             color: #333;
             cursor: pointer;
         }
-        /* قائمة التنقل القابلة للسحب */
+        /* قائمة التنقل القابلة للتمرير على الهواتف */
         @media (max-width: 767px) {
-            .navbar .menu {
-                display: none;
+            .navbar {
                 flex-direction: column;
-                position: fixed;
-                top: 0;
-                right: 0;
-                height: 100%;
-                width: 250px;
-                background-color: #ffffff;
-                box-shadow: -2px 0 5px rgba(0,0,0,0.1);
-                padding-top: 60px;
-                transition: transform 0.3s ease-in-out;
-                transform: translateX(100%);
-                z-index: 999;
+                align-items: flex-start;
             }
-            .navbar .menu.active {
-                transform: translateX(0);
-            }
-            .navbar .menu li {
-                margin: 20px 0;
-                text-align: center;
-            }
-            .hamburger {
+            .menu-header {
                 display: block;
             }
+            .menu {
+                display: flex;
+                overflow-x: auto;
+                white-space: nowrap;
+                width: 100%;
+                background-color: #ffffff;
+                padding: 10px 20px;
+            }
+            .menu li {
+                margin: 0 10px;
+            }
+            .menu li a {
+                padding: 10px 15px;
+                display: inline-block;
+            }
+            .hamburger {
+                display: none;
+            }
+        }
+        /* تحسينات إضافية للتمرير الأفقي */
+        .menu::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .menu::-webkit-scrollbar-thumb {
+            background-color: #3498db;
+            border-radius: 4px;
+        }
+
+        .menu::-webkit-scrollbar-track {
+            background-color: #f0f4f8;
         }
         /* المحتوى الرئيسي */
         .container {
@@ -167,6 +194,7 @@
     <!-- شريط التنقل العلوي -->
     <nav class="navbar">
         <div class="logo">لوحة التحكم</div>
+        <div class="menu-header">القائمة</div> <!-- العنوان الجديد -->
         <ul class="menu" id="menu">
             <li><a href="#" onclick="loadForm('senior_paramedic')"><i class="fas fa-user-md"></i> نموذج كبار المسعفين (داخلي)</a></li>
             <li><a href="#" onclick="loadForm('rapid_response_reports')"><i class="fas fa-car-crash"></i> نموذج بلاغات التدخل السريع</a></li>
@@ -177,9 +205,12 @@
             <li><a href="#" onclick="loadForm('support_request')"><i class="fas fa-handshake"></i> طلب تفعيل خطة المساندة</a></li>
             <li><a href="#" onclick="loadForm('support_activation')"><i class="fas fa-check-circle"></i> قبول تفعيل خطة المساندة</a></li>
         </ul>
+        <!-- إزالة أيقونة الهامبرجر -->
+        <!--
         <div class="hamburger" id="hamburger">
             <i class="fas fa-bars"></i>
         </div>
+        -->
     </nav>
 
     <!-- المحتوى الرئيسي -->
@@ -192,6 +223,8 @@
     </div>
 
     <script>
+        /*
+        // إزالة أو تعليق الكود المتعلق بالهامبرجر
         const hamburger = document.getElementById('hamburger');
         const menu = document.getElementById('menu');
 
@@ -207,6 +240,7 @@
                 menu.classList.remove('active');
             }
         });
+        */
 
         function loadForm(formName) {
             const formContainer = document.getElementById('form-container');
@@ -214,11 +248,10 @@
 
             if (formName === 'senior_paramedic') {
                 formHTML = `
-
                     <h2>نموذج كبار المسعفين</h2>
                     <div class="form-section">
-                        <label for="sector">اختر القطاع:</label>
-                        <select id="sector" onchange="toggleOtherSectorInput()">
+                        <label for="senior_paramedic_sector">اختر القطاع:</label>
+                        <select id="senior_paramedic_sector" onchange="toggleOtherSectorInput(this)">
                             <option value="الوسط">الوسط</option>
                             <option value="الجنوب">الجنوب</option>
                             <option value="الشرق">الشرق</option>
@@ -226,151 +259,152 @@
                             <option value="الشمال">الشمال</option>
                             <option value="other">أخرى</option>
                         </select>
-                        <input type="text" id="other_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
+                        <input type="text" id="senior_paramedic_other_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
 
-                        <label for="date">التاريخ:</label>
-                        <input type="date" id="date" readonly>
+                        <label for="senior_paramedic_date">التاريخ:</label>
+                        <input type="date" id="senior_paramedic_date" readonly>
 
-                        <label for="time">التوقيت الحالي:</label>
-                        <select id="time">
+                        <label for="senior_paramedic_time">التوقيت الحالي:</label>
+                        <select id="senior_paramedic_time" class="time-select">
                             <option value="0:00 إلى 6:00">0:00 إلى 6:00</option>
                             <option value="6:00 إلى 12:00">6:00 إلى 12:00</option>
                             <option value="12:00 إلى 18:00">12:00 إلى 18:00</option>
                             <option value="18:00 إلى 0:00">18:00 إلى 0:00</option>
                         </select>
 
-                        <label for="working_teams">عدد الفرق العاملة:</label>
-                        <input type="text" id="working_teams">
+                        <label for="senior_paramedic_working_teams">عدد الفرق العاملة:</label>
+                        <input type="text" id="senior_paramedic_working_teams">
 
-                        <label for="total_teams">من أصل:</label>
-                        <input type="text" id="total_teams">
+                        <label for="senior_paramedic_total_teams">من أصل:</label>
+                        <input type="text" id="senior_paramedic_total_teams">
 
                         <div class="input-row">
                             <div class="input-small">
-                                <label for="rapid_response_teams">عدد فرق التدخل السريع:</label>
-                                <input type="text" id="rapid_response_teams">
+                                <label for="senior_paramedic_rapid_response_teams">عدد فرق التدخل السريع:</label>
+                                <input type="text" id="senior_paramedic_rapid_response_teams">
                             </div>
                             <div class="input-small">
-                                <label for="operating_vehicles">عدد المركبات العاملة:</label>
-                                <input type="text" id="operating_vehicles">
+                                <label for="senior_paramedic_operating_vehicles">عدد المركبات العاملة:</label>
+                                <input type="text" id="senior_paramedic_operating_vehicles">
                             </div>
                             <div class="input-small">
-                                <label for="broken_vehicles">عدد المركبات المتعطلة:</label>
-                                <input type="text" id="broken_vehicles">
+                                <label for="senior_paramedic_broken_vehicles">عدد المركبات المتعطلة:</label>
+                                <input type="text" id="senior_paramedic_broken_vehicles">
                             </div>
                             <div class="input-small">
-                                <label for="reserve_vehicles">عدد المركبات الاحتياط:</label>
-                                <input type="text" id="reserve_vehicles">
+                                <label for="senior_paramedic_reserve_vehicles">عدد المركبات الاحتياط:</label>
+                                <input type="text" id="senior_paramedic_reserve_vehicles">
                             </div>
                         </div>
 
-                        <label for="open_logistics_reports">بلاغات الدعم اللوجستي المفتوحة:</label>
-                        <input type="text" id="open_logistics_reports">
+                        <label for="senior_paramedic_open_logistics_reports">بلاغات الدعم اللوجستي المفتوحة:</label>
+                        <input type="text" id="senior_paramedic_open_logistics_reports">
 
-                        <label for="coordination_teams">عدد العاملين في التنسيق والتحكم:</label>
-                        <input type="text" id="coordination_teams">
+                        <label for="senior_paramedic_coordination_teams">عدد العاملين في التنسيق والتحكم:</label>
+                        <input type="text" id="senior_paramedic_coordination_teams">
 
-                        <label for="logistics_support_teams">عدد العاملين في الدعم اللوجستي:</label>
-                        <input type="text" id="logistics_support_teams">
+                        <label for="senior_paramedic_logistics_support_teams">عدد العاملين في الدعم اللوجستي:</label>
+                        <input type="text" id="senior_paramedic_logistics_support_teams">
 
-                        <label for="hospitals_out_of_service">قائمة المستشفيات خارج الخدمة:</label>
-                        <input type="text" id="hospitals_out_of_service">
+                        <label for="senior_paramedic_hospitals_out_of_service">قائمة المستشفيات خارج الخدمة:</label>
+                        <input type="text" id="senior_paramedic_hospitals_out_of_service">
 
                         <h2>الطلب</h2>
 
-                        <label for="eco_reports">عدد بلاغات إنعاش إيكو:</label>
-                        <input type="text" id="eco_reports">
+                        <label for="senior_paramedic_eco_reports">عدد بلاغات إنعاش إيكو:</label>
+                        <input type="text" id="senior_paramedic_eco_reports">
 
-                        <label for="delta_reports">عدد بلاغات دلتا:</label>
-                        <input type="text" id="delta_reports">
+                        <label for="senior_paramedic_delta_reports">عدد بلاغات دلتا:</label>
+                        <input type="text" id="senior_paramedic_delta_reports">
 
-                        <label for="charlie_reports">عدد بلاغات تشارلي:</label>
-                        <input type="text" id="charlie_reports">
+                        <label for="senior_paramedic_charlie_reports">عدد بلاغات تشارلي:</label>
+                        <input type="text" id="senior_paramedic_charlie_reports">
 
-                        <label for="bravo_reports">عدد بلاغات برافو:</label>
-                        <input type="text" id="bravo_reports">
+                        <label for="senior_paramedic_bravo_reports">عدد بلاغات برافو:</label>
+                        <input type="text" id="senior_paramedic_bravo_reports">
 
-                        <label for="alpha_reports">عدد بلاغات ألفا:</label>
-                        <input type="text" id="alpha_reports">
+                        <label for="senior_paramedic_alpha_reports">عدد بلاغات ألفا:</label>
+                        <input type="text" id="senior_paramedic_alpha_reports">
 
-                        <label for="omega_reports">عدد بلاغات أوميغا:</label>
-                        <input type="text" id="omega_reports">
+                        <label for="senior_paramedic_omega_reports">عدد بلاغات أوميغا:</label>
+                        <input type="text" id="senior_paramedic_omega_reports">
 
-                        <label for="catheter_reports">عدد بلاغات القسطرة:</label>
-                        <input type="text" id="catheter_reports">
+                        <label for="senior_paramedic_catheter_reports">عدد بلاغات القسطرة:</label>
+                        <input type="text" id="senior_paramedic_catheter_reports">
 
-                        <label for="stroke_reports">عدد بلاغات السكتة الدماغية:</label>
-                        <input type="text" id="stroke_reports">
+                        <label for="senior_paramedic_stroke_reports">عدد بلاغات السكتة الدماغية:</label>
+                        <input type="text" id="senior_paramedic_stroke_reports">
 
                         <h2>البلاغات</h2>
 
-                        <label for="total_reports">إجمالي بلاغات القطاع:</label>
-                        <input type="text" id="total_reports">
+                        <label for="senior_paramedic_total_reports">إجمالي بلاغات القطاع:</label>
+                        <input type="text" id="senior_paramedic_total_reports">
 
-                        <label for="government_transfers">عدد الحالات المنقولة للقطاع الحكومي:</label>
-                        <input type="text" id="government_transfers">
+                        <label for="senior_paramedic_government_transfers">عدد الحالات المنقولة للقطاع الحكومي:</label>
+                        <input type="text" id="senior_paramedic_government_transfers">
 
-                        <label for="private_transfers">عدد الحالات المنقولة للقطاع الخاص:</label>
-                        <input type="text" id="private_transfers">
+                        <label for="senior_paramedic_private_transfers">عدد الحالات المنقولة للقطاع الخاص:</label>
+                        <input type="text" id="senior_paramedic_private_transfers">
 
-                        <label for="untransferred_cases">عدد الحالات الغير منقولة:</label>
-                        <input type="text" id="untransferred_cases">
+                        <label for="senior_paramedic_untransferred_cases">عدد الحالات الغير منقولة:</label>
+                        <input type="text" id="senior_paramedic_untransferred_cases">
 
-                        <label for="paper_reports">عدد البلاغات المدونة ورقياً:</label>
-                        <input type="text" id="paper_reports">
+                        <label for="senior_paramedic_paper_reports">عدد البلاغات المدونة ورقياً:</label>
+                        <input type="text" id="senior_paramedic_paper_reports">
 
                         <h2>المخرجات</h2>
 
-                        <label for="waiting_time">متوسط زمن الانتظار في قائمة الترحيل:</label>
-                        <input type="text" id="waiting_time">
+                        <label for="senior_paramedic_waiting_time">متوسط زمن الانتظار في قائمة الترحيل:</label>
+                        <input type="text" id="senior_paramedic_waiting_time">
 
-                        <label for="top_team">اعلى فرقة اسعافيه في عدد البلاغات:</label>
-                        <input type="text" id="top_team">
+                        <label for="senior_paramedic_top_team">اعلى فرقة اسعافيه في عدد البلاغات:</label>
+                        <input type="text" id="senior_paramedic_top_team">
 
-                        <label for="average_reports">متوسط عدد البلاغات للفرق الاسعافية:</label>
-                        <input type="text" id="average_reports">
+                        <label for="senior_paramedic_average_reports">متوسط عدد البلاغات للفرق الاسعافية:</label>
+                        <input type="text" id="senior_paramedic_average_reports">
 
-                        <label for="response_rate">نسبة زمن الاستجابة خلال 8 دقائق للبلاغات الساخنة:</label>
-                        <input type="text" id="response_rate">
+                        <label for="senior_paramedic_response_rate">نسبة زمن الاستجابة خلال 8 دقائق للبلاغات الساخنة:</label>
+                        <input type="text" id="senior_paramedic_response_rate">
 
-                        <label for="average_response_time">متوسط زمن الاستجابة لبلاغات الحوادث المرورية الساخنة:</label>
-                        <input type="text" id="average_response_time">
+                        <label for="senior_paramedic_average_response_time">متوسط زمن الاستجابة لبلاغات الحوادث المرورية الساخنة:</label>
+                        <input type="text" id="senior_paramedic_average_response_time">
 
-                        <label for="response_time_to_intervention">زمن الاستجابة حتى المباشرة:</label>
-                        <input type="text" id="response_time_to_intervention">
+                        <label for="senior_paramedic_response_time_to_intervention">زمن الاستجابة حتى المباشرة:</label>
+                        <input type="text" id="senior_paramedic_response_time_to_intervention">
 
                         <h2>ملاحظات النوبة</h2>
 
-                        <label for="absence_in_shift">عدد الغياب في المناوبة:</label>
-                        <input type="text" id="absence_in_shift">
+                        <label for="senior_paramedic_absence_in_shift">عدد الغياب في المناوبة:</label>
+                        <input type="text" id="senior_paramedic_absence_in_shift">
 
-                        <label for="cad_program_notes">ملاحظات برنامج الكاد:</label>
-                        <textarea id="cad_program_notes" rows="4"></textarea>
+                        <label for="senior_paramedic_cad_program_notes">ملاحظات برنامج الكاد:</label>
+                        <textarea id="senior_paramedic_cad_program_notes" rows="4"></textarea>
+
+                        <button onclick="sendWhatsAppMessage('senior_paramedic')">إرسال النموذج بالواتساب</button>
                     </div>
-                    <button onclick="sendWhatsAppMessage('senior_paramedic')">إرسال النموذج بالواتساب</button>
                 `;
             }
-            // إضافة النماذج الأخرى هنا بنفس الطريقة
             else if (formName === 'rapid_response_reports') {
                 formHTML = `
                     <h2>نموذج بلاغات التدخل السريع</h2>
                     <div class="form-section">
-                        <label for="sector_west">قطاع عمليات الغرب:</label>
-                        <input type="text" id="sector_west" placeholder="أدخل العدد">
+                        <label for="rapid_response_reports_sector_west">قطاع عمليات الغرب:</label>
+                        <input type="text" id="rapid_response_reports_sector_west" placeholder="أدخل العدد">
 
-                        <label for="sector_east">قطاع عمليات الشرق:</label>
-                        <input type="text" id="sector_east" placeholder="أدخل العدد">
+                        <label for="rapid_response_reports_sector_east">قطاع عمليات الشرق:</label>
+                        <input type="text" id="rapid_response_reports_sector_east" placeholder="أدخل العدد">
 
-                        <label for="sector_central">قطاع عمليات الوسط:</label>
-                        <input type="text" id="sector_central" placeholder="أدخل العدد">
+                        <label for="rapid_response_reports_sector_central">قطاع عمليات الوسط:</label>
+                        <input type="text" id="rapid_response_reports_sector_central" placeholder="أدخل العدد">
 
-                        <label for="sector_north">قطاع عمليات الشمال:</label>
-                        <input type="text" id="sector_north" placeholder="أدخل العدد">
+                        <label for="rapid_response_reports_sector_north">قطاع عمليات الشمال:</label>
+                        <input type="text" id="rapid_response_reports_sector_north" placeholder="أدخل العدد">
 
-                        <label for="sector_south">قطاع عمليات الجنوب:</label>
-                        <input type="text" id="sector_south" placeholder="أدخل العدد">
+                        <label for="rapid_response_reports_sector_south">قطاع عمليات الجنوب:</label>
+                        <input type="text" id="rapid_response_reports_sector_south" placeholder="أدخل العدد">
+                        
+                        <button onclick="sendWhatsAppMessage('rapid_response_reports')">إرسال النموذج بالواتساب</button>
                     </div>
-                    <button onclick="sendWhatsAppMessage('rapid_response_reports')">إرسال النموذج بالواتساب</button>
                 `;
             }
             else if (formName === 'senior_paramedic_outside') {
