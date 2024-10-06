@@ -13,117 +13,66 @@
             margin: 0;
             padding: 0;
             direction: rtl;
+            text-align: center;
         }
 
         header {
             background-color: #4a90e2;
             color: white;
             padding: 15px;
-            text-align: center;
             font-size: 22px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .dashboard {
-            display: grid;
-            grid-template-columns: 1fr;
-            grid-template-rows: auto 1fr;
-            height: 100vh;
-            transition: all 0.3s ease;
-        }
-
-        /* الشريط الجانبي */
-        .sidebar {
-            background-color: #ffffff;
-            padding: 20px;
-            color: #333;
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
-            border-right: 1px solid #e3e3e3;
-            transition: max-height 0.3s ease;
-        }
-
-        .sidebar.hidden {
-            max-height: 0;
-            overflow: hidden;
-            padding: 0;
-        }
-
-        .sidebar h2 {
-            font-size: 20px;
-            color: #4a90e2;
-            margin-bottom: 30px;
-        }
-
-        .sidebar ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .sidebar ul li {
-            margin-bottom: 15px;
-        }
-
-        .sidebar ul li a {
+        .buttons-container {
             display: flex;
+            justify-content: center;
             align-items: center;
-            padding: 12px;
-            color: #333;
-            text-decoration: none;
-            font-size: 16px;
-            transition: background-color 0.3s;
-            border-radius: 8px;
+            height: 80vh;
+            gap: 20px;
         }
 
-        .sidebar ul li a:hover {
-            background-color: #e3e9f1;
-        }
-
-        .sidebar ul li a i {
-            margin-left: 10px;
-        }
-
-        /* المحتوى الرئيسي */
-        .content {
-            padding: 30px;
-            background-color: #f9fbfc;
-            height: 100%;
-            transition: all 0.3s ease;
-        }
-
-        h2 {
-            color: #4a90e2;
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-
-        p {
-            font-size: 16px;
-            color: #555;
-            line-height: 1.6;
-        }
-
-        /* الأزرار */
-        button {
-            padding: 12px;
+        .buttons-container button {
+            padding: 15px 25px;
             background-color: #4a90e2;
             border: none;
             color: white;
-            font-size: 16px;
-            border-radius: 6px;
+            font-size: 18px;
+            border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
 
-        button:hover {
+        .buttons-container button:hover {
             background-color: #357ab8;
         }
 
         /* تصميم النموذج */
+        .form-container {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border-radius: 8px;
+            z-index: 1000;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .form-container.active {
+            display: block;
+        }
+
         label {
             margin-top: 10px;
             display: block;
             font-size: 16px;
             color: #333;
+            text-align: right;
         }
 
         input, select, textarea {
@@ -141,68 +90,100 @@
             border-color: #4a90e2;
         }
 
-        .form-section {
-            background-color: #ffffff;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        button[type="submit"] {
+            padding: 12px;
+            background-color: #4a90e2;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
         }
 
-        /* التصميم المتجاوب */
-        @media (max-width: 768px) {
-            .dashboard {
-                grid-template-columns: 1fr;
-            }
+        button[type="submit"]:hover {
+            background-color: #357ab8;
+        }
 
-            .sidebar {
-                max-height: 100px;
-                padding: 20px;
-            }
+        /* التغطية الخلفية */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
 
-            .content {
-                padding: 15px;
-            }
+        .overlay.active {
+            display: block;
         }
     </style>
 </head>
 <body>
 
-<!-- الشريط العلوي -->
 <header>
     لوحة تحكم الإسعاف
 </header>
 
-<!-- محتويات الصفحة -->
-<div class="dashboard">
-    <!-- الشريط الجانبي -->
-    <div class="sidebar" id="sidebar">
-        <h2>القائمة الرئيسية</h2>
-        <ul>
-            <li><a href="#" onclick="loadForm('نموذج كبار المسعفين')"><i class="fas fa-user-md"></i> نموذج كبار المسعفين</a></li>
-            <li><a href="#" onclick="loadForm('نموذج بلاغات التدخل السريع')"><i class="fas fa-car-crash"></i> نموذج بلاغات التدخل السريع</a></li>
-            <li><a href="#" onclick="loadForm('نموذج فشل تشغيلي')"><i class="fas fa-exclamation-triangle"></i> نموذج فشل تشغيلي</a></li>
-        </ul>
-    </div>
+<!-- الأزرار -->
+<div class="buttons-container" id="buttonsContainer">
+    <button onclick="openForm('form1')">نموذج كبار المسعفين</button>
+    <button onclick="openForm('form2')">نموذج بلاغات التدخل السريع</button>
+    <button onclick="openForm('form3')">نموذج فشل تشغيلي</button>
+</div>
 
-    <!-- المحتوى الرئيسي -->
-    <div class="content" id="content">
-        <h2>مرحبًا بك في لوحة تحكم الإسعاف</h2>
-        <p>اختر نموذجًا من القائمة للبدء.</p>
-    </div>
+<!-- النماذج -->
+<div class="overlay" id="overlay"></div>
+
+<div class="form-container" id="form1">
+    <h2>نموذج كبار المسعفين</h2>
+    <form onsubmit="submitForm('form1'); return false;">
+        <label for="name">الاسم:</label>
+        <input type="text" id="name" required>
+        <label for="team">عدد الفرق العاملة:</label>
+        <input type="number" id="team" required>
+        <button type="submit">إرسال النموذج</button>
+    </form>
+</div>
+
+<div class="form-container" id="form2">
+    <h2>نموذج بلاغات التدخل السريع</h2>
+    <form onsubmit="submitForm('form2'); return false;">
+        <label for="report">رقم البلاغ:</label>
+        <input type="text" id="report" required>
+        <label for="sector">القطاع:</label>
+        <input type="text" id="sector" required>
+        <button type="submit">إرسال النموذج</button>
+    </form>
+</div>
+
+<div class="form-container" id="form3">
+    <h2>نموذج فشل تشغيلي</h2>
+    <form onsubmit="submitForm('form3'); return false;">
+        <label for="failure">نوع الفشل:</label>
+        <input type="text" id="failure" required>
+        <label for="details">التفاصيل:</label>
+        <textarea id="details" rows="4" required></textarea>
+        <button type="submit">إرسال النموذج</button>
+    </form>
 </div>
 
 <script>
-    // تحميل نموذج عند النقر على رابط في الشريط الجانبي
-    function loadForm(formName) {
-        const content = document.getElementById('content');
-        const sidebar = document.getElementById('sidebar');
+    // عرض النموذج عند الضغط على الزر
+    function openForm(formId) {
+        document.getElementById(formId).classList.add('active');
+        document.getElementById('overlay').classList.add('active');
+    }
 
-        // تغيير المحتوى
-        content.innerHTML = `<h2>${formName}</h2><p>هنا يمكنك عرض أو تعديل ${formName}.</p>`;
-
-        // طي القائمة بعد اختيار نموذج
-        sidebar.classList.add('hidden');
+    // إغلاق النموذج وإعادة عرض الأزرار
+    function submitForm(formId) {
+        document.getElementById(formId).classList.remove('active');
+        document.getElementById('overlay').classList.remove('active');
+        alert("تم إرسال النموذج بنجاح!");
     }
 </script>
 
