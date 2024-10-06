@@ -25,6 +25,16 @@
             text-align: center;
             transition: width 0.3s;
             box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            height: 100%;
+            width: 250px;
+            top: 0;
+            right: 0;
+            z-index: 100;
+            transition: transform 0.3s ease-in-out;
+        }
+        .sidebar.hidden {
+            transform: translateX(100%);
         }
         .sidebar h1 {
             font-size: 24px;
@@ -60,7 +70,7 @@
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            overflow-y: auto;
+            margin-right: 270px; /* Allow space for the sidebar */
         }
         h2 {
             color: #3498db;
@@ -68,66 +78,33 @@
             margin-bottom: 20px;
             text-align: center;
         }
-        label {
-            margin-top: 10px;
-            display: block;
-            color: #333;
-            font-weight: bold;
-            font-size: 15px;
-        }
-        input[type="text"], input[type="date"], input[type="time"], input[type="datetime-local"], textarea, select {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0 15px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 14px;
-            transition: border-color 0.3s;
-        }
-        input[type="text"]:focus, input[type="date"]:focus, input[type="time"]:focus, select:focus {
-            border-color: #3498db;
-            outline: none;
-        }
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #3498db;
-            border: none;
-            border-radius: 6px;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #1d6a9c;
-        }
-        .copy-notification {
+
+        /* زر التحكم في الشريط الجانبي */
+        .toggle-sidebar {
             display: none;
-            text-align: center;
-            color: green;
-            font-size: 14px;
-            margin-top: 15px;
-        }
-        .form-section {
-            margin-bottom: 30px;
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 200;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
         }
 
         /* Responsive design */
-        @media (min-width: 768px) {
-            .dashboard {
-                flex-direction: row;
+        @media (max-width: 768px) {
+            .container {
+                margin-right: 0;
             }
             .sidebar {
-                width: 250px;
-                text-align: left;
+                transform: translateX(100%);
             }
-            .container {
-                margin-left: 10px;
+            .toggle-sidebar {
+                display: block;
             }
         }
     </style>
@@ -135,8 +112,11 @@
 <body>
 
 <div class="dashboard">
+    <!-- زر التحكم في الشريط الجانبي -->
+    <button class="toggle-sidebar" onclick="toggleSidebar()">☰</button>
+
     <!-- الشريط الجانبي -->
-    <div class="sidebar">
+    <div class="sidebar hidden" id="sidebar">
         <h1>لوحة التحكم</h1>
         <ul>
             <li><a href="#" onclick="loadForm('senior_paramedic')"><i class="fas fa-user-md"></i> (داخلي)نموذج كبار المسعفين</a></li>
