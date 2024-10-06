@@ -90,7 +90,7 @@
         }
 
         input[type="text"], input[type="date"], select {
-            height: 35px; /* حجم موحد لجميع الحقول */
+            height: 30px; /* حجم موحد لجميع الحقول */
         }
 
         input:focus, select:focus, textarea:focus {
@@ -188,8 +188,14 @@
 </div>
 
 <script>
-    // عرض/إخفاء النموذج عند الضغط على الزر
+    // عرض/إخفاء النموذج عند الضغط على الزر، وإغلاق النماذج الأخرى
     function toggleForm(formId) {
+        const forms = document.querySelectorAll('.form-container');
+        forms.forEach((form) => {
+            if (form.id !== formId) {
+                form.classList.remove('active');
+            }
+        });
         const form = document.getElementById(formId);
         form.classList.toggle('active');
     }
