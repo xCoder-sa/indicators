@@ -18,53 +18,57 @@
             flex-direction: column;
             min-height: 100vh;
         }
-        .sidebar {
-            background-color: #ffffff;
-            padding: 15px;
-            color: #333;
-            text-align: center;
-            transition: width 0.3s;
-            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            right: 0;
-            width: 240px;
-            overflow-y: auto;
-            border-left: 1px solid #ddd;
-        }
-        .sidebar h1 {
-            font-size: 20px;
-            margin-bottom: 20px;
-            color: #3498db;
-        }
-        .sidebar ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-        .sidebar ul li {
-            margin-bottom: 15px;
-        }
-        .sidebar ul li a {
-            display: block;
-            padding: 10px;
-            color: #3498db;
-            text-decoration: none;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
-        .sidebar ul li a:hover {
-            background-color: #3498db;
-            color: white;
-        }
-        .container {
-            flex: 1;
-            padding: 20px;
-            margin-right: 260px;
-            background-color: #f4f4f4;
-            min-height: 100vh;
-        }
+/* الشريط الجانبي في الشاشات الكبيرة */
+.sidebar {
+    background-color: #ffffff;
+    padding: 20px;
+    color: #333;
+    text-align: center;
+    transition: width 0.3s, left 0.3s;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+}
+
+/* الشريط الجانبي في الشاشات الصغيرة (افتراضيًا مخفي) */
+@media (max-width: 768px) {
+    .sidebar {
+        position: absolute;
+        top: 0;
+        left: -250px;
+        width: 250px;
+        height: 100%;
+        transition: left 0.3s ease-in-out;
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    .menu-toggle {
+        display: block;
+        background-color: #3498db;
+        color: white;
+        padding: 10px;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        z-index: 2;
+    }
+
+    /* إخفاء القائمة الجانبية إذا لم تكن مفتوحة */
+    .sidebar.closed {
+        left: -250px;
+    }
+
+    /* تعديل الحاوية الرئيسية لتتناسب مع الشاشة الصغيرة */
+    .container {
+        margin-left: 0;
+        padding-top: 50px;
+    }
+}
         h2 {
             color: #333;
             font-size: 22px;
@@ -146,6 +150,8 @@
 <button class="sidebar-toggler" onclick="toggleSidebar()">☰</button>
 
 <div class="dashboard">
+<!-- زر فتح/إغلاق القائمة -->
+<div class="menu-toggle" onclick="toggleSidebar()">☰ القائمة</div>
     <!-- الشريط الجانبي -->
     <div class="sidebar" id="sidebar">
         <h1>لوحة التحكم</h1>
@@ -213,6 +219,12 @@
 
         formContainer.innerHTML = formHTML;
     }
+    
+    function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    sidebar.classList.toggle('open');
+}
+
 
     document.addEventListener("DOMContentLoaded", function () {
         loadForm('senior_paramedic');
