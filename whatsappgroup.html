@@ -193,17 +193,21 @@
             flex: 1;
             min-width: 100px;
         }
+
 	    .form-group {
     display: flex;
-    align-items: center;  /* يجعل التسمية والإدخال في خط مستقيم */
+    align-items: center;
+    direction: rtl;  /* جعل اتجاه النص من اليمين إلى اليسار */
+    justify-content: flex-end;  /* لضمان أن العناصر تبدأ من اليمين */
 }
 
 .form-group label {
-    margin-right: 30px;  /* إضافة مسافة بين التسمية وحقل الإدخال */
+    margin-left: 10px;  /* مسافة بين التسمية وحقل الإدخال */
 }
 
 .form-group input {
-    margin-right: 20px;  /* مسافة إضافية بين حقلي الإدخال */
+    margin-left: 20px;  /* مسافة إضافية بين حقول الإدخال */
+    text-align: right;  /* لجعل النص في حقول الإدخال يبدأ من اليمين */
 }
 
     </style>
