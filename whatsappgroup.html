@@ -1058,7 +1058,7 @@ function sendWhatsAppMessage(formName) {
         const reportNumbers = document.querySelectorAll('.report-number');
         const reportTypes = document.querySelectorAll('.report-type');
         reportNumbers.forEach((number, index) => {
-            formText += `رقم البلاغ: ${number.value}, نوع البلاغ: ${reportTypes[index].value}\n, زمن الاستجابة: ${number.value}`;
+            formText += `رقم البلاغ: ${number.value}, نوع البلاغ: ${reportTypes[index].value}\n, زمن الاستجابة: ${waiting_time}`;
         });
 
         formText += `\n=== المخرجات ===\n`;
