@@ -29,6 +29,7 @@
             grid-template-columns: 1fr;
             grid-template-rows: auto 1fr;
             height: 100vh;
+            transition: all 0.3s ease;
         }
 
         /* الشريط الجانبي */
@@ -38,6 +39,13 @@
             color: #333;
             box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
             border-right: 1px solid #e3e3e3;
+            transition: max-height 0.3s ease;
+        }
+
+        .sidebar.hidden {
+            max-height: 0;
+            overflow: hidden;
+            padding: 0;
         }
 
         .sidebar h2 {
@@ -79,6 +87,7 @@
             padding: 30px;
             background-color: #f9fbfc;
             height: 100%;
+            transition: all 0.3s ease;
         }
 
         h2 {
@@ -145,6 +154,15 @@
             .dashboard {
                 grid-template-columns: 1fr;
             }
+
+            .sidebar {
+                max-height: 100px;
+                padding: 20px;
+            }
+
+            .content {
+                padding: 15px;
+            }
         }
     </style>
 </head>
@@ -158,12 +176,12 @@
 <!-- محتويات الصفحة -->
 <div class="dashboard">
     <!-- الشريط الجانبي -->
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
         <h2>القائمة الرئيسية</h2>
         <ul>
-            <li><a href="#" onclick="loadForm('نموذج 1')"><i class="fas fa-user-md"></i> نموذج كبار المسعفين</a></li>
-            <li><a href="#" onclick="loadForm('نموذج 2')"><i class="fas fa-car-crash"></i> نموذج بلاغات التدخل السريع</a></li>
-            <li><a href="#" onclick="loadForm('نموذج 3')"><i class="fas fa-exclamation-triangle"></i> نموذج فشل تشغيلي</a></li>
+            <li><a href="#" onclick="loadForm('نموذج كبار المسعفين')"><i class="fas fa-user-md"></i> نموذج كبار المسعفين</a></li>
+            <li><a href="#" onclick="loadForm('نموذج بلاغات التدخل السريع')"><i class="fas fa-car-crash"></i> نموذج بلاغات التدخل السريع</a></li>
+            <li><a href="#" onclick="loadForm('نموذج فشل تشغيلي')"><i class="fas fa-exclamation-triangle"></i> نموذج فشل تشغيلي</a></li>
         </ul>
     </div>
 
@@ -178,7 +196,13 @@
     // تحميل نموذج عند النقر على رابط في الشريط الجانبي
     function loadForm(formName) {
         const content = document.getElementById('content');
+        const sidebar = document.getElementById('sidebar');
+
+        // تغيير المحتوى
         content.innerHTML = `<h2>${formName}</h2><p>هنا يمكنك عرض أو تعديل ${formName}.</p>`;
+
+        // طي القائمة بعد اختيار نموذج
+        sidebar.classList.add('hidden');
     }
 </script>
 
