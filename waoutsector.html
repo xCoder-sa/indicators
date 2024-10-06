@@ -23,14 +23,16 @@
             background-color: #ecf0f1;
         }
 
-        .sidebar {
-            width: 250px;
-            background-color: #3498db;
-            padding: 20px;
-            color: #fff;
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
+.sidebar {
+    width: 200px; /* تقليص عرض الشريط الجانبي */
+    background-color: #3498db;
+    padding: 20px;
+    color: #fff;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+
 
         .sidebar.closed {
             transform: translateX(-100%);
@@ -164,9 +166,17 @@
             }
 
             .container {
-                margin: 0;
-                padding: 20px;
-            }
+    flex: 1;
+    padding: 30px;
+    background-color: #fff;
+    margin: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    max-width: calc(100% - 220px); /* استغلال المساحة المتبقية بعد الشريط الجانبي */
+    margin-left: 220px; /* توسيط المحتوى مع الشريط الجانبي */
+}
+
         }
     </style>
 </head>
