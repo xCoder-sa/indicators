@@ -50,27 +50,49 @@
         .navbar .menu li {
             margin-left: 20px;
         }
+	/* تعديل مظهر الأزرار في شريط التنقل */
         .navbar .menu li a {
-            text-decoration: none;
-            color: #ffffff; /* لون النص أبيض */
-            font-size: 16px;
-            padding: 8px 12px;
-            border-radius: 4px;
-            transition: background-color 0.3s, color 0.3s;
-            display: flex;
-            align-items: center;
-        }
+	    text-decoration: none;
+	    color: #ffffff; /* لون النص أبيض */
+	    font-size: 16px;
+	    padding: 8px 12px;
+	    border-radius: 4px;
+	    border: 2px solid #fff; /* إضافة حدود بيضاء حول الأزرار */
+	    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+	    display: flex;
+	    align-items: center;
+	}
+
         .navbar .menu li a i {
             margin-left: 5px;
         }
-        .navbar .menu li a:hover {
-            background-color: #2980b9; /* لون أغمق عند التمرير */
-            color: #ecf0f1; /* تغيير لون النص عند التمرير */
-        }
-        .navbar .menu li a.active {
-            background-color: #1abc9c; /* لون مختلف عند التفعيل */
-            color: #ffffff;
-        }
+        /* تغيير لون الخلفية عند التمرير */
+	.navbar .menu li a:hover {
+	    background-color: #2980b9; /* لون أغمق عند التمرير */
+	    color: #ecf0f1; /* تغيير لون النص عند التمرير */
+	    border-color: #ecf0f1; /* تغيير لون الحدود عند التمرير */
+	}
+
+	/* لون مختلف عند التفعيل */
+	.navbar .menu li a.active {
+	    background-color: #1abc9c; /* لون مختلف عند التفعيل */
+	    color: #ffffff;
+	    border-color: #1abc9c; /* نفس لون الخلفية عند التفعيل */
+	}
+
+	    /* سهم يشير إلى إمكانية السحب */
+	.navbar .menu::after {
+	    content: '⟵ اسحب لرؤية المزيد';
+	    color: #fff;
+	    font-size: 14px;
+	    position: absolute;
+	    top: 50%;
+	    right: 10px;
+	    transform: translateY(-50%);
+	    background-color: #3498db;
+	    padding: 5px 10px;
+	    border-radius: 4px;
+	}
         /* أيقونة الهامبرجر للهواتف */
         .hamburger {
             display: none;
@@ -210,9 +232,9 @@
 
 .form-group input {
     width: 150px;
-    padding: 5px;
+    padding: 0px;
     text-align: right;
-    height: 15px;  /* ضبط ارتفاع الحقول */
+    height: 20px;  /* ضبط ارتفاع الحقول */
 }
 
 /* تصميم متجاوب لشاشات الهواتف المحمولة */
@@ -224,11 +246,11 @@
 
     .form-group input {
         width: 100%;  /* ملء الشاشة للحقول على الشاشات الصغيرة */
-        height: 20px;  /* زيادة ارتفاع الحقول على الشاشات الصغيرة */
+        height: 30px;  /* زيادة ارتفاع الحقول على الشاشات الصغيرة */
     }
 
     .form-group label {
-        margin-bottom: 5px;  /* مسافة صغيرة بين التسمية والحقل */
+        margin-bottom: 1px;  /* مسافة صغيرة بين التسمية والحقل */
     }
 }
 
