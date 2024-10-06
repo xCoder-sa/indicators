@@ -13,106 +13,81 @@
             padding: 0;
             direction: rtl;
         }
-        /* شريط التنقل العلوي */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #ffffff;
-            padding: 15px 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-        .navbar .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #3498db;
-        }
-        .menu-header {
-            display: none; /* سيتم عرضه فقط على الشاشات الصغيرة */
-            font-size: 18px;
-            font-weight: bold;
-            padding: 10px 20px;
-            background-color: #ffffff;
-            width: 100%;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        .navbar .menu {
-            display: flex;
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-        }
-        .navbar .menu li {
-            margin-left: 20px;
-        }
-        .navbar .menu li a {
-            text-decoration: none;
-            color: #333;
-            font-size: 16px;
-            padding: 8px 12px;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-            display: flex;
-            align-items: center;
-        }
-        .navbar .menu li a i {
-            margin-left: 5px;
-        }
-        .navbar .menu li a:hover {
-            background-color: #ecf0f1;
-        }
-        /* أيقونة الهامبرجر للهواتف */
-        .hamburger {
-            display: none;
-            font-size: 24px;
-            color: #333;
-            cursor: pointer;
-        }
-        /* قائمة التنقل القابلة للتمرير على الهواتف */
-        @media (max-width: 767px) {
-            .navbar {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .menu-header {
-                display: block;
-            }
-            .menu {
-                display: flex;
-                overflow-x: auto;
-                white-space: nowrap;
-                width: 100%;
-                background-color: #ffffff;
-                padding: 10px 20px;
-            }
-            .menu li {
-                margin: 0 10px;
-            }
-            .menu li a {
-                padding: 10px 15px;
-                display: inline-block;
-            }
-            .hamburger {
-                display: none;
-            }
-        }
-        /* تحسينات إضافية للتمرير الأفقي */
-        .menu::-webkit-scrollbar {
-            height: 8px;
-        }
+/* شريط التنقل العلوي */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #3498db; /* لون أزرق للشريط */
+    padding: 15px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
 
-        .menu::-webkit-scrollbar-thumb {
-            background-color: #3498db;
-            border-radius: 4px;
-        }
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff; /* لون أبيض للنص */
+}
 
-        .menu::-webkit-scrollbar-track {
-            background-color: #f0f4f8;
-        }
+.navbar .menu li a {
+    text-decoration: none;
+    color: #fff; /* لون أبيض للنص داخل الروابط */
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+    display: flex;
+    align-items: center;
+    background-color: transparent; /* خلفية شفافة في الوضع العادي */
+}
+
+.navbar .menu li a:hover,
+.navbar .menu li a:focus,
+.navbar .menu li a:active {
+    background-color: #1d6a9c; /* تغيير لون الخلفية عند التحويم، التركيز أو الضغط */
+    color: #fff; /* تأكيد بقاء النص أبيض */
+}
+
+.navbar .menu li a.selected {
+    background-color: #145a76; /* خلفية دائمة للعناصر المختارة */
+    color: #fff; /* تأكيد بقاء النص أبيض */
+}
+
+/* قائمة التنقل القابلة للتمرير على الهواتف */
+@media (max-width: 767px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .menu {
+        display: flex;
+        overflow-x: auto;
+        white-space: nowrap;
+        width: 100%;
+        background-color: #3498db; /* تأكيد الخلفية الزرقاء */
+        padding: 10px 20px;
+    }
+    .menu li a {
+        padding: 10px 15px;
+        display: inline-block;
+    }
+}
+
+/* تحسينات إضافية للأجهزة التي تدعم اللمس */
+@media (hover: none) {
+    .navbar .menu li a {
+        background-color: #3498db; /* تأكيد لون الخلفية عند عدم وجود hover */
+        color: #fff;
+    }
+    .navbar .menu li a:active {
+        background-color: #145a76; /* خلفية عند الضغط للأجهزة اللمسية */
+    }
+}
+
         /* المحتوى الرئيسي */
         .container {
             padding: 80px 20px 20px 20px; /* زيادة padding-top للعلامة الثابتة */
