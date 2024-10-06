@@ -864,10 +864,11 @@ function sendWhatsAppMessage(formName) {
         formText += `ملاحظات برنامج الكاد: ${document.getElementById('cad_program_notes').value}\n`;
     } else if (formName === 'operational_failure') {
         formText += `=== نموذج فشل تشغيلي ===\n\n`;
-        formText += `القطاع: ${document.getElementById('sector').value}\n`;
-        if (document.getElementById('sector').value === 'other') {
-            formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
-        }
+        if (document.getElementById('sector').value !== 'other') {
+    formText += `القطاع: ${document.getElementById('sector').value}\n`;
+} else {
+    formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
+}
 	formText += `رقم البلاغ: ${document.getElementById('report_number').value}\n`;
         formText += `بداية الحدث: ${document.getElementById('start_hour').value}:${document.getElementById('start_minute').value}\n`;
         formText += `تعطل فرقة إسعافية: ${document.getElementById('unit_failure').value}\n`;
@@ -890,10 +891,11 @@ function sendWhatsAppMessage(formName) {
         formText += `ملاحظات: ${document.getElementById('notes').value}\n`;
     } else if (formName === 'major_event') {
         formText += `=== نموذج حدث جسيم ===\n\n`;
-        formText += `القطاع: ${document.getElementById('sector').value}\n`;
-        if (document.getElementById('sector').value === 'other') {
-            formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
-        }
+        if (document.getElementById('sector').value !== 'other') {
+    formText += `القطاع: ${document.getElementById('sector').value}\n`;
+} else {
+    formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
+}
         formText += `وقت وتاريخ الحدث: ${document.getElementById('event_time').value} ${document.getElementById('event_hour').value}:${document.getElementById('event_minute').value}\n`;
         formText += `تفاصيل الحدث: ${document.getElementById('event_details').value}\n`;
         formText += `إيجاز الوضع الراهن أثناء ورود البلاغ: ${document.getElementById('assigned_units').value}\n`;
@@ -922,10 +924,11 @@ function sendWhatsAppMessage(formName) {
         formText += `قائد المنطقة المناوب: ${document.getElementById('area_leader').value}\n`;
     } else if (formName === 'support_request') {
         formText += `=== طلب تفعيل خطة المساندة والدعم المتبادل ===\n\n`;
-        formText += `القطاع: ${document.getElementById('sector').value}\n`;
-        if (document.getElementById('sector').value === 'other') {
-            formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
-        }
+        if (document.getElementById('sector').value !== 'other') {
+    formText += `القطاع: ${document.getElementById('sector').value}\n`;
+} else {
+    formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
+}
         formText += `توقيت طلب الدعم: ${document.getElementById('report_hour').value}:${document.getElementById('report_minute').value}\n`;
         formText += `عدد الوحدات المرتبطة ببلاغ: ${document.getElementById('units_linked').value}\n`;
         formText += `عدد الوحدات الجاهزة: ${document.getElementById('units_ready').value}\n`;
