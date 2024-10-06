@@ -193,7 +193,7 @@
             flex: 1;
             min-width: 100px;
         }
-.form-group {
+	.form-group {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -209,8 +209,10 @@
 
 .form-group input {
     width: 150px;
-    padding: 5px;
+    padding: 10px;  /* زيادة المساحة داخل الحقول */
     text-align: right;
+    font-size: 16px;  /* تكبير النص داخل الحقول */
+    height: 40px;  /* زيادة ارتفاع مربع الكتابة */
 }
 
 /* تصميم متجاوب لشاشات الهواتف المحمولة */
@@ -222,12 +224,14 @@
 
     .form-group input {
         width: 100%;  /* جعل حقول الإدخال تأخذ عرض الشاشة كاملاً */
+        height: 45px;  /* ارتفاع أكبر على الشاشات الصغيرة */
     }
 
     .form-group label {
         margin-bottom: 5px;  /* مسافة بين التسمية وحقل الإدخال في التصميم العمودي */
     }
 }
+
 
     </style>
 </head>
