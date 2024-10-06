@@ -301,6 +301,153 @@
                 </div>
                 <button onclick="sendWhatsAppMessage('senior_paramedic')">إرسال النموذج بالواتساب</button>
             `;
+	} else if (formName === 'senior_paramedic_outside') {
+            formHTML = `
+		 <h2>نموذج كبار المسعفين (خارجي)</h2>
+                <div class="form-section">
+                    <label for="sector">اختر القطاع:</label>
+                    <select id="sector" onchange="toggleOtherSectorInput()">
+                        <option value="رماح">رماح</option>
+                        <option value="الافلاج">الافلاج</option>
+                        <option value="الخرج">الخرج</option>
+                        <option value="الدرعية">الدرعية</option>
+                        <option value="الدوادمي">الدوادمي</option>
+                        <option value="الزلفي">الزلفي</option>
+                        <option value="الغاط">الغاط</option>
+                        <option value="القويعية">القويعية</option>
+                        <option value="المجمعة">المجمعة</option>
+                        <option value="الغاط">الغاط</option>
+                        <option value="المجمعة">المجمعة</option>
+                        <option value="المزاحمية">المزاحمية</option>
+                        <option value="حوطة بني تميم">حوطة بني تميم</option>
+                        <option value="شقراء">شقراء</option>
+                        <option value="عفيف">عفيف</option>
+                        <option value="وادي الدواسر">وادي الدواسر</option>
+                        <option value="other">أخرى</option>
+                    </select>
+                    <input type="text" id="other_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
+
+                    <label for="date">التاريخ:</label>
+                    <input type="date" id="date" readonly>
+
+                    <label for="time">التوقيت الحالي:</label>
+                    <select id="time">
+                        <option value="09:00 إلى 15:00">09:00 إلى 15:00</option>
+                        <option value="15:00 إلى 21:00">15:00 إلى 21:00</option>
+                        <option value="21:00 إلى 03:00">21:00 إلى 03:00</option>
+                        <option value="03:00 إلى 09:00">03:00 إلى 09:00</option>
+                    </select>
+
+                    <label for="working_teams">عدد الفرق العاملة:</label>
+                    <input type="text" id="working_teams">
+
+                    <label for="total_teams">من أصل:</label>
+                    <input type="text" id="total_teams">
+
+                    <div class="input-row">
+                        <div class="input-small">
+                            <label for="rapid_response_teams">عدد فرق التدخل السريع:</label>
+                            <input type="text" id="rapid_response_teams">
+                        </div>
+                        <div class="input-small">
+                            <label for="operating_vehicles">عدد المركبات العاملة:</label>
+                            <input type="text" id="operating_vehicles">
+                        </div>
+                        <div class="input-small">
+                            <label for="broken_vehicles">عدد المركبات المتعطلة:</label>
+                            <input type="text" id="broken_vehicles">
+                        </div>
+                        <div class="input-small">
+                            <label for="reserve_vehicles">عدد المركبات الاحتياط:</label>
+                            <input type="text" id="reserve_vehicles">
+                        </div>
+                    </div>
+
+                    <label for="open_logistics_reports">بلاغات الدعم اللوجستي المفتوحة:</label>
+                    <input type="text" id="open_logistics_reports">
+
+                    <label for="coordination_teams">عدد العاملين في التنسيق والتحكم:</label>
+                    <input type="text" id="coordination_teams">
+
+                    <label for="logistics_support_teams">عدد العاملين في الدعم اللوجستي:</label>
+                    <input type="text" id="logistics_support_teams">
+
+                    <label for="hospitals_out_of_service">قائمة المستشفيات خارج الخدمة:</label>
+                    <input type="text" id="hospitals_out_of_service">
+
+                    <h2>الطلب</h2>
+
+                    <label for="eco_reports">عدد بلاغات إنعاش إيكو:</label>
+                    <input type="text" id="eco_reports">
+
+                    <label for="delta_reports">عدد بلاغات دلتا:</label>
+                    <input type="text" id="delta_reports">
+
+                    <label for="charlie_reports">عدد بلاغات تشارلي:</label>
+                    <input type="text" id="charlie_reports">
+
+                    <label for="bravo_reports">عدد بلاغات برافو:</label>
+                    <input type="text" id="bravo_reports">
+
+                    <label for="alpha_reports">عدد بلاغات ألفا:</label>
+                    <input type="text" id="alpha_reports">
+
+                    <label for="omega_reports">عدد بلاغات أوميغا:</label>
+                    <input type="text" id="omega_reports">
+
+                    <label for="catheter_reports">عدد بلاغات القسطرة:</label>
+                    <input type="text" id="catheter_reports">
+
+                    <label for="stroke_reports">عدد بلاغات السكتة الدماغية:</label>
+                    <input type="text" id="stroke_reports">
+
+                    <h2>البلاغات</h2>
+
+                    <label for="total_reports">إجمالي بلاغات القطاع:</label>
+                    <input type="text" id="total_reports">
+
+                    <label for="government_transfers">عدد الحالات المنقولة للقطاع الحكومي:</label>
+                    <input type="text" id="government_transfers">
+
+                    <label for="private_transfers">عدد الحالات المنقولة للقطاع الخاص:</label>
+                    <input type="text" id="private_transfers">
+
+                    <label for="untransferred_cases">عدد الحالات الغير منقولة:</label>
+                    <input type="text" id="untransferred_cases">
+
+                    <label for="paper_reports">عدد البلاغات المدونة ورقياً:</label>
+                    <input type="text" id="paper_reports">
+
+                    <h2>المخرجات</h2>
+
+                    <label for="waiting_time">متوسط زمن الانتظار في قائمة الترحيل:</label>
+                    <input type="text" id="waiting_time">
+
+                    <label for="top_team">اعلى فرقة اسعافيه في عدد البلاغات:</label>
+                    <input type="text" id="top_team">
+
+                    <label for="average_reports">متوسط عدد البلاغات للفرق الاسعافية:</label>
+                    <input type="text" id="average_reports">
+
+                    <label for="response_rate">نسبة زمن الاستجابة خلال 8 دقائق للبلاغات الساخنة:</label>
+                    <input type="text" id="response_rate">
+
+                    <label for="average_response_time">متوسط زمن الاستجابة لبلاغات الحوادث المرورية الساخنة:</label>
+                    <input type="text" id="average_response_time">
+
+                    <label for="response_time_to_intervention">زمن الاستجابة حتى المباشرة:</label>
+                    <input type="text" id="response_time_to_intervention">
+
+                    <h2>ملاحظات النوبة</h2>
+
+                    <label for="absence_in_shift">عدد الغياب في المناوبة:</label>
+                    <input type="text" id="absence_in_shift">
+
+                    <label for="cad_program_notes">ملاحظات برنامج الكاد:</label>
+                    <textarea id="cad_program_notes" rows="4"></textarea>
+                </div>
+                <button onclick="sendWhatsAppMessage('senior_paramedic')">إرسال النموذج بالواتساب</button>
+            `;
         } else if (formName === 'operational_failure') {
             formHTML = `
                 <h2>نموذج فشل تشغيلي</h2>
