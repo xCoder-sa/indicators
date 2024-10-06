@@ -194,20 +194,9 @@
             min-width: 100px;
         }
 
-	    .form-group {
-    display: flex;
-    align-items: center;
-    direction: rtl;  /* جعل اتجاه النص من اليمين إلى اليسار */
-    justify-content: flex-end;  /* لضمان أن العناصر تبدأ من اليمين */
-}
-
-.form-group label {
-    margin-left: 10px;  /* مسافة بين التسمية وحقل الإدخال */
-}
-
-.form-group input {
-    margin-left: 20px;  /* مسافة إضافية بين حقول الإدخال */
-    text-align: right;  /* لجعل النص في حقول الإدخال يبدأ من اليمين */
+label, input {
+    display: inline-block;
+    margin-right: 10px;  /* مسافة صغيرة بين العناصر */
 }
 
     </style>
@@ -293,10 +282,10 @@
                         <option value="18:00 إلى 0:00">18:00 إلى 0:00</option>
                     </select>
 
-                    <div class="form-group">
+                   <div>
     <label for="working_teams">عدد الفرق العاملة:</label>
     <input type="text" id="working_teams">
-
+  
     <label for="total_teams">من أصل:</label>
     <input type="text" id="total_teams">
 </div>
