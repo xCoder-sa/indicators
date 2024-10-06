@@ -18,7 +18,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #ffffff;
+            background-color: #3498db; /* تغيير الخلفية إلى لون أزرق */
             padding: 15px 20px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             position: fixed;
@@ -29,16 +29,17 @@
         .navbar .logo {
             font-size: 24px;
             font-weight: bold;
-            color: #3498db;
+            color: #ffffff; /* لون النص أبيض */
         }
         .menu-header {
             display: none; /* سيتم عرضه فقط على الشاشات الصغيرة */
             font-size: 18px;
             font-weight: bold;
             padding: 10px 20px;
-            background-color: #ffffff;
+            background-color: #3498db; /* مطابقة لون الخلفية */
             width: 100%;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            color: #ffffff; /* لون النص أبيض */
         }
         .navbar .menu {
             display: flex;
@@ -51,11 +52,11 @@
         }
         .navbar .menu li a {
             text-decoration: none;
-            color: #333;
+            color: #ffffff; /* لون النص أبيض */
             font-size: 16px;
             padding: 8px 12px;
             border-radius: 4px;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, color 0.3s;
             display: flex;
             align-items: center;
         }
@@ -63,13 +64,18 @@
             margin-left: 5px;
         }
         .navbar .menu li a:hover {
-            background-color: #ecf0f1;
+            background-color: #2980b9; /* لون أغمق عند التمرير */
+            color: #ecf0f1; /* تغيير لون النص عند التمرير */
+        }
+        .navbar .menu li a.active {
+            background-color: #1abc9c; /* لون مختلف عند التفعيل */
+            color: #ffffff;
         }
         /* أيقونة الهامبرجر للهواتف */
         .hamburger {
             display: none;
             font-size: 24px;
-            color: #333;
+            color: #ffffff; /* لون الأيقونة أبيض */
             cursor: pointer;
         }
         /* قائمة التنقل القابلة للتمرير على الهواتف */
@@ -86,7 +92,7 @@
                 overflow-x: auto;
                 white-space: nowrap;
                 width: 100%;
-                background-color: #ffffff;
+                background-color: #3498db; /* مطابقة لون الخلفية */
                 padding: 10px 20px;
             }
             .menu li {
@@ -106,12 +112,12 @@
         }
 
         .menu::-webkit-scrollbar-thumb {
-            background-color: #3498db;
+            background-color: #ffffff;
             border-radius: 4px;
         }
 
         .menu::-webkit-scrollbar-track {
-            background-color: #f0f4f8;
+            background-color: #3498db;
         }
         /* المحتوى الرئيسي */
         .container {
@@ -196,21 +202,16 @@
         <div class="logo">لوحة التحكم</div>
         <div class="menu-header">القائمة</div> <!-- العنوان الجديد -->
         <ul class="menu" id="menu">
-            <li><a href="#" onclick="loadForm('senior_paramedic')"><i class="fas fa-user-md"></i> نموذج كبار المسعفين (داخلي)</a></li>
-            <li><a href="#" onclick="loadForm('rapid_response_reports')"><i class="fas fa-car-crash"></i> نموذج بلاغات التدخل السريع</a></li>
-            <li><a href="#" onclick="loadForm('senior_paramedic_outside')"><i class="fas fa-user-md"></i> نموذج كبار المسعفين (خارجي)</a></li>
-            <li><a href="#" onclick="loadForm('operational_failure')"><i class="fas fa-exclamation-triangle"></i> نموذج فشل تشغيلي</a></li>
-            <li><a href="#" onclick="loadForm('eco_reports')"><i class="fas fa-file-alt"></i> نموذج بلاغات إيكو</a></li>
-            <li><a href="#" onclick="loadForm('major_event')"><i class="fas fa-calendar-alt"></i> نموذج حدث جسيم</a></li>
-            <li><a href="#" onclick="loadForm('support_request')"><i class="fas fa-handshake"></i> طلب تفعيل خطة المساندة</a></li>
-            <li><a href="#" onclick="loadForm('support_activation')"><i class="fas fa-check-circle"></i> قبول تفعيل خطة المساندة</a></li>
+            <li><a href="#" onclick="loadForm('senior_paramedic')" class="menu-item"><i class="fas fa-user-md"></i> نموذج كبار المسعفين (داخلي)</a></li>
+            <li><a href="#" onclick="loadForm('rapid_response_reports')" class="menu-item"><i class="fas fa-car-crash"></i> نموذج بلاغات التدخل السريع</a></li>
+            <li><a href="#" onclick="loadForm('senior_paramedic_outside')" class="menu-item"><i class="fas fa-user-md"></i> نموذج كبار المسعفين (خارجي)</a></li>
+            <li><a href="#" onclick="loadForm('operational_failure')" class="menu-item"><i class="fas fa-exclamation-triangle"></i> نموذج فشل تشغيلي</a></li>
+            <li><a href="#" onclick="loadForm('eco_reports')" class="menu-item"><i class="fas fa-file-alt"></i> نموذج بلاغات إيكو</a></li>
+            <li><a href="#" onclick="loadForm('major_event')" class="menu-item"><i class="fas fa-calendar-alt"></i> نموذج حدث جسيم</a></li>
+            <li><a href="#" onclick="loadForm('support_request')" class="menu-item"><i class="fas fa-handshake"></i> طلب تفعيل خطة المساندة</a></li>
+            <li><a href="#" onclick="loadForm('support_activation')" class="menu-item"><i class="fas fa-check-circle"></i> قبول تفعيل خطة المساندة</a></li>
         </ul>
         <!-- إزالة أيقونة الهامبرجر -->
-        <!--
-        <div class="hamburger" id="hamburger">
-            <i class="fas fa-bars"></i>
-        </div>
-        -->
     </nav>
 
     <!-- المحتوى الرئيسي -->
@@ -246,8 +247,11 @@
             const formContainer = document.getElementById('form-container');
             let formHTML = '';
 
+            // هنا يجب إضافة الكود الخاص بتحميل النماذج حسب formName
+            // مثال:
             if (formName === 'senior_paramedic') {
                 formHTML = `
+		
                 <h2>نموذج كبار المسعفين</h2>
                 <div class="form-section">
                     <label for="sector">اختر القطاع:</label>
