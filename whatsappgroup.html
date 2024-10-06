@@ -80,18 +80,28 @@
 	    border-color: #1abc9c; /* نفس لون الخلفية عند التفعيل */
 	}
 
-	    /* سهم يشير إلى إمكانية السحب */
-	.navbar .menu::after {
-	    content: '⟵ اسحب لرؤية المزيد';
-	    color: #fff;
-	    font-size: 14px;
-	    position: absolute;
-	    top: 50%;
-	    right: 10px;
-	    transform: translateY(-50%);
-	    background-color: #3498db;
-	    padding: 5px 10px;
-	    border-radius: 4px;
+	/* سهم يشير إلى إمكانية السحب ويظهر فقط على الشاشات الصغيرة */
+	@media (max-width: 767px) {
+	    .navbar .menu::after {
+	        content: '⟵ اسحب لرؤية المزيد';
+	        color: #fff;
+	        font-size: 14px;
+	        position: absolute;
+	        top: 50%;
+	        right: 10px;
+	        transform: translateY(-50%);
+	        background-color: #3498db;
+	        padding: 5px 10px;
+	        border-radius: 4px;
+	        display: block;  /* تأكيد العرض على الشاشات الصغيرة */
+	    }
+	}
+	
+	/* إخفاء السهم على الشاشات الكبيرة */
+	@media (min-width: 768px) {
+	    .navbar .menu::after {
+	        display: none;
+	    }
 	}
         /* أيقونة الهامبرجر للهواتف */
         .hamburger {
@@ -234,7 +244,7 @@
     width: 150px;
     padding: 10px;
     text-align: right;
-    height: 40px;  /* ضبط ارتفاع الحقول */
+    height: 30px;  /* ضبط ارتفاع الحقول */
 }
 
 /* تصميم متجاوب لشاشات الهواتف المحمولة */
@@ -246,7 +256,7 @@
 
     .form-group input {
         width: 100%;  /* ملء الشاشة للحقول على الشاشات الصغيرة */
-        height: 30px;  /* زيادة ارتفاع الحقول على الشاشات الصغيرة */
+        height: 25px;  /* زيادة ارتفاع الحقول على الشاشات الصغيرة */
     }
 
     .form-group label {
