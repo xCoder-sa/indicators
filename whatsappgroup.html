@@ -821,10 +821,11 @@ function sendWhatsAppMessage(formName) {
 
     if (formName === 'senior_paramedic') {
         formText += `=== نموذج كبار المسعفين ===\n\n`;
-        formText += `القطاع: ${document.getElementById('sector').value}\n`;
-        if (document.getElementById('sector').value === 'other') {
-            formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
-        }
+        if (document.getElementById('sector').value !== 'other') {
+    formText += `القطاع: ${document.getElementById('sector').value}\n`;
+} else {
+    formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
+}
 	formText += `التاريخ: ${document.getElementById('date').value}\n`;
         formText += `التوقيت الحالي: ${document.getElementById('time').value}\n`;
         formText += `عدد الفرق العاملة: ${document.getElementById('working_teams').value} من أصل: ${document.getElementById('total_teams').value}\n`;
