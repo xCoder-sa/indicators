@@ -903,24 +903,8 @@ function getFormData(formName) {
         data.coordination_teams = document.getElementById('coordination_teams')?.value || '';
         data.logistics_support_teams = document.getElementById('logistics_support_teams')?.value || '';
         data.hospitals_out_of_service = document.getElementById('hospitals_out_of_service')?.value || '';
-        data.eco_reports = document.getElementById('eco_reports')?.value || '';
-        data.delta_reports = document.getElementById('delta_reports')?.value || '';
-        data.charlie_reports = document.getElementById('charlie_reports')?.value || '';
-        data.bravo_reports = document.getElementById('bravo_reports')?.value || '';
-        data.alpha_reports = document.getElementById('alpha_reports')?.value || '';
-        data.omega_reports = document.getElementById('omega_reports')?.value || '';
-        data.catheter_reports = document.getElementById('catheter_reports')?.value || '';
-        data.stroke_reports = document.getElementById('stroke_reports')?.value || '';
         data.total_reports = document.getElementById('total_reports')?.value || '';
-        data.government_transfers = document.getElementById('government_transfers')?.value || '';
-        data.private_transfers = document.getElementById('private_transfers')?.value || '';
-        data.untransferred_cases = document.getElementById('untransferred_cases')?.value || '';
-        data.paper_reports = document.getElementById('paper_reports')?.value || '';
         data.waiting_time = document.getElementById('waiting_time')?.value || '';
-        data.top_team = document.getElementById('top_team')?.value || '';
-        data.average_reports = document.getElementById('average_reports')?.value || '';
-        data.response_rate = document.getElementById('response_rate')?.value || '';
-        data.average_response_time = document.getElementById('average_response_time')?.value || '';
         data.response_time_to_intervention = document.getElementById('response_time_to_intervention')?.value || '';
         data.absence_in_shift = document.getElementById('absence_in_shift')?.value || '';
         data.units_notes = document.getElementById('units_notes')?.value || '';
@@ -1128,7 +1112,6 @@ function sendWhatsAppMessage(formName) {
         reportNumbers.forEach((number, index) => {
             formText += `رقم البلاغ: ${number.value}, نوع البلاغ: ${reportTypes[index].value}\n, زمن الاستجابة: ${number.value}`;
         });
-
         formText += `\n=== المخرجات ===\n`;
         formText += `متوسط زمن الاستجابة للبلاغات: ${document.getElementById('waiting_time').value}\n`;
         formText += `\n=== ملاحظات النوبة ===\n`;
