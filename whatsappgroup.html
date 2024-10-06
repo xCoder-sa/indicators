@@ -310,6 +310,9 @@
                         <option value="الشرق">الشرق</option>
                         <option value="الغرب">الغرب</option>
                         <option value="الشمال">الشمال</option>
+			<option value="other">أخرى</option>
+                    </select>
+                    <input type="text" id="other_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
                     </select>
 
                     <label for="report_number">رقم البلاغ:</label>
@@ -376,6 +379,9 @@
                         <option value="الشرق">الشرق</option>
                         <option value="الغرب">الغرب</option>
                         <option value="الشمال">الشمال</option>
+			<option value="other">أخرى</option>
+                    </select>
+                    <input type="text" id="other_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
                     </select>
 
                     <label for="responding_units">الوحدات المستجيبة:</label>
@@ -818,7 +824,8 @@ function sendWhatsAppMessage(formName) {
         formText += `القطاع: ${document.getElementById('sector').value}\n`;
         if (document.getElementById('sector').value === 'other') {
             formText += `القطاع الآخر: ${document.getElementById('other_sector').value}\n`;
-        }        formText += `التاريخ: ${document.getElementById('date').value}\n`;
+        }
+	formText += `التاريخ: ${document.getElementById('date').value}\n`;
         formText += `التوقيت الحالي: ${document.getElementById('time').value}\n`;
         formText += `عدد الفرق العاملة: ${document.getElementById('working_teams').value} من أصل: ${document.getElementById('total_teams').value}\n`;
         formText += `عدد فرق التدخل السريع: ${document.getElementById('rapid_response_teams').value}\n`;
@@ -857,7 +864,10 @@ function sendWhatsAppMessage(formName) {
     } else if (formName === 'operational_failure') {
         formText += `=== نموذج فشل تشغيلي ===\n\n`;
         formText += `القطاع: ${document.getElementById('sector').value}\n`;
-        formText += `رقم البلاغ: ${document.getElementById('report_number').value}\n`;
+        if (document.getElementById('sector').value === 'other') {
+            formText += `القطاع الآخر: ${document.getElementById('other_sector').value}\n`;
+        }
+	formText += `رقم البلاغ: ${document.getElementById('report_number').value}\n`;
         formText += `بداية الحدث: ${document.getElementById('start_hour').value}:${document.getElementById('start_minute').value}\n`;
         formText += `تعطل فرقة إسعافية: ${document.getElementById('unit_failure').value}\n`;
         formText += `نوع العطل: ${document.getElementById('failure_type').value}\n`;
@@ -912,6 +922,9 @@ function sendWhatsAppMessage(formName) {
     } else if (formName === 'support_request') {
         formText += `=== طلب تفعيل خطة المساندة والدعم المتبادل ===\n\n`;
         formText += `القطاع: ${document.getElementById('sector').value}\n`;
+        if (document.getElementById('sector').value === 'other') {
+            formText += `القطاع الآخر: ${document.getElementById('other_sector').value}\n`;
+        }
         formText += `توقيت طلب الدعم: ${document.getElementById('report_hour').value}:${document.getElementById('report_minute').value}\n`;
         formText += `عدد الوحدات المرتبطة ببلاغ: ${document.getElementById('units_linked').value}\n`;
         formText += `عدد الوحدات الجاهزة: ${document.getElementById('units_ready').value}\n`;
