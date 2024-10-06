@@ -225,44 +225,6 @@
             flex: 1;
             min-width: 100px;
         }
-	.form-group {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    direction: rtl;
-    gap: 10px;
-    flex-wrap: wrap;  /* لتجنب الالتفاف غير الضروري */
-}
-
-.form-group label {
-    white-space: nowrap;
-    margin: 0 5px 0 0;  /* إلغاء المسافة السفلية بين التسمية */
-    padding: 0;  /* إلغاء الحشو غير الضروري */
-}
-
-.form-group input {
-    width: 150px;
-    padding: 10px;
-    text-align: right;
-    height: 30px;  /* ضبط ارتفاع الحقول */
-}
-
-/* تصميم متجاوب لشاشات الهواتف المحمولة */
-@media (max-width: 600px) {
-    .form-group {
-        flex-direction: column;  /* جعل العناصر فوق بعضها على الشاشات الصغيرة */
-        align-items: flex-start;  /* ضمان محاذاة صحيحة */
-    }
-
-    .form-group input {
-        width: 100%;  /* ملء الشاشة للحقول على الشاشات الصغيرة */
-        height: 25px;  /* زيادة ارتفاع الحقول على الشاشات الصغيرة */
-    }
-
-    .form-group label {
-        margin-bottom: 5px;  /* مسافة صغيرة بين التسمية والحقل */
-    }
-}
 
     </style>
 </head>
@@ -347,7 +309,6 @@
                         <option value="18:00 إلى 0:00">18:00 إلى 0:00</option>
                     </select>
 
-                        <div class="form-group">
                             <label for="working_teams">عدد الفرق العاملة:</label>
                             <input type="text" id="working_teams">
 
@@ -356,8 +317,6 @@
 
                             <label for="rapid_response_teams">عدد فرق التدخل السريع:</label>
                             <input type="text" id="rapid_response_teams">
-
-                            </div>
 
                         <div class="input-row">
                         <div class="input-small">
