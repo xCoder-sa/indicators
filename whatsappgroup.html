@@ -140,6 +140,7 @@
         <h1>لوحة التحكم</h1>
         <ul>
             <li><a href="#" onclick="loadForm('senior_paramedic')"><i class="fas fa-user-md"></i> نموذج كبار المسعفين (داخلي)</a></li>
+	    <li><a href="#" onclick="loadForm('rapid_response_reports')"><i class="fas fa-car-crash"></i> نموذج بلاغات التدخل السريع</a></li>
 	    <li><a href="#" onclick="loadForm('senior_paramedic_outside')"><i class="fas fa-user-md"></i> نموذج كبار المسعفين (خارجي)</a></li>
             <li><a href="#" onclick="loadForm('operational_failure')"><i class="fas fa-exclamation-triangle"></i> نموذج فشل تشغيلي</a></li>
             <li><a href="#" onclick="loadForm('eco_reports')"><i class="fas fa-file-alt"></i> نموذج بلاغات إيكو</a></li>
@@ -300,6 +301,27 @@
                     <textarea id="cad_program_notes" rows="4"></textarea>
                 </div>
                 <button onclick="sendWhatsAppMessage('senior_paramedic')">إرسال النموذج بالواتساب</button>
+            `;
+	      } else if (formName === 'rapid_response_reports') {
+            formHTML = `
+                <h2>نموذج بلاغات التدخل السريع</h2>
+                <div class="form-section">
+                    <label for="sector_west">قطاع عمليات الغرب:</label>
+                    <input type="text" id="sector_west" placeholder="أدخل العدد">
+
+                    <label for="sector_east">قطاع عمليات الشرق:</label>
+                    <input type="text" id="sector_east" placeholder="أدخل العدد">
+
+                    <label for="sector_central">قطاع عمليات الوسط:</label>
+                    <input type="text" id="sector_central" placeholder="أدخل العدد">
+
+                    <label for="sector_north">قطاع عمليات الشمال:</label>
+                    <input type="text" id="sector_north" placeholder="أدخل العدد">
+
+                    <label for="sector_south">قطاع عمليات الجنوب:</label>
+                    <input type="text" id="sector_south" placeholder="أدخل العدد">
+                </div>
+                <button onclick="sendWhatsAppMessage('rapid_response_reports')">إرسال النموذج بالواتساب</button>
             `;
 	} else if (formName === 'senior_paramedic_outside') {
             formHTML = `
@@ -1141,7 +1163,15 @@ function sendWhatsAppMessage(formName) {
         formText += `عدد الغياب في المناوبة: ${document.getElementById('absence_in_shift').value}\n`;
         formText += `نقاط اسعافية مكشوفة: ${document.getElementById('units_notes').value}\n`;
         formText += `اسم كبير المسعفين: ${document.getElementById('senior_paramedic_name').value}\n`;
-    }
+    } else if (formName === 'rapid_response_reports') {
+            formText += `=== نموذج بلاغات التدخل السريع ===\n\n`;
+            formText += `قطاع عمليات الغرب: ${document.getElementById('sector_west').value}\n`;
+            formText += `قطاع عمليات الشرق: ${document.getElementById('sector_east').value}\n`;
+            formText += `قطاع عمليات الوسط: ${document.getElementById('sector_central').value}\n`;
+            formText += `قطاع عمليات الشمال: ${document.getElementById('sector_north').value}\n`;
+            formText += `قطاع عمليات الجنوب: ${document.getElementById('sector_south').value}\n`;
+        }
+
 
 	
     console.log(formText); // تأكيد عرض البيانات المجمعة
