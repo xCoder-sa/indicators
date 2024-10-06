@@ -8,99 +8,90 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f7f9fc;
+            background-color: #eef3f7;
             margin: 0;
             padding: 0;
             direction: rtl;
-            box-sizing: border-box;
         }
         .dashboard {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            grid-template-rows: auto 1fr;
             height: 100vh;
+            transition: all 0.3s ease;
         }
         .sidebar {
             background-color: #2c3e50;
             color: white;
-            width: 250px;
-            transition: width 0.3s;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            padding: 20px;
             box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
         }
-        .sidebar.collapsed {
-            width: 80px;
-        }
         .sidebar h1 {
-            font-size: 20px;
-            margin: 20px;
-            text-align: center;
+            font-size: 26px;
+            margin-bottom: 30px;
+            color: #ecf0f1;
         }
         .sidebar ul {
-            list-style: none;
+            list-style-type: none;
             padding: 0;
         }
         .sidebar ul li {
-            margin: 10px 0;
+            margin-bottom: 15px;
         }
         .sidebar ul li a {
             display: flex;
             align-items: center;
-            padding: 15px;
-            color: white;
+            padding: 12px;
+            color: #ecf0f1;
             text-decoration: none;
-            font-size: 14px;
+            background-color: #34495e;
+            border-radius: 8px;
+            font-size: 16px;
             transition: background-color 0.3s;
         }
         .sidebar ul li a:hover {
-            background-color: #34495e;
+            background-color: #1abc9c;
         }
         .sidebar ul li a i {
             margin-left: 10px;
         }
-        .sidebar .toggle {
-            cursor: pointer;
-            padding: 10px;
-            background-color: #1abc9c;
-            color: white;
-            text-align: center;
-            font-size: 16px;
-        }
         .container {
-            flex: 1;
-            padding: 40px;
-            background-color: #ecf0f1;
+            padding: 30px;
+            background-color: white;
             border-radius: 8px;
-            margin-left: 20px;
-            overflow-y: auto;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            margin: 10px;
         }
         h2 {
-            color: #2980b9;
+            color: #3498db;
             font-size: 24px;
             margin-bottom: 20px;
-            text-align: center;
         }
         label {
-            margin-top: 10px;
             display: block;
-            color: #333;
+            margin-top: 10px;
+            color: #2c3e50;
             font-weight: bold;
             font-size: 15px;
         }
-        input, select, textarea {
+        input[type="text"], input[type="date"], input[type="time"], input[type="datetime-local"], textarea, select {
             width: 100%;
-            padding: 10px;
-            margin: 5px 0 15px;
+            padding: 12px;
+            margin: 5px 0 20px;
             border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 14px;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: border-color 0.3s;
+        }
+        input[type="text"]:focus, input[type="date"]:focus, input[type="time"]:focus, select:focus {
+            border-color: #1abc9c;
+            outline: none;
         }
         button {
             width: 100%;
-            padding: 12px;
-            background-color: #2980b9;
+            padding: 15px;
+            background-color: #3498db;
             border: none;
             border-radius: 6px;
             color: white;
@@ -109,22 +100,31 @@
             transition: background-color 0.3s;
         }
         button:hover {
-            background-color: #21618c;
+            background-color: #1abc9c;
         }
-        /* Responsive design */
+        .form-section {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
             .dashboard {
-                flex-direction: column;
+                grid-template-columns: 1fr;
             }
             .sidebar {
-                position: absolute;
-                width: 80px;
-                height: 100%;
-                z-index: 100;
+                grid-row: 1;
+                grid-column: 1;
+                width: 100%;
+                text-align: center;
             }
             .container {
-                margin-left: 100px;
-                padding: 20px;
+                grid-row: 2;
+                grid-column: 1;
+                padding: 15px;
             }
         }
     </style>
@@ -132,39 +132,24 @@
 <body>
 
 <div class="dashboard">
-    <!-- الشريط الجانبي -->
-    <div class="sidebar" id="sidebar">
+    <div class="sidebar">
         <h1>لوحة التحكم</h1>
         <ul>
-            <li><a href="#"><i class="fas fa-user-md"></i> نموذج كبار المسعفين</a></li>
-            <li><a href="#"><i class="fas fa-car-crash"></i> نموذج التدخل السريع</a></li>
-            <!-- Add more links as needed -->
+            <li><a href="#" onclick="loadForm('senior_paramedic')"><i class="fas fa-user-md"></i> نموذج كبار المسعفين (داخلي)</a></li>
+            <li><a href="#" onclick="loadForm('rapid_response_reports')"><i class="fas fa-car-crash"></i> نموذج بلاغات التدخل السريع</a></li>
+            <li><a href="#" onclick="loadForm('operational_failure')"><i class="fas fa-exclamation-triangle"></i> نموذج فشل تشغيلي</a></li>
         </ul>
-        <div class="toggle" onclick="toggleSidebar()">≡</div>
     </div>
-
-    <!-- المحتوى الرئيسي -->
-    <div class="container">
-        <h2>نموذج كبار المسعفين</h2>
-        <!-- Forms go here -->
-        <form>
-            <label for="sector">اختر القطاع:</label>
-            <select id="sector">
-                <option value="الوسط">الوسط</option>
-                <option value="الجنوب">الجنوب</option>
-                <!-- Other options -->
-            </select>
-            <label for="date">التاريخ:</label>
-            <input type="date" id="date">
-            <button type="submit">إرسال</button>
-        </form>
+    <div class="container" id="form-container">
+        <!-- المحتوى الرئيسي -->
     </div>
 </div>
 
 <script>
-    function toggleSidebar() {
-        const sidebar = document.getElementById('sidebar');
-        sidebar.classList.toggle('collapsed');
+    function loadForm(formName) {
+        // مثال لتحميل نموذج بناءً على الرابط الذي تم النقر عليه
+        const formContainer = document.getElementById('form-container');
+        formContainer.innerHTML = `<h2>${formName}</h2><p>هنا يظهر محتوى النموذج.</p>`;
     }
 </script>
 
