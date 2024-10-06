@@ -938,7 +938,6 @@ function getFormData(formName) {
         });
 
         data.senior_paramedic_name = document.getElementById('senior_paramedic_name')?.value || '';
-
     } else if (formName === 'support_activation') {
         // جمع بيانات نموذج قبول تفعيل خطة المساندة والدعم المتبادل
         data.support_status = document.getElementById('support_status')?.value || '';
@@ -1101,7 +1100,7 @@ function sendWhatsAppMessage(formName) {
         formText += `عدد الفرق الداعمة: ${document.getElementById('support_teams_count').value}\n`;
         formText += `توقيت انتهاء الدعم: ${document.getElementById('end_hour').value}:${document.getElementById('end_minute').value}\n`;
         formText += `اسم قائد المنطقة: ${document.getElementById('region_leader_name').value}\n`;
-		        } else if (formName === 'senior_paramedic_outside') {
+   } else if (formName === 'senior_paramedic_outside') {
         formText += `===  نموذج كبار المسعفين خارجي ===\n\n`;
         if (document.getElementById('sector').value !== 'other') {
     formText += `القطاع: ${document.getElementById('sector').value}\n`;
