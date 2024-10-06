@@ -215,16 +215,43 @@
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
-        /* تحسينات إضافية */
-        .input-row {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .input-small {
-            flex: 1;
-            min-width: 100px;
-        }
+.input-row {
+    display: flex;
+    gap: 10px; /* مسافة بين العناصر في الوضع العادي */
+    flex-wrap: wrap; /* للسماح بتوزيع العناصر على عدة أسطر عند ضيق الشاشة */
+}
+
+.input-small {
+    flex: 1;
+    min-width: 150px; /* عرض أدنى للحقول */
+    margin-bottom: 10px; /* إضافة مسافة بين الحقول في الأسفل */
+}
+
+.input-small label {
+    display: block;
+    margin-bottom: 5px; /* مسافة صغيرة بين التسمية ومربع الإدخال */
+}
+
+.input-small input {
+    width: 100%; /* جعل الحقول تأخذ العرض الكامل المتاح */
+    padding: 8px; /* إضافة مسافة داخل الحقول */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* لضمان حساب الحشو ضمن عرض العنصر */
+}
+
+/* تصميم متجاوب لشاشات الهواتف المحمولة */
+@media (max-width: 767px) {
+    .input-row {
+        flex-direction: column; /* جعل الحقول تظهر بشكل عمودي على الشاشات الصغيرة */
+        gap: 15px; /* زيادة المسافة بين الحقول في الهواتف */
+    }
+
+    .input-small {
+        width: 100%; /* جعل كل حقل يأخذ عرض الشاشة بالكامل */
+    }
+}
+
 
     </style>
 </head>
@@ -314,15 +341,19 @@
 
                             <label for="total_teams">من أصل:</label>
                             <input type="text" id="total_teams">
-
-                            <label for="rapid_response_teams">عدد فرق التدخل السريع:</label>
-                            <input type="text" id="rapid_response_teams">
-
+			    
                         <div class="input-row">
                         <div class="input-small">
                             <label for="operating_vehicles">عدد المركبات العاملة:</label>
                             <input type="text" id="operating_vehicles">
                         </div>
+                        <div class="input-small">
+                            <label for="rapid_response_teams">عدد فرق التدخل السريع:</label>
+                            <input type="text" id="rapid_response_teams">
+                        </div>
+                    </div>
+
+                        <div class="input-row">
                         <div class="input-small">
                             <label for="broken_vehicles">عدد المركبات المتعطلة:</label>
                             <input type="text" id="broken_vehicles">
