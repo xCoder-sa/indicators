@@ -1284,8 +1284,6 @@ function getFormData(formName) {
         data.bravo_reports = document.getElementById('bravo_reports')?.value || '';
         data.alpha_reports = document.getElementById('alpha_reports')?.value || '';
         data.omega_reports = document.getElementById('omega_reports')?.value || '';
-        data.catheter_reports = document.getElementById('catheter_reports')?.value || '';
-        data.stroke_reports = document.getElementById('stroke_reports')?.value || '';
         data.total_reports = document.getElementById('total_reports')?.value || '';
         data.government_transfers = document.getElementById('government_transfers')?.value || '';
         data.private_transfers = document.getElementById('private_transfers')?.value || '';
@@ -1525,8 +1523,6 @@ function sendWhatsAppMessage(formName) {
         formText += `عدد بلاغات برافو: ${document.getElementById('bravo_reports').value}\n`;
         formText += `عدد بلاغات ألفا: ${document.getElementById('alpha_reports').value}\n`;
         formText += `عدد بلاغات أوميغا: ${document.getElementById('omega_reports').value}\n`;
-        formText += `عدد بلاغات القسطرة: ${document.getElementById('catheter_reports').value}\n`;
-        formText += `عدد بلاغات السكتة الدماغية: ${document.getElementById('stroke_reports').value}\n\n`;
         formText += `\n=== البلاغات ===\n`;
         formText += `إجمالي بلاغات القطاع: ${document.getElementById('total_reports').value}\n`;
         formText += `عدد الحالات المنقولة للقطاع الحكومي: ${document.getElementById('government_transfers').value}\n`;
