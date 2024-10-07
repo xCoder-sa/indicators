@@ -16,7 +16,6 @@
     /* شريط التنقل العلوي */
     .navbar {
         display: flex;
-        flex-direction: row; /* الافتراضي هو الصف */
         justify-content: space-between;
         align-items: center;
         background-color: #3498db; /* تغيير الخلفية إلى لون أزرق */
@@ -47,6 +46,7 @@
         list-style-type: none;
         margin: 0;
         padding: 0;
+        position: relative; /* لإظهار السهم بشكل صحيح */
     }
     .navbar .menu li {
         margin-left: 20px;
@@ -81,21 +81,38 @@
         border-color: #1abc9c; /* نفس لون الخلفية عند التفعيل */
     }
 
-    /* عنصر "اسحب لرؤية المزيد" */
-    .swipe-text {
-        display: none; /* مخفي بشكل افتراضي */
-        background-color: #3498db; /* لون الخلفية أزرق */
-        color: #fff; /* لون النص أبيض */
-        font-size: 14px;
-        padding: 5px 10px;
-        border-radius: 4px;
-        margin-left: 10px; /* مسافة بين العبارة وباقي العناصر */
+    /* سهم يشير إلى إمكانية السحب ويظهر فقط على الشاشات الصغيرة */
+    @media (max-width: 767px) {
+        .navbar .menu::before {
+            content: '⟵ اسحب لرؤية المزيد';
+            color: #fff;
+            font-size: 14px;
+            margin-right: 10px; /* مسافة بين العبارة وباقي العناصر */
+            background-color: #3498db;
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block;  /* لضمان عرض العبارة بشكل صحيح ضمن تدفق العناصر */
+            pointer-events: none; /* السماح بالنقر على العناصر الأخرى بدون تداخل */
+        }
     }
-
-    /* عرض عنصر "اسحب لرؤية المزيد" فقط على الشاشات الصغيرة */
+    
+    /* إخفاء السهم على الشاشات الكبيرة */
+    @media (min-width: 768px) {
+        .navbar .menu::before {
+            display: none;
+        }
+    }
+    /* أيقونة الهامبرجر للهواتف */
+    .hamburger {
+        display: none;
+        font-size: 24px;
+        color: #ffffff; /* لون الأيقونة أبيض */
+        cursor: pointer;
+    }
+    /* قائمة التنقل القابلة للتمرير على الهواتف */
     @media (max-width: 767px) {
         .navbar {
-            flex-direction: column; /* تغيير اتجاه العناصر إلى عمودي */
+            flex-direction: column;
             align-items: flex-start;
         }
         .menu-header {
@@ -116,19 +133,10 @@
             padding: 10px 15px;
             display: inline-block;
         }
-        /* إظهار عنصر "اسحب لرؤية المزيد" على الشاشات الصغيرة */
-        .swipe-text {
-            display: block;
-            margin: 10px 0 0 0; /* إضافة مسافة أعلى لتجنب التداخل مع الأزرار */
-        }
-    }
-    /* إخفاء عنصر "اسحب لرؤية المزيد" على الشاشات الكبيرة */
-    @media (min-width: 768px) {
-        .swipe-text {
+        .hamburger {
             display: none;
         }
     }
-
     /* تحسينات إضافية للتمرير الأفقي */
     .menu::-webkit-scrollbar {
         height: 8px;
@@ -144,7 +152,7 @@
     }
     /* المحتوى الرئيسي */
     .container {
-        padding: 150px 20px 20px 20px; /* زيادة padding-top لتجنب تغطية الشريط والعنصر الجديد */
+        padding: 160px 20px 20px 20px; /* زيادة padding-top لتجنب تغطية الشريط والعبارة */
         max-width: 1200px;
         margin: 0 auto;
         background-color: #fff;
@@ -280,7 +288,6 @@
 
 </style>
 
-
 </head>
 <body>
 
@@ -342,8 +349,6 @@
 		
             <h2 class="form-title">نموذج كبار المسعفين</h2>
             <p class="form-description">يرسل كل 6 ساعات من قبل كبير مسعفين القطاع المناوب</p>
-
-
                 <div class="form-section">
                     <label for="sector">اختر القطاع:</label>
                     <select id="sector" onchange="toggleOtherSectorInput()">
@@ -960,7 +965,8 @@
             `;
         } else if (formName === 'eco_reports') {
             formHTML = `
-                <h2>نموذج بلاغات إيكو</h2>
+            <h2 class="form-title">نموذج بلاغات إيكو</h2>
+            <p class="form-description">يرسل من قبل كبير المسعفين المناوب</p>
                 <div class="form-section">
                     <label for="report_date">التاريخ:</label>
                     <input type="date" id="report_date" readonly>
@@ -1005,7 +1011,8 @@
             `;
         } else if (formName === 'major_event') {
             formHTML = `
-                <h2>نموذج حدث جسيم</h2>
+               <h2 class="form-title">نموذج حدث جسيم<</h2>
+            <p class="form-description">يرسل من قبل  قائد المنقطة او من قبل كبير المسعفين المناوب</p>
                 <div class="form-section">
                     <label for="sector">القطاع:</label>
                     <select id="sector" onchange="toggleOtherSectorInput()">
