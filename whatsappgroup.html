@@ -840,6 +840,7 @@
                     <input type="text" id="total_reports">
 		    
                     <label for="related_reports">البلاغات:</label>
+		    <p>احسب زمن الاستجابة من الرد الى الوصول للموقع </p>
                     <div id="reports-container">
                         <div class="input-pair">
                             <input type="text" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
@@ -865,6 +866,8 @@
                     <input type="text" id="absence_in_shift">
                     <label for="units_notes">نقاط اسعافية مكشوفة:</label>
                     <input type="text" id="units_notes">
+                    <label for="outsider_notes">ملاحظات عامه:</label>
+                    <input type="text" id="outsider_notes">
                     <label for="senior_paramedic_name"> كبير المسعفين المناوب:</label>
                     <textarea id="senior_paramedic_name" rows="4"></textarea>
                 </div>
@@ -1467,6 +1470,7 @@ function getFormData(formName) {
             }
         });
 
+        data.outsider_notes = document.getElementById('outsider_notes')?.value || '';
         data.senior_paramedic_name = document.getElementById('senior_paramedic_name')?.value || '';
     } else if (formName === 'support_activation') {
         // جمع بيانات نموذج قبول تفعيل خطة المساندة والدعم المتبادل
@@ -1670,6 +1674,7 @@ function sendWhatsAppMessage(formName) {
         formText += `\n=== ملاحظات النوبة ===\n`;
         formText += `عدد الغياب في المناوبة: ${document.getElementById('absence_in_shift').value}\n`;
         formText += `نقاط اسعافية مكشوفة: ${document.getElementById('units_notes').value}\n`;
+        formText += `ملاحظات: ${document.getElementById('outsider_notes').value}\n`;
         formText += `اسم كبير المسعفين: ${document.getElementById('senior_paramedic_name').value}\n`;
     } else if (formName === 'rapid_response_reports') {
             formText += `=== نموذج بلاغات التدخل السريع ===\n\n`;
