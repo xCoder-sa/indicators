@@ -257,22 +257,14 @@
 	    .input-small input {
 	        padding: 6px; /* تقليل الحشو الداخلي لتوفير مساحة */
 	    }
-	
-	.form-description {
-	    display: inline-block; /* تجعل الخلفية تتبع حجم النص */
-	    background-color: #d3d3d3; /* اللون الرصاصي للخلفية */
-	    padding: 10px; /* حشوة داخلية للنص */
-	    border-radius: 4px; /* زوايا مستديرة */
-	    text-align: center; /* توسيط النص داخل الفقرة */
-	    margin: 20px auto; /* توسيط العنصر على الشاشة */
-	    max-width: 90%; /* عرض مناسب على الشاشات الصغيرة */
-	}
-	
-	@media (max-width: 767px) {
-	    .form-description {
-	        margin-top: 60px; /* إضافة مسافة علوية إضافية لشاشات الهواتف لتجنب تغطية النص بالشريط العلوي */
-	    }
-	}
+.form-description {
+    background-color: #d3d3d3; /* اللون الرصاصي للخلفية */
+    text-align: center; /* لتوسيط الجملة */
+    padding: 10px; /* لإضافة مسافة حول النص داخل الخلفية */
+    margin: 0 auto; /* للتوسيط التلقائي عند الحاجة */
+    width: fit-content; /* لتحديد عرض العنصر بناءً على المحتوى */
+}
+
 
     </style>
 </head>
