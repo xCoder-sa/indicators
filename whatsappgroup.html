@@ -774,8 +774,8 @@
             formHTML = `
 		 <h2></h2>
 
-                  <h2 class="form-title">نموذج كبار المسعفين (خارجي)</h2>
-            <p class="form-description">نموذج كبار المسعفين للقطاعات الخارجية يرسل كل 6 ساعات من قبل كبير المسعفين</p>
+		<h2>نموذج كبار المسعفين (خارجي)</h2>
+		<center><h3>نموذج كبار المسعفين للقطاعات الخارجية يرسل كل 6 ساعات من قبل كبير المسعفين</h3></center>
                 <div class="form-section">
                     <label for="sector">اختر القطاع:</label>
                     <select id="sector" onchange="toggleOtherSectorInput()">
@@ -880,8 +880,8 @@
             `;
         } else if (formName === 'operational_failure') {
             formHTML = `
-               <h2 class="form-title">نموذج فشل تشغيلي</h2>
-            <p class="form-description">يرسل من قبل كبار المسعفين في حال وجود فشل تشغيلي </p>
+              <h2>نموذج فشل تشغيلي</h2>
+		<center><h3>يرسل من قبل كبار المسعفين في حال وجود فشل تشغيلي</h3></center>
                 <div class="form-section">
                     <label for="sector">اختر القطاع:</label>
                     <select id="sector">
@@ -932,8 +932,9 @@
             `;
         } else if (formName === 'eco_reports') {
             formHTML = `
-            <h2 class="form-title">نموذج بلاغات إيكو</h2>
-            <p class="form-description">يرسل من قبل كبير المسعفين المناوب</p>
+            <h2>نموذج بلاغات إيكو</h2>
+		<center><h3>يرسل من قبل كبير المسعفين المناوب</h3></center>
+
                 <div class="form-section">
                     <label for="report_date">التاريخ:</label>
                     <input type="date" id="report_date" readonly>
@@ -978,8 +979,9 @@
             `;
         } else if (formName === 'major_event') {
             formHTML = `
-               <h2 class="form-title">نموذج حدث جسيم</h2>
-            <p class="form-description">يرسل من قبل  قائد المنقطة او من قبل كبير المسعفين المناوب</p>
+               <h2>نموذج حدث جسيم</h2>
+		<center><h3>يرسل من قبل قائد المنطقة أو من قبل كبير المسعفين المناوب</h3></center>
+
                 <div class="form-section">
                     <label for="sector">القطاع:</label>
                     <select id="sector" onchange="toggleOtherSectorInput()">
@@ -1073,8 +1075,9 @@
             `;
         } else if (formName === 'support_request') {
             formHTML = `
-               <h2 class="form-title"طلب تفعيل خطة المساندة والدعم المتبادل</h2>
-            <p class="form-description">يرسل من قبل كبير المسعفين المناوب قبل طلب التدعيم</p>
+               <h2>طلب تفعيل خطة المساندة والدعم المتبادل</h2>
+		<center><h3>يرسل من قبل كبير المسعفين المناوب قبل طلب التدعيم</h3></center>
+
                 <div class="form-section">
                     <label for="sector">القطاع:</label>
                     <select id="sector" onchange="toggleOtherSectorInput()">
@@ -1129,8 +1132,9 @@
             `;
         } else if (formName === 'support_activation') {
             formHTML = `
-               <h2 class="form-title"نموذج قبول تفعيل خطة المساندة والدعم المتبادل</h2>
-            <p class="form-description">يرسل من قبل قائد المنطقة</p>
+               <h2>نموذج قبول تفعيل خطة المساندة والدعم المتبادل</h2>
+		<center><h3>يرسل من قبل قائد المنطقة</h3></center>
+
                 <div class="form-section">
                     <label for="support_status">حالة الدعم:</label>
                     <select id="support_status">
