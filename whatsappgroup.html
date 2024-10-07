@@ -1685,7 +1685,7 @@ function sendWhatsAppMessage(formName) {
         
         formText += `\n=== البلاغات الإسعافية المرتبطة ===\n`;
         reportNumbers.forEach((number, index) => {
-            formText += `رقم البلاغ: ${number.value}, نوع البلاغ: ${reportTypes[index].value}, زمن الاستجابة: ${waitingTimes[index].value}\n`;
+            formText += `رقم البلاغ: ${number.value}, نوع البلاغ: ${reportTypes[index].value}, زمن بقاء البلاغ في قائمة الترحيل: ${waitingTimes[index].value}\n`;
         });
 
         formText += `\nاسم كبير المسعفين: ${document.getElementById('senior_paramedic_name').value}\n`;
