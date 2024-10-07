@@ -257,16 +257,6 @@
 	    .input-small input {
 	        padding: 6px; /* تقليل الحشو الداخلي لتوفير مساحة */
 	    }
-.form-description {
-    background-color: #d3d3d3; /* اللون الرصاصي للخلفية */
-    text-align: center; /* لتوسيط الجملة */
-    padding: 10px; /* لإضافة مسافة حول النص داخل الخلفية */
-    margin: 20px auto; /* التوسيط الأفقي وإضافة مسافة علوية */
-    width: auto; /* السماح للعنصر بتعديل عرضه بناءً على محتواه */
-    max-width: 100%; /* لضمان عدم تجاوز العرض المتاح */
-    z-index: 1001; /* لضمان ظهور العنصر فوق شريط التنقل */
-    position: relative; /* تأكيد على ظهور العنصر فوق العناصر الأخرى */
-}
 
     </style>
 </head>
@@ -328,8 +318,8 @@
             if (formName === 'senior_paramedic') {
                 formHTML = `
 		
-            <h2 class="">نموذج كبار المسعفين</h2>
-            <p class="form-description">يرسل كل 6 ساعات من قبل كبير مسعفين القطاع المناوب</p>
+            <h2>نموذج كبار المسعفين</h2>
+            <center><h3>يرسل كل 6 ساعات من قبل كبير مسعفين القطاع المناوب</h3></center>
 	           <div class="form-section">
                     <label for="sector">اختر القطاع:</label>
                     <select id="sector" onchange="toggleOtherSectorInput()">
