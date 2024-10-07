@@ -87,16 +87,12 @@
             content: '⟵ اسحب لرؤية المزيد';
             color: #fff;
             font-size: 14px;
-            position: absolute;
-            bottom: -25px; /* وضع السهم أسفل شريط التنقل */
-            right: 10px;
-            transform: translateY(0);
+            margin-left: 10px; /* مسافة بين العبارة وباقي العناصر */
             background-color: #3498db;
             padding: 5px 10px;
             border-radius: 4px;
-            display: block;  /* تأكيد العرض على الشاشات الصغيرة */
+            display: inline-block;  /* لضمان عرض العبارة بشكل صحيح ضمن تدفق العناصر */
             pointer-events: none; /* السماح بالنقر على العناصر الأخرى بدون تداخل */
-            z-index: 999; /* التأكد من أن السهم ليس فوق المحتوى الرئيسي */
         }
     }
     
@@ -156,7 +152,7 @@
     }
     /* المحتوى الرئيسي */
     .container {
-        padding: 120px 20px 20px 20px; /* زيادة padding-top لتجنب تغطية الشريط */
+        padding: 150px 20px 20px 20px; /* زيادة padding-top لتجنب تغطية الشريط والعبارة */
         max-width: 1200px;
         margin: 0 auto;
         background-color: #fff;
@@ -291,6 +287,7 @@
     }
 
 </style>
+
 
 </head>
 <body>
@@ -811,7 +808,10 @@
             `;
 	} else if (formName === 'senior_paramedic_outside') {
             formHTML = `
-		 <h2>نموذج كبار المسعفين (خارجي)</h2>
+		 <h2></h2>
+
+                  <h2 class="form-title">نموذج كبار المسعفين (خارجي)</h2>
+            <p class="form-description">نموذج كبار المسعفين للقطاعات الخارجية يرسل كل 6 ساعات من قبل كبير المسعفين</p>
                 <div class="form-section">
                     <label for="sector">اختر القطاع:</label>
                     <select id="sector" onchange="toggleOtherSectorInput()">
