@@ -347,8 +347,8 @@
                             <input type="text" id="working_teams">
                         </div>
                         <div class="input-small">
-			<label for="total_teams">من أصل:</label>
-                            <input type="text" id="total_teams">
+			    <label for="total_teams">من أصل:</label>
+			    <input type="text" id="total_teams" readonly>
                         </div>
                     </div>  
                         <div class="input-row">
@@ -1818,6 +1818,22 @@ document.addEventListener("DOMContentLoaded", function () {
     loadForm('senior_paramedic'); // تحميل النموذج الافتراضي
     selectCurrentTime(); // تحديد التوقيت الحالي تلقائياً
 });
+
+    function updateTotalTeams() {
+        var sector = document.getElementById("sector").value;
+        var totalTeamsInput = document.getElementById("total_teams");
+
+        var teams = {
+            "الوسط": 8,
+            "الجنوب": 10,
+            "الشرق": 15,
+            "الغرب": 13,
+            "الشمال": 12,
+            "other": ''
+        };
+
+        totalTeamsInput.value = teams[sector];
+    }
     
 </script>
 
