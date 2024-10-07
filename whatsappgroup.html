@@ -317,55 +317,55 @@
 
             if (formName === 'senior_paramedic') {
                 formHTML = `
-		
-		    <h2>نموذج كبار المسعفين</h2>
-		    <center><h3>يرسل كل 6 ساعات من قبل كبير مسعفين القطاع المناوب</h3></center>
-		    <div class="form-section">
-		        <label for="sector">اختر القطاع:</label>
-			<select id="sector" onchange="toggleOtherSectorInput()">
-		            var teams = {
-		                'الوسط': 8,
-		                'الجنوب': 10,
-		                'الشرق': 15,
-		                'الغرب': 13,
-		                'الشمال': 12,
-		            };
-		            document.getElementById('total_teams').value = teams[this.value] || '';
-		            if (this.value === 'other') {
-		                document.getElementById('other_sector').style.display = 'block';
-		            } else {
-		                document.getElementById('other_sector').style.display = 'none';
-		            }
-		        ">
-			    <option value="" disabled selected>اختر القطاع</option>
-			    <option value="الوسط">الوسط</option>
-			    <option value="الجنوب">الجنوب</option>
-			    <option value="الشرق">الشرق</option>
-			    <option value="الغرب">الغرب</option>
-			    <option value="الشمال">الشمال</option>
-			</select>
-		        
-		        <label for="date">التاريخ:</label>
-		        <input type="date" id="date" readonly>
-		        
-		        <label for="time">التوقيت الحالي:</label>
-		        <select id="time">
-		            <option value="0:00 إلى 6:00">0:00 إلى 6:00</option>
-		            <option value="6:00 إلى 12:00">6:00 إلى 12:00</option>
-		            <option value="12:00 إلى 18:00">12:00 إلى 18:00</option>
-		            <option value="18:00 إلى 0:00">18:00 إلى 0:00</option>
-		        </select>
-		
-		        <div class="input-row">
-		            <div class="input-small">
-		                <label for="working_teams">عدد الفرق العاملة:</label>
-		                <input type="text" id="working_teams">
-		            </div>
-		            <div class="input-small">
-		                <label for="total_teams">من أصل:</label>
-		            <input type="text" id="total_teams" readonly disabled style="background-color: #e0e0e0;">
-		            </div>
-		        </div>  
+   <h2>نموذج كبار المسعفين</h2>
+    <center><h3>يرسل كل 6 ساعات من قبل كبير مسعفين القطاع المناوب</h3></center>
+    <div class="form-section">
+        <label for="sector">اختر القطاع:</label>
+        <select id="sector" onchange="
+            var teams = {
+                'الوسط': 8,
+                'الجنوب': 10,
+                'الشرق': 15,
+                'الغرب': 13,
+                'الشمال': 12,
+            };
+            document.getElementById('total_teams').value = teams[this.value] || '';
+            if (this.value === 'other') {
+                document.getElementById('other_sector').style.display = 'block';
+            } else {
+                document.getElementById('other_sector').style.display = 'none';
+            }
+        ">
+            <option value="" disabled selected>اختر القطاع</option>
+            <option value="الوسط">الوسط</option>
+            <option value="الجنوب">الجنوب</option>
+            <option value="الشرق">الشرق</option>
+            <option value="الغرب">الغرب</option>
+            <option value="الشمال">الشمال</option>
+        </select>
+        <input type="text" id="other_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
+        
+        <label for="date">التاريخ:</label>
+        <input type="date" id="date" readonly>
+        
+        <label for="time">التوقيت الحالي:</label>
+        <select id="time">
+            <option value="0:00 إلى 6:00">0:00 إلى 6:00</option>
+            <option value="6:00 إلى 12:00">6:00 إلى 12:00</option>
+            <option value="12:00 إلى 18:00">12:00 إلى 18:00</option>
+            <option value="18:00 إلى 0:00">18:00 إلى 0:00</option>
+        </select>
+
+        <div class="input-row">
+            <div class="input-small">
+                <label for="working_teams">عدد الفرق العاملة:</label>
+                <input type="text" id="working_teams">
+            </div>
+            <div class="input-small">
+                <label for="total_teams">من أصل:</label>
+                <input type="text" id="total_teams" readonly disabled style="background-color: #e0e0e0;">
+            </div>
+        </div>  
 
                         <div class="input-row">
                         <div class="input-small">
