@@ -342,9 +342,7 @@
 		            <option value="الشرق">الشرق</option>
 		            <option value="الغرب">الغرب</option>
 		            <option value="الشمال">الشمال</option>
-		            <option value="other">أخرى</option>
 		        </select>
-		        <input type="text" id="other_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
 		        
 		        <label for="date">التاريخ:</label>
 		        <input type="date" id="date" readonly>
@@ -364,7 +362,7 @@
 		            </div>
 		            <div class="input-small">
 		                <label for="total_teams">من أصل:</label>
-		                <input type="text" id="total_teams" readonly>
+		            <input type="text" id="total_teams" readonly disabled style="background-color: #e0e0e0;">
 		            </div>
 		        </div>  
 
@@ -1313,7 +1311,6 @@ function getFormData(formName) {
 
     if (formName === 'senior_paramedic') {
         data.sector = document.getElementById('sector')?.value || '';
-        data.other_sector = document.getElementById('other_sector')?.value || '';
         data.date = document.getElementById('date')?.value || '';
         data.time = document.getElementById('time')?.value || '';
         data.working_teams = document.getElementById('working_teams')?.value || '';
@@ -1570,11 +1567,7 @@ function sendWhatsAppMessage(formName) {
 
     if (formName === 'senior_paramedic') {
         formText += `=== نموذج كبار المسعفين ===\n\n`;
-        if (document.getElementById('sector').value !== 'other') {
-    formText += `القطاع: ${document.getElementById('sector').value}\n`;
-} else {
-    formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
-}
+	formText += `القطاع: ${document.getElementById('sector').value}\n`;
 	formText += `التاريخ: ${document.getElementById('date').value}\n`;
         formText += `التوقيت الحالي: ${document.getElementById('time').value}\n`;
         formText += `عدد الفرق العاملة: ${document.getElementById('working_teams').value} من أصل: ${document.getElementById('total_teams').value}\n`;
@@ -1886,6 +1879,7 @@ function selectCurrentTime() {
 document.addEventListener("DOMContentLoaded", function () {
     loadForm('senior_paramedic'); // تحميل النموذج الافتراضي
     selectCurrentTime(); // تحديد التوقيت الحالي تلقائياً
+    updateTotalTeams(); // تحديث العدد عند تحميل الصفحة لأول مرة
 });
 
 </script>
