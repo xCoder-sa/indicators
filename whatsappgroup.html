@@ -322,7 +322,7 @@
 		    <center><h3>يرسل كل 6 ساعات من قبل كبير مسعفين القطاع المناوب</h3></center>
 		    <div class="form-section">
 		        <label for="sector">اختر القطاع:</label>
-		        <select id="sector" onchange="
+			<select id="sector" onchange="updateTotalTeams()">
 		            var teams = {
 		                'الوسط': 8,
 		                'الجنوب': 10,
@@ -337,12 +337,13 @@
 		                document.getElementById('other_sector').style.display = 'none';
 		            }
 		        ">
-		            <option value="الوسط">الوسط</option>
-		            <option value="الجنوب">الجنوب</option>
-		            <option value="الشرق">الشرق</option>
-		            <option value="الغرب">الغرب</option>
-		            <option value="الشمال">الشمال</option>
-		        </select>
+			    <option value="" disabled selected>اختر القطاع</option>
+			    <option value="الوسط">الوسط</option>
+			    <option value="الجنوب">الجنوب</option>
+			    <option value="الشرق">الشرق</option>
+			    <option value="الغرب">الغرب</option>
+			    <option value="الشمال">الشمال</option>
+			</select>
 		        
 		        <label for="date">التاريخ:</label>
 		        <input type="date" id="date" readonly>
@@ -1879,7 +1880,6 @@ function selectCurrentTime() {
 document.addEventListener("DOMContentLoaded", function () {
     loadForm('senior_paramedic'); // تحميل النموذج الافتراضي
     selectCurrentTime(); // تحديد التوقيت الحالي تلقائياً
-    updateTotalTeams(); // تحديث العدد عند تحميل الصفحة لأول مرة
 });
 
 </script>
