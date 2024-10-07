@@ -5,283 +5,261 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لوحة تحكم القيادات</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<style>
-    body {
-        font-family: 'Arial', sans-serif;
-        background-color: #f0f4f8;
-        margin: 0;
-        padding: 0;
-        direction: rtl;
-    }
-    /* شريط التنقل العلوي */
-    .navbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #3498db; /* تغيير الخلفية إلى لون أزرق */
-        padding: 15px 20px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        position: fixed;
-        width: 100%;
-        top: 0;
-        z-index: 1000;
-    }
-    .navbar .logo {
-        font-size: 24px;
-        font-weight: bold;
-        color: #ffffff; /* لون النص أبيض */
-    }
-    .menu-header {
-        display: none; /* سيتم عرضه فقط على الشاشات الصغيرة */
-        font-size: 18px;
-        font-weight: bold;
-        padding: 10px 20px;
-        background-color: #3498db; /* مطابقة لون الخلفية */
-        width: 100%;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        color: #ffffff; /* لون النص أبيض */
-    }
-    .navbar .menu {
-        display: flex;
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        position: relative; /* لإظهار السهم بشكل صحيح */
-    }
-    .navbar .menu li {
-        margin-left: 20px;
-    }
-    /* تعديل مظهر الأزرار في شريط التنقل */
-    .navbar .menu li a {
-        text-decoration: none;
-        color: #ffffff; /* لون النص أبيض */
-        font-size: 16px;
-        padding: 8px 12px;
-        border-radius: 4px;
-        border: 2px solid #fff; /* إضافة حدود بيضاء حول الأزرار */
-        transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-        display: flex;
-        align-items: center;
-    }
-
-    .navbar .menu li a i {
-        margin-left: 5px;
-    }
-    /* تغيير لون الخلفية عند التمرير */
-    .navbar .menu li a:hover {
-        background-color: #2980b9; /* لون أغمق عند التمرير */
-        color: #ecf0f1; /* تغيير لون النص عند التمرير */
-        border-color: #ecf0f1; /* تغيير لون الحدود عند التمرير */
-    }
-
-    /* لون مختلف عند التفعيل */
-    .navbar .menu li a.active {
-        background-color: #1abc9c; /* لون مختلف عند التفعيل */
-        color: #ffffff;
-        border-color: #1abc9c; /* نفس لون الخلفية عند التفعيل */
-    }
-
-    /* سهم يشير إلى إمكانية السحب ويظهر فقط على الشاشات الصغيرة */
-    @media (max-width: 767px) {
-        .navbar .menu::after {
-            content: '⟵ اسحب لرؤية المزيد';
-            color: #fff;
-            font-size: 14px;
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
-            background-color: #3498db;
-            padding: 5px 10px;
-            border-radius: 4px;
-            display: block;  /* تأكيد العرض على الشاشات الصغيرة */
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 0;
+            direction: rtl;
         }
-    }
-    
-    /* إخفاء السهم على الشاشات الكبيرة */
-    @media (min-width: 768px) {
-        .navbar .menu::after {
-            display: none;
-        }
-    }
-    /* أيقونة الهامبرجر للهواتف */
-    .hamburger {
-        display: none;
-        font-size: 24px;
-        color: #ffffff; /* لون الأيقونة أبيض */
-        cursor: pointer;
-    }
-    /* قائمة التنقل القابلة للتمرير على الهواتف */
-    @media (max-width: 767px) {
+        /* شريط التنقل العلوي */
         .navbar {
-            flex-direction: column;
-            align-items: flex-start;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #3498db; /* تغيير الخلفية إلى لون أزرق */
+            padding: 15px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffffff; /* لون النص أبيض */
         }
         .menu-header {
-            display: block;
-        }
-        .menu {
-            display: flex;
-            overflow-x: auto;
-            white-space: nowrap;
-            width: 100%;
-            background-color: #3498db; /* مطابقة لون الخلفية */
+            display: none; /* سيتم عرضه فقط على الشاشات الصغيرة */
+            font-size: 18px;
+            font-weight: bold;
             padding: 10px 20px;
+            background-color: #3498db; /* مطابقة لون الخلفية */
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            color: #ffffff; /* لون النص أبيض */
         }
-        .menu li {
-            margin: 0 10px;
+        .navbar .menu {
+            display: flex;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
         }
-        .menu li a {
-            padding: 10px 15px;
-            display: inline-block;
+        .navbar .menu li {
+            margin-left: 20px;
         }
+	/* تعديل مظهر الأزرار في شريط التنقل */
+        .navbar .menu li a {
+	    text-decoration: none;
+	    color: #ffffff; /* لون النص أبيض */
+	    font-size: 16px;
+	    padding: 8px 12px;
+	    border-radius: 4px;
+	    border: 2px solid #fff; /* إضافة حدود بيضاء حول الأزرار */
+	    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+	    display: flex;
+	    align-items: center;
+	}
+
+        .navbar .menu li a i {
+            margin-left: 5px;
+        }
+        /* تغيير لون الخلفية عند التمرير */
+	.navbar .menu li a:hover {
+	    background-color: #2980b9; /* لون أغمق عند التمرير */
+	    color: #ecf0f1; /* تغيير لون النص عند التمرير */
+	    border-color: #ecf0f1; /* تغيير لون الحدود عند التمرير */
+	}
+
+	/* لون مختلف عند التفعيل */
+	.navbar .menu li a.active {
+	    background-color: #1abc9c; /* لون مختلف عند التفعيل */
+	    color: #ffffff;
+	    border-color: #1abc9c; /* نفس لون الخلفية عند التفعيل */
+	}
+
+	/* سهم يشير إلى إمكانية السحب ويظهر فقط على الشاشات الصغيرة */
+	@media (max-width: 767px) {
+	    .navbar .menu::after {
+	        content: '⟵ اسحب لرؤية المزيد';
+	        color: #fff;
+	        font-size: 14px;
+	        position: absolute;
+	        top: 50%;
+	        right: 10px;
+	        transform: translateY(-50%);
+	        background-color: #3498db;
+	        padding: 5px 10px;
+	        border-radius: 4px;
+	        display: block;  /* تأكيد العرض على الشاشات الصغيرة */
+	    }
+	}
+	
+	/* إخفاء السهم على الشاشات الكبيرة */
+	@media (min-width: 768px) {
+	    .navbar .menu::after {
+	        display: none;
+	    }
+	}
+        /* أيقونة الهامبرجر للهواتف */
         .hamburger {
             display: none;
-        }
-    }
-    /* تحسينات إضافية للتمرير الأفقي */
-    .menu::-webkit-scrollbar {
-        height: 8px;
-    }
-
-    .menu::-webkit-scrollbar-thumb {
-        background-color: #ffffff;
-        border-radius: 4px;
-    }
-
-    .menu::-webkit-scrollbar-track {
-        background-color: #3498db;
-    }
-    /* المحتوى الرئيسي */
-    .container {
-        padding: 100px 20px 20px 20px; /* زيادة padding-top لتجنب تغطية الشريط */
-        max-width: 1200px;
-        margin: 0 auto;
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        overflow-y: auto;
-    }
-    /* تنسيقات العنوان والوصف للنماذج */
-    .form-title {
-        color: #3498db;
-        font-size: 28px;
-        margin-bottom: 10px;
-        text-align: center;
-    }
-    .form-description {
-        color: #555555;
-        font-size: 16px;
-        margin-bottom: 30px;
-        text-align: center;
-    }
-    /* تحسينات إضافية للعنوان الرئيسي الافتراضي */
-    .container h2 {
-        color: #3498db;
-        font-size: 24px;
-        margin-bottom: 20px;
-        text-align: center;
-    }
-    label {
-        margin-top: 10px;
-        display: block;
-        color: #333;
-        font-weight: bold;
-        font-size: 15px;
-    }
-    input[type="text"], input[type="date"], input[type="time"], input[type="datetime-local"], textarea, select {
-        width: 100%;
-        padding: 10px;
-        margin: 5px 0 15px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        font-size: 14px;
-        transition: border-color 0.3s;
-    }
-    input[type="text"]:focus, input[type="date"]:focus, input[type="time"]:focus, select:focus {
-        border-color: #3498db;
-        outline: none;
-    }
-    button {
-        width: 100%;
-        padding: 12px;
-        background-color: #3498db;
-        border: none;
-        border-radius: 6px;
-        color: white;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-    button:hover {
-        background-color: #1d6a9c;
-    }
-    .copy-notification {
-        display: none;
-        text-align: center;
-        color: green;
-        font-size: 14px;
-        margin-top: 15px;
-    }
-    .form-section {
-        margin-bottom: 30px;
-        background-color: #f9f9f9;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-    .input-row {
-        display: flex;
-        gap: 10px; /* مسافة بين العناصر */
-        flex-wrap: wrap; /* السماح للعناصر بالالتفاف إذا ضاقت المساحة */
-    }
-    
-    .input-small {
-        flex: 1;
-        min-width: 150px;
-        margin-bottom: 10px;
-    }
-    
-    .input-small label {
-        display: block;
-        margin-bottom: 5px;
-    }
-    
-    .input-small input {
-        width: 100%;
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
-    
-    /* تصميم متجاوب لشاشات الهواتف المحمولة */
-    @media (max-width: 767px) {
-        .input-row {
-            display: flex;
-            flex-direction: column; /* ترتيب الحقول في عمود لتحسين العرض */
-            gap: 5px; /* تقليل المسافة بين الحقول */
-        }
-    
-        .input-small {
-            flex: 1;
-            min-width: 100px; /* ضبط عرض الحقول */
-            margin-bottom: 5px; /* تقليل المسافة أسفل الحقول */
-        }
-    
-        .input-small input {
-            padding: 6px; /* تقليل الحشو الداخلي لتوفير مساحة */
-        }
-        /* تنسيق العنوان والوصف على الشاشات الصغيرة */
-        .form-title {
             font-size: 24px;
+            color: #ffffff; /* لون الأيقونة أبيض */
+            cursor: pointer;
         }
-        .form-description {
-            font-size: 14px;
+        /* قائمة التنقل القابلة للتمرير على الهواتف */
+        @media (max-width: 767px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .menu-header {
+                display: block;
+            }
+            .menu {
+                display: flex;
+                overflow-x: auto;
+                white-space: nowrap;
+                width: 100%;
+                background-color: #3498db; /* مطابقة لون الخلفية */
+                padding: 10px 20px;
+            }
+            .menu li {
+                margin: 0 10px;
+            }
+            .menu li a {
+                padding: 10px 15px;
+                display: inline-block;
+            }
+            .hamburger {
+                display: none;
+            }
         }
-    }
+        /* تحسينات إضافية للتمرير الأفقي */
+        .menu::-webkit-scrollbar {
+            height: 8px;
+        }
 
-</style>
+        .menu::-webkit-scrollbar-thumb {
+            background-color: #ffffff;
+            border-radius: 4px;
+        }
+
+        .menu::-webkit-scrollbar-track {
+            background-color: #3498db;
+        }
+        /* المحتوى الرئيسي */
+        .container {
+            padding: 80px 20px 20px 20px; /* زيادة padding-top للعلامة الثابتة */
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+        }
+        h2 {
+            color: #3498db;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        label {
+            margin-top: 10px;
+            display: block;
+            color: #333;
+            font-weight: bold;
+            font-size: 15px;
+        }
+        input[type="text"], input[type="date"], input[type="time"], input[type="datetime-local"], textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        input[type="text"]:focus, input[type="date"]:focus, input[type="time"]:focus, select:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #3498db;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #1d6a9c;
+        }
+        .copy-notification {
+            display: none;
+            text-align: center;
+            color: green;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+        .form-section {
+            margin-bottom: 30px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+	.input-row {
+	    display: flex;
+	    gap: 10px; /* مسافة بين العناصر */
+	    flex-wrap: wrap; /* السماح للعناصر بالالتفاف إذا ضاقت المساحة */
+	}
+	
+	.input-small {
+	    flex: 1;
+	    min-width: 150px;
+	    margin-bottom: 10px;
+	}
+	
+	.input-small label {
+	    display: block;
+	    margin-bottom: 5px;
+	}
+	
+	.input-small input {
+	    width: 100%;
+	    padding: 8px;
+	    border: 1px solid #ccc;
+	    border-radius: 4px;
+	    box-sizing: border-box;
+	}
+	
+	/* تصميم متجاوب لشاشات الهواتف المحمولة */
+	@media (max-width: 767px) {
+	    .input-row {
+	        display: flex;
+	        flex-direction: row; /* ترتيب الحقول في صف حتى على الشاشات الصغيرة */
+	        gap: 5px; /* تقليل المسافة بين الحقول */
+	    }
+	
+	    .input-small {
+	        flex: 1;
+	        min-width: 100px; /* ضبط عرض الحقول */
+	        margin-bottom: 5px; /* تقليل المسافة أسفل الحقول */
+	    }
+	
+	    .input-small input {
+	        padding: 6px; /* تقليل الحشو الداخلي لتوفير مساحة */
+	    }
+	}
+
+    </style>
 </head>
 <body>
 
