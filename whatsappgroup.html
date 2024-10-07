@@ -1026,6 +1026,12 @@
                     <label for="other_authorities">جهات أخرى:</label>
                     <input type="text" id="other_authorities">
 
+		      <label for="first_team_arrival">وقت وصول أول فرقة:</label>
+		<div class="input-row">
+		    <input type="text" id="arrival_hour" placeholder="الساعة" style="width: 45px;">
+		    <input type="text" id="arrival_minute" placeholder="الدقيقة" style="width: 45px;">
+		</div>
+
                     <label for="injury_triage">فرز الإصابات:</label>
                     <div class="input-row">
                         <input type="text" id="critical_injuries" placeholder="حرجة" style="width: 45px;">
@@ -1052,7 +1058,10 @@
 			
 			<label for="total_victimes">إجمالي الحالات:</label>
 			<input type="text" id="total_victimes">
-
+   
+			<label for="hospitals">المستشفيات:</label>
+			<input type="text" id="hospitals">
+   
                     <label for="central_operations_notification">إبلاغ العمليات المركزية:</label>
                     <input type="checkbox" id="central_operations_yes"> نعم
                     <input type="checkbox" id="central_operations_no"> لا
@@ -1436,6 +1445,9 @@ function getFormData(formName) {
 	data.transferred_victimes = document.getElementById('transferd_victimes')?.value || '';
 	data.non_transferred_victimes = document.getElementById('non_transferd_victimes')?.value || '';
 	data.total_victimes = document.getElementById('total_victimes')?.value || '';
+	data.hospitals = document.getElementById('hospitals')?.value || '';
+	data.arrival_hour = document.getElementById('arrival_hour')?.value || '';
+	data.arrival_minute = document.getElementById('arrival_minute')?.value || '';
         data.central_operations_yes = document.getElementById('central_operations_yes').checked;
         data.central_operations_no = document.getElementById('central_operations_no').checked;
         data.joint_operations_yes = document.getElementById('joint_operations_yes').checked;
@@ -1615,6 +1627,7 @@ function sendWhatsAppMessage(formName) {
         formText += `الهلال الأحمر: ${document.getElementById('saudi_red_crescent').value}\n`;
         formText += `وزارة الصحة: ${document.getElementById('health_ministry').value}\n`;
         formText += `جهات أخرى: ${document.getElementById('other_authorities').value}\n`;
+        formText += `وقت وصول أول فرقة: ${document.getElementById('arrival_hour').value}:${document.getElementById('arrival_minute').value}\n`;
         formText += `\n=== فرز الإصابات ===\n`;
         formText += `وفيات: ${document.getElementById('deaths').value}\n`;
         formText += `حرجة: ${document.getElementById('critical_injuries').value}\n`;
@@ -1629,6 +1642,7 @@ function sendWhatsAppMessage(formName) {
         formText += `الحالات الغير منقولة: ${document.getElementById('non_transferd_victimes').value}\n`;
         formText += `إجمالي الحالات: ${document.getElementById('total_victimes').value}\n`;
         formText += `إبلاغ العمليات المركزية: ${document.getElementById('central_operations_yes').checked ? 'نعم' : 'لا'}\n`;
+        formText += `المستشفيات: ${document.getElementById('hospitals').value}\n`;
         formText += `إبلاغ العمليات المشتركة: ${document.getElementById('joint_operations_yes').checked ? 'نعم' : 'لا'}\n`;
         formText += `انتهاء الحدث: ${document.getElementById('end_hour').value}:${document.getElementById('end_minute').value}\n`;
         formText += `قائد الحدث الميداني: ${document.getElementById('field_leader').value}\n`;
