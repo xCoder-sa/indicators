@@ -1483,7 +1483,6 @@ function getFormData(formName) {
                 });
             }
         });
-
         data.challenges = document.getElementById('challenges')?.value || '';
 	        } else if (formName === 'senior_paramedic_outside') {
         // جمع بيانات نموذج كبار المسعفين الخارجي 
@@ -1678,13 +1677,15 @@ function sendWhatsAppMessage(formName) {
         formText += `عدد الوحدات الخارجة عن الجاهزية: ${document.getElementById('units_out_of_order').value}\n`;
         formText += `عدد فرق القطاع العاملة أثناء المناوبة: ${document.getElementById('working_teams_shift').value}\n`;
         formText += `\n=== التحديات والإجراءات المتخذة ===\n${document.getElementById('challenges').value}\n\n`;
-
-        // البلاغات الإسعافية المرتبطة
-        formText += `\n=== البلاغات الإسعافية المرتبطة ===\n`;
+        
+        // جمع البيانات المتعلقة بالبلاغات الإسعافية المرتبطة
         const reportNumbers = document.querySelectorAll('.report-number');
         const reportTypes = document.querySelectorAll('.report-type');
+        const waitingTimes = document.querySelectorAll('.waiting_time');
+        
+        formText += `\n=== البلاغات الإسعافية المرتبطة ===\n`;
         reportNumbers.forEach((number, index) => {
-            formText += `رقم البلاغ: ${number.value}, نوع البلاغ: ${reportTypes[index].value}\n`;
+            formText += `رقم البلاغ: ${number.value}, نوع البلاغ: ${reportTypes[index].value}, زمن الاستجابة: ${waitingTimes[index].value}\n`;
         });
 
         formText += `\nاسم كبير المسعفين: ${document.getElementById('senior_paramedic_name').value}\n`;
