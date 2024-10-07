@@ -270,6 +270,7 @@
         <div class="menu-header">القائمة</div> <!-- العنوان الجديد -->
         <ul class="menu" id="menu">
             <li><a href="#" onclick="loadForm('senior_paramedic')" class="menu-item"><i class="fas fa-user-md"></i> نموذج كبار المسعفين (داخلي)</a></li>
+	    <li><a href="#" onclick="loadForm('attendance')" class="menu-item"><i class="fas fa-check-circle"></i> نموذج تحضير</a></li>
             <li><a href="#" onclick="loadForm('rapid_response_reports')" class="menu-item"><i class="fas fa-car-crash"></i> نموذج بلاغات التدخل السريع</a></li>
             <li><a href="#" onclick="loadForm('senior_paramedic_outside')" class="menu-item"><i class="fas fa-user-md"></i> نموذج كبار المسعفين (خارجي)</a></li>
             <li><a href="#" onclick="loadForm('operational_failure')" class="menu-item"><i class="fas fa-exclamation-triangle"></i> نموذج فشل تشغيلي</a></li>
@@ -452,6 +453,29 @@
                     <textarea id="cad_program_notes" rows="4"></textarea>
                 </div>
                 <button onclick="sendWhatsAppMessage('senior_paramedic')">إرسال النموذج بالواتساب</button>
+            `;
+	      } else if (formName === 'attendance') {
+            formHTML = `
+		 <h2>نموذج تحضير</h2>
+                <div class="form-section">
+                <div class="form-section">
+                    <label for="date">التاريخ:</label>
+                    <input type="date" id="date" readonly>
+                    <label for="shift">المناوبة</label>
+                    <select id="shift" onchange="toggleOtherSectorInput()">
+                        <option value="صباحي">صباحي</option>
+                        <option value="مسائي">مسائي</option>
+                    </select>
+                          <div class="input-row">
+                        <div class="input-small">
+                            <label for="center_sector_teams">عدد فرق الوسط العاملة :</label>
+                            <input type="text" id="center_sector_teams">
+                        </div>
+                        <div class="input-small">
+                            <label for="center_sector_vehicles">عدد مركبات الوسط العاملة :</label>
+                            <input type="text" id="center_sector_vehicles">
+                        </div>
+                    </div>
             `;
 	      } else if (formName === 'rapid_response_reports') {
             formHTML = `
