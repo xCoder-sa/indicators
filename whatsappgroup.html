@@ -782,8 +782,6 @@
                         <option value="الغاط">الغاط</option>
                         <option value="القويعية">القويعية</option>
                         <option value="المجمعة">المجمعة</option>
-                        <option value="الغاط">الغاط</option>
-                        <option value="المجمعة">المجمعة</option>
                         <option value="المزاحمية">المزاحمية</option>
                         <option value="حوطة بني تميم">حوطة بني تميم</option>
                         <option value="شقراء">شقراء</option>
@@ -808,7 +806,7 @@
                     <input type="text" id="working_teams">
 
                     <label for="total_teams">من أصل:</label>
-                    <input type="text" id="total_teams readonly "15 value">
+                    <input type="text" id="total_teams">
 
                         <div class="input-small">
                             <label for="operating_vehicles">عدد المركبات العاملة:</label>
@@ -1536,12 +1534,12 @@ function sendWhatsAppMessage(formName) {
         formText += `متوسط زمن الانتظار في قائمة الترحيل: ${document.getElementById('waiting_time').value}\n`;
         formText += `اعلى فرقة اسعافيه في عدد البلاغات: ${document.getElementById('top_team').value}\n`;
         formText += `متوسط عدد البلاغات للفرق الاسعافية: ${document.getElementById('average_reports').value}\n`;
-        formText += `نسبة زمن الاستجابة خلال 8 دقائق للبلاغات الساخنة: ${document.getElementById('response_rate').value}\n`;
-        formText += `متوسط زمن الاستجابة لبلاغات الحوادث المرورية الساخنة: ${document.getElementById('average_response_time').value}\n`;
+        formText += `نسبة زمن الاستجابة خلال 8 دقائق للبلاغات الاسعافية بإستثناء حالات الفا: ${document.getElementById('response_rate').value}\n`;
+        formText += `متوسط زمن الاستجابة لبلاغات الحوادث المرورية: ${document.getElementById('average_response_time').value}\n`;
         formText += `زمن الاستجابة حتى المباشرة: ${document.getElementById('response_time_to_intervention').value}\n\n`;
         formText += `\n=== ملاحظات النوبة ===\n`;
         formText += `عدد الغياب في المناوبة: ${document.getElementById('absence_in_shift').value}\n`;
-        formText += `ملاحظات برنامج الكاد: ${document.getElementById('cad_program_notes').value}\n`;
+        formText += `ملاحظات عامه: ${document.getElementById('cad_program_notes').value}\n`;
     } else if (formName === 'operational_failure') {
         formText += `=== نموذج فشل تشغيلي ===\n\n`;
         if (document.getElementById('sector').value !== 'other') {
