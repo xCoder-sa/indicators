@@ -1381,7 +1381,8 @@ function getFormData(formName) {
     } else if (formName === 'operational_failure') {
         // جمع بيانات نموذج فشل تشغيلي
         data.sector = document.getElementById('sector')?.value || '';
-        data.report_number = document.getElementById('report_number')?.value || '';
+        data.other_sector = document.getElementById('other_sector')?.value || '';
+	data.report_number = document.getElementById('report_number')?.value || '';
         data.start_hour = document.getElementById('start_hour')?.value || '';
         data.start_minute = document.getElementById('start_minute')?.value || '';
         data.unit_failure = document.getElementById('unit_failure')?.value || '';
@@ -1402,6 +1403,7 @@ function getFormData(formName) {
         data.report_type = document.getElementById('report_type')?.value || '';
         data.report_location = document.getElementById('report_location')?.value || '';
         data.operational_sector = document.getElementById('operational_sector')?.value || '';
+        data.other_sector = document.getElementById('other_sector')?.value || '';
         data.responding_units = document.getElementById('responding_units')?.value || '';
         data.response_time = document.getElementById('response_time')?.value || '';
         data.notes = document.getElementById('notes')?.value || '';
@@ -1578,8 +1580,8 @@ function sendWhatsAppMessage(formName) {
         formText += `نهاية الحدث: ${document.getElementById('end_hour').value}:${document.getElementById('end_minute').value}\n`;
     } else if (formName === 'eco_reports') {
         formText += `=== نموذج بلاغات إيكو ===\n\n`;
-        if (document.getElementById('sector').value !== 'other') {
-    formText += `القطاع: ${document.getElementById('sector').value}\n`;
+        if (document.getElementById('operational_sector').value !== 'other') {
+    formText += `القطاع: ${document.getElementById('operational_sector').value}\n`;
 } else {
     formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
 }
