@@ -922,6 +922,13 @@
                     <label for="service_impact">التأثير على الخدمة:</label>
                     <textarea id="service_impact" rows="4"></textarea>
 
+                    <label for="event_status">هل الحدث ما زال قائم؟</label>
+                    <select id="event_status">
+                        <option value="نعم">نعم</option>
+                        <option value="لا">لا</option>
+                    </select>
+
+
                     <label for="event_end">نهاية الحدث (الساعة والدقيقة):</label>
                     <div class="input-row">
                         <input type="text" id="end_hour" placeholder="الساعة" style="width: 45px;">
@@ -1383,6 +1390,7 @@ function getFormData(formName) {
         data.damages = document.getElementById('damages')?.value || '';
         data.actions_taken = document.getElementById('actions_taken')?.value || '';
         data.service_impact = document.getElementById('service_impact')?.value || '';
+        data.event_status = document.getElementById('event_status')?.value || '';
         data.end_hour = document.getElementById('end_hour')?.value || '';
         data.end_minute = document.getElementById('end_minute')?.value || '';
     } else if (formName === 'eco_reports') {
@@ -1566,6 +1574,7 @@ function sendWhatsAppMessage(formName) {
         formText += `الأضرار: ${document.getElementById('damages').value}\n`;
         formText += `الإجراءات المتخذة: ${document.getElementById('actions_taken').value}\n`;
         formText += `التأثير على الخدمة: ${document.getElementById('service_impact').value}\n`;
+        formText += `هل الحدث ما زال قائم؟: ${document.getElementById('event_status').value}\n`;
         formText += `نهاية الحدث: ${document.getElementById('end_hour').value}:${document.getElementById('end_minute').value}\n`;
     } else if (formName === 'eco_reports') {
         formText += `=== نموذج بلاغات إيكو ===\n\n`;
