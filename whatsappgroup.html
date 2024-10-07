@@ -1140,6 +1140,7 @@
                                 <option value="تشارلي">تشارلي</option>
                                 <option value="برافو">برافو</option>
                             </select>
+                	 <input type="text" placeholder="وقت بقاء البلاغ في قائمة الترحيل" class="waiting_time" style="width: 150px;">
                         </div>
                     </div>
                     <button type="button" onclick="addReportField()">إضافة بلاغ آخر</button>
@@ -1468,6 +1469,21 @@ function getFormData(formName) {
         data.units_ready = document.getElementById('units_ready')?.value || '';
         data.units_out_of_order = document.getElementById('units_out_of_order')?.value || '';
         data.working_teams_shift = document.getElementById('working_teams_shift')?.value || '';
+        data.waiting_time = document.getElementById('waiting_time')?.value || '';
+        // جمع بيانات البلاغات الإسعافية المرتبطة
+        const reportNumbers = document.querySelectorAll('.report-number');
+        const reportTypes = document.querySelectorAll('.report-type');
+        const waiting_time = document.querySelectorAll('.waiting_time');
+        data.reports = [];
+        reportNumbers.forEach((number, index) => {
+            if (number.value && reportTypes[index].value && number.value) {
+                data.reports.push({
+                    number: number.value,
+                    type: reportTypes[index].value
+                });
+            }
+        });
+
         data.challenges = document.getElementById('challenges')?.value || '';
 	        } else if (formName === 'senior_paramedic_outside') {
         // جمع بيانات نموذج كبار المسعفين الخارجي 
