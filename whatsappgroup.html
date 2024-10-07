@@ -318,39 +318,40 @@
             if (formName === 'senior_paramedic') {
                 formHTML = `
 		
-            <h2>نموذج كبار المسعفين</h2>
-            <center><h3>يرسل كل 6 ساعات من قبل كبير مسعفين القطاع المناوب</h3></center>
-	           <div class="form-section">
-                    <label for="sector">اختر القطاع:</label>
-                    <select id="sector" onchange="toggleOtherSectorInput()">
-                        <option value="الوسط">الوسط</option>
-                        <option value="الجنوب">الجنوب</option>
-                        <option value="الشرق">الشرق</option>
-                        <option value="الغرب">الغرب</option>
-                        <option value="الشمال">الشمال</option>
-                        <option value="other">أخرى</option>
-                    </select>
-                    <input type="text" id="other_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
-                    <label for="date">التاريخ:</label>
-                    <input type="date" id="date" readonly>
-                    <label for="time">التوقيت الحالي:</label>
-                    <select id="time">
-                        <option value="0:00 إلى 6:00">0:00 إلى 6:00</option>
-                        <option value="6:00 إلى 12:00">6:00 إلى 12:00</option>
-                        <option value="12:00 إلى 18:00">12:00 إلى 18:00</option>
-                        <option value="18:00 إلى 0:00">18:00 إلى 0:00</option>
-                    </select>
-
-                        <div class="input-row">
-                        <div class="input-small">
-                            <label for="working_teams">عدد الفرق العاملة:</label>
-                            <input type="text" id="working_teams">
-                        </div>
-                        <div class="input-small">
-			    <label for="total_teams">من أصل:</label>
-			    <input type="text" id="total_teams" readonly>
-                        </div>
-                    </div>  
+		<form id="senior_paramedic_form">
+		    <h2>نموذج كبار المسعفين</h2>
+		    <center><h3>يرسل كل 6 ساعات من قبل كبير مسعفين القطاع المناوب</h3></center>
+		    <div class="form-section">
+		        <label for="sector">اختر القطاع:</label>
+		        <select id="sector" onchange="toggleOtherSectorInput()">
+		            <option value="الوسط">الوسط</option>
+		            <option value="الجنوب">الجنوب</option>
+		            <option value="الشرق">الشرق</option>
+		            <option value="الغرب">الغرب</option>
+		            <option value="الشمال">الشمال</option>
+		            <option value="other">أخرى</option>
+		        </select>
+		        <input type="text" id="other_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
+		        <label for="date">التاريخ:</label>
+		        <input type="date" id="date" readonly>
+		        <label for="time">التوقيت الحالي:</label>
+		        <select id="time">
+		            <option value="0:00 إلى 6:00">0:00 إلى 6:00</option>
+		            <option value="6:00 إلى 12:00">6:00 إلى 12:00</option>
+		            <option value="12:00 إلى 18:00">12:00 إلى 18:00</option>
+		            <option value="18:00 إلى 0:00">18:00 إلى 0:00</option>
+		        </select>
+		
+		        <div class="input-row">
+		            <div class="input-small">
+		                <label for="working_teams">عدد الفرق العاملة:</label>
+		                <input type="text" id="working_teams">
+		            </div>
+		            <div class="input-small">
+		                <label for="total_teams">من أصل:</label>
+		                <input type="text" id="total_teams" readonly>
+		            </div>
+		        </div>
                         <div class="input-row">
                         <div class="input-small">
                             <label for="operating_vehicles">عدد المركبات العاملة:</label>
