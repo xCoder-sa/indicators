@@ -318,12 +318,25 @@
             if (formName === 'senior_paramedic') {
                 formHTML = `
 		
-		<form id="senior_paramedic_form">
 		    <h2>نموذج كبار المسعفين</h2>
 		    <center><h3>يرسل كل 6 ساعات من قبل كبير مسعفين القطاع المناوب</h3></center>
 		    <div class="form-section">
 		        <label for="sector">اختر القطاع:</label>
-		        <select id="sector" onchange="toggleOtherSectorInput()">
+		        <select id="sector" onchange="
+		            var teams = {
+		                'الوسط': 8,
+		                'الجنوب': 10,
+		                'الشرق': 15,
+		                'الغرب': 13,
+		                'الشمال': 12,
+		            };
+		            document.getElementById('total_teams').value = teams[this.value] || '';
+		            if (this.value === 'other') {
+		                document.getElementById('other_sector').style.display = 'block';
+		            } else {
+		                document.getElementById('other_sector').style.display = 'none';
+		            }
+		        ">
 		            <option value="الوسط">الوسط</option>
 		            <option value="الجنوب">الجنوب</option>
 		            <option value="الشرق">الشرق</option>
@@ -332,8 +345,10 @@
 		            <option value="other">أخرى</option>
 		        </select>
 		        <input type="text" id="other_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
+		        
 		        <label for="date">التاريخ:</label>
 		        <input type="date" id="date" readonly>
+		        
 		        <label for="time">التوقيت الحالي:</label>
 		        <select id="time">
 		            <option value="0:00 إلى 6:00">0:00 إلى 6:00</option>
@@ -351,7 +366,8 @@
 		                <label for="total_teams">من أصل:</label>
 		                <input type="text" id="total_teams" readonly>
 		            </div>
-		        </div>
+		        </div>  
+
                         <div class="input-row">
                         <div class="input-small">
                             <label for="operating_vehicles">عدد المركبات العاملة:</label>
@@ -1871,24 +1887,6 @@ document.addEventListener("DOMContentLoaded", function () {
     loadForm('senior_paramedic'); // تحميل النموذج الافتراضي
     selectCurrentTime(); // تحديد التوقيت الحالي تلقائياً
 });
-
-function updateTotalTeams(formName) {
-    // تحقق من أن النموذج هو نموذج كبار المسعفين فقط
-    if (formName === 'senior_paramedic') {
-        var sector = document.querySelector('#senior_paramedic_form #sector').value;
-        var totalTeamsInput = document.querySelector('#senior_paramedic_form #total_teams');
-
-        var teams = {
-            "الوسط": 8,
-            "الجنوب": 10,
-            "الشرق": 15,
-            "الغرب": 13,
-            "الشمال": 12,
-        };
-
-        totalTeamsInput.value = teams[sector];
-    }
-}
 
 </script>
 
