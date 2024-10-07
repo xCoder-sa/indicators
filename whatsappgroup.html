@@ -882,15 +882,14 @@
             formHTML = `
               <h2>نموذج فشل تشغيلي</h2>
 		<center><h3>يرسل من قبل كبار المسعفين في حال وجود فشل تشغيلي</h3></center>
-                <div class="form-section">
                     <label for="sector">اختر القطاع:</label>
-                    <select id="sector">
+                    <select id="sector" onchange="toggleOtherSectorInput()">
                         <option value="الوسط">الوسط</option>
                         <option value="الجنوب">الجنوب</option>
                         <option value="الشرق">الشرق</option>
                         <option value="الغرب">الغرب</option>
                         <option value="الشمال">الشمال</option>
-			<option value="other">أخرى</option>
+                        <option value="other">أخرى</option>
                     </select>
                     <input type="text" id="other_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
                     <label for="report_number">رقم البلاغ:</label>
@@ -949,14 +948,14 @@
                         <input type="text" id="report_hour" placeholder="الساعة" style="width: 45px;">
                         <input type="text" id="report_minute" placeholder="الدقيقة" style="width: 45px;">
                     </div>
-                    <label for="operational_sector">القطاع التشغيلي:</label>
-                    <select id="operational_sector" required>
+                    <label for="sector">اختر القطاع:</label>
+                    <select id="sector" onchange="toggleOtherSectorInput()">
                         <option value="الوسط">الوسط</option>
                         <option value="الجنوب">الجنوب</option>
                         <option value="الشرق">الشرق</option>
                         <option value="الغرب">الغرب</option>
                         <option value="الشمال">الشمال</option>
-			<option value="other">أخرى</option>
+                        <option value="other">أخرى</option>
                     </select>
                     <input type="text" id="other_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
                     <label for="report_number">رقم البلاغ:</label>
@@ -1397,7 +1396,7 @@ function getFormData(formName) {
         data.report_number = document.getElementById('report_number')?.value || '';
         data.report_type = document.getElementById('report_type')?.value || '';
         data.report_location = document.getElementById('report_location')?.value || '';
-        data.operational_sector = document.getElementById('operational_sector')?.value || '';
+        data.sector = document.getElementById('sector')?.value || '';
         data.other_sector = document.getElementById('other_sector')?.value || '';
         data.responding_units = document.getElementById('responding_units')?.value || '';
         data.response_time = document.getElementById('response_time')?.value || '';
@@ -1575,8 +1574,8 @@ function sendWhatsAppMessage(formName) {
         formText += `نهاية الحدث: ${document.getElementById('end_hour').value}:${document.getElementById('end_minute').value}\n`;
     } else if (formName === 'eco_reports') {
         formText += `=== نموذج بلاغات إيكو ===\n\n`;
-        if (document.getElementById('operational_sector').value !== 'other') {
-    formText += `القطاع: ${document.getElementById('operational_sector').value}\n`;
+        if (document.getElementById('sector').value !== 'other') {
+    formText += `القطاع: ${document.getElementById('sector').value}\n`;
 } else {
     formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
 }
