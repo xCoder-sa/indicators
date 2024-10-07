@@ -850,6 +850,8 @@
                                 <option value="برافو">برافو</option>
                             </select>
                 	 <input type="text" placeholder="زمن الاستجابة" class="waiting_time" style="width: 120px;">
+                        <p>احسب زمن الاستجابة من الرد الى الوصول للموقع</p>
+
                         </div>
                     </div>
                     <button type="button" onclick="relatedreports()">إضافة بلاغ آخر</button>
@@ -868,7 +870,7 @@
                     <label for="outsider_notes">ملاحظات عامه:</label>
                     <textarea id="outsider_notes" rows="4"></textarea>
                     <label for="senior_paramedic_name"> كبير المسعفين المناوب:</label>
-                    <input type="text" id="senior_paramedic_name">
+                    <textarea id="senior_paramedic_name" rows="4"></textarea>
 
                 </div>
                 <button onclick="sendWhatsAppMessage('senior_paramedic_outside')">إرسال النموذج بالواتساب</button>
@@ -1443,7 +1445,6 @@ function getFormData(formName) {
         data.time = document.getElementById('time')?.value || '';
         data.working_teams = document.getElementById('working_teams')?.value || '';
         data.total_teams = document.getElementById('total_teams')?.value || '';
-        data.rapid_response_teams = document.getElementById('rapid_response_teams')?.value || '';
         data.operating_vehicles = document.getElementById('operating_vehicles')?.value || '';
         data.broken_vehicles = document.getElementById('broken_vehicles')?.value || '';
         data.reserve_vehicles = document.getElementById('reserve_vehicles')?.value || '';
@@ -1648,7 +1649,6 @@ function sendWhatsAppMessage(formName) {
         formText += `التاريخ: ${document.getElementById('date').value}\n`;
         formText += `التوقيت الحالي: ${document.getElementById('time').value}\n`;
         formText += `عدد الفرق العاملة: ${document.getElementById('working_teams').value} من أصل: ${document.getElementById('total_teams').value}\n`;
-        formText += `عدد فرق التدخل السريع: ${document.getElementById('rapid_response_teams').value}\n`;
         formText += `عدد المركبات العاملة: ${document.getElementById('operating_vehicles').value}\n`;
         formText += `عدد المركبات المتعطلة: ${document.getElementById('broken_vehicles').value}\n`;
         formText += `عدد المركبات الاحتياط: ${document.getElementById('reserve_vehicles').value}\n`;
