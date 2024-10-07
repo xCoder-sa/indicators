@@ -405,22 +405,16 @@
                     <label for="omega_reports">عدد بلاغات أوميغا:</label>
                     <input type="text" id="omega_reports">
 
-                    <h2>البلاغات</h2>
-
                     <label for="total_reports">إجمالي بلاغات القطاع:</label>
                     <input type="text" id="total_reports">
+
+                    <h2>البلاغات</h2>
 
                     <label for="government_transfers">عدد الحالات المنقولة للقطاع الحكومي:</label>
                     <input type="text" id="government_transfers">
 
-                    <label for="private_transfers">عدد الحالات المنقولة للقطاع الخاص:</label>
-                    <input type="text" id="private_transfers">
-
                     <label for="untransferred_cases">عدد الحالات الغير منقولة:</label>
                     <input type="text" id="untransferred_cases">
-
-                    <label for="paper_reports">عدد البلاغات المدونة ورقياً:</label>
-                    <input type="text" id="paper_reports">
 
                     <h2>المخرجات</h2>
 
@@ -1299,9 +1293,7 @@ function getFormData(formName) {
         data.omega_reports = document.getElementById('omega_reports')?.value || '';
         data.total_reports = document.getElementById('total_reports')?.value || '';
         data.government_transfers = document.getElementById('government_transfers')?.value || '';
-        data.private_transfers = document.getElementById('private_transfers')?.value || '';
         data.untransferred_cases = document.getElementById('untransferred_cases')?.value || '';
-        data.paper_reports = document.getElementById('paper_reports')?.value || '';
         data.waiting_time = document.getElementById('waiting_time')?.value || '';
         data.top_team = document.getElementById('top_team')?.value || '';
         data.average_reports = document.getElementById('average_reports')?.value || '';
@@ -1539,9 +1531,7 @@ function sendWhatsAppMessage(formName) {
         formText += `\n=== البلاغات ===\n`;
         formText += `إجمالي بلاغات القطاع: ${document.getElementById('total_reports').value}\n`;
         formText += `عدد الحالات المنقولة للقطاع الحكومي: ${document.getElementById('government_transfers').value}\n`;
-        formText += `عدد الحالات المنقولة للقطاع الخاص: ${document.getElementById('private_transfers').value}\n`;
         formText += `عدد الحالات الغير منقولة: ${document.getElementById('untransferred_cases').value}\n`;
-        formText += `عدد البلاغات المدونة ورقياً: ${document.getElementById('paper_reports').value}\n`;
         formText += `\n=== المخرجات ===\n`;
         formText += `متوسط زمن الانتظار في قائمة الترحيل: ${document.getElementById('waiting_time').value}\n`;
         formText += `اعلى فرقة اسعافيه في عدد البلاغات: ${document.getElementById('top_team').value}\n`;
