@@ -1605,10 +1605,10 @@ function sendWhatsAppMessage(formName) {
         formText += `وزارة الصحة: ${document.getElementById('health_ministry').value}\n`;
         formText += `جهات أخرى: ${document.getElementById('other_authorities').value}\n`;
         formText += `\n=== فرز الإصابات ===\n`;
-        formText += `حرجة: ${document.getElementById('critical_injuries').value}\n`;
-        formText += `متوسطة: ${document.getElementById('moderate_injuries').value}\n`;
-        formText += `طفيفة: ${document.getElementById('minor_injuries').value}\n`;
-        formText += `وفيات: ${document.getElementById('deaths').value}\n`;
+        formText += `حرجة 🔴: ${document.getElementById('critical_injuries').value}\n`;
+        formText += `متوسطة 🟡: ${document.getElementById('moderate_injuries').value}\n`;
+        formText += `طفيفة 🟢: ${document.getElementById('minor_injuries').value}\n`;
+        formText += `وفيات ⚫️: ${document.getElementById('deaths').value}\n`;
         formText += `\n=== الجنسيات ===\n`;
         formText += `سعودي: ${document.getElementById('saudi_nationality').value}\n`;
         formText += `غير سعودي: ${document.getElementById('non_saudi_nationality').value}\n`;
