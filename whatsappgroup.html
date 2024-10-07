@@ -842,23 +842,23 @@
                     <label for="total_reports">إجمالي بلاغات القطاع:</label>
                     <input type="text" id="total_reports">
 		    
-                    <label for="related_reports">البلاغات:</label>
-                    <div id="reports-container">
-                        <div class="input-pair">
-                            <input type="text" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
-                            <select class="report-type" style="width: 120px;">
-                                <option value="إيكو">إيكو</option>
-                                <option value="دلتا">دلتا</option>
-                                <option value="تشارلي">تشارلي</option>
-                                <option value="برافو">برافو</option>
-                            </select>
-                	 <input type="text" placeholder="زمن الاستجابة" class="waiting_time" style="width: 120px;">
-                        <p>احسب زمن الاستجابة من الرد الى الوصول للموقع</p>
-
-                        </div>
-                    </div>
-                    <button type="button" onclick="relatedreports()">إضافة بلاغ آخر</button>
-
+		<label for="related_reports">البلاغات:</label>
+		<div id="reports-container-1">
+		    <div class="input-pair">
+		        <input type="text" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
+		        <select class="report-type" style="width: 120px;">
+		            <option value="إيكو">إيكو</option>
+		            <option value="دلتا">دلتا</option>
+		            <option value="تشارلي">تشارلي</option>
+		            <option value="برافو">برافو</option>
+		        </select>
+		        <input type="text" placeholder="زمن الاستجابة" class="waiting_time" style="width: 120px;">
+		        <p>احسب زمن الاستجابة من الرد الى الوصول للموقع</p>
+		    </div>
+		</div>
+		
+		<!-- الزر يستخدم الفنكشن مع تمرير المعرف والنوع -->
+		<button type="button" onclick="relatedreports('reports-container-1', 'responseTime')">إضافة بلاغ آخر</button>
 
                     <h2>المخرجات</h2>
                     <label for="absence_in_shift">متوسط زمن الاستجابة:</label>
@@ -1130,20 +1130,22 @@
                     <label for="challenges">التحديات والاجراءات المتخذة:</label>
                     <textarea id="challenges" rows="4" placeholder="1- ...&#10;2- ..."></textarea>
 
-                    <label for="related_reports">في حال كان طلب الدعم مرتبط ببلاغات إسعافية:</label>
-                    <div id="reports-container">
-                        <div class="input-pair">
-                            <input type="text" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
-                            <select class="report-type" style="width: 120px;">
-                                <option value="إيكو">إيكو</option>
-                                <option value="دلتا">دلتا</option>
-                                <option value="تشارلي">تشارلي</option>
-                                <option value="برافو">برافو</option>
-                            </select>
-                	 <input type="text" placeholder="زمن بقاء البلاغ في قائمة الترحيل" class="waiting_time" style="width: 150px;">
-                        </div>
-                    </div>
-                    <button type="button" onclick="relatedreports()">إضافة بلاغ آخر</button>
+		<label for="related_reports">في حال كان طلب الدعم مرتبط ببلاغات إسعافية:</label>
+		<div id="reports-container-2">
+		    <div class="input-pair">
+		        <input type="text" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
+		        <select class="report-type" style="width: 120px;">
+		            <option value="إيكو">إيكو</option>
+		            <option value="دلتا">دلتا</option>
+		            <option value="تشارلي">تشارلي</option>
+		            <option value="برافو">برافو</option>
+		        </select>
+		        <input type="text" placeholder="زمن بقاء البلاغ في قائمة الترحيل" class="waiting_time" style="width: 150px;">
+		    </div>
+		</div>
+		
+		<!-- الزر يستخدم الفنكشن مع تمرير معرّف الحاوية والنوع -->
+		<button type="button" onclick="relatedreports('reports-container-2', 'dispatchTime')">إضافة بلاغ آخر</button>
 
                     <label for="senior_paramedic_name">اسم كبير المسعفين:</label>
                     <input type="text" id="senior_paramedic_name">
@@ -1229,37 +1231,33 @@
         });
     }
 
-    function addReportField() {
-        const reportsContainer = document.getElementById('reports-container');
-        const newField = `
-            <div class="input-pair">
-                <input type="text" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
-                <select class="report-type" style="width: 120px;">
-                    <option value="إيكو">إيكو</option>
-                    <option value="دلتا">دلتا</option>
-                    <option value="تشارلي">تشارلي</option>
-                    <option value="برافو">برافو</option>
-                </select>
-            </div>
-        `;
-        reportsContainer.insertAdjacentHTML('beforeend', newField);
+function relatedreports(containerId, reportType) {
+    const reportsContainer = document.getElementById(containerId);
+    
+    let newField = `
+        <div class="input-pair">
+            <input type="text" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
+            <select class="report-type" style="width: 120px;">
+                <option value="إيكو">إيكو</option>
+                <option value="دلتا">دلتا</option>
+                <option value="تشارلي">تشارلي</option>
+                <option value="برافو">برافو</option>
+            </select>
+    `;
+    
+    // التحقق من نوع التقرير لتحديد الحقول الإضافية
+    if (reportType === 'responseTime') {
+        newField += `<input type="text" placeholder="زمن الاستجابة" class="waiting_time" style="width: 120px;">`;
+        newField += `<p>احسب زمن الاستجابة من الرد الى الوصول للموقع</p>`;
+    } else if (reportType === 'dispatchTime') {
+        newField += `<input type="text" placeholder="زمن بقاء البلاغ في قائمة الترحيل" class="waiting_time" style="width: 150px;">`;
     }
-	    function relatedreports() {
-        const reportsContainer = document.getElementById('reports-container');
-        const newField = `
-                        <div class="input-pair">
-                            <input type="text" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
-                            <select class="report-type" style="width: 120px;">
-                                <option value="إيكو">إيكو</option>
-                                <option value="دلتا">دلتا</option>
-                                <option value="تشارلي">تشارلي</option>
-                                <option value="برافو">برافو</option>
-                            </select>
-                	 <input type="text" placeholder="زمن الاستجابة" class="waiting_time" style="width: 120px;">
-                        </div>
-        `;
-        reportsContainer.insertAdjacentHTML('beforeend', newField);
-    }
+
+    newField += `</div>`; // إغلاق div
+
+    reportsContainer.insertAdjacentHTML('beforeend', newField);
+}
+
 
 function saveForm(formName) {
     const xhr = new XMLHttpRequest();
