@@ -16,6 +16,7 @@
     /* شريط التنقل العلوي */
     .navbar {
         display: flex;
+        flex-direction: row; /* الافتراضي هو الصف */
         justify-content: space-between;
         align-items: center;
         background-color: #3498db; /* تغيير الخلفية إلى لون أزرق */
@@ -46,7 +47,6 @@
         list-style-type: none;
         margin: 0;
         padding: 0;
-        position: relative; /* لإظهار السهم بشكل صحيح */
     }
     .navbar .menu li {
         margin-left: 20px;
@@ -81,38 +81,21 @@
         border-color: #1abc9c; /* نفس لون الخلفية عند التفعيل */
     }
 
-    /* سهم يشير إلى إمكانية السحب ويظهر فقط على الشاشات الصغيرة */
-    @media (max-width: 767px) {
-        .navbar .menu::after {
-            content: '⟵ اسحب لرؤية المزيد';
-            color: #fff;
-            font-size: 14px;
-            margin-left: 10px; /* مسافة بين العبارة وباقي العناصر */
-            background-color: #3498db;
-            padding: 5px 10px;
-            border-radius: 4px;
-            display: inline-block;  /* لضمان عرض العبارة بشكل صحيح ضمن تدفق العناصر */
-            pointer-events: none; /* السماح بالنقر على العناصر الأخرى بدون تداخل */
-        }
+    /* عنصر "اسحب لرؤية المزيد" */
+    .swipe-text {
+        display: none; /* مخفي بشكل افتراضي */
+        background-color: #3498db; /* لون الخلفية أزرق */
+        color: #fff; /* لون النص أبيض */
+        font-size: 14px;
+        padding: 5px 10px;
+        border-radius: 4px;
+        margin-left: 10px; /* مسافة بين العبارة وباقي العناصر */
     }
-    
-    /* إخفاء السهم على الشاشات الكبيرة */
-    @media (min-width: 768px) {
-        .navbar .menu::after {
-            display: none;
-        }
-    }
-    /* أيقونة الهامبرجر للهواتف */
-    .hamburger {
-        display: none;
-        font-size: 24px;
-        color: #ffffff; /* لون الأيقونة أبيض */
-        cursor: pointer;
-    }
-    /* قائمة التنقل القابلة للتمرير على الهواتف */
+
+    /* عرض عنصر "اسحب لرؤية المزيد" فقط على الشاشات الصغيرة */
     @media (max-width: 767px) {
         .navbar {
-            flex-direction: column;
+            flex-direction: column; /* تغيير اتجاه العناصر إلى عمودي */
             align-items: flex-start;
         }
         .menu-header {
@@ -133,10 +116,19 @@
             padding: 10px 15px;
             display: inline-block;
         }
-        .hamburger {
+        /* إظهار عنصر "اسحب لرؤية المزيد" على الشاشات الصغيرة */
+        .swipe-text {
+            display: block;
+            margin: 10px 0 0 0; /* إضافة مسافة أعلى لتجنب التداخل مع الأزرار */
+        }
+    }
+    /* إخفاء عنصر "اسحب لرؤية المزيد" على الشاشات الكبيرة */
+    @media (min-width: 768px) {
+        .swipe-text {
             display: none;
         }
     }
+
     /* تحسينات إضافية للتمرير الأفقي */
     .menu::-webkit-scrollbar {
         height: 8px;
@@ -152,7 +144,7 @@
     }
     /* المحتوى الرئيسي */
     .container {
-        padding: 150px 20px 20px 20px; /* زيادة padding-top لتجنب تغطية الشريط والعبارة */
+        padding: 150px 20px 20px 20px; /* زيادة padding-top لتجنب تغطية الشريط والعنصر الجديد */
         max-width: 1200px;
         margin: 0 auto;
         background-color: #fff;
@@ -287,7 +279,6 @@
     }
 
 </style>
-
 
 </head>
 <body>
