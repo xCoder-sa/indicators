@@ -25,6 +25,7 @@
         width: 100%;
         top: 0;
         z-index: 1000;
+        flex-wrap: wrap; /* السماح بالتفاف العناصر */
     }
     .navbar .logo {
         font-size: 24px;
@@ -47,6 +48,8 @@
         margin: 0;
         padding: 0;
         position: relative; /* لإظهار السهم بشكل صحيح */
+        flex-wrap: wrap;
+        width: 100%;
     }
     .navbar .menu li {
         margin-left: 20px;
@@ -91,8 +94,11 @@
             background-color: #3498db;
             padding: 5px 10px;
             border-radius: 4px;
-            display: inline-block;  /* لضمان عرض العبارة بشكل صحيح ضمن تدفق العناصر */
+            display: block;  /* جعلها تظهر كصف منفصل */
+            text-align: right; /* محاذاة النص لليمين */
             pointer-events: none; /* السماح بالنقر على العناصر الأخرى بدون تداخل */
+            margin-bottom: 10px; /* مساحة بين العبارة والعناصر الأخرى */
+            width: 100%; /* أخذ عرض كامل */
         }
     }
     
@@ -1011,7 +1017,7 @@
             `;
         } else if (formName === 'major_event') {
             formHTML = `
-               <h2 class="form-title">نموذج حدث جسيم<</h2>
+               <h2 class="form-title">نموذج حدث جسيم</h2>
             <p class="form-description">يرسل من قبل  قائد المنقطة او من قبل كبير المسعفين المناوب</p>
                 <div class="form-section">
                     <label for="sector">القطاع:</label>
@@ -1106,7 +1112,8 @@
             `;
         } else if (formName === 'support_request') {
             formHTML = `
-                <h2>طلب تفعيل خطة المساندة والدعم المتبادل</h2>
+               <h2 class="form-title"طلب تفعيل خطة المساندة والدعم المتبادل</h2>
+            <p class="form-description">يرسل من قبل كبير المسعفين المناوب قبل طلب التدعيم</p>
                 <div class="form-section">
                     <label for="sector">القطاع:</label>
                     <select id="sector" onchange="toggleOtherSectorInput()">
@@ -1161,7 +1168,8 @@
             `;
         } else if (formName === 'support_activation') {
             formHTML = `
-                <h2>نموذج قبول تفعيل خطة المساندة والدعم المتبادل</h2>
+               <h2 class="form-title"نموذج قبول تفعيل خطة المساندة والدعم المتبادل</h2>
+            <p class="form-description">يرسل من قبل قائد المنطقة</p>
                 <div class="form-section">
                     <label for="support_status">حالة الدعم:</label>
                     <select id="support_status">
