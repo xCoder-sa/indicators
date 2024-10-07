@@ -1043,6 +1043,15 @@
 
                     <label for="children_count">عدد الأطفال:</label>
                     <input type="text" id="children_count">
+		    
+                    <label for="transferd_victimes">الحالات المنقولة:</label>
+                    <input type="text" id="transferd_victimes">
+			
+                    <label for="non_transferd_victimes">الحالات الغير منقولة:</label>
+                    <input type="text" id="non_transferd_victimes">
+			
+			<label for="total_victimes">إجمالي الحالات:</label>
+			<input type="text" id="total_victimes">
 
                     <label for="central_operations_notification">إبلاغ العمليات المركزية:</label>
                     <input type="checkbox" id="central_operations_yes"> نعم
@@ -1424,6 +1433,9 @@ function getFormData(formName) {
         data.non_saudi_nationality = document.getElementById('non_saudi_nationality')?.value || '';
         data.unknown_nationality = document.getElementById('unknown_nationality')?.value || '';
         data.children_count = document.getElementById('children_count')?.value || '';
+	data.transferred_victimes = document.getElementById('transferd_victimes')?.value || '';
+	data.non_transferred_victimes = document.getElementById('non_transferd_victimes')?.value || '';
+	data.total_victimes = document.getElementById('total_victimes')?.value || '';
         data.central_operations_yes = document.getElementById('central_operations_yes').checked;
         data.central_operations_no = document.getElementById('central_operations_no').checked;
         data.joint_operations_yes = document.getElementById('joint_operations_yes').checked;
@@ -1604,15 +1616,18 @@ function sendWhatsAppMessage(formName) {
         formText += `وزارة الصحة: ${document.getElementById('health_ministry').value}\n`;
         formText += `جهات أخرى: ${document.getElementById('other_authorities').value}\n`;
         formText += `\n=== فرز الإصابات ===\n`;
-        formText += `وفيات \u26AB: ${document.getElementById('deaths').value}\n`; // ⚫
-        formText += `حرجة \u1F534: ${document.getElementById('critical_injuries').value}\n`; // 🔴
-        formText += `متوسطة \u1F7E1: ${document.getElementById('moderate_injuries').value}\n`; // 🟡
-        formText += `طفيفة \u1F7E2: ${document.getElementById('minor_injuries').value}\n`; // 🟢
+        formText += `وفيات: ${document.getElementById('deaths').value}\n`;
+        formText += `حرجة: ${document.getElementById('critical_injuries').value}\n`;
+        formText += `متوسطة: ${document.getElementById('moderate_injuries').value}\n`;
+        formText += `طفيفة: ${document.getElementById('minor_injuries').value}\n`;
         formText += `\n=== الجنسيات ===\n`;
         formText += `سعودي: ${document.getElementById('saudi_nationality').value}\n`;
         formText += `غير سعودي: ${document.getElementById('non_saudi_nationality').value}\n`;
         formText += `غير معروف: ${document.getElementById('unknown_nationality').value}\n`;
         formText += `عدد الأطفال: ${document.getElementById('children_count').value}\n`;
+        formText += `الحالات المنقولة: ${document.getElementById('transferd_victimes').value}\n`;
+        formText += `الحالات الغير منقولة: ${document.getElementById('non_transferd_victimes').value}\n`;
+        formText += `إجمالي الحالات: ${document.getElementById('total_victimes').value}\n`;
         formText += `إبلاغ العمليات المركزية: ${document.getElementById('central_operations_yes').checked ? 'نعم' : 'لا'}\n`;
         formText += `إبلاغ العمليات المشتركة: ${document.getElementById('joint_operations_yes').checked ? 'نعم' : 'لا'}\n`;
         formText += `انتهاء الحدث: ${document.getElementById('end_hour').value}:${document.getElementById('end_minute').value}\n`;
