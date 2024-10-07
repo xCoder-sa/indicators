@@ -258,17 +258,21 @@
 	        padding: 6px; /* تقليل الحشو الداخلي لتوفير مساحة */
 	    }
 	
+	.form-description {
+	    display: inline-block; /* تجعل الخلفية تتبع حجم النص */
+	    background-color: #d3d3d3; /* اللون الرصاصي للخلفية */
+	    padding: 10px; /* حشوة داخلية للنص */
+	    border-radius: 4px; /* زوايا مستديرة */
+	    text-align: center; /* توسيط النص داخل الفقرة */
+	    margin: 20px auto; /* توسيط العنصر على الشاشة */
+	    max-width: 90%; /* عرض مناسب على الشاشات الصغيرة */
+	}
+	
+	@media (max-width: 767px) {
 	    .form-description {
-    display: inline-block; /* يجعل الخلفية تغلف النص فقط */
-    background-color: #d3d3d3; /* اللون الرصاصي للخلفية */
-    border: 1px solid #a9a9a9; /* حدود رمادية حول النص */
-    padding: 10px; /* حشوة داخلية لتحسين المظهر */
-    border-radius: 4px; /* زوايا مستديرة للحدود */
-    text-align: center; /* توسيط النص داخل الفقرة */
-    margin: 20px auto 0 auto; /* توسيط الفقرة أفقيًا وإضافة مسافة علوية */
-    max-width: 90%; /* منع تمدد الفقرة على الشاشات الصغيرة */
-}
-
+	        margin-top: 60px; /* إضافة مسافة علوية إضافية لشاشات الهواتف لتجنب تغطية النص بالشريط العلوي */
+	    }
+	}
 
     </style>
 </head>
