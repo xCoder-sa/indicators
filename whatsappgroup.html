@@ -1871,9 +1871,11 @@ document.addEventListener("DOMContentLoaded", function () {
     selectCurrentTime(); // تحديد التوقيت الحالي تلقائياً
 });
 
-    function updateTotalTeams() {
-        var sector = document.getElementById("sector").value;
-        var totalTeamsInput = document.getElementById("total_teams");
+function updateTotalTeams(formName) {
+    // تحقق من أن النموذج هو نموذج كبار المسعفين فقط
+    if (formName === 'senior_paramedic') {
+        var sector = document.querySelector('#senior_paramedic_form #sector').value;
+        var totalTeamsInput = document.querySelector('#senior_paramedic_form #total_teams');
 
         var teams = {
             "الوسط": 8,
@@ -1885,7 +1887,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         totalTeamsInput.value = teams[sector];
     }
-    
+}
+
 </script>
 
 </body>
