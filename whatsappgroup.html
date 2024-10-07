@@ -25,7 +25,6 @@
         width: 100%;
         top: 0;
         z-index: 1000;
-        flex-wrap: wrap; /* السماح بالتفاف العناصر */
     }
     .navbar .logo {
         font-size: 24px;
@@ -48,8 +47,6 @@
         margin: 0;
         padding: 0;
         position: relative; /* لإظهار السهم بشكل صحيح */
-        flex-wrap: wrap;
-        width: 100%;
     }
     .navbar .menu li {
         margin-left: 20px;
@@ -86,25 +83,24 @@
 
     /* سهم يشير إلى إمكانية السحب ويظهر فقط على الشاشات الصغيرة */
     @media (max-width: 767px) {
-        .navbar .menu::before {
+        .navbar .menu::after {
             content: '⟵ اسحب لرؤية المزيد';
             color: #fff;
             font-size: 14px;
-            margin-right: 10px; /* مسافة بين العبارة وباقي العناصر */
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
             background-color: #3498db;
             padding: 5px 10px;
             border-radius: 4px;
-            display: block;  /* جعلها تظهر كصف منفصل */
-            text-align: right; /* محاذاة النص لليمين */
-            pointer-events: none; /* السماح بالنقر على العناصر الأخرى بدون تداخل */
-            margin-bottom: 10px; /* مساحة بين العبارة والعناصر الأخرى */
-            width: 100%; /* أخذ عرض كامل */
+            display: block;  /* تأكيد العرض على الشاشات الصغيرة */
         }
     }
     
     /* إخفاء السهم على الشاشات الكبيرة */
     @media (min-width: 768px) {
-        .navbar .menu::before {
+        .navbar .menu::after {
             display: none;
         }
     }
@@ -158,7 +154,7 @@
     }
     /* المحتوى الرئيسي */
     .container {
-        padding: 160px 20px 20px 20px; /* زيادة padding-top لتجنب تغطية الشريط والعبارة */
+        padding: 120px 20px 20px 20px; /* زيادة padding-top لتجنب تغطية الشريط */
         max-width: 1200px;
         margin: 0 auto;
         background-color: #fff;
@@ -177,12 +173,11 @@
         background-color: #e0e0e0; /* خلفية رمادية */
         color: #3498db; /* لون النص أزرق مطابق للتصميم */
         font-size: 16px;
-        margin: 20px auto 30px auto; /* حشوة أعلاه وأسفله ومركزية */
+        margin-bottom: 30px;
         text-align: center;
         padding: 10px 15px; /* حشوة داخلية حول النص */
         border-radius: 5px; /* حواف مدورة */
-        display: block; /* لجعل الخلفية تمتد وفقًا لمحتوى النص */
-        max-width: 600px; /* تحديد أقصى عرض لتجنب تمدد الخلفية بشكل مفرط */
+        display: inline-block; /* لضمان تغطية خلفية النص بشكل مناسب */
     }
     /* تحسينات إضافية للعنوان الرئيسي الافتراضي */
     .container h2 {
@@ -288,7 +283,6 @@
         .form-description {
             font-size: 14px;
             padding: 8px 12px; /* تعديل الحشوة لتناسب الشاشات الصغيرة */
-            max-width: 90%; /* زيادة الحد الأقصى للعرض على الشاشات الصغيرة */
         }
     }
 
