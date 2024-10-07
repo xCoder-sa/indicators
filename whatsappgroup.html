@@ -840,7 +840,6 @@
                     <input type="text" id="total_reports">
 		    
                     <label for="related_reports">البلاغات:</label>
-		    <p>احسب زمن الاستجابة من الرد الى الوصول للموقع </p>
                     <div id="reports-container">
                         <div class="input-pair">
                             <input type="text" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
@@ -851,6 +850,7 @@
                                 <option value="برافو">برافو</option>
                             </select>
                 	 <input type="text" placeholder="زمن الاستجابة" class="waiting_time" style="width: 120px;">
+		  		    <p>احسب زمن الاستجابة من الرد الى الوصول للموقع</p>
                         </div>
                     </div>
                     <button type="button" onclick="relatedreports()">إضافة بلاغ آخر</button>
@@ -867,9 +867,11 @@
                     <label for="units_notes">نقاط اسعافية مكشوفة:</label>
                     <input type="text" id="units_notes">
                     <label for="outsider_notes">ملاحظات عامه:</label>
-                    <input type="text" id="outsider_notes">
+                    <textarea id="outsider_notes" rows="4"></textarea>
+
                     <label for="senior_paramedic_name"> كبير المسعفين المناوب:</label>
-                    <textarea id="senior_paramedic_name" rows="4"></textarea>
+                    <input type="text" id="senior_paramedic_name">
+
                 </div>
                 <button onclick="sendWhatsAppMessage('senior_paramedic_outside')">إرسال النموذج بالواتساب</button>
             `;
