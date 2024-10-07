@@ -154,7 +154,7 @@
     }
     /* المحتوى الرئيسي */
     .container {
-        padding: 100px 20px 20px 20px; /* زيادة padding-top لتجنب تغطية الشريط */
+        padding: 120px 20px 20px 20px; /* زيادة padding-top لتجنب تغطية الشريط */
         max-width: 1200px;
         margin: 0 auto;
         background-color: #fff;
@@ -170,10 +170,14 @@
         text-align: center;
     }
     .form-description {
-        color: #555555;
+        background-color: #e0e0e0; /* خلفية رمادية */
+        color: #3498db; /* لون النص أزرق مطابق للتصميم */
         font-size: 16px;
         margin-bottom: 30px;
         text-align: center;
+        padding: 10px 15px; /* حشوة داخلية حول النص */
+        border-radius: 5px; /* حواف مدورة */
+        display: inline-block; /* لضمان تغطية خلفية النص بشكل مناسب */
     }
     /* تحسينات إضافية للعنوان الرئيسي الافتراضي */
     .container h2 {
@@ -278,6 +282,7 @@
         }
         .form-description {
             font-size: 14px;
+            padding: 8px 12px; /* تعديل الحشوة لتناسب الشاشات الصغيرة */
         }
     }
 
