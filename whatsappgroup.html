@@ -884,6 +884,7 @@
     `;
 	} else if (formName === 'senior_paramedic_outside') {
             formHTML = `
+	    		<div class="form-section">
 		<h2>نموذج كبار المسعفين (خارجي)</h2>
 		<p>نموذج كبار المسعفين للقطاعات الخارجية يرسل كل 6 ساعات من قبل كبير المسعفين</p>
                 <div class="form-section">
@@ -917,12 +918,18 @@
                         <option value="21:00 إلى 03:00">21:00 إلى 03:00</option>
                         <option value="03:00 إلى 09:00">03:00 إلى 09:00</option>
                     </select>
-
+	</div>
+ 		<div class="form-section">
+		<div class="input-row">
+		    <div class="input-small">
                     <label for="working_teams">عدد الفرق العاملة:</label>
                     <input type="text" id="working_teams">
-
+		    
+		    <div class="input-small">
                     <label for="total_teams">من أصل:</label>
                     <input type="text" id="total_teams">
+	</div>
+	</div>
 
                           <div class="input-row">
 			<div class="input-small">
