@@ -1947,32 +1947,7 @@ document.addEventListener("DOMContentLoaded", function () {
     selectCurrentTime();  
 });
 
-    function toggleFieldsBasedOnSupportStatus() {
-                const supportStatus = document.getElementById('support_status').value;
-                const supportDetails = document.getElementById('supportDetails');
-                
-                if (supportStatus === 'الرفض') {
-                    supportDetails.style.display = 'none'; // إخفاء الحقول عند الرفض
-                } else {
-                    supportDetails.style.display = 'block'; // إظهار الحقول عند الموافقة
-                }
-            }
-
-            // استدعاء الدالة لتحديث العرض فورًا عند تحميل الصفحة
-            window.onload = toggleFieldsBasedOnSupportStatus;
-
-function calculateTotal() {
-    const sectorWest = parseInt(document.getElementById('sector_west').value) || 0;
-    const sectorEast = parseInt(document.getElementById('sector_east').value) || 0;
-    const sectorCentral = parseInt(document.getElementById('sector_central').value) || 0;
-    const sectorNorth = parseInt(document.getElementById('sector_north').value) || 0;
-    const sectorSouth = parseInt(document.getElementById('sector_south').value) || 0;
-
-    const total = sectorWest + sectorEast + sectorCentral + sectorNorth + sectorSouth;
-
-    document.getElementById('total_rapid_response_reports').value = total;
-}
-	    
+    // فنكشن حساب إجمالي مركبات منطقة الرياض  
 function calculateWorkingVehiclesTotals() {
     // حساب إجمالي مركبات القطاعات الداخلية العاملة
     const internal_vehicles_total = 
@@ -1999,19 +1974,13 @@ function calculateWorkingVehiclesTotals() {
         (parseInt(document.getElementById('afif_sector_vehicles_work').value) || 0) +
         (parseInt(document.getElementById('wadi_al_dawasir_sector_vehicles_work').value) || 0);
 
-    // حساب إجمالي مركبات منطقة الرياض العاملة
-    const total_vehicles_riyadh = internal_vehicles_total + external_vehicles_total;
+    // حساب إجمالي المركبات العاملة في منطقة الرياض
+    const total_working_vehicles_riyadh = internal_vehicles_total + external_vehicles_total;
 
-    // عرض الإجماليات في المربعات
-    document.getElementById('internal_vehicles_total').value = internal_vehicles_total;
-    document.getElementById('external_vehicles_total').value = external_vehicles_total;
-    document.getElementById('total_vehicles_riyadh').value = total_vehicles_riyadh;
+    // عرض الإجماليات في الحقول المناسبة
+    document.getElementById('total_working_vehicles_riyadh').value = total_working_vehicles_riyadh;
 }
 
-// إضافة استدعاء حساب الإجماليات عند إدخال البيانات
-document.querySelectorAll('input[type="text"]').forEach(input => {
-    input.addEventListener('input', calculateWorkingVehiclesTotals);
-});
 
 </script>
 
