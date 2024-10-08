@@ -1182,11 +1182,11 @@
 		<center><h3>يرسل من قبل قائد المنطقة</h3></center>
 
                 <div class="form-section">
-                    <label for="support_status">حالة الدعم:</label>
-                    <select id="support_status">
-                        <option value="الموافقة">الموافقة</option>
-                        <option value="الرفض">الرفض</option>
-                    </select>
+		<label for="support_status">حالة الدعم:</label>
+		<select id="support_status" onchange="toggleFieldsBasedOnSupportStatus()">
+		    <option value="الموافقة">الموافقة</option>
+		    <option value="الرفض">الرفض</option>
+		</select>
 
                     <label for="support_reasons">أسباب القبول أو الرفض:</label>
                     <textarea id="support_reasons" rows="4"></textarea>
@@ -1541,22 +1541,26 @@ function getFormData(formName) {
 
         data.outsider_notes = document.getElementById('outsider_notes')?.value || '';
         data.senior_paramedic_name = document.getElementById('senior_paramedic_name')?.value || '';
-    } else if (formName === 'support_activation') {
-        // جمع بيانات نموذج قبول تفعيل خطة المساندة والدعم المتبادل
-        data.support_status = document.getElementById('support_status')?.value || '';
-        data.support_reasons = document.getElementById('support_reasons')?.value || '';
-        data.support_sector = document.getElementById('support_sector')?.value || '';
-        data.other_support_sector = document.getElementById('other_support_sector')?.value || '';
-        data.supported_sector = document.getElementById('supported_sector')?.value || '';
-        data.other_supported_sector = document.getElementById('other_supported_sector')?.value || '';
-        data.dispatch_hour = document.getElementById('dispatch_hour')?.value || '';
-        data.dispatch_minute = document.getElementById('dispatch_minute')?.value || '';
-        data.arrival_hour = document.getElementById('arrival_hour')?.value || '';
-        data.arrival_minute = document.getElementById('arrival_minute')?.value || '';
-        data.support_teams_count = document.getElementById('support_teams_count')?.value || '';
-        data.end_hour = document.getElementById('end_hour')?.value || '';
-        data.end_minute = document.getElementById('end_minute')?.value || '';
-        data.region_leader_name = document.getElementById('region_leader_name')?.value || '';
+	} else if (formName === 'support_activation') {
+	    data.support_status = document.getElementById('support_status').value;
+	    data.support_reasons = document.getElementById('support_reasons').value;
+	    data.region_leader_name = document.getElementById('region_leader_name').value;
+	
+	    if (data.support_status === 'الموافقة') {
+	        data.support_sector = document.getElementById('support_sector').value || '';
+	        data.other_support_sector = document.getElementById('other_support_sector').value || '';
+	        data.supported_sector = document.getElementById('supported_sector').value || '';
+	        data.other_supported_sector = document.getElementById('other_supported_sector').value || '';
+	        data.dispatch_hour = document.getElementById('dispatch_hour').value || '';
+	        data.dispatch_minute = document.getElementById('dispatch_minute').value || '';
+	        data.arrival_hour = document.getElementById('arrival_hour').value || '';
+	        data.arrival_minute = document.getElementById('arrival_minute').value || '';
+	        data.support_teams_count = document.getElementById('support_teams_count').value || '';
+	        data.end_hour = document.getElementById('end_hour').value || '';
+	        data.end_minute = document.getElementById('end_minute').value || '';
+	    }
+	}
+
   } else if (formName === 'rapid_response_reports') {
         // جمع بيانات نموذج "بلاغات التدخل السريع"
         data.sector_west = document.getElementById('sector_west')?.value || '';
@@ -1706,17 +1710,22 @@ function sendWhatsAppMessage(formName) {
         });
 
         formText += `\nاسم كبير المسعفين: ${document.getElementById('senior_paramedic_name').value}\n`;
-    } else if (formName === 'support_activation') {
-        formText += `=== نموذج قبول تفعيل خطة المساندة والدعم المتبادل ===\n\n`;
-        formText += `حالة الدعم: ${document.getElementById('support_status').value}\n`;
-        formText += `أسباب القبول أو الرفض: ${document.getElementById('support_reasons').value}\n`;
-        formText += `القطاع الداعم: ${document.getElementById('support_sector').value}\n`;
-        formText += `القطاع المدعوم: ${document.getElementById('supported_sector').value}\n`;
-        formText += `توقيت تحريك الدعم: ${document.getElementById('dispatch_hour').value}:${document.getElementById('dispatch_minute').value}\n`;
-        formText += `توقيت وصول الدعم: ${document.getElementById('arrival_hour').value}:${document.getElementById('arrival_minute').value}\n`;
-        formText += `عدد الفرق الداعمة: ${document.getElementById('support_teams_count').value}\n`;
-        formText += `توقيت انتهاء الدعم: ${document.getElementById('end_hour').value}:${document.getElementById('end_minute').value}\n`;
-        formText += `اسم قائد المنطقة: ${document.getElementById('region_leader_name').value}\n`;
+	} else if (formName === 'support_activation') {
+	    formText += `=== نموذج قبول تفعيل خطة المساندة والدعم المتبادل ===\n\n`;
+	    formText += `حالة الدعم: ${document.getElementById('support_status').value}\n`;
+	    formText += `أسباب القبول أو الرفض: ${document.getElementById('support_reasons').value}\n`;
+	    formText += `اسم قائد المنطقة: ${document.getElementById('region_leader_name').value}\n`;
+	
+	    if (document.getElementById('support_status').value === 'الموافقة') {
+	        formText += `القطاع الداعم: ${document.getElementById('support_sector').value}\n`;
+	        formText += `القطاع المدعوم: ${document.getElementById('supported_sector').value}\n`;
+	        formText += `توقيت تحريك الدعم: ${document.getElementById('dispatch_hour').value}:${document.getElementById('dispatch_minute').value}\n`;
+	        formText += `توقيت وصول الدعم: ${document.getElementById('arrival_hour').value}:${document.getElementById('arrival_minute').value}\n`;
+	        formText += `عدد الفرق الداعمة: ${document.getElementById('support_teams_count').value}\n`;
+	        formText += `توقيت انتهاء الدعم: ${document.getElementById('end_hour').value}:${document.getElementById('end_minute').value}\n`;
+	    }
+	}
+
    } else if (formName === 'senior_paramedic_outside') {
         formText += `===  نموذج كبار المسعفين خارجي ===\n\n`;
         if (document.getElementById('sector').value !== 'other') {
@@ -1901,6 +1910,22 @@ document.addEventListener("DOMContentLoaded", function () {
     selectCurrentTime();  
 });
 
+function toggleFieldsBasedOnSupportStatus() {
+    const supportStatus = document.getElementById('support_status').value;
+    const otherFields = document.querySelectorAll('#support_sector, #other_support_sector, #supported_sector, #other_supported_sector, #dispatch_hour, #dispatch_minute, #arrival_hour, #arrival_minute, #support_teams_count, #end_hour, #end_minute');
+    const supportReasonsField = document.getElementById('support_reasons');
+    const regionLeaderField = document.getElementById('region_leader_name');
+
+    if (supportStatus === 'الرفض') {
+        // إخفاء جميع الحقول عدا الأسباب واسم قائد المنطقة
+        otherFields.forEach(field => field.closest('.form-section').style.display = 'none');
+        supportReasonsField.closest('.form-section').style.display = 'block';
+        regionLeaderField.closest('.form-section').style.display = 'block';
+    } else {
+        // إظهار جميع الحقول
+        otherFields.forEach(field => field.closest('.form-section').style.display = 'block');
+    }
+}
 
 </script>
 
