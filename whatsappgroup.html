@@ -2008,6 +2008,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById('total_rapid_response_reports').value = total;
 }
+
+    function toggleFieldsBasedOnSupportStatus() {
+        const supportStatus = document.getElementById('support_status').value;
+        const supportDetails = document.getElementById('supportDetails');
+        
+        if (supportStatus === 'الرفض') {
+            supportDetails.style.display = 'none'; // إخفاء الحقول عند الرفض
+        } else {
+            supportDetails.style.display = 'block'; // إظهار الحقول عند الموافقة
+        }
+    }
+
+    // استدعاء الدالة عند تحميل الصفحة
+    window.onload = function() {
+        toggleFieldsBasedOnSupportStatus(); // لضمان تحديث العرض بناءً على القيمة الحالية لحالة الدعم
+    };
 </script>
 
 </body>
