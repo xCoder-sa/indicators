@@ -1967,52 +1967,34 @@ function calculateTotal() {
 
     document.getElementById('total_rapid_response_reports').value = total;
 }
-function calculateTotals() {
-    // حساب إجمالي مركبات القطاعات الداخلية
+	    
+function calculateWorkingVehiclesTotals() {
+    // حساب إجمالي مركبات القطاعات الداخلية العاملة
     const internal_vehicles_total = 
         (parseInt(document.getElementById('center_sector_vehicles_work').value) || 0) +
-        (parseInt(document.getElementById('center_sector_vehicles_broken').value) || 0) +
         (parseInt(document.getElementById('east_sector_vehicles_work').value) || 0) +
-        (parseInt(document.getElementById('east_sector_vehicles_broken').value) || 0) +
         (parseInt(document.getElementById('west_sector_vehicles_work').value) || 0) +
-        (parseInt(document.getElementById('west_sector_vehicles_broken').value) || 0) +
         (parseInt(document.getElementById('north_sector_vehicles_work').value) || 0) +
-        (parseInt(document.getElementById('north_sector_vehicles_broken').value) || 0) +
-        (parseInt(document.getElementById('south_sector_vehicles_work').value) || 0) +
-        (parseInt(document.getElementById('south_sector_vehicles_broken').value) || 0);
+        (parseInt(document.getElementById('south_sector_vehicles_work').value) || 0);
 
-    // حساب إجمالي مركبات القطاعات الخارجية
+    // حساب إجمالي مركبات القطاعات الخارجية العاملة
     const external_vehicles_total = 
         (parseInt(document.getElementById('ramah_sector_vehicles_work').value) || 0) +
-        (parseInt(document.getElementById('ramah_sector_vehicles_broken').value) || 0) +
         (parseInt(document.getElementById('al_aflag_sector_vehicles_work').value) || 0) +
-        (parseInt(document.getElementById('al_aflag_sector_vehicles_broken').value) || 0) +
         (parseInt(document.getElementById('al_kharj_sector_vehicles_work').value) || 0) +
-        (parseInt(document.getElementById('al_kharj_sector_vehicles_broken').value) || 0) +
         (parseInt(document.getElementById('al_dariya_sector_vehicles_work').value) || 0) +
-        (parseInt(document.getElementById('al_dariya_sector_vehicles_broken').value) || 0) +
         (parseInt(document.getElementById('al_dawadmi_sector_vehicles_work').value) || 0) +
-        (parseInt(document.getElementById('al_dawadmi_sector_vehicles_broken').value) || 0) +
         (parseInt(document.getElementById('al_zulfi_sector_vehicles_work').value) || 0) +
-        (parseInt(document.getElementById('al_zulfi_sector_vehicles_broken').value) || 0) +
         (parseInt(document.getElementById('al_ghat_sector_vehicles_work').value) || 0) +
-        (parseInt(document.getElementById('al_ghat_sector_vehicles_broken').value) || 0) +
         (parseInt(document.getElementById('al_quwayiyah_sector_vehicles_work').value) || 0) +
-        (parseInt(document.getElementById('al_quwayiyah_sector_vehicles_broken').value) || 0) +
         (parseInt(document.getElementById('al_majmaah_sector_vehicles_work').value) || 0) +
-        (parseInt(document.getElementById('al_majmaah_sector_vehicles_broken').value) || 0) +
         (parseInt(document.getElementById('al_muzahimiyah_sector_vehicles_work').value) || 0) +
-        (parseInt(document.getElementById('al_muzahimiyah_sector_vehicles_broken').value) || 0) +
         (parseInt(document.getElementById('hawtat_banee_tamim_sector_vehicles_work').value) || 0) +
-        (parseInt(document.getElementById('hawtat_banee_tamim_sector_vehicles_broken').value) || 0) +
         (parseInt(document.getElementById('shaqra_sector_vehicles_work').value) || 0) +
-        (parseInt(document.getElementById('shaqra_sector_vehicles_broken').value) || 0) +
         (parseInt(document.getElementById('afif_sector_vehicles_work').value) || 0) +
-        (parseInt(document.getElementById('afif_sector_vehicles_broken').value) || 0) +
-        (parseInt(document.getElementById('wadi_al_dawasir_sector_vehicles_work').value) || 0) +
-        (parseInt(document.getElementById('wadi_al_dawasir_sector_vehicles_broken').value) || 0);
+        (parseInt(document.getElementById('wadi_al_dawasir_sector_vehicles_work').value) || 0);
 
-    // حساب إجمالي مركبات منطقة الرياض
+    // حساب إجمالي مركبات منطقة الرياض العاملة
     const total_vehicles_riyadh = internal_vehicles_total + external_vehicles_total;
 
     // عرض الإجماليات في المربعات
@@ -2023,8 +2005,9 @@ function calculateTotals() {
 
 // إضافة استدعاء حساب الإجماليات عند إدخال البيانات
 document.querySelectorAll('input[type="text"]').forEach(input => {
-    input.addEventListener('input', calculateTotals);
+    input.addEventListener('input', calculateWorkingVehiclesTotals);
 });
+
 
 </script>
 
