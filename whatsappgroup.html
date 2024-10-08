@@ -766,16 +766,17 @@
 			</div>
                 </div>
 		    <!-- حساب الإجماليات -->
-		    <div class="form-section">
-		        <label for="internal_vehicles_total">إجمالي مركبات القطاعات الداخلية:</label>
-		        <input type="number" id="internal_vehicles_total" readonly style="background-color: #e0e0e0;">
+		<div class="form-section">
+		    <label for="internal_vehicles_total">إجمالي المركبات الداخلية العاملة:</label>
+		    <input type="number" id="internal_vehicles_total" readonly style="background-color: #e0e0e0;">
 		
-		        <label for="external_vehicles_total">إجمالي مركبات القطاعات الخارجية:</label>
-		        <input type="number" id="external_vehicles_total" readonly style="background-color: #e0e0e0;">
+		    <label for="external_vehicles_total">إجمالي المركبات الخارجية العاملة:</label>
+		    <input type="number" id="external_vehicles_total" readonly style="background-color: #e0e0e0;">
 		
-		        <label for="total_vehicles_riyadh">إجمالي مركبات منطقة الرياض:</label>
-		        <input type="number" id="total_vehicles_riyadh" readonly style="background-color: #e0e0e0;">
-		    </div>
+		    <label for="total_vehicles_riyadh">إجمالي المركبات العاملة في منطقة الرياض:</label>
+		    <input type="number" id="total_vehicles_riyadh" readonly style="background-color: #e0e0e0;">
+		</div>
+
 
 		<label for="updateattendance">اصدار التحديث</label>
 		<select id="updateattendance" onchange="toggleOtherSectorInput()">
@@ -1863,9 +1864,9 @@ function sendWhatsAppMessage(formName) {
 		formText += `عدد مركبات وادي الدواسر العاملة : ${document.getElementById('wadi_al_dawasir_sector_vehicles_work').value}\n`;
 		formText += `عدد مركبات وادي الدواسر المتعطلة : ${document.getElementById('wadi_al_dawasir_sector_vehicles_broken').value}\n`;        
 		formText += `\n=== إحصائيات المنطقة ===\n`;
-		formText += `إجمالي مركبات القطاعات الداخلية: ${document.getElementById('internal_vehicles_total').value}\n`;
-		formText += `إجمالي مركبات القطاعات الخارجية: ${document.getElementById('external_vehicles_total').value}\n`;
-		formText += `إجمالي مركبات منطقة الرياض: ${document.getElementById('total_vehicles_riyadh').value}\n`;
+		formText += `إجمالي المركبات الداخلية العاملة: ${document.getElementById('internal_vehicles_total').value}\n`;
+		formText += `إجمالي المركبات الخارجية العاملة: ${document.getElementById('external_vehicles_total').value}\n`;
+		formText += `إجمالي المركبات العاملة في منطقة الرياض: ${document.getElementById('total_vehicles_riyadh').value}\n`;
 	        formText += `نسخة التحديث : ${document.getElementById('updateattendance').value}\n`;
 	        formText += `اسم قائد المنطقة : ${document.getElementById('senior_paramedic_attendance').value}\n`;
         } 
