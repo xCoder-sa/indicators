@@ -438,7 +438,7 @@
                     <h2>الطلب</h2>
                         <div class="input-row">
                         <div class="input-small">
-                    <label for="eco_reports">عدد بلاغات إنعاش إيكو:</label>
+                    <label for="eco_reports">عدد بلاغات إيكو:</label>
                     <input type="text" id="eco_reports">
                         </div>
                         <div class="input-small">
@@ -469,7 +469,7 @@
                         <div class="input-row">
                         <div class="input-small">
                     <label for="total_reports">إجمالي بلاغات القطاع:</label>
-                    <input type="text" id="total_reports">
+		<input type="text" id="total_reports" readonly style="background-color: #e0e0e0;">
                         </div>
                     </div>
 		    
@@ -2052,6 +2052,32 @@ document.addEventListener("DOMContentLoaded", function () {
     window.onload = function() {
         toggleFieldsBasedOnSupportStatus(); // لضمان تحديث العرض بناءً على القيمة الحالية لحالة الدعم
     };
+
+// إجمالي بلاغات القطاع:
+function calculateTotalReports() {
+    // Get values from inputs and convert them to integers
+    var ecoReports = parseInt(document.getElementById('eco_reports').value) || 0;
+    var deltaReports = parseInt(document.getElementById('delta_reports').value) || 0;
+    var charlieReports = parseInt(document.getElementById('charlie_reports').value) || 0;
+    var bravoReports = parseInt(document.getElementById('bravo_reports').value) || 0;
+    var alphaReports = parseInt(document.getElementById('alpha_reports').value) || 0;
+    var omegaReports = parseInt(document.getElementById('omega_reports').value) || 0;
+    
+    // Calculate total
+    var totalReports = ecoReports + deltaReports + charlieReports + bravoReports + alphaReports + omegaReports;
+    
+    // Set the total in the readonly input field
+    document.getElementById('total_reports').value = totalReports;
+}
+
+// Add event listeners to update total when any input changes
+document.getElementById('eco_reports').addEventListener('input', calculateTotalReports);
+document.getElementById('delta_reports').addEventListener('input', calculateTotalReports);
+document.getElementById('charlie_reports').addEventListener('input', calculateTotalReports);
+document.getElementById('bravo_reports').addEventListener('input', calculateTotalReports);
+document.getElementById('alpha_reports').addEventListener('input', calculateTotalReports);
+document.getElementById('omega_reports').addEventListener('input', calculateTotalReports);
+
 </script>
 
 </body>
