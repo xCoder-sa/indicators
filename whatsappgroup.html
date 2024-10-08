@@ -766,7 +766,8 @@
 		        <input type="text" id="wadi_al_dawasir_sector_vehicles_broken">
 		    </div>
 		</div>
-		
+
+			  <h2>إحصائيات منطقة الرياض</h2>		
 		    <!-- حساب الإجماليات -->
 		<div class="form-section">
 		    <div class="input-small">
@@ -1958,6 +1959,9 @@ function calculateWorkingVehiclesTotals() {
         (parseInt(document.getElementById('north_sector_vehicles_work').value) || 0) +
         (parseInt(document.getElementById('south_sector_vehicles_work').value) || 0);
 
+    // عرض إجمالي مركبات القطاعات الداخلية
+    document.getElementById('internal_vehicles_total').value = internal_vehicles_total;
+
     // حساب إجمالي مركبات القطاعات الخارجية العاملة
     const external_vehicles_total = 
         (parseInt(document.getElementById('ramah_sector_vehicles_work').value) || 0) +
@@ -1975,13 +1979,15 @@ function calculateWorkingVehiclesTotals() {
         (parseInt(document.getElementById('afif_sector_vehicles_work').value) || 0) +
         (parseInt(document.getElementById('wadi_al_dawasir_sector_vehicles_work').value) || 0);
 
+    // عرض إجمالي مركبات القطاعات الخارجية
+    document.getElementById('external_vehicles_total').value = external_vehicles_total;
+
     // حساب إجمالي المركبات العاملة في منطقة الرياض
     const total_working_vehicles_riyadh = internal_vehicles_total + external_vehicles_total;
 
-    // عرض الإجماليات في الحقول المناسبة
+    // عرض إجمالي مركبات منطقة الرياض
     document.getElementById('total_working_vehicles_riyadh').value = total_working_vehicles_riyadh;
 }
-
 
 </script>
 
