@@ -1128,23 +1128,36 @@
                         <option value="other">أخرى</option>
                     </select>
                     <input type="text" id="other_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
+		<div class="form-section">
+                    <div class="input-row">
+                  	  <div class="input-small">
                     <label for="report_number">رقم البلاغ:</label>
                     <input type="text" id="report_number">
-
+                 </div>
+                        <div class="input-small">
                     <label for="report_type">نوع البلاغ:</label>
                     <input type="text" id="report_type" value="إيكو">
-
+                 </div>
+                        <div class="input-small">
                     <label for="report_location">موقع البلاغ:</label>
                     <input type="text" id="report_location">
-
+             		 </div>
+              	   	</div>
+              	   </div>
+		          <div class="input-row">
+                        <div class="input-small">
                     <label for="responding_units">الوحدات المستجيبة:</label>
                     <input type="text" id="responding_units">
-
+              	   </div>
+                        <div class="input-small">
                     <label for="response_time">زمن الاستجابة (دقائق):</label>
                     <input type="text" id="response_time">
-
+             		 </div>
+              	   	</div>
+		       <div class="input-small">
                     <label for="notes">ملاحظات:</label>
                     <textarea id="notes" rows="4"></textarea>
+			</div>
                 </div>
                 <button onclick="sendWhatsAppMessage('eco_reports')">إرسال النموذج بالواتساب</button>
             `;
