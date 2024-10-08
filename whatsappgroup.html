@@ -1908,30 +1908,43 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function toggleFieldsBasedOnSupportStatus() {
     const supportStatus = document.getElementById('support_status').value;
-    
-    // تحديد العناصر التي سيتم إخفاؤها أو إظهارها
-    const sectionsToHide = document.querySelectorAll('#support_sector, #other_support_sector, #supported_sector, #other_supported_sector, #dispatch_hour, #dispatch_minute, #arrival_hour, #arrival_minute, #support_teams_count, #end_hour, #end_minute');
-    
-    const supportReasonsSection = document.getElementById('support_reasons').closest('.form-section');
-    const regionLeaderSection = document.getElementById('region_leader_name').closest('.form-section');
 
+    // العناصر التي سيتم إخفاؤها
+    const elementsToHide = [
+        'support_sector',
+        'other_support_sector',
+        'supported_sector',
+        'other_supported_sector',
+        'dispatch_hour',
+        'dispatch_minute',
+        'arrival_hour',
+        'arrival_minute',
+        'support_teams_count',
+        'end_hour',
+        'end_minute'
+    ];
+
+    // عند اختيار "الرفض"
     if (supportStatus === 'الرفض') {
-        // إخفاء الحقول الأخرى
-        sectionsToHide.forEach(section => {
-            section.closest('.form-section').style.display = 'none';
+        elementsToHide.forEach(function(id) {
+            document.getElementById(id).closest('.form-section').style.display = 'none';
         });
-
         // إظهار الحقول المطلوبة فقط
-        supportReasonsSection.style.display = 'block';
-        regionLeaderSection.style.display = 'block';
+        document.getElementById('support_reasons').closest('.form-section').style.display = 'block';
+        document.getElementById('region_leader_name').closest('.form-section').style.display = 'block';
     } else {
-        // إظهار كل الحقول
-        sectionsToHide.forEach(section => {
-            section.closest('.form-section').style.display = 'block';
+        // عند اختيار "الموافقة" إظهار جميع الحقول
+        elementsToHide.forEach(function(id) {
+            document.getElementById(id).closest('.form-section').style.display = 'block';
         });
     }
 }
 
+// استدعاء الدالة عند تغيير حالة الدعم
+document.getElementById('support_status').addEventListener('change', toggleFieldsBasedOnSupportStatus);
+
+// استدعاء الدالة في البداية لضمان العرض الصحيح
+window.onload = toggleFieldsBasedOnSupportStatus;
 
 </script>
 
