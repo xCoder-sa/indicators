@@ -1320,27 +1320,28 @@
             <textarea id="support_reasons" rows="4"></textarea>
 
             <div id="supportDetails">
-                <label for="support_sector">القطاع الداعم:</label>
-                <select id="support_sector" onchange="toggleOtherSectorInput()">
-                    <option value="الوسط">الوسط</option>
-                    <option value="الجنوب">الجنوب</option>
-                    <option value="الشرق">الشرق</option>
-                    <option value="الغرب">الغرب</option>
-                    <option value="الشمال">الشمال</option>
-                    <option value="other">أخرى</option>
-                </select>
-                <input type="text" id="other_support_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
+		 <label for="support_sector">القطاع الداعم:</label>
+		<select id="support_sector" onchange="toggleOtherSectorInput(this, 'other_support_sector')">
+		    <option value="الوسط">الوسط</option>
+		    <option value="الجنوب">الجنوب</option>
+		    <option value="الشرق">الشرق</option>
+		    <option value="الغرب">الغرب</option>
+		    <option value="الشمال">الشمال</option>
+		    <option value="other">أخرى</option>
+		</select>
+		<input type="text" id="other_support_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
+		
+		<label for="supported_sector">القطاع المدعوم:</label>
+		<select id="supported_sector" onchange="toggleOtherSectorInput(this, 'other_supported_sector')">
+		    <option value="الوسط">الوسط</option>
+		    <option value="الجنوب">الجنوب</option>
+		    <option value="الشرق">الشرق</option>
+		    <option value="الغرب">الغرب</option>
+		    <option value="الشمال">الشمال</option>
+		    <option value="other">أخرى</option>
+		</select>
+		<input type="text" id="other_supported_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
 
-                <label for="supported_sector">القطاع المدعوم:</label>
-                <select id="supported_sector" onchange="toggleOtherSectorInput()">
-                    <option value="الوسط">الوسط</option>
-                    <option value="الجنوب">الجنوب</option>
-                    <option value="الشرق">الشرق</option>
-                    <option value="الغرب">الغرب</option>
-                    <option value="الشمال">الشمال</option>
-                    <option value="other">أخرى</option>
-                </select>
-                <input type="text" id="other_supported_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
 
                 <label for="dispatch_time">توقيت تحريك الدعم (نظام 24 ساعة):</label>
                 <div class="input-row">
@@ -2003,30 +2004,9 @@ function showCopyNotification() {
 }
 
 
-    function toggleOtherSectorInput() {
-        const sectorSelect = document.getElementById("sector");
-        const otherSectorInput = document.getElementById("other_sector");
-        if (sectorSelect.value === "other") {
-            otherSectorInput.style.display = "block";
-        } else {
-            otherSectorInput.style.display = "none";
-        }
-    }
-	    
-    function toggleOtherSectorInput() {
-        const sectorSelect = document.getElementById("support_sector");
-        const otherSectorInput = document.getElementById("other_support_sector");
-        if (sectorSelect.value === "other") {
-            otherSectorInput.style.display = "block";
-        } else {
-            otherSectorInput.style.display = "none";
-        }
-    }
-	    
-    function toggleOtherSectorInput() {
-        const sectorSelect = document.getElementById("supported_sector");
-        const otherSectorInput = document.getElementById("other_supported_sector");
-        if (sectorSelect.value === "other") {
+    function toggleOtherSectorInput(selectElement, inputId) {
+        const otherSectorInput = document.getElementById(inputId);
+        if (selectElement.value === "other") {
             otherSectorInput.style.display = "block";
         } else {
             otherSectorInput.style.display = "none";
