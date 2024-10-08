@@ -1085,11 +1085,16 @@
                         <option value="لا">لا</option>
                     </select>
 
-
                     <label for="event_end">نهاية الحدث (نظام 24 ساعة):</label>
                     <div class="input-row">
                         <input type="text" id="end_hour" placeholder="الساعة" style="width: 45px;">
                         <input type="text" id="end_minute" placeholder="الدقيقة" style="width: 45px;">
+                    </div>
+                </div>
+                    <div class="input-row">
+                    <div class="input-small">
+                    <label for="senior_paramedic_name"> كبير المسعفين المناوب:</label>
+                    <input type="text" id="senior_paramedic_name">
                     </div>
                 </div>
                 <button onclick="sendWhatsAppMessage('operational_failure')">إرسال النموذج بالواتساب</button>
@@ -1569,6 +1574,7 @@ function getFormData(formName) {
         data.event_status = document.getElementById('event_status')?.value || '';
         data.end_hour = document.getElementById('end_hour')?.value || '';
         data.end_minute = document.getElementById('end_minute')?.value || '';
+        data.senior_paramedic_name = document.getElementById('senior_paramedic_name')?.value || '';
     } else if (formName === 'eco_reports') {
         // جمع بيانات نموذج بلاغات إيكو
         data.report_date = document.getElementById('report_date')?.value || '';
@@ -1773,6 +1779,7 @@ function sendWhatsAppMessage(formName) {
         formText += `التأثير على الخدمة: ${document.getElementById('service_impact').value}\n`;
         formText += `هل الحدث ما زال قائم؟: ${document.getElementById('event_status').value}\n`;
         formText += `نهاية الحدث: ${document.getElementById('end_hour').value}:${document.getElementById('end_minute').value}\n`;
+        formText += `اسم كبير المسعفين: ${document.getElementById('senior_paramedic_name').value}\n`;
     } else if (formName === 'eco_reports') {
         formText += `=== نموذج بلاغات إيكو ===\n\n`;
         if (document.getElementById('sector').value !== 'other') {
