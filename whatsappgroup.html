@@ -1029,6 +1029,10 @@
             formHTML = `
               <h2>نموذج فشل تشغيلي</h2>
 		<p>يرسل من قبل كبار المسعفين في حال وجود فشل تشغيلي</p>
+  
+                <div class="form-section">
+                          <div class="input-row">
+			<div class="input-small">
                     <label for="sector">اختر القطاع:</label>
                     <select id="sector" onchange="toggleOtherSectorInput()">
                         <option value="الوسط">الوسط</option>
@@ -1046,17 +1050,30 @@
                     <div class="input-row">
                         <input type="text" id="start_hour" placeholder="الساعة" style="width: 45px;">
                         <input type="text" id="start_minute" placeholder="الدقيقة" style="width: 45px;">
-                    </div>
-
+                      </div>
+		   </div>
+	    </div>
+     </div>
+                <div class="form-section">
+                          <div class="input-row">
+			<div class="input-small">
                     <label for="unit_failure">تعطل فرقة إسعافية:</label>
                     <input type="text" id="unit_failure">
-
+                 </div>
+                        <div class="input-small">
                     <label for="failure_type">نوع العطل:</label>
                     <input type="text" id="failure_type">
-
+                 </div>
+                        <div class="input-small">
                     <label for="report_type">نوع البلاغ:</label>
-                    <input type="text" id="report_type">
-
+		        <select class="report-type" style="width: 120px;">
+		            <option value="إيكو">إيكو</option>
+		            <option value="دلتا">دلتا</option>
+		            <option value="تشارلي">تشارلي</option>
+		            <option value="برافو">برافو</option>
+		        </select>
+	  </div>
+		   </div>
                     <label for="damages">الأضرار:</label>
                     <textarea id="damages" rows="4"></textarea>
 
