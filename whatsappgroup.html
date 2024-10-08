@@ -827,7 +827,10 @@
 
             <label for="total_rapid_response_reports">إجمالي التدخل السريع:</label>
             <input type="number" id="total_rapid_response_reports" placeholder="يظهر العدد بشكل تلقائي" readonly disabled style="background-color: #e0e0e0; color: #000; border: 1px solid #ccc; border-radius: 6px; padding: 10px;">
-        </div>
+            
+	    <label for="senior_paramedic_rapid_response_reports">قائد المنطقة المناوب :</label>
+            <input type="text" id="senior_paramedic_rapid_response_reports">
+	</div>
         <button onclick="sendWhatsAppMessage('rapid_response_reports')">إرسال النموذج بالواتساب</button>
     `;
 	} else if (formName === 'senior_paramedic_outside') {
@@ -1605,6 +1608,8 @@ function getFormData(formName) {
 	        data.support_teams_count = document.getElementById('support_teams_count').value || '';
 	        data.end_hour = document.getElementById('end_hour').value || '';
 	        data.end_minute = document.getElementById('end_minute').value || '';
+	        data.senior_paramedic_rapid_response_reports = document.getElementById('senior_paramedic_rapid_response_reports')?.value || '';
+
 } else if (formName === 'rapid_response_reports') {
     // جمع بيانات نموذج "بلاغات التدخل السريع"
     data.sector_west = document.getElementById('sector_west')?.value || '';
@@ -1814,6 +1819,7 @@ function sendWhatsAppMessage(formName) {
     formText += `قطاع عمليات الشمال: ${document.getElementById('sector_north').value}\n`;
     formText += `قطاع عمليات الجنوب: ${document.getElementById('sector_south').value}\n`;
     formText += `إجمالي التدخل السريع: ${document.getElementById('total_rapid_response_reports').value}\n`;
+    formText += `قائد المنطقة المناوب: ${document.getElementById('senior_paramedic_rapid_response_reports').value}\n`;
    } else if (formName === 'attendance') {
         formText += `=== نموذج تحضير منطقة الرياض ===\n\n`;
 	formText += `=== تحضير القطاع الداخلي ===\n\n`;
