@@ -1850,13 +1850,16 @@ function sendWhatsAppMessage(formName) {
 	    formText += `اسم قائد المنطقة: ${document.getElementById('region_leader_name').value}\n`;
 	
 	    if (document.getElementById('support_status').value === 'الموافقة') {
+
+		    // القطاع الداعم اخرى
 	    if (document.getElementById('support_sector').value !== 'other') {
     formText += `القطاع:قطاع ${document.getElementById('support_sector').value}\n`;
 } else {
-    formText += `القطاع:قطاع محافظة ${document.getElementById('other_sector').value}\n`;
+    formText += `القطاع:قطاع محافظة ${document.getElementById('other_support_sector').value}\n`;
 }
+		    		    // القطاع المدعوم اخرى
 	    if (document.getElementById('supported_sector').value !== 'other') {
-    formText += `القطاع:قطاع ${document.getElementById('supported_sector').value}\n`;
+    formText += `القطاع:قطاع ${document.getElementById('other_supported_sector').value}\n`;
 } else {
     formText += `القطاع:قطاع محافظة ${document.getElementById('other_sector').value}\n`;
 }
@@ -2003,6 +2006,26 @@ function showCopyNotification() {
     function toggleOtherSectorInput() {
         const sectorSelect = document.getElementById("sector");
         const otherSectorInput = document.getElementById("other_sector");
+        if (sectorSelect.value === "other") {
+            otherSectorInput.style.display = "block";
+        } else {
+            otherSectorInput.style.display = "none";
+        }
+    }
+	    
+    function toggleOtherSectorInput() {
+        const sectorSelect = document.getElementById("support_sector");
+        const otherSectorInput = document.getElementById("other_support_sector");
+        if (sectorSelect.value === "other") {
+            otherSectorInput.style.display = "block";
+        } else {
+            otherSectorInput.style.display = "none";
+        }
+    }
+	    
+    function toggleOtherSectorInput() {
+        const sectorSelect = document.getElementById("supported_sector");
+        const otherSectorInput = document.getElementById("other_supported_sector");
         if (sectorSelect.value === "other") {
             otherSectorInput.style.display = "block";
         } else {
