@@ -1908,20 +1908,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function toggleFieldsBasedOnSupportStatus() {
     const supportStatus = document.getElementById('support_status').value;
-    const otherFields = document.querySelectorAll('#support_sector, #other_support_sector, #supported_sector, #other_supported_sector, #dispatch_hour, #dispatch_minute, #arrival_hour, #arrival_minute, #support_teams_count, #end_hour, #end_minute');
-    const supportReasonsField = document.getElementById('support_reasons');
-    const regionLeaderField = document.getElementById('region_leader_name');
+    
+    // تحديد العناصر التي سيتم إخفاؤها أو إظهارها
+    const sectionsToHide = document.querySelectorAll('#support_sector, #other_support_sector, #supported_sector, #other_supported_sector, #dispatch_hour, #dispatch_minute, #arrival_hour, #arrival_minute, #support_teams_count, #end_hour, #end_minute');
+    
+    const supportReasonsSection = document.getElementById('support_reasons').closest('.form-section');
+    const regionLeaderSection = document.getElementById('region_leader_name').closest('.form-section');
 
     if (supportStatus === 'الرفض') {
-        // إخفاء جميع الحقول عدا الأسباب واسم قائد المنطقة
-        otherFields.forEach(field => field.closest('.form-section').style.display = 'none');
-        supportReasonsField.closest('.form-section').style.display = 'block';
-        regionLeaderField.closest('.form-section').style.display = 'block';
+        // إخفاء الحقول الأخرى
+        sectionsToHide.forEach(section => {
+            section.closest('.form-section').style.display = 'none';
+        });
+
+        // إظهار الحقول المطلوبة فقط
+        supportReasonsSection.style.display = 'block';
+        regionLeaderSection.style.display = 'block';
     } else {
-        // إظهار جميع الحقول
-        otherFields.forEach(field => field.closest('.form-section').style.display = 'block');
+        // إظهار كل الحقول
+        sectionsToHide.forEach(section => {
+            section.closest('.form-section').style.display = 'block';
+        });
     }
 }
+
 
 </script>
 
