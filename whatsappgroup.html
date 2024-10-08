@@ -1855,9 +1855,9 @@ function sendWhatsAppMessage(formName) {
 	    if (document.getElementById('support_sector').value !== 'other') {
     formText += `القطاع:قطاع ${document.getElementById('support_sector').value}\n`;
 } else {
-    formText += `القطاع:قطاع محافظة ${document.getElementById('other_support_sector').value}\n`;
+    formText += `القطاع:قطاع محافظة ${document.getElementById('other_sector').value}\n`;
 }
-		    		    // القطاع المدعوم اخرى
+		    // القطاع المدعوم اخرى
 	    if (document.getElementById('supported_sector').value !== 'other') {
     formText += `القطاع:قطاع ${document.getElementById('other_supported_sector').value}\n`;
 } else {
