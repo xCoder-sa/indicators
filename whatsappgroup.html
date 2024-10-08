@@ -1949,7 +1949,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
     // فنكشن حساب إجمالي مركبات منطقة الرياض  
-function calculateWorkingVehiclesTotals() {
+    function calculateWorkingVehiclesTotals() {
     // حساب إجمالي مركبات القطاعات الداخلية العاملة
     const internal_vehicles_total = 
         (parseInt(document.getElementById('center_sector_vehicles_work').value) || 0) +
@@ -1987,6 +1987,18 @@ function calculateWorkingVehiclesTotals() {
     // عرض إجمالي مركبات منطقة الرياض
     document.getElementById('total_working_vehicles_riyadh').value = total_working_vehicles_riyadh;
 }
+
+	        // فنكشن حساب تحضير التدخل السريع 
+    function calculateTotal() {
+    const sectorWest = parseInt(document.getElementById('sector_west').value) || 0;
+    const sectorEast = parseInt(document.getElementById('sector_east').value) || 0;
+    const sectorCentral = parseInt(document.getElementById('sector_central').value) || 0;
+    const sectorNorth = parseInt(document.getElementById('sector_north').value) || 0;
+    const sectorSouth = parseInt(document.getElementById('sector_south').value) || 0;
+
+    const total = sectorWest + sectorEast + sectorCentral + sectorNorth + sectorSouth;
+
+    document.getElementById('total_rapid_response_reports').value = total;
 
 </script>
 
