@@ -1714,7 +1714,7 @@ function sendWhatsAppMessage(formName) {
 
     if (formName === 'senior_paramedic') {
         formText += `=== نموذج كبار المسعفين ===\n\n`;
-	formText += `القطاع: ${document.getElementById('sector').value}\n`;
+	formText += `القطاع:قطاع ${document.getElementById('sector').value}\n`;
 	formText += `التاريخ: ${document.getElementById('date').value}\n`;
         formText += `التوقيت الحالي: ${document.getElementById('time').value}\n`;
         formText += `عدد الفرق العاملة: ${document.getElementById('working_teams').value} من أصل: ${document.getElementById('total_teams').value}\n`;
@@ -1751,11 +1751,10 @@ function sendWhatsAppMessage(formName) {
     } else if (formName === 'operational_failure') {
         formText += `=== نموذج فشل تشغيلي ===\n\n`;
         if (document.getElementById('sector').value !== 'other') {
-    formText += `القطاع: ${document.getElementById('sector').value}\n`;
+    formText += `القطاع: قطاع  ${document.getElementById('sector').value}\n`;
 } else {
     formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
 }
-	formText += `القطاع: ${document.getElementById('sector').value}\n`;
 	formText += `رقم البلاغ: ${document.getElementById('report_number').value}\n`;
         formText += `بداية الحدث: ${document.getElementById('start_hour').value}:${document.getElementById('start_minute').value}\n`;
         formText += `تعطل فرقة إسعافية: ${document.getElementById('unit_failure').value}\n`;
