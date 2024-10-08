@@ -1176,69 +1176,92 @@
                 </div>
                 <button onclick="sendWhatsAppMessage('support_request')">إرسال النموذج بالواتساب</button>
             `;
-        } else if (formName === 'support_activation') {
-            formHTML = `
-               <h2>نموذج قبول تفعيل خطة المساندة والدعم المتبادل</h2>
-		<center><h3>يرسل من قبل قائد المنطقة</h3></center>
+} else if (formName === 'support_activation') {
+    formHTML = `
+        <h2>نموذج قبول تفعيل خطة المساندة والدعم المتبادل</h2>
+        <center><h3>يرسل من قبل قائد المنطقة</h3></center>
 
-                <div class="form-section">
-		<label for="support_status">حالة الدعم:</label>
-		<select id="support_status" onchange="toggleFieldsBasedOnSupportStatus()">
-		    <option value="الموافقة">الموافقة</option>
-		    <option value="الرفض">الرفض</option>
-		</select>
+        <div class="form-section">
+            <label for="support_status">حالة الدعم:</label>
+            <select id="support_status" onchange="toggleFieldsBasedOnSupportStatus()">
+                <option value="الموافقة">الموافقة</option>
+                <option value="الرفض">الرفض</option>
+            </select>
 
-                    <label for="support_reasons">أسباب القبول أو الرفض:</label>
-                    <textarea id="support_reasons" rows="4"></textarea>
+            <label for="support_reasons">أسباب القبول أو الرفض:</label>
+            <textarea id="support_reasons" rows="4"></textarea>
 
-                    <label for="support_sector">القطاع الداعم:</label>
-                    <select id="support_sector" onchange="toggleOtherSectorInput()">
-                        <option value="الوسط">الوسط</option>
-                        <option value="الجنوب">الجنوب</option>
-                        <option value="الشرق">الشرق</option>
-                        <option value="الغرب">الغرب</option>
-                        <option value="الشمال">الشمال</option>
-                        <option value="other">أخرى</option>
-                    </select>
-                    <input type="text" id="other_support_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
+            <div id="supportDetails">
+                <label for="support_sector">القطاع الداعم:</label>
+                <select id="support_sector" onchange="toggleOtherSectorInput()">
+                    <option value="الوسط">الوسط</option>
+                    <option value="الجنوب">الجنوب</option>
+                    <option value="الشرق">الشرق</option>
+                    <option value="الغرب">الغرب</option>
+                    <option value="الشمال">الشمال</option>
+                    <option value="other">أخرى</option>
+                </select>
+                <input type="text" id="other_support_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
 
-                    <label for="supported_sector">القطاع المدعوم:</label>
-                    <select id="supported_sector" onchange="toggleOtherSectorInput()">
-                        <option value="الوسط">الوسط</option>
-                        <option value="الجنوب">الجنوب</option>
-                        <option value="الشرق">الشرق</option>
-                        <option value="الغرب">الغرب</option>
-                        <option value="الشمال">الشمال</option>
-                        <option value="other">أخرى</option>
-                    </select>
-                    <input type="text" id="other_supported_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
+                <label for="supported_sector">القطاع المدعوم:</label>
+                <select id="supported_sector" onchange="toggleOtherSectorInput()">
+                    <option value="الوسط">الوسط</option>
+                    <option value="الجنوب">الجنوب</option>
+                    <option value="الشرق">الشرق</option>
+                    <option value="الغرب">الغرب</option>
+                    <option value="الشمال">الشمال</option>
+                    <option value="other">أخرى</option>
+                </select>
+                <input type="text" id="other_supported_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
 
-                    <label for="dispatch_time">توقيت تحريك الدعم (نظام 24 ساعة):</label>
-                    <div class="input-row">
-                        <input type="text" id="dispatch_hour" placeholder="الساعة" style="width: 45px;">
-                        <input type="text" id="dispatch_minute" placeholder="الدقيقة" style="width: 45px;">
-                    </div>
-
-                    <label for="arrival_time">توقيت وصول الدعم (نظام 24 ساعة):</label>
-                    <div class="input-row">
-                        <input type="text" id="arrival_hour" placeholder="الساعة" style="width: 45px;">
-                        <input type="text" id="arrival_minute" placeholder="الدقيقة" style="width: 45px;">
-                    </div>
-
-                    <label for="support_teams_count">عدد الفرق الداعمة:</label>
-                    <input type="text" id="support_teams_count">
-
-                    <label for="end_time">توقيت انتهاء الدعم (نظام 24 ساعة):</label>
-                    <div class="input-row">
-                        <input type="text" id="end_hour" placeholder="الساعة" style="width: 45px;">
-                        <input type="text" id="end_minute" placeholder="الدقيقة" style="width: 45px;">
-                    </div>
-
-                    <label for="region_leader_name">اسم قائد المنطقة:</label>
-                    <input type="text" id="region_leader_name">
+                <label for="dispatch_time">توقيت تحريك الدعم (نظام 24 ساعة):</label>
+                <div class="input-row">
+                    <input type="text" id="dispatch_hour" placeholder="الساعة" style="width: 45px;">
+                    <input type="text" id="dispatch_minute" placeholder="الدقيقة" style="width: 45px;">
                 </div>
-                <button onclick="sendWhatsAppMessage('support_activation')">إرسال النموذج بالواتساب</button>
-            `;
+
+                <label for="arrival_time">توقيت وصول الدعم (نظام 24 ساعة):</label>
+                <div class="input-row">
+                    <input type="text" id="arrival_hour" placeholder="الساعة" style="width: 45px;">
+                    <input type="text" id="arrival_minute" placeholder="الدقيقة" style="width: 45px;">
+                </div>
+
+                <label for="support_teams_count">عدد الفرق الداعمة:</label>
+                <input type="text" id="support_teams_count">
+
+                <label for="end_time">توقيت انتهاء الدعم (نظام 24 ساعة):</label>
+                <div class="input-row">
+                    <input type="text" id="end_hour" placeholder="الساعة" style="width: 45px;">
+                    <input type="text" id="end_minute" placeholder="الدقيقة" style="width: 45px;">
+                </div>
+            </div>
+
+            <label for="region_leader_name">اسم قائد المنطقة:</label>
+            <input type="text" id="region_leader_name">
+        </div>
+        <button onclick="sendWhatsAppMessage('support_activation')">إرسال النموذج بالواتساب</button>
+    `;
+
+    // إضافة دالة لإخفاء أو إظهار الحقول بناءً على اختيار حالة الدعم
+    formHTML += `
+        <script>
+            function toggleFieldsBasedOnSupportStatus() {
+                const supportStatus = document.getElementById('support_status').value;
+                const supportDetails = document.getElementById('supportDetails');
+                
+                if (supportStatus === 'الرفض') {
+                    supportDetails.style.display = 'none'; // إخفاء الحقول عند الرفض
+                } else {
+                    supportDetails.style.display = 'block'; // إظهار الحقول عند الموافقة
+                }
+            }
+
+            // استدعاء الدالة لتحديث العرض فورًا عند تحميل الصفحة
+            window.onload = toggleFieldsBasedOnSupportStatus;
+        </script>
+    `;
+}
+
         }
 
         formContainer.innerHTML = formHTML;
