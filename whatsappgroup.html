@@ -494,8 +494,8 @@
                     <h2>المخرجات</h2>
   		<div class="input-row">
 		    <div class="input-small">
-                    <label for="waiting_time">متوسط زمن الانتظار في قائمة الترحيل:</label>
-                    <input type="text" id="waiting_time">
+                    <label for="waiting_time">متوسط زمن الانتظار في قائمة الترحيل (بالدقائق):</label>
+                    <input type="number" id="waiting_time">
 		    </div>
 		</div>
   		<div class="input-row">
@@ -938,11 +938,11 @@
                         </div>
                         <div class="input-small">
                             <label for="broken_vehicles">عدد المركبات المتعطلة:</label>
-                            <input type="text" id="broken_vehicles">
+                            <input type="number" id="broken_vehicles">
                         </div>
                         <div class="input-small">
                             <label for="reserve_vehicles">عدد المركبات الاحتياط:</label>
-                            <input type="text" id="reserve_vehicles">
+                            <input type="number" id="reserve_vehicles">
                         </div>
                     </div>
                           <div class="input-row">
@@ -970,7 +970,7 @@
                           <div class="input-row">
 			<div class="input-small">
                     <label for="total_reports">إجمالي بلاغات القطاع:</label>
-                    <input type="text" id="total_reports">
+                    <input type="number" id="total_reports">
 		    
 		<label for="related_reports">البلاغات:</label>
 		<div id="reports-container-1">
@@ -982,7 +982,7 @@
 		            <option value="تشارلي">تشارلي</option>
 		            <option value="برافو">برافو</option>
 		        </select>
-		        <input type="text" placeholder="زمن الاستجابة" class="waiting_time" style="width: 120px;">
+		        <input type="number" placeholder="(بالدقائق) زمن الاستجابة" class="waiting_time" style="width: 120px;">
 		        <p>احسب زمن الاستجابة من الرد الى الوصول للموقع</p>
 		    </div>
 		</div>
@@ -996,8 +996,8 @@
                 <div class="form-section">
                           <div class="input-row">
 			<div class="input-small">
-                    <label for="absence_in_shift">متوسط زمن الاستجابة:</label>
-                    <input type="text" id="response_time_to_intervention">
+                    <label for="response_time_to_intervention">متوسط زمن الاستجابة (بالدقائق):</label>
+                    <input type="number" id="response_time_to_intervention" placeholder="أدخل الوقت بالدقائق رقم فقط">
                         </div>
                     </div>
                 </div>
@@ -1089,11 +1089,13 @@
                         <option value="لا">لا</option>
                     </select>
 
-                    <label for="event_end">نهاية الحدث (نظام 24 ساعة):</label>
-                    <div class="input-row">
-                        <input type="text" id="end_hour" placeholder="الساعة" style="width: 45px;">
-                        <input type="text" id="end_minute" placeholder="الدقيقة" style="width: 45px;">
-                    </div>
+            <label for="">نهاية الحدث (نظام 24 ساعة):</label>
+            <div class="input-row">
+                <input type="number" id="end_hour" placeholder="الساعة" style="width: 45px;">
+                <input type="number" id="end_minute" placeholder="الدقيقة" style="width: 45px;">
+                <input type="checkbox" id="event_not_ended" onclick="toggleEndTimeFields()">
+                <label for="event_not_ended" style="font-weight: bold; color: red;">لم ينتهِ حتى الآن</label>
+            </div>
                 </div>
                 <div class="form-section">
                     <div class="input-row">
@@ -1155,8 +1157,8 @@
               	   </div>
                         <div class="input-small">
                     <label for="response_time">زمن الاستجابة (دقائق):</label>
-                    <input type="text" id="response_time">
-             		 </div>
+                    <input type="number" id="response_time" placeholder="أكتب الدقيقة بالرقم فقط">
+                    </div>
               	   	</div>
 		       <div class="input-small">
                     <label for="notes">ملاحظات:</label>
@@ -1362,17 +1364,15 @@
             <label for="support_reasons">أسباب القبول أو الرفض:</label>
             <textarea id="support_reasons" rows="4"></textarea>
 
-	 <div id="supportDetails">
-	    <label for="support_sector">القطاع الداعم:</label>
-	    <select id="support_sector" name="support_sector[]" multiple size="5" onchange="toggleOtherSectorInput()">
-	        <option value="الوسط">الوسط</option>
-	        <option value="الجنوب">الجنوب</option>
-	        <option value="الشرق">الشرق</option>
-	        <option value="الغرب">الغرب</option>
-	        <option value="الشمال">الشمال</option>
-	    </select>
-	</div>
-
+            <div id="supportDetails">
+                <label for="support_sector">القطاع الداعم:</label>
+                <select id="support_sector" onchange="toggleOtherSectorInput()">
+                    <option value="الوسط">الوسط</option>
+                    <option value="الجنوب">الجنوب</option>
+                    <option value="الشرق">الشرق</option>
+                    <option value="الغرب">الغرب</option>
+                    <option value="الشمال">الشمال</option>
+                </select>
 
                 <label for="supported_sector">القطاع المدعوم:</label>
                 <select id="supported_sector" onchange="toggleOtherSectorInput()">
@@ -1413,6 +1413,7 @@
 } else if (formName === 'regional_leader_form') {
     formHTML = `
         <h2>نموذج قائد المنطقة المناوب</h2>
+        <p>يرسل من قبل قائد المنطقة كل بداية مناوبة</p>
         <div class="form-section">
             <label for="shift">المناوبة:</label>
             <select id="shift" onchange="toggleOtherSectorInput()">
@@ -1528,10 +1529,10 @@ function relatedreports(containerId, reportType) {
     
     // التحقق من نوع التقرير لتحديد الحقول الإضافية
     if (reportType === 'responseTime') {
-        newField += `<input type="text" placeholder="زمن الاستجابة" class="waiting_time" style="width: 120px;">`;
+        newField += `<input type="number" placeholder=" زمن الاستجابة (بالدقائق)" class="waiting_time" style="width: 120px;">`;
         newField += `<p>احسب زمن الاستجابة من الرد الى الوصول للموقع</p>`;
     } else if (reportType === 'dispatchTime') {
-        newField += `<input type="text" placeholder="زمن بقاء البلاغ في قائمة الترحيل" class="waiting_time" style="width: 150px;">`;
+        newField += `<input type="number" placeholder="زمن بقاء البلاغ في قائمة الترحيل (بالدقائق)" class="waiting_time" style="width: 150px;">`;
     }
 
     newField += `</div>`; // إغلاق div
@@ -1539,22 +1540,6 @@ function relatedreports(containerId, reportType) {
     reportsContainer.insertAdjacentHTML('beforeend', newField);
 }
 
-// دالة إضافة القطاعات الجديدة
-function addSector() {
-    const sectorsContainer = document.getElementById('sectors-container');
-    let newField = `
-        <div class="input-pair">
-            <select class="support-sector" style="width: 120px;">
-                <option value="الوسط">الوسط</option>
-                <option value="الجنوب">الجنوب</option>
-                <option value="الشرق">الشرق</option>
-                <option value="الغرب">الغرب</option>
-                <option value="الشمال">الشمال</option>
-            </select>
-        </div>`;
-    
-    sectorsContainer.insertAdjacentHTML('beforeend', newField);
-}
 
 function saveForm(formName) {
     const xhr = new XMLHttpRequest();
@@ -1702,8 +1687,13 @@ function getFormData(formName) {
         data.actions_taken = document.getElementById('actions_taken')?.value || '';
         data.service_impact = document.getElementById('service_impact')?.value || '';
         data.event_status = document.getElementById('event_status')?.value || '';
-        data.end_hour = document.getElementById('end_hour')?.value || '';
-        data.end_minute = document.getElementById('end_minute')?.value || '';
+        if (document.getElementById('event_not_ended').checked) {
+            data.end_hour = 'لم ينتهِ حتى الآن';
+            data.end_minute = '';
+        } else {
+            data.end_hour = document.getElementById('end_hour').value || '';
+            data.end_minute = document.getElementById('end_minute').value || '';
+        }
         data.senior_paramedic_name = document.getElementById('senior_paramedic_name')?.value || '';
     } else if (formName === 'eco_reports') {
         // جمع بيانات نموذج بلاغات إيكو
@@ -1819,29 +1809,25 @@ function getFormData(formName) {
 
         data.outsider_notes = document.getElementById('outsider_notes')?.value || '';
         data.senior_paramedic_name = document.getElementById('senior_paramedic_name')?.value || '';
-} else if (formName === 'support_activation') {
-    data.support_status = document.getElementById('support_status').value;
-    data.support_reasons = document.getElementById('support_reasons').value;
-    data.region_leader_name = document.getElementById('region_leader_name').value;
-
-    if (data.support_status === 'الموافقة') {
-        // جمع القطاعات المختارة في قائمة support_sector المتعددة
-        const selectedSectors = Array.from(document.querySelectorAll('#support_sector option:checked')).map(option => option.value);
-        data.support_sector = selectedSectors.length > 0 ? selectedSectors : '';  // تأكد من أن هناك قطاعات مختارة
-
-        data.other_support_sector = document.getElementById('other_support_sector').value || '';
-        data.supported_sector = document.getElementById('supported_sector').value || '';
-        data.other_supported_sector = document.getElementById('other_supported_sector').value || '';
-        data.dispatch_hour = document.getElementById('dispatch_hour').value || '';
-        data.dispatch_minute = document.getElementById('dispatch_minute').value || '';
-        data.arrival_hour = document.getElementById('arrival_hour').value || '';
-        data.arrival_minute = document.getElementById('arrival_minute').value || '';
-        data.support_teams_count = document.getElementById('support_teams_count').value || '';
-        data.end_hour = document.getElementById('end_hour').value || '';
-        data.end_minute = document.getElementById('end_minute').value || '';
-        data.senior_paramedic_rapid_response_reports = document.getElementById('senior_paramedic_rapid_response_reports')?.value || '';
-    } 
-    	} else if (formName === 'rapid_response_reports') {
+	} else if (formName === 'support_activation') {
+	    data.support_status = document.getElementById('support_status').value;
+	    data.support_reasons = document.getElementById('support_reasons').value;
+	    data.region_leader_name = document.getElementById('region_leader_name').value;
+	
+	    if (data.support_status === 'الموافقة') {
+	        data.support_sector = document.getElementById('support_sector').value || '';
+	        data.other_support_sector = document.getElementById('other_support_sector').value || '';
+	        data.supported_sector = document.getElementById('supported_sector').value || '';
+	        data.other_supported_sector = document.getElementById('other_supported_sector').value || '';
+	        data.dispatch_hour = document.getElementById('dispatch_hour').value || '';
+	        data.dispatch_minute = document.getElementById('dispatch_minute').value || '';
+	        data.arrival_hour = document.getElementById('arrival_hour').value || '';
+	        data.arrival_minute = document.getElementById('arrival_minute').value || '';
+	        data.support_teams_count = document.getElementById('support_teams_count').value || '';
+	        data.end_hour = document.getElementById('end_hour').value || '';
+	        data.end_minute = document.getElementById('end_minute').value || '';
+	        data.senior_paramedic_rapid_response_reports = document.getElementById('senior_paramedic_rapid_response_reports')?.value || '';
+	} else if (formName === 'rapid_response_reports') {
 		    // جمع بيانات نموذج "بلاغات التدخل السريع"
 		    data.sector_west = document.getElementById('sector_west')?.value || '';
 		    data.sector_east = document.getElementById('sector_east')?.value || '';
@@ -1881,9 +1867,9 @@ function sendWhatsAppMessage(formName) {
     let formText = '';
 
     if (formName === 'senior_paramedic') {
-        formText += `=== نموذج كبار المسعفين ===\n\n`;
-	formText += `القطاع: ${document.getElementById('sector').value}\n`;
-	formText += `التاريخ: ${document.getElementById('date').value}\n`;
+        formText += `\n*=== نموذج كبار المسعفين ===*\n\n`;
+    	formText += `القطاع: ${document.getElementById('sector').value}\n`;
+    	formText += `التاريخ: ${document.getElementById('date').value}\n`;
         formText += `التوقيت الحالي: ${document.getElementById('time').value}\n`;
         formText += `عدد الفرق العاملة: ${document.getElementById('working_teams').value} من أصل: ${document.getElementById('total_teams').value}\n`;
         formText += `عدد فرق التدخل السريع: ${document.getElementById('rapid_response_teams').value}\n`;
@@ -1894,36 +1880,35 @@ function sendWhatsAppMessage(formName) {
         formText += `عدد العاملين في التنسيق والتحكم: ${document.getElementById('coordination_teams').value}\n`;
         formText += `عدد العاملين في الدعم اللوجستي: ${document.getElementById('logistics_support_teams').value}\n`;
         formText += `قائمة المستشفيات خارج الخدمة: ${document.getElementById('hospitals_out_of_service').value}\n`;
-        formText += `\n=== الطلب ===\n`;
+        formText += `\n*=== الطلب ===*\n`;
         formText += `عدد بلاغات إنعاش إيكو: ${document.getElementById('eco_reports').value}\n`;
         formText += `عدد بلاغات دلتا: ${document.getElementById('delta_reports').value}\n`;
         formText += `عدد بلاغات تشارلي: ${document.getElementById('charlie_reports').value}\n`;
         formText += `عدد بلاغات برافو: ${document.getElementById('bravo_reports').value}\n`;
         formText += `عدد بلاغات ألفا: ${document.getElementById('alpha_reports').value}\n`;
         formText += `عدد بلاغات أوميغا: ${document.getElementById('omega_reports').value}\n`;
-        formText += `\n=== البلاغات ===\n`;
+        formText += `\n*=== البلاغات ===*\n`;
         formText += `إجمالي بلاغات القطاع: ${document.getElementById('total_reports').value}\n`;
         formText += `عدد الحالات المنقولة  : ${document.getElementById('government_transfers').value}\n`;
         formText += `عدد الحالات الغير منقولة: ${document.getElementById('untransferred_cases').value}\n`;
-        formText += `\n=== المخرجات ===\n`;
-        formText += `متوسط زمن الانتظار في قائمة الترحيل: ${document.getElementById('waiting_time').value}\n`;
+        formText += `\n*=== المخرجات ===*\n`;
+        formText += `متوسط زمن الانتظار في قائمة الترحيل(بالدقائق): ${document.getElementById('waiting_time').value}\n`;
         formText += `اعلى فرقة اسعافيه في عدد البلاغات: ${document.getElementById('top_team').value}\n`;
         formText += `متوسط عدد البلاغات للفرق الاسعافية: ${document.getElementById('average_reports').value}\n`;
         formText += `نسبة زمن الاستجابة خلال 8 دقائق للبلاغات الاسعافية بإستثناء حالات الفا: ${document.getElementById('response_rate').value}\n`;
         formText += `متوسط زمن الاستجابة لبلاغات الحوادث المرورية: ${document.getElementById('average_response_time').value}\n`;
-        formText += `زمن الاستجابة من الرد حتى الوصول: ${document.getElementById('response_time_to_intervention').value}\n\n`;
-        formText += `\n=== ملاحظات النوبة ===\n`;
+        formText += `زمن الاستجابة من الرد حتى الوصول (بالدقائق): ${document.getElementById('response_time_to_intervention').value}\n\n`;
+        formText += `\n*=== ملاحظات النوبة ===*\n`;
         formText += `عدد الغياب في المناوبة: ${document.getElementById('absence_in_shift').value}\n`;
         formText += `ملاحظات عامه: ${document.getElementById('cad_program_notes').value}\n`;
-        formText += `اسم كبير المسعفين: ${document.getElementById('senior_paramedic_name').value}\n`;
+        formText += `*اسم كبير المسعفين:*  ${document.getElementById('senior_paramedic_name').value}\n`;
     } else if (formName === 'operational_failure') {
-        formText += `=== نموذج فشل تشغيلي ===\n\n`;
+        formText += `*=== نموذج فشل تشغيلي ===*\n\n`;
         if (document.getElementById('sector').value !== 'other') {
     formText += `القطاع: ${document.getElementById('sector').value}\n`;
 } else {
     formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
 }
-	formText += `القطاع: ${document.getElementById('sector').value}\n`;
 	formText += `رقم البلاغ: ${document.getElementById('report_number').value}\n`;
         formText += `بداية الحدث: ${document.getElementById('start_hour').value}:${document.getElementById('start_minute').value}\n`;
         formText += `تعطل فرقة إسعافية: ${document.getElementById('unit_failure').value}\n`;
@@ -1933,10 +1918,14 @@ function sendWhatsAppMessage(formName) {
         formText += `الإجراءات المتخذة: ${document.getElementById('actions_taken').value}\n`;
         formText += `التأثير على الخدمة: ${document.getElementById('service_impact').value}\n`;
         formText += `هل الحدث ما زال قائم؟: ${document.getElementById('event_status').value}\n`;
+    if (document.getElementById('event_not_ended').checked) {
+        formText += `نهاية الحدث: لم ينتهِ حتى الآن\n`;
+    } else {
         formText += `نهاية الحدث: ${document.getElementById('end_hour').value}:${document.getElementById('end_minute').value}\n`;
-        formText += `اسم كبير المسعفين: ${document.getElementById('senior_paramedic_name').value}\n`;
+    }
+        formText += `*اسم كبير المسعفين:*  ${document.getElementById('senior_paramedic_name').value}\n`;
     } else if (formName === 'eco_reports') {
-        formText += `=== نموذج بلاغات إيكو ===\n\n`;
+        formText += `*=== نموذج بلاغات إيكو ===*\n\n`;
         if (document.getElementById('sector').value !== 'other') {
     formText += `القطاع:قطاع ${document.getElementById('sector').value}\n`;
 } else {
@@ -1950,9 +1939,9 @@ function sendWhatsAppMessage(formName) {
         formText += `الوحدات المستجيبة: ${document.getElementById('responding_units').value}\n`;
         formText += `زمن الاستجابة (دقائق): ${document.getElementById('response_time').value}\n`;
         formText += `ملاحظات: ${document.getElementById('notes').value}\n`;
-        formText += `اسم كبير المسعفين: ${document.getElementById('senior_paramedic_name').value}\n`;
+        formText += `*اسم كبير المسعفين:* ${document.getElementById('senior_paramedic_name').value}\n`;
     } else if (formName === 'major_event') {
-        formText += `=== نموذج حدث جسيم ===\n\n`;
+        formText += `*=== نموذج حدث جسيم ===*\n\n`;
         if (document.getElementById('sector').value !== 'other') {
     formText += `القطاع: ${document.getElementById('sector').value}\n`;
 } else {
@@ -1968,12 +1957,12 @@ function sendWhatsAppMessage(formName) {
         formText += `وزارة الصحة: ${document.getElementById('health_ministry').value}\n`;
         formText += `جهات أخرى: ${document.getElementById('other_authorities').value}\n`;
         formText += `وقت وصول أول فرقة: ${document.getElementById('arrival_hour').value}:${document.getElementById('arrival_minute').value}\n`;
-        formText += `\n=== فرز الإصابات ===\n`;
+        formText += `\n*=== فرز الإصابات ===*\n`;
         formText += `وفيات: ${document.getElementById('deaths').value}\n`;
         formText += `حرجة: ${document.getElementById('critical_injuries').value}\n`;
         formText += `متوسطة: ${document.getElementById('moderate_injuries').value}\n`;
         formText += `طفيفة: ${document.getElementById('minor_injuries').value}\n`;
-        formText += `\n=== الجنسيات ===\n`;
+        formText += `\n*=== الجنسيات ===*\n`;
         formText += `سعودي: ${document.getElementById('saudi_nationality').value}\n`;
         formText += `غير سعودي: ${document.getElementById('non_saudi_nationality').value}\n`;
         formText += `غير معروف: ${document.getElementById('unknown_nationality').value}\n`;
@@ -1990,7 +1979,7 @@ function sendWhatsAppMessage(formName) {
         formText += `تنسيق الاستجابة: ${document.getElementById('response_coordination').value}\n`;
         formText += `قائد المنطقة المناوب: ${document.getElementById('area_leader').value}\n`;
     } else if (formName === 'support_request') {
-        formText += `=== طلب تفعيل خطة المساندة والدعم المتبادل ===\n\n`;
+        formText += `*=== طلب تفعيل خطة المساندة والدعم المتبادل ===*\n\n`;
         if (document.getElementById('sector').value !== 'other') {
     formText += `القطاع: ${document.getElementById('sector').value}\n`;
 } else {
@@ -2001,40 +1990,35 @@ function sendWhatsAppMessage(formName) {
         formText += `عدد الوحدات الجاهزة: ${document.getElementById('units_ready').value}\n`;
         formText += `عدد الوحدات الخارجة عن الجاهزية: ${document.getElementById('units_out_of_order').value}\n`;
         formText += `عدد فرق القطاع العاملة أثناء المناوبة: ${document.getElementById('working_teams_shift').value}\n`;
-        formText += `\n=== التحديات والإجراءات المتخذة ===\n${document.getElementById('challenges').value}\n\n`;
+        formText += `\n*=== التحديات والإجراءات المتخذة ===*\n${document.getElementById('challenges').value}\n\n`;
         
         // جمع البيانات المتعلقة بالبلاغات الإسعافية المرتبطة
         const reportNumbers = document.querySelectorAll('.report-number');
         const reportTypes = document.querySelectorAll('.report-type');
         const waitingTimes = document.querySelectorAll('.waiting_time');
         
-        formText += `\n=== البلاغات الإسعافية المرتبطة ===\n`;
+        formText += `\n*=== البلاغات الإسعافية المرتبطة ===*\n`;
         reportNumbers.forEach((number, index) => {
-            formText += `رقم البلاغ: ${number.value}, نوع البلاغ: ${reportTypes[index].value}, زمن بقاء البلاغ في قائمة الترحيل: ${waitingTimes[index].value}\n`;
+            formText += `رقم البلاغ: ${number.value}, نوع البلاغ: ${reportTypes[index].value}, زمن بقاء البلاغ في قائمة الترحيل (بالدقائق): ${waitingTimes[index].value}\n`;
         });
 
-        formText += `\nاسم كبير المسعفين: ${document.getElementById('senior_paramedic_name').value}\n`;
-} else if (formName === 'support_activation') {
-    formText += `=== نموذج قبول تفعيل خطة المساندة والدعم المتبادل ===\n\n`;
-    formText += `حالة الدعم: ${document.getElementById('support_status').value}\n`;
-    formText += `أسباب القبول أو الرفض: ${document.getElementById('support_reasons').value}\n`;
-    formText += `اسم قائد المنطقة: ${document.getElementById('region_leader_name').value}\n`;
-
-    if (document.getElementById('support_status').value === 'الموافقة') {
-        // تعديل لجمع القطاعات المتعددة
-        const selectedSectors = Array.from(document.querySelectorAll('#support_sector option:checked')).map(option => option.value);
-        if (selectedSectors.length > 0) {
-            formText += `القطاعات الداعمة: ${selectedSectors.join(', ')}\n`;
-        }
-
-        formText += `القطاع المدعوم: ${document.getElementById('supported_sector').value}\n`;
-        formText += `توقيت تحريك الدعم: ${document.getElementById('dispatch_hour').value}:${document.getElementById('dispatch_minute').value}\n`;
-        formText += `توقيت وصول الدعم: ${document.getElementById('arrival_hour').value}:${document.getElementById('arrival_minute').value}\n`;
-        formText += `عدد الفرق الداعمة: ${document.getElementById('support_teams_count').value}\n`;
-        formText += `توقيت انتهاء الدعم: ${document.getElementById('end_hour').value}:${document.getElementById('end_minute').value}\n`;
-    }
+        formText += `\n*اسم كبير المسعفين:* ${document.getElementById('senior_paramedic_name').value}\n`;
+	} else if (formName === 'support_activation') {
+        formText += `*=== نموذج قبول تفعيل خطة المساندة والدعم المتبادل ===*\n\n`;
+	    formText += `حالة الدعم: ${document.getElementById('support_status').value}\n`;
+	    formText += `أسباب القبول أو الرفض: ${document.getElementById('support_reasons').value}\n`;
+	    formText += `اسم قائد المنطقة: ${document.getElementById('region_leader_name').value}\n`;
+	
+	    if (document.getElementById('support_status').value === 'الموافقة') {
+	        formText += `القطاع الداعم: ${document.getElementById('support_sector').value}\n`;
+	        formText += `القطاع المدعوم: ${document.getElementById('supported_sector').value}\n`;
+	        formText += `توقيت تحريك الدعم: ${document.getElementById('dispatch_hour').value}:${document.getElementById('dispatch_minute').value}\n`;
+	        formText += `توقيت وصول الدعم: ${document.getElementById('arrival_hour').value}:${document.getElementById('arrival_minute').value}\n`;
+	        formText += `عدد الفرق الداعمة: ${document.getElementById('support_teams_count').value}\n`;
+	        formText += `توقيت انتهاء الدعم: ${document.getElementById('end_hour').value}:${document.getElementById('end_minute').value}\n`;
+		      }
    } else if (formName === 'senior_paramedic_outside') {
-        formText += `===  نموذج كبار المسعفين خارجي ===\n\n`;
+        formText += `*=== نموذج كبار المسعفين خارجي ===*\n\n`;
         if (document.getElementById('sector').value !== 'other') {
             formText += `القطاع: قطاع محافظة ${document.getElementById('sector').value}\n`;
         } else {
@@ -2050,7 +2034,7 @@ function sendWhatsAppMessage(formName) {
         formText += `عدد العاملين في التنسيق والتحكم: ${document.getElementById('coordination_teams').value}\n`;
         formText += `عدد العاملين في الدعم اللوجستي: ${document.getElementById('logistics_support_teams').value}\n`;
         formText += `قائمة المستشفيات خارج الخدمة: ${document.getElementById('hospitals_out_of_service').value}\n`;
-        formText += `\n=== البلاغات ===\n`;
+        formText += `*=== البلاغات ===*\n\n`;
         formText += `إجمالي بلاغات القطاع: ${document.getElementById('total_reports').value}\n`;
         
         // جمع البيانات المتعلقة بالبلاغات الإسعافية المرتبطة
@@ -2058,30 +2042,30 @@ function sendWhatsAppMessage(formName) {
         const reportTypes = document.querySelectorAll('.report-type');
         const waitingTimes = document.querySelectorAll('.waiting_time');
         
-        formText += `\n=== البلاغات الإسعافية المرتبطة ===\n`;
+        formText += `*=== البلاغات الإسعافية المرتبطة ===*\n\n`;
         reportNumbers.forEach((number, index) => {
-            formText += `رقم البلاغ: ${number.value}, نوع البلاغ: ${reportTypes[index].value}, زمن الاستجابة: ${waitingTimes[index].value}\n`;
+            formText += `رقم البلاغ: ${number.value}, نوع البلاغ: ${reportTypes[index].value}, زمن الاستجابة (بالدقائق): ${waitingTimes[index].value}\n`;
         });
 
-        formText += `\n=== المخرجات ===\n`;
-        formText += `متوسط زمن الاستجابة للبلاغات: ${document.getElementById('response_time_to_intervention').value}\n`;
-        formText += `\n=== ملاحظات النوبة ===\n`;
+        formText += `*=== المخرجات ===*\n\n`;
+        formText += `متوسط زمن الاستجابة للبلاغات (بالدقائق): ${document.getElementById('response_time_to_intervention').value}\n`;
+        formText += `*=== ملاحظات النوبة ===*\n\n`;
         formText += `عدد الغياب في المناوبة: ${document.getElementById('absence_in_shift').value}\n`;
         formText += `نقاط اسعافية مكشوفة: ${document.getElementById('units_notes').value}\n`;
         formText += `ملاحظات: ${document.getElementById('outsider_notes').value}\n`;
         formText += `اسم كبير المسعفين: ${document.getElementById('senior_paramedic_name').value}\n`;
 } else if (formName === 'rapid_response_reports') {
-    formText += `=== نموذج بلاغات التدخل السريع ===\n\n`;
+        formText += `*=== نموذج بلاغات التدخل السريع ===*\n\n`;
     formText += `قطاع عمليات الغرب: ${document.getElementById('sector_west').value}\n`;
     formText += `قطاع عمليات الشرق: ${document.getElementById('sector_east').value}\n`;
     formText += `قطاع عمليات الوسط: ${document.getElementById('sector_central').value}\n`;
     formText += `قطاع عمليات الشمال: ${document.getElementById('sector_north').value}\n`;
     formText += `قطاع عمليات الجنوب: ${document.getElementById('sector_south').value}\n`;
-    formText += `إجمالي التدخل السريع: ${document.getElementById('total_rapid_response_reports').value}\n`;
-    formText += `قائد المنطقة المناوب: ${document.getElementById('senior_paramedic_rapid_response_reports').value}\n`;
+    formText += `*إجمالي التدخل السريع:* ${document.getElementById('total_rapid_response_reports').value}\n`;
+    formText += `*قائد المنطقة المناوب:* ${document.getElementById('senior_paramedic_rapid_response_reports').value}\n`;
    } else if (formName === 'attendance') {
-        formText += `=== نموذج تحضير منطقة الرياض ===\n\n`;
-	formText += `=== تحضير القطاع الداخلي ===\n\n`;
+    formText += `*=== نموذج تحضير منطقة الرياض ===*\n\n`;
+    formText += `*=== تحضير القطاع الداخلي ===*\n\n`;
 	formText += `التاريخ: ${document.getElementById('date').value}\n`;
 	formText += `المناوبة : ${document.getElementById('shift').value}\n`;
 	formText += `عدد فرق قطاع الوسط العاملة : ${document.getElementById('center_sector_teams').value}\n`;
@@ -2099,7 +2083,7 @@ function sendWhatsAppMessage(formName) {
 	formText += `عدد فرق قطاع الجنوب العاملة : ${document.getElementById('south_sector_teams').value}\n`;
 	formText += `عدد مركبات قطاع الجنوب العاملة : ${document.getElementById('south_sector_vehicles_work').value}\n`;
 	formText += `عدد مركبات قطاع الجنوب المتعطلة : ${document.getElementById('south_sector_vehicles_broken').value}\n`;
-	formText += `\n=== تحضير القطاع الخارجي ===\n`;
+    formText += `\n*=== تحضير القطاع الخارجي ===*\n`;
 	formText += `عدد فرق قطاع محافظة رماح العاملة : ${document.getElementById('ramah_sector_teams').value}\n`;
 	formText += `عدد مركبات قطاع محافظة رماح العاملة : ${document.getElementById('ramah_sector_vehicles_work').value}\n`;
 	formText += `عدد مركبات قطاع محافظة رماح المتعطلة : ${document.getElementById('ramah_sector_vehicles_broken').value}\n`;
@@ -2142,25 +2126,25 @@ function sendWhatsAppMessage(formName) {
 	formText += `عدد فرق قطاع محافظة وادي الدواسر العاملة : ${document.getElementById('wadi_al_dawasir_sector_teams').value}\n`;
 	formText += `عدد مركبات قطاع محافظة وادي الدواسر العاملة : ${document.getElementById('wadi_al_dawasir_sector_vehicles_work').value}\n`;
 	formText += `عدد مركبات قطاع محافظة وادي الدواسر المتعطلة : ${document.getElementById('wadi_al_dawasir_sector_vehicles_broken').value}\n`;        
-	formText += `\n=== إحصائيات المنطقة ===\n`;
+    formText += `\n*=== إحصائيات المنطقة ===*\n`;
 	formText += `إجمالي مركبات القطاعات الداخلية العاملة: ${document.getElementById('internal_vehicles_total').value}\n`;
 	formText += `إجمالي مركبات القطاعات الخارجية العاملة: ${document.getElementById('external_vehicles_total').value}\n`;
 	formText += `إجمالي المركبات العاملة في منطقة الرياض: ${document.getElementById('total_working_vehicles_riyadh').value}\n`;
 	formText += `نسخة التحديث : ${document.getElementById('updateattendance').value}\n`;
 	formText += `اسم قائد المنطقة : ${document.getElementById('senior_paramedic_attendance').value}\n`;
 	} else if (formName === 'regional_leader_form') {
-	formText += `=== نموذج قائد المنطقة المناوب ===\n\n`;
+    formText += `*=== نموذج قائد المنطقة المناوب ===*\n\n`;
 	formText += `المناوبة: ${document.getElementById('shift').value}\n`;
 	formText += `التاريخ: ${document.getElementById('date').value}\n\n`;	    
-	formText += `=== قائد المنطقة المناوب ===\n`;
+    formText += `*=== قائد المنطقة المناوب ===*\n`;
 	formText += `اسم: ${document.getElementById('region_leader').value}\n`;
 	formText += `جوال: ${document.getElementById('region_leader_phone').value}\n`;
 	formText += `قناة: ${document.getElementById('region_leader_channel').value}\n\n`;
-	formText += `=== كبار المسعفين حسب القطاع ===\n`;
+    formText += `*=== كبار المسعفين حسب القطاع ===*\n`;
 	formText += `قطاع الشرق: ${document.getElementById('east_leader').value} - قناة (${document.getElementById('east_channel').value})\n`;
 	formText += `قطاع الغرب: ${document.getElementById('west_leader').value} - قناة (${document.getElementById('west_channel').value})\n`;
-	formText += `قطاع جنوب: ${document.getElementById('south_leader').value} - قناة (${document.getElementById('south_channel').value})\n`;
-	formText += `قطاع وسط: ${document.getElementById('central_leader').value} - قناة (${document.getElementById('central_channel').value})\n`;
+	formText += `قطاع الجنوب: ${document.getElementById('south_leader').value} - قناة (${document.getElementById('south_channel').value})\n`;
+	formText += `قطاع الوسط: ${document.getElementById('central_leader').value} - قناة (${document.getElementById('central_channel').value})\n`;
 	formText += `قطاع الشمال: ${document.getElementById('north_leader').value} - قناة (${document.getElementById('north_channel').value})\n`;
         } 
 
@@ -2304,30 +2288,48 @@ document.addEventListener("DOMContentLoaded", function () {
         toggleFieldsBasedOnSupportStatus(); // لضمان تحديث العرض بناءً على القيمة الحالية لحالة الدعم
     };
 
-// إجمالي بلاغات القطاع:
-function calculateTotalReports() {
-    // Get values from inputs and convert them to integers
-    var ecoReports = parseInt(document.getElementById('eco_reports').value) || 0;
-    var deltaReports = parseInt(document.getElementById('delta_reports').value) || 0;
-    var charlieReports = parseInt(document.getElementById('charlie_reports').value) || 0;
-    var bravoReports = parseInt(document.getElementById('bravo_reports').value) || 0;
-    var alphaReports = parseInt(document.getElementById('alpha_reports').value) || 0;
-    var omegaReports = parseInt(document.getElementById('omega_reports').value) || 0;
+    // إجمالي بلاغات القطاع:
+    function calculateTotalReports() {
+        // Get values from inputs and convert them to integers
+        var ecoReports = parseInt(document.getElementById('eco_reports').value) || 0;
+        var deltaReports = parseInt(document.getElementById('delta_reports').value) || 0;
+        var charlieReports = parseInt(document.getElementById('charlie_reports').value) || 0;
+        var bravoReports = parseInt(document.getElementById('bravo_reports').value) || 0;
+        var alphaReports = parseInt(document.getElementById('alpha_reports').value) || 0;
+        var omegaReports = parseInt(document.getElementById('omega_reports').value) || 0;
+        
+        // Calculate total
+        var totalReports = ecoReports + deltaReports + charlieReports + bravoReports + alphaReports + omegaReports;
+        
+        // Set the total in the readonly input field
+        document.getElementById('total_reports').value = totalReports;
+    }
     
-    // Calculate total
-    var totalReports = ecoReports + deltaReports + charlieReports + bravoReports + alphaReports + omegaReports;
+    // Add event listeners to update total when any input changes
+    document.getElementById('eco_reports').addEventListener('input', calculateTotalReports);
+    document.getElementById('delta_reports').addEventListener('input', calculateTotalReports);
+    document.getElementById('charlie_reports').addEventListener('input', calculateTotalReports);
+    document.getElementById('bravo_reports').addEventListener('input', calculateTotalReports);
+    document.getElementById('alpha_reports').addEventListener('input', calculateTotalReports);
+    document.getElementById('omega_reports').addEventListener('input', calculateTotalReports);
     
-    // Set the total in the readonly input field
-    document.getElementById('total_reports').value = totalReports;
-}
-
-// Add event listeners to update total when any input changes
-document.getElementById('eco_reports').addEventListener('input', calculateTotalReports);
-document.getElementById('delta_reports').addEventListener('input', calculateTotalReports);
-document.getElementById('charlie_reports').addEventListener('input', calculateTotalReports);
-document.getElementById('bravo_reports').addEventListener('input', calculateTotalReports);
-document.getElementById('alpha_reports').addEventListener('input', calculateTotalReports);
-document.getElementById('omega_reports').addEventListener('input', calculateTotalReports);
+    function toggleEndTimeFields() {
+        const isChecked = document.getElementById('event_not_ended').checked;
+        const endHourField = document.getElementById('end_hour');
+        const endMinuteField = document.getElementById('end_minute');
+        
+        if (isChecked) {
+            // إخفاء الحقول إذا تم اختيار "لم ينتهِ"
+            endHourField.value = '';
+            endMinuteField.value = '';
+            endHourField.disabled = true;
+            endMinuteField.disabled = true;
+        } else {
+            // إعادة تفعيل الحقول إذا تم إلغاء اختيار "لم ينتهِ"
+            endHourField.disabled = false;
+            endMinuteField.disabled = false;
+        }
+    }
 
 </script>
 
