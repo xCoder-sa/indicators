@@ -1320,28 +1320,27 @@
             <textarea id="support_reasons" rows="4"></textarea>
 
             <div id="supportDetails">
-		 <label for="support_sector">القطاع الداعم:</label>
-		<select id="support_sector" onchange="toggleOtherSectorInput(this, 'other_support_sector')">
-		    <option value="الوسط">الوسط</option>
-		    <option value="الجنوب">الجنوب</option>
-		    <option value="الشرق">الشرق</option>
-		    <option value="الغرب">الغرب</option>
-		    <option value="الشمال">الشمال</option>
-		    <option value="other">أخرى</option>
-		</select>
-		<input type="text" id="other_support_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
-		
-		<label for="supported_sector">القطاع المدعوم:</label>
-		<select id="supported_sector" onchange="toggleOtherSectorInput(this, 'other_supported_sector')">
-		    <option value="الوسط">الوسط</option>
-		    <option value="الجنوب">الجنوب</option>
-		    <option value="الشرق">الشرق</option>
-		    <option value="الغرب">الغرب</option>
-		    <option value="الشمال">الشمال</option>
-		    <option value="other">أخرى</option>
-		</select>
-		<input type="text" id="other_supported_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
+                <label for="support_sector">القطاع الداعم:</label>
+                <select id="support_sector" onchange="toggleOtherSectorInput()">
+                    <option value="الوسط">الوسط</option>
+                    <option value="الجنوب">الجنوب</option>
+                    <option value="الشرق">الشرق</option>
+                    <option value="الغرب">الغرب</option>
+                    <option value="الشمال">الشمال</option>
+                    <option value="other">أخرى</option>
+                </select>
+                <input type="text" id="other_support_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
 
+                <label for="supported_sector">القطاع المدعوم:</label>
+                <select id="supported_sector" onchange="toggleOtherSectorInput()">
+                    <option value="الوسط">الوسط</option>
+                    <option value="الجنوب">الجنوب</option>
+                    <option value="الشرق">الشرق</option>
+                    <option value="الغرب">الغرب</option>
+                    <option value="الشمال">الشمال</option>
+                    <option value="other">أخرى</option>
+                </select>
+                <input type="text" id="other_supported_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
 
                 <label for="dispatch_time">توقيت تحريك الدعم (نظام 24 ساعة):</label>
                 <div class="input-row">
@@ -1715,7 +1714,7 @@ function sendWhatsAppMessage(formName) {
 
     if (formName === 'senior_paramedic') {
         formText += `=== نموذج كبار المسعفين ===\n\n`;
-	formText += `القطاع:قطاع ${document.getElementById('sector').value}\n`;
+	formText += `القطاع: ${document.getElementById('sector').value}\n`;
 	formText += `التاريخ: ${document.getElementById('date').value}\n`;
         formText += `التوقيت الحالي: ${document.getElementById('time').value}\n`;
         formText += `عدد الفرق العاملة: ${document.getElementById('working_teams').value} من أصل: ${document.getElementById('total_teams').value}\n`;
@@ -1752,10 +1751,11 @@ function sendWhatsAppMessage(formName) {
     } else if (formName === 'operational_failure') {
         formText += `=== نموذج فشل تشغيلي ===\n\n`;
         if (document.getElementById('sector').value !== 'other') {
-    formText += `القطاع: قطاع  ${document.getElementById('sector').value}\n`;
+    formText += `القطاع: ${document.getElementById('sector').value}\n`;
 } else {
-    formText += `القطاع: قطاع محافظة ${document.getElementById('other_sector').value}\n`;
+    formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
 }
+	formText += `القطاع: ${document.getElementById('sector').value}\n`;
 	formText += `رقم البلاغ: ${document.getElementById('report_number').value}\n`;
         formText += `بداية الحدث: ${document.getElementById('start_hour').value}:${document.getElementById('start_minute').value}\n`;
         formText += `تعطل فرقة إسعافية: ${document.getElementById('unit_failure').value}\n`;
@@ -1769,9 +1769,9 @@ function sendWhatsAppMessage(formName) {
     } else if (formName === 'eco_reports') {
         formText += `=== نموذج بلاغات إيكو ===\n\n`;
         if (document.getElementById('sector').value !== 'other') {
-    formText += `القطاع:قطاع ${document.getElementById('sector').value}\n`;
+    formText += `القطاع: ${document.getElementById('sector').value}\n`;
 } else {
-    formText += `القطاع:قطاع محافظة ${document.getElementById('other_sector').value}\n`;
+    formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
 }
         formText += `التاريخ: ${document.getElementById('report_date').value}\n`;
         formText += `توقيت التقرير: ${document.getElementById('report_hour').value}:${document.getElementById('report_minute').value}\n`;
@@ -1784,9 +1784,9 @@ function sendWhatsAppMessage(formName) {
     } else if (formName === 'major_event') {
         formText += `=== نموذج حدث جسيم ===\n\n`;
         if (document.getElementById('sector').value !== 'other') {
-    formText += `القطاع:قطاع ${document.getElementById('sector').value}\n`;
+    formText += `القطاع: ${document.getElementById('sector').value}\n`;
 } else {
-    formText += `القطاع:قطاع محافظة ${document.getElementById('other_sector').value}\n`;
+    formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
 }
         formText += `وقت وتاريخ الحدث: ${document.getElementById('event_time').value} ${document.getElementById('event_hour').value}:${document.getElementById('event_minute').value}\n`;
         formText += `تفاصيل الحدث: ${document.getElementById('event_details').value}\n`;
@@ -1822,9 +1822,9 @@ function sendWhatsAppMessage(formName) {
     } else if (formName === 'support_request') {
         formText += `=== طلب تفعيل خطة المساندة والدعم المتبادل ===\n\n`;
         if (document.getElementById('sector').value !== 'other') {
-    formText += `القطاع:قطاع ${document.getElementById('sector').value}\n`;
+    formText += `القطاع: ${document.getElementById('sector').value}\n`;
 } else {
-    formText += `القطاع:قطاع محافظة ${document.getElementById('other_sector').value}\n`;
+    formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
 }
         formText += `توقيت طلب الدعم: ${document.getElementById('report_hour').value}:${document.getElementById('report_minute').value}\n`;
         formText += `عدد الوحدات المرتبطة ببلاغ: ${document.getElementById('units_linked').value}\n`;
@@ -1851,19 +1851,8 @@ function sendWhatsAppMessage(formName) {
 	    formText += `اسم قائد المنطقة: ${document.getElementById('region_leader_name').value}\n`;
 	
 	    if (document.getElementById('support_status').value === 'الموافقة') {
-
-		    // القطاع الداعم اخرى
-	    if (document.getElementById('support_sector').value !== 'other') {
-    formText += `القطاع:قطاع ${document.getElementById('support_sector').value}\n`;
-} else {
-    formText += `القطاع:قطاع محافظة ${document.getElementById('other_sector').value}\n`;
-}
-		    // القطاع المدعوم اخرى
-	    if (document.getElementById('supported_sector').value !== 'other') {
-    formText += `القطاع:قطاع ${document.getElementById('other_supported_sector').value}\n`;
-} else {
-    formText += `القطاع:قطاع محافظة ${document.getElementById('other_sector').value}\n`;
-}
+	        formText += `القطاع الداعم: ${document.getElementById('support_sector').value}\n`;
+	        formText += `القطاع المدعوم: ${document.getElementById('supported_sector').value}\n`;
 	        formText += `توقيت تحريك الدعم: ${document.getElementById('dispatch_hour').value}:${document.getElementById('dispatch_minute').value}\n`;
 	        formText += `توقيت وصول الدعم: ${document.getElementById('arrival_hour').value}:${document.getElementById('arrival_minute').value}\n`;
 	        formText += `عدد الفرق الداعمة: ${document.getElementById('support_teams_count').value}\n`;
@@ -2004,9 +1993,10 @@ function showCopyNotification() {
 }
 
 
-    function toggleOtherSectorInput(selectElement, inputId) {
-        const otherSectorInput = document.getElementById(inputId);
-        if (selectElement.value === "other") {
+    function toggleOtherSectorInput() {
+        const sectorSelect = document.getElementById("sector");
+        const otherSectorInput = document.getElementById("other_sector");
+        if (sectorSelect.value === "other") {
             otherSectorInput.style.display = "block";
         } else {
             otherSectorInput.style.display = "none";
