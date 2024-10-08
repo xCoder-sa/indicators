@@ -795,8 +795,6 @@
     `;
 	} else if (formName === 'senior_paramedic_outside') {
             formHTML = `
-		 <h2></h2>
-
 		<h2>نموذج كبار المسعفين (خارجي)</h2>
 		<center><h3>نموذج كبار المسعفين للقطاعات الخارجية يرسل كل 6 ساعات من قبل كبير المسعفين</h3></center>
                 <div class="form-section">
@@ -1575,7 +1573,6 @@ function getFormData(formName) {
     data.sector_north = document.getElementById('sector_north')?.value || '';
     data.sector_south = document.getElementById('sector_south')?.value || '';
     data.total_rapid_response_reports = document.getElementById('total_rapid_response_reports')?.value || '';
-}
     }
 
     return data;
