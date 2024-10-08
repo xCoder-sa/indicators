@@ -1753,7 +1753,7 @@ function sendWhatsAppMessage(formName) {
         if (document.getElementById('sector').value !== 'other') {
     formText += `القطاع: قطاع  ${document.getElementById('sector').value}\n`;
 } else {
-    formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
+    formText += `القطاع: قطاع محافظة ${document.getElementById('other_sector').value}\n`;
 }
 	formText += `رقم البلاغ: ${document.getElementById('report_number').value}\n`;
         formText += `بداية الحدث: ${document.getElementById('start_hour').value}:${document.getElementById('start_minute').value}\n`;
@@ -1768,9 +1768,9 @@ function sendWhatsAppMessage(formName) {
     } else if (formName === 'eco_reports') {
         formText += `=== نموذج بلاغات إيكو ===\n\n`;
         if (document.getElementById('sector').value !== 'other') {
-    formText += `القطاع: ${document.getElementById('sector').value}\n`;
+    formText += `القطاع:قطاع ${document.getElementById('sector').value}\n`;
 } else {
-    formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
+    formText += `القطاع:قطاع محافظة ${document.getElementById('other_sector').value}\n`;
 }
         formText += `التاريخ: ${document.getElementById('report_date').value}\n`;
         formText += `توقيت التقرير: ${document.getElementById('report_hour').value}:${document.getElementById('report_minute').value}\n`;
@@ -1783,9 +1783,9 @@ function sendWhatsAppMessage(formName) {
     } else if (formName === 'major_event') {
         formText += `=== نموذج حدث جسيم ===\n\n`;
         if (document.getElementById('sector').value !== 'other') {
-    formText += `القطاع: ${document.getElementById('sector').value}\n`;
+    formText += `القطاع:قطاع ${document.getElementById('sector').value}\n`;
 } else {
-    formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
+    formText += `القطاع:قطاع محافظة ${document.getElementById('other_sector').value}\n`;
 }
         formText += `وقت وتاريخ الحدث: ${document.getElementById('event_time').value} ${document.getElementById('event_hour').value}:${document.getElementById('event_minute').value}\n`;
         formText += `تفاصيل الحدث: ${document.getElementById('event_details').value}\n`;
@@ -1821,9 +1821,9 @@ function sendWhatsAppMessage(formName) {
     } else if (formName === 'support_request') {
         formText += `=== طلب تفعيل خطة المساندة والدعم المتبادل ===\n\n`;
         if (document.getElementById('sector').value !== 'other') {
-    formText += `القطاع: ${document.getElementById('sector').value}\n`;
+    formText += `القطاع:قطاع ${document.getElementById('sector').value}\n`;
 } else {
-    formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
+    formText += `القطاع:قطاع محافظة ${document.getElementById('other_sector').value}\n`;
 }
         formText += `توقيت طلب الدعم: ${document.getElementById('report_hour').value}:${document.getElementById('report_minute').value}\n`;
         formText += `عدد الوحدات المرتبطة ببلاغ: ${document.getElementById('units_linked').value}\n`;
@@ -1850,8 +1850,16 @@ function sendWhatsAppMessage(formName) {
 	    formText += `اسم قائد المنطقة: ${document.getElementById('region_leader_name').value}\n`;
 	
 	    if (document.getElementById('support_status').value === 'الموافقة') {
-	        formText += `القطاع الداعم: ${document.getElementById('support_sector').value}\n`;
-	        formText += `القطاع المدعوم: ${document.getElementById('supported_sector').value}\n`;
+	    if (document.getElementById('support_sector').value !== 'other') {
+    formText += `القطاع:قطاع ${document.getElementById('support_sector').value}\n`;
+} else {
+    formText += `القطاع:قطاع محافظة ${document.getElementById('other_sector').value}\n`;
+}
+	    if (document.getElementById('supported_sector').value !== 'other') {
+    formText += `القطاع:قطاع ${document.getElementById('supported_sector').value}\n`;
+} else {
+    formText += `القطاع:قطاع محافظة ${document.getElementById('other_sector').value}\n`;
+}
 	        formText += `توقيت تحريك الدعم: ${document.getElementById('dispatch_hour').value}:${document.getElementById('dispatch_minute').value}\n`;
 	        formText += `توقيت وصول الدعم: ${document.getElementById('arrival_hour').value}:${document.getElementById('arrival_minute').value}\n`;
 	        formText += `عدد الفرق الداعمة: ${document.getElementById('support_teams_count').value}\n`;
