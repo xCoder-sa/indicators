@@ -161,6 +161,11 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             overflow-y: auto;
         }
+    @media (max-width: 767px) {
+    .container {
+        padding-top: 150px; /* زيادة المساحة لتعويض ارتفاع شريط التنقل */
+    }
+}
         h2 {
             color: #3498db;
             font-size: 24px;
@@ -470,7 +475,7 @@
 		<center><h3>نموذج تحضير منطقة الرياض صلاحيات قائد المنطقة يرسل بعد نصف ساعة من بداية المناوبة ويحدث في حال وجود مستجدات</h3></center>
                 <div class="form-section">
                     <label for="date">التاريخ:</label>
-                    <input type="date" id="date" readonly disabled style="background-color: #e0e0e0;>
+        <input type="date" id="date" readonly disabled style="background-color: #e0e0e0;>
                     <label for="shift">المناوبة</label>
                     <select id="shift" onchange="toggleOtherSectorInput()">
                         <option value="صباحي">صباحي</option>
@@ -810,7 +815,7 @@
                     <input type="text" id="other_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
 
                     <label for="date">التاريخ:</label>
-                    <input type="date" id="date" readonly disabled style="background-color: #e0e0e0;>
+        <input type="date" id="date" readonly disabled style="background-color: #e0e0e0;>
 
                     <label for="time">التوقيت الحالي:</label>
                     <select id="time">
@@ -911,7 +916,7 @@
                     <label for="report_number">رقم البلاغ:</label>
                     <input type="text" id="report_number">
 
-                    <label for="event_start">بداية الحدث (الساعة والدقيقة):</label>
+                    <label for="event_start">بداية الحدث (نظام 24 ساعة):</label>
                     <div class="input-row">
                         <input type="text" id="start_hour" placeholder="الساعة" style="width: 45px;">
                         <input type="text" id="start_minute" placeholder="الدقيقة" style="width: 45px;">
@@ -942,7 +947,7 @@
                     </select>
 
 
-                    <label for="event_end">نهاية الحدث (الساعة والدقيقة):</label>
+                    <label for="event_end">نهاية الحدث (نظام 24 ساعة):</label>
                     <div class="input-row">
                         <input type="text" id="end_hour" placeholder="الساعة" style="width: 45px;">
                         <input type="text" id="end_minute" placeholder="الدقيقة" style="width: 45px;">
@@ -952,14 +957,17 @@
             `;
         } else if (formName === 'eco_reports') {
             formHTML = `
-            <h2>نموذج بلاغات إيكو</h2>
-		<center><h3>يرسل من قبل كبير المسعفين المناوب</h3></center>
-
+                <div class="input-row">
+                <div class="input-small">
+                    <h2>نموذج بلاغات إيكو</h2>
+                    <center><h3>يرسل من قبل كبير المسعفين المناوب</h3></center>
+                        </div>
+                        </div>
                 <div class="form-section">
                     <label for="report_date">التاريخ:</label>
-                    <input type="date" id="report_date" readonly disabled style="background-color: #e0e0e0;>
+                    <input type="date" id="report_date" readonly>
 
-                    <label for="report_time">توقيت التقرير (الساعة والدقيقة):</label>
+                    <label for="report_time">توقيت التقرير (نظام 24 ساعة):</label>
                     <div class="input-row">
                         <input type="text" id="report_hour" placeholder="الساعة" style="width: 45px;">
                         <input type="text" id="report_minute" placeholder="الدقيقة" style="width: 45px;">
@@ -1012,7 +1020,7 @@
                     <input type="text" id="other_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
 
                     <label for="event_time">وقت وتاريخ الحدث:</label>
-                    <input type="date" id="event_time" readonly disabled style="background-color: #e0e0e0;>
+                    <input type="date" id="event_time" readonly>
                     <div class="input-row">
                         <input type="text" id="event_hour" placeholder="الساعة" style="width: 45px;">
                         <input type="text" id="event_minute" placeholder="الدقيقة" style="width: 45px;">
@@ -1125,7 +1133,7 @@
                     </select>
                     <input type="text" id="other_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
 
-                    <label for="report_time">توقيت طلب الدعم (الساعة والدقيقة):</label>
+                    <label for="report_time">توقيت طلب الدعم (نظام 24 ساعة):</label>
                     <div class="input-row">
                         <input type="text" id="report_hour" placeholder="الساعة" style="width: 45px;">
                         <input type="text" id="report_minute" placeholder="الدقيقة" style="width: 45px;">
@@ -1205,13 +1213,13 @@
                     </select>
                     <input type="text" id="other_supported_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
 
-                    <label for="dispatch_time">توقيت تحريك الدعم (الساعة والدقيقة):</label>
+                    <label for="dispatch_time">توقيت تحريك الدعم (نظام 24 ساعة):</label>
                     <div class="input-row">
                         <input type="text" id="dispatch_hour" placeholder="الساعة" style="width: 45px;">
                         <input type="text" id="dispatch_minute" placeholder="الدقيقة" style="width: 45px;">
                     </div>
 
-                    <label for="arrival_time">توقيت وصول الدعم (الساعة والدقيقة):</label>
+                    <label for="arrival_time">توقيت وصول الدعم (نظام 24 ساعة):</label>
                     <div class="input-row">
                         <input type="text" id="arrival_hour" placeholder="الساعة" style="width: 45px;">
                         <input type="text" id="arrival_minute" placeholder="الدقيقة" style="width: 45px;">
@@ -1220,7 +1228,7 @@
                     <label for="support_teams_count">عدد الفرق الداعمة:</label>
                     <input type="text" id="support_teams_count">
 
-                    <label for="end_time">توقيت انتهاء الدعم (الساعة والدقيقة):</label>
+                    <label for="end_time">توقيت انتهاء الدعم (نظام 24 ساعة):</label>
                     <div class="input-row">
                         <input type="text" id="end_hour" placeholder="الساعة" style="width: 45px;">
                         <input type="text" id="end_minute" placeholder="الدقيقة" style="width: 45px;">
@@ -1878,9 +1886,21 @@ function selectCurrentTime() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    loadForm('senior_paramedic'); // تحميل النموذج الافتراضي
-    selectCurrentTime(); // تحديد التوقيت الحالي تلقائياً
+    // الحصول على المعاملات من رابط URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const formType = urlParams.get('formType');  // الحصول على قيمة formType من الرابط
+
+    // تحقق مما إذا كان هناك معامل formType في الرابط
+    if (formType) {
+        loadForm(formType);  // تحميل النموذج المطلوب إذا كان معامل formType موجود
+    } else {
+        loadForm('senior_paramedic');  // تحميل النموذج الافتراضي إذا لم يوجد معامل
+    }
+    
+    // تحديد التوقيت الحالي تلقائياً
+    selectCurrentTime();  
 });
+
 
 </script>
 
