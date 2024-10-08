@@ -497,7 +497,6 @@
                     </select>
 
                           <h2>تحضير القطاعات الداخلية</h2>
-
 		<div class="input-row">
 		    <div class="input-small">
 		        <label for="center_sector_teams">عدد فرق قطاع الوسط العاملة :</label>
@@ -505,7 +504,7 @@
 		    </div>
 		    <div class="input-small">
 		        <label for="center_sector_vehicles_work">مركبات قطاع الوسط العاملة :</label>
-		        <input type="text" id="center_sector_vehicles_work">
+		        <input type="text" id="center_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()">
 		    </div>
 		    <div class="input-small">
 		        <label for="center_sector_vehicles_broken">مركبات قطاع الوسط المتعطلة :</label>
@@ -519,7 +518,7 @@
 		    </div>
 		    <div class="input-small">
 		        <label for="east_sector_vehicles_work">مركبات قطاع الشرق العاملة :</label>
-		        <input type="text" id="east_sector_vehicles_work">
+		        <input type="text" id="east_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()">
 		    </div>
 		    <div class="input-small">
 		        <label for="east_sector_vehicles_broken">مركبات قطاع الشرق المتعطلة :</label>
@@ -533,7 +532,7 @@
 		    </div>
 		    <div class="input-small">
 		        <label for="west_sector_vehicles_work">مركبات قطاع الغرب العاملة :</label>
-		        <input type="text" id="west_sector_vehicles_work">
+		        <input type="text" id="west_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()">
 		    </div>
 		    <div class="input-small">
 		        <label for="west_sector_vehicles_broken">مركبات قطاع الغرب المتعطلة :</label>
@@ -547,7 +546,7 @@
 		    </div>
 		    <div class="input-small">
 		        <label for="north_sector_vehicles_work">مركبات قطاع الشمال العاملة :</label>
-		        <input type="text" id="north_sector_vehicles_work">
+		        <input type="text" id="north_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()">
 		    </div>
 		    <div class="input-small">
 		        <label for="north_sector_vehicles_broken">مركبات قطاع الشمال المتعطلة :</label>
@@ -561,13 +560,18 @@
 		    </div>
 		    <div class="input-small">
 		        <label for="south_sector_vehicles_work">مركبات قطاع الجنوب العاملة :</label>
-		        <input type="text" id="south_sector_vehicles_work">
+		        <input type="text" id="south_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()">
 		    </div>
 		    <div class="input-small">
 		        <label for="south_sector_vehicles_broken">مركبات قطاع الجنوب المتعطلة :</label>
 		        <input type="text" id="south_sector_vehicles_broken">
 		    </div>
 		</div>
+		
+		<!-- حقول لعرض الإجماليات -->
+		<label for="internal_vehicles_total">إجمالي مركبات القطاعات الداخلية العاملة :</label>
+		<input type="text" id="internal_vehicles_total" readonly style="background-color: #e0e0e0;">
+
                           <h2>تحضير القطاعات الخارجية</h2>
                           <div class="input-row">
 			<div class="input-small">
@@ -2008,7 +2012,6 @@ function calculateWorkingVehiclesTotals() {
 document.querySelectorAll('input[type="text"]').forEach(input => {
     input.addEventListener('input', calculateWorkingVehiclesTotals);
 });
-
 
 </script>
 
