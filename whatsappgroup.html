@@ -306,6 +306,8 @@
             <li><a href="#" onclick="loadForm('major_event')" class="menu-item"><i class="fas fa-calendar-alt"></i> نموذج حدث جسيم</a></li>
             <li><a href="#" onclick="loadForm('support_request')" class="menu-item"><i class="fas fa-handshake"></i> طلب تفعيل خطة المساندة</a></li>
             <li><a href="#" onclick="loadForm('support_activation')" class="menu-item"><i class="fas fa-check-circle"></i> قبول تفعيل خطة المساندة</a></li>
+            <li><a href="#" onclick="loadForm('regional_leader_form')" class="menu-item"> <i class="fas fa-moon"></i> نموذج قائد المنطقة المناوب </a></li>
+
         </ul>
         <!-- إزالة أيقونة الهامبرجر -->
     </nav>
@@ -1406,7 +1408,92 @@
         </div>
         <button onclick="sendWhatsAppMessage('support_activation')">إرسال النموذج بالواتساب</button>
     `;
-
+} else if (formName === 'regional_leader_form') {
+    formHTML = `
+        <h2>نموذج قائد المنطقة المناوب</h2>
+        <div class="form-section">
+            <label for="shift">المناوبة:</label>
+            <select id="shift" onchange="toggleOtherSectorInput()">
+                <option value="صباحي">صباحي</option>
+                <option value="مسائي">مسائي</option>
+            </select>
+        </div>
+        <div class="form-section">
+            <label for="date">التاريخ:</label>
+            <input type="date" id="date" readonly disabled style="background-color: #e0e0e0;">
+        </div>
+        <div class="form-section">
+            <label for="region_leader">قائد المنطقة المناوب:</label>
+            <input type="text" id="region_leader" placeholder="أدخل اسم قائد المنطقة">
+            
+            <label for="region_leader_phone">جوال:</label>
+            <input type="text" id="region_leader_phone" placeholder="أدخل رقم الجوال">
+            
+            <label for="region_leader_channel">قناة:</label>
+            <input type="text" id="region_leader_channel" placeholder="أدخل رقم القناة">
+        </div>
+        
+        <div class="form-section">
+            <h3>كبار المسعفين حسب القطاع</h3>
+            
+            <div class="input-row">
+                <div class="input-small">
+                    <label for="east_leader">كبير المسعفين قطاع الشرق:</label>
+                    <input type="text" id="east_leader" placeholder="أدخل اسم كبير المسعفين قطاع الشرق">
+                </div>
+                <div class="input-small">
+                    <label for="east_channel">قناة:</label>
+                    <input type="text" id="east_channel" placeholder="أدخل رقم القناة">
+                </div>
+            </div>
+            
+            <div class="input-row">
+                <div class="input-small">
+                    <label for="west_leader">كبير المسعفين قطاع الغرب:</label>
+                    <input type="text" id="west_leader" placeholder="أدخل اسم كبير المسعفين قطاع الغرب">
+                </div>
+                <div class="input-small">
+                    <label for="west_channel">قناة:</label>
+                    <input type="text" id="west_channel" placeholder="أدخل رقم القناة">
+                </div>
+            </div>
+            
+            <div class="input-row">
+                <div class="input-small">
+                    <label for="south_leader">كبير المسعفين قطاع جنوب:</label>
+                    <input type="text" id="south_leader" placeholder="أدخل اسم كبير المسعفين قطاع جنوب">
+                </div>
+                <div class="input-small">
+                    <label for="south_channel">قناة:</label>
+                    <input type="text" id="south_channel" placeholder="أدخل رقم القناة">
+                </div>
+            </div>
+            
+            <div class="input-row">
+                <div class="input-small">
+                    <label for="central_leader">كبير المسعفين قطاع وسط:</label>
+                    <input type="text" id="central_leader" placeholder="أدخل اسم كبير المسعفين قطاع وسط">
+                </div>
+                <div class="input-small">
+                    <label for="central_channel">قناة:</label>
+                    <input type="text" id="central_channel" placeholder="أدخل رقم القناة">
+                </div>
+            </div>
+            
+            <div class="input-row">
+                <div class="input-small">
+                    <label for="north_leader">كبير المسعفين قطاع الشمال:</label>
+                    <input type="text" id="north_leader" placeholder="أدخل اسم كبير المسعفين قطاع الشمال">
+                </div>
+                <div class="input-small">
+                    <label for="north_channel">قناة:</label>
+                    <input type="text" id="north_channel" placeholder="أدخل رقم القناة">
+                </div>
+            </div>
+        </div>
+        
+        <button onclick="sendWhatsAppMessage('regional_leader_form')">إرسال النموذج بالواتساب</button>
+    `;
         }
 
         formContainer.innerHTML = formHTML;
@@ -1732,15 +1819,35 @@ function getFormData(formName) {
 	        data.end_hour = document.getElementById('end_hour').value || '';
 	        data.end_minute = document.getElementById('end_minute').value || '';
 	        data.senior_paramedic_rapid_response_reports = document.getElementById('senior_paramedic_rapid_response_reports')?.value || '';
-
-} else if (formName === 'rapid_response_reports') {
-    // جمع بيانات نموذج "بلاغات التدخل السريع"
-    data.sector_west = document.getElementById('sector_west')?.value || '';
-    data.sector_east = document.getElementById('sector_east')?.value || '';
-    data.sector_central = document.getElementById('sector_central')?.value || '';
-    data.sector_north = document.getElementById('sector_north')?.value || '';
-    data.sector_south = document.getElementById('sector_south')?.value || '';
-    data.total_rapid_response_reports = document.getElementById('total_rapid_response_reports')?.value || '';
+	} else if (formName === 'rapid_response_reports') {
+		    // جمع بيانات نموذج "بلاغات التدخل السريع"
+		    data.sector_west = document.getElementById('sector_west')?.value || '';
+		    data.sector_east = document.getElementById('sector_east')?.value || '';
+		    data.sector_central = document.getElementById('sector_central')?.value || '';
+		    data.sector_north = document.getElementById('sector_north')?.value || '';
+		    data.sector_south = document.getElementById('sector_south')?.value || '';
+		    data.total_rapid_response_reports = document.getElementById('total_rapid_response_reports')?.value || '';
+			    } else if (formName === 'regional_leader_form') {
+		    data.shift = document.getElementById('shift').value || '';
+		    data.date = document.getElementById('date').value || '';
+		    data.region_leader = document.getElementById('region_leader').value || '';
+		    data.region_leader_phone = document.getElementById('region_leader_phone').value || '';
+		    data.region_leader_channel = document.getElementById('region_leader_channel').value || '';
+		    
+		    data.east_leader = document.getElementById('east_leader').value || '';
+		    data.east_channel = document.getElementById('east_channel').value || '';
+		    
+		    data.west_leader = document.getElementById('west_leader').value || '';
+		    data.west_channel = document.getElementById('west_channel').value || '';
+		    
+		    data.south_leader = document.getElementById('south_leader').value || '';
+		    data.south_channel = document.getElementById('south_channel').value || '';
+		    
+		    data.central_leader = document.getElementById('central_leader').value || '';
+		    data.central_channel = document.getElementById('central_channel').value || '';
+		    
+		    data.north_leader = document.getElementById('north_leader').value || '';
+		    data.north_channel = document.getElementById('north_channel').value || '';
     }
     }
 
@@ -2008,12 +2115,26 @@ function sendWhatsAppMessage(formName) {
 	formText += `عدد فرق قطاع محافظة وادي الدواسر العاملة : ${document.getElementById('wadi_al_dawasir_sector_teams').value}\n`;
 	formText += `عدد مركبات قطاع محافظة وادي الدواسر العاملة : ${document.getElementById('wadi_al_dawasir_sector_vehicles_work').value}\n`;
 	formText += `عدد مركبات قطاع محافظة وادي الدواسر المتعطلة : ${document.getElementById('wadi_al_dawasir_sector_vehicles_broken').value}\n`;        
-		formText += `\n=== إحصائيات المنطقة ===\n`;
-		formText += `إجمالي مركبات القطاعات الداخلية العاملة: ${document.getElementById('internal_vehicles_total').value}\n`;
-		formText += `إجمالي مركبات القطاعات الخارجية العاملة: ${document.getElementById('external_vehicles_total').value}\n`;
-		formText += `إجمالي المركبات العاملة في منطقة الرياض: ${document.getElementById('total_working_vehicles_riyadh').value}\n`;
-	        formText += `نسخة التحديث : ${document.getElementById('updateattendance').value}\n`;
-	        formText += `اسم قائد المنطقة : ${document.getElementById('senior_paramedic_attendance').value}\n`;
+	formText += `\n=== إحصائيات المنطقة ===\n`;
+	formText += `إجمالي مركبات القطاعات الداخلية العاملة: ${document.getElementById('internal_vehicles_total').value}\n`;
+	formText += `إجمالي مركبات القطاعات الخارجية العاملة: ${document.getElementById('external_vehicles_total').value}\n`;
+	formText += `إجمالي المركبات العاملة في منطقة الرياض: ${document.getElementById('total_working_vehicles_riyadh').value}\n`;
+	formText += `نسخة التحديث : ${document.getElementById('updateattendance').value}\n`;
+	formText += `اسم قائد المنطقة : ${document.getElementById('senior_paramedic_attendance').value}\n`;
+	} else if (formName === 'regional_leader_form') {
+	formText += `=== نموذج قائد المنطقة المناوب ===\n\n`;
+	formText += `المناوبة: ${document.getElementById('shift').value}\n`;
+	formText += `التاريخ: ${document.getElementById('date').value}\n\n`;	    
+	formText += `=== قائد المنطقة المناوب ===\n`;
+	formText += `اسم: ${document.getElementById('region_leader').value}\n`;
+	formText += `جوال: ${document.getElementById('region_leader_phone').value}\n`;
+	formText += `قناة: ${document.getElementById('region_leader_channel').value}\n\n`;
+	formText += `=== كبار المسعفين حسب القطاع ===\n`;
+	formText += `قطاع الشرق: ${document.getElementById('east_leader').value} - قناة (${document.getElementById('east_channel').value})\n`;
+	formText += `قطاع الغرب: ${document.getElementById('west_leader').value} - قناة (${document.getElementById('west_channel').value})\n`;
+	formText += `قطاع جنوب: ${document.getElementById('south_leader').value} - قناة (${document.getElementById('south_channel').value})\n`;
+	formText += `قطاع وسط: ${document.getElementById('central_leader').value} - قناة (${document.getElementById('central_channel').value})\n`;
+	formText += `قطاع الشمال: ${document.getElementById('north_leader').value} - قناة (${document.getElementById('north_channel').value})\n`;
         } 
 
 	
