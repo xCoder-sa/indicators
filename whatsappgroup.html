@@ -765,6 +765,17 @@
 			    <input type="text" id="wadi_al_dawasir_sector_vehicles_broken">
 			</div>
                 </div>
+		    <!-- حساب الإجماليات -->
+		    <div class="form-section">
+		        <label for="internal_vehicles_total">إجمالي مركبات القطاعات الداخلية:</label>
+		        <input type="number" id="internal_vehicles_total" readonly style="background-color: #e0e0e0;">
+		
+		        <label for="external_vehicles_total">إجمالي مركبات القطاعات الخارجية:</label>
+		        <input type="number" id="external_vehicles_total" readonly style="background-color: #e0e0e0;">
+		
+		        <label for="total_vehicles_riyadh">إجمالي مركبات منطقة الرياض:</label>
+		        <input type="number" id="total_vehicles_riyadh" readonly style="background-color: #e0e0e0;">
+		    </div>
 
 		<label for="updateattendance">اصدار التحديث</label>
 		<select id="updateattendance" onchange="toggleOtherSectorInput()">
@@ -1428,6 +1439,9 @@ function getFormData(formName) {
     data.wadi_al_dawasir_sector_teams = document.getElementById('wadi_al_dawasir_sector_teams')?.value || '';
     data.wadi_al_dawasir_sector_vehicles_work = document.getElementById('wadi_al_dawasir_sector_vehicles_work')?.value || '';
     data.wadi_al_dawasir_sector_vehicles_broken = document.getElementById('wadi_al_dawasir_sector_vehicles_broken')?.value || '';
+    data.internal_vehicles_total = document.getElementById('internal_vehicles_total')?.value || '';
+    data.external_vehicles_total = document.getElementById('external_vehicles_total')?.value || '';
+    data.total_vehicles_riyadh = document.getElementById('total_vehicles_riyadh')?.value || '';
     data.update_attendance_version = document.getElementById('updateattendance')?.value || '';
     data.senior_paramedic_attendance = document.getElementById('senior_paramedic_attendance')?.value || '';
     } else if (formName === 'operational_failure') {
@@ -1848,10 +1862,13 @@ function sendWhatsAppMessage(formName) {
 		formText += `عدد فرق وادي الدواسر العاملة : ${document.getElementById('wadi_al_dawasir_sector_teams').value}\n`;
 		formText += `عدد مركبات وادي الدواسر العاملة : ${document.getElementById('wadi_al_dawasir_sector_vehicles_work').value}\n`;
 		formText += `عدد مركبات وادي الدواسر المتعطلة : ${document.getElementById('wadi_al_dawasir_sector_vehicles_broken').value}\n`;        
+		formText += `\n=== إحصائيات المنطقة ===\n`;
+		formText += `إجمالي مركبات القطاعات الداخلية: ${document.getElementById('internal_vehicles_total').value}\n`;
+		formText += `إجمالي مركبات القطاعات الخارجية: ${document.getElementById('external_vehicles_total').value}\n`;
+		formText += `إجمالي مركبات منطقة الرياض: ${document.getElementById('total_vehicles_riyadh').value}\n`;
 	        formText += `نسخة التحديث : ${document.getElementById('updateattendance').value}\n`;
 	        formText += `اسم قائد المنطقة : ${document.getElementById('senior_paramedic_attendance').value}\n`;
         } 
-
 
 
 	
@@ -1950,6 +1967,64 @@ function calculateTotal() {
 
     document.getElementById('total_rapid_response_reports').value = total;
 }
+function calculateTotals() {
+    // حساب إجمالي مركبات القطاعات الداخلية
+    const internal_vehicles_total = 
+        (parseInt(document.getElementById('center_sector_vehicles_work').value) || 0) +
+        (parseInt(document.getElementById('center_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('east_sector_vehicles_work').value) || 0) +
+        (parseInt(document.getElementById('east_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('west_sector_vehicles_work').value) || 0) +
+        (parseInt(document.getElementById('west_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('north_sector_vehicles_work').value) || 0) +
+        (parseInt(document.getElementById('north_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('south_sector_vehicles_work').value) || 0) +
+        (parseInt(document.getElementById('south_sector_vehicles_broken').value) || 0);
+
+    // حساب إجمالي مركبات القطاعات الخارجية
+    const external_vehicles_total = 
+        (parseInt(document.getElementById('ramah_sector_vehicles_work').value) || 0) +
+        (parseInt(document.getElementById('ramah_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('al_aflag_sector_vehicles_work').value) || 0) +
+        (parseInt(document.getElementById('al_aflag_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('al_kharj_sector_vehicles_work').value) || 0) +
+        (parseInt(document.getElementById('al_kharj_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('al_dariya_sector_vehicles_work').value) || 0) +
+        (parseInt(document.getElementById('al_dariya_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('al_dawadmi_sector_vehicles_work').value) || 0) +
+        (parseInt(document.getElementById('al_dawadmi_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('al_zulfi_sector_vehicles_work').value) || 0) +
+        (parseInt(document.getElementById('al_zulfi_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('al_ghat_sector_vehicles_work').value) || 0) +
+        (parseInt(document.getElementById('al_ghat_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('al_quwayiyah_sector_vehicles_work').value) || 0) +
+        (parseInt(document.getElementById('al_quwayiyah_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('al_majmaah_sector_vehicles_work').value) || 0) +
+        (parseInt(document.getElementById('al_majmaah_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('al_muzahimiyah_sector_vehicles_work').value) || 0) +
+        (parseInt(document.getElementById('al_muzahimiyah_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('hawtat_banee_tamim_sector_vehicles_work').value) || 0) +
+        (parseInt(document.getElementById('hawtat_banee_tamim_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('shaqra_sector_vehicles_work').value) || 0) +
+        (parseInt(document.getElementById('shaqra_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('afif_sector_vehicles_work').value) || 0) +
+        (parseInt(document.getElementById('afif_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('wadi_al_dawasir_sector_vehicles_work').value) || 0) +
+        (parseInt(document.getElementById('wadi_al_dawasir_sector_vehicles_broken').value) || 0);
+
+    // حساب إجمالي مركبات منطقة الرياض
+    const total_vehicles_riyadh = internal_vehicles_total + external_vehicles_total;
+
+    // عرض الإجماليات في المربعات
+    document.getElementById('internal_vehicles_total').value = internal_vehicles_total;
+    document.getElementById('external_vehicles_total').value = external_vehicles_total;
+    document.getElementById('total_vehicles_riyadh').value = total_vehicles_riyadh;
+}
+
+// إضافة استدعاء حساب الإجماليات عند إدخال البيانات
+document.querySelectorAll('input[type="text"]').forEach(input => {
+    input.addEventListener('input', calculateTotals);
+});
 
 </script>
 
