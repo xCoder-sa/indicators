@@ -192,7 +192,20 @@
             border-color: #3498db;
             outline: none;
         }
-
+	input[type="number"] {
+	    width: 100%; /* نفس عرض الحقول النصية */
+	    padding: 10px; /* نفس المسافة الداخلية */
+	    margin: 5px 0 15px; /* نفس المسافات المحيطة */
+	    border: 1px solid #ccc; /* نفس الحدود */
+	    border-radius: 6px; /* نفس الحواف المستديرة */
+	    font-size: 14px; /* نفس حجم النص */
+	    transition: border-color 0.3s; /* تأثير الانتقال للحدود */
+	}
+	
+	input[type="number"]:focus {
+	    border-color: #3498db; /* نفس لون الحدود عند التركيز */
+	    outline: none; /* إزالة الخط الأزرق الافتراضي */
+	}
         button {
             width: 100%;
             padding: 12px;
