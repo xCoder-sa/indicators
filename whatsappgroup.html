@@ -784,6 +784,9 @@
 
                     <label for="sector_south">قطاع عمليات الجنوب:</label>
                     <input type="text" id="sector_south" placeholder="أدخل العدد">
+		    
+                    <label for="sector_south"إجمالي التدخل السريع:</label>
+                    <input type="text" id="sector_south" placeholder="يظهر العدد بشكل تلقائي">
                 </div>
                 <button onclick="sendWhatsAppMessage('rapid_response_reports')">إرسال النموذج بالواتساب</button>
             `;
@@ -1909,7 +1912,7 @@ document.addEventListener("DOMContentLoaded", function () {
     selectCurrentTime();  
 });
 
-            function toggleFieldsBasedOnSupportStatus() {
+    function toggleFieldsBasedOnSupportStatus() {
                 const supportStatus = document.getElementById('support_status').value;
                 const supportDetails = document.getElementById('supportDetails');
                 
@@ -1923,7 +1926,18 @@ document.addEventListener("DOMContentLoaded", function () {
             // استدعاء الدالة لتحديث العرض فورًا عند تحميل الصفحة
             window.onload = toggleFieldsBasedOnSupportStatus;
 
+    function calculateTotal() {
+        const sectorWest = parseInt(document.getElementById('sector_west').value) || 0;
+        const sectorEast = parseInt(document.getElementById('sector_east').value) || 0;
+        const sectorCentral = parseInt(document.getElementById('sector_central').value) || 0;
+        const sectorNorth = parseInt(document.getElementById('sector_north').value) || 0;
+        const sectorSouth = parseInt(document.getElementById('sector_south').value) || 0;
 
+        const total = sectorWest + sectorEast + sectorCentral + sectorNorth + sectorSouth;
+
+        document.getElementById('total_rapid_response_reports').value = total;
+    }
+}
 </script>
 
 </body>
