@@ -1159,6 +1159,14 @@
                     <textarea id="notes" rows="4"></textarea>
 			</div>
                 </div>
+	                <div class="form-section">
+                    <div class="input-row">
+                    <div class="input-small">
+                    <label for="senior_paramedic_name"> كبير المسعفين المناوب:</label>
+                    <input type="text" id="senior_paramedic_name">
+                    </div>
+                </div>
+          </div>
                 <button onclick="sendWhatsAppMessage('eco_reports')">إرسال النموذج بالواتساب</button>
             `;
         } else if (formName === 'major_event') {
@@ -1603,6 +1611,7 @@ function getFormData(formName) {
         data.responding_units = document.getElementById('responding_units')?.value || '';
         data.response_time = document.getElementById('response_time')?.value || '';
         data.notes = document.getElementById('notes')?.value || '';
+        data.senior_paramedic_name = document.getElementById('senior_paramedic_name')?.value || '';
     } else if (formName === 'major_event') {
         // جمع بيانات نموذج حدث جسيم
         data.sector = document.getElementById('sector')?.value || '';
@@ -1810,6 +1819,7 @@ function sendWhatsAppMessage(formName) {
         formText += `الوحدات المستجيبة: ${document.getElementById('responding_units').value}\n`;
         formText += `زمن الاستجابة: ${document.getElementById('response_time').value}\n`;
         formText += `ملاحظات: ${document.getElementById('notes').value}\n`;
+        formText += `اسم كبير المسعفين: ${document.getElementById('senior_paramedic_name').value}\n`;
     } else if (formName === 'major_event') {
         formText += `=== نموذج حدث جسيم ===\n\n`;
         if (document.getElementById('sector').value !== 'other') {
