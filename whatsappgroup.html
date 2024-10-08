@@ -62,7 +62,15 @@
 	    display: flex;
 	    align-items: center;
 	}
-
+        p {
+        background-color: #bfbfbf;
+        text-align: center;
+        padding: 10px;
+        width: fit-content;
+        margin: 0 auto;
+        font-weight: bold;
+        border-radius: 20px;
+	}
         .navbar .menu li a i {
             margin-left: 5px;
         }
@@ -488,7 +496,7 @@
 	      } else if (formName === 'attendance') {
             formHTML = `	    
 		<h2>نموذج تحضير</h2>
-		<center><h3>نموذج تحضير منطقة الرياض صلاحيات قائد المنطقة يرسل بعد نصف ساعة من بداية المناوبة ويحدث في حال وجود مستجدات</h3></center>
+		<p>نموذج تحضير منطقة الرياض صلاحيات قائد المنطقة يرسل بعد نصف ساعة من بداية المناوبة ويحدث في حال وجود مستجدات</p>
                 <div class="form-section">
                     <label for="date">التاريخ:</label>
         <input type="date" id="date" readonly disabled style="background-color: #e0e0e0;>
@@ -802,7 +810,7 @@
 } else if (formName === 'rapid_response_reports') {
     formHTML = `
         <h2>نموذج بلاغات التدخل السريع</h2>
-        <center><h3>يرسل من قبل قائد المنطقة كل 6 ساعات</h3></center>
+        <p>يرسل من قبل قائد المنطقة كل 6 ساعات</p>
         <div class="form-section">
             <label for="sector_west">قطاع عمليات الغرب:</label>
             <input type="number" id="sector_west" placeholder="أدخل العدد" oninput="calculateTotal()">
@@ -827,7 +835,7 @@
 	} else if (formName === 'senior_paramedic_outside') {
             formHTML = `
 		<h2>نموذج كبار المسعفين (خارجي)</h2>
-		<center><h3>نموذج كبار المسعفين للقطاعات الخارجية يرسل كل 6 ساعات من قبل كبير المسعفين</h3></center>
+		<p>نموذج كبار المسعفين للقطاعات الخارجية يرسل كل 6 ساعات من قبل كبير المسعفين</p>
                 <div class="form-section">
                     <label for="sector">اختر القطاع:</label>
                     <select id="sector" onchange="toggleOtherSectorInput()">
@@ -937,7 +945,7 @@
         } else if (formName === 'operational_failure') {
             formHTML = `
               <h2>نموذج فشل تشغيلي</h2>
-		<center><h3>يرسل من قبل كبار المسعفين في حال وجود فشل تشغيلي</h3></center>
+		<p>يرسل من قبل كبار المسعفين في حال وجود فشل تشغيلي</p>
                     <label for="sector">اختر القطاع:</label>
                     <select id="sector" onchange="toggleOtherSectorInput()">
                         <option value="الوسط">الوسط</option>
@@ -995,7 +1003,7 @@
                 <div class="input-row">
                 <div class="input-small">
                     <h2>نموذج بلاغات إيكو</h2>
-                    <center><h3>يرسل من قبل كبير المسعفين المناوب</h3></center>
+                    <p>يرسل من قبل كبير المسعفين المناوب</p>
                         </div>
                         </div>
                 <div class="form-section">
@@ -1040,7 +1048,7 @@
         } else if (formName === 'major_event') {
             formHTML = `
                <h2>نموذج حدث جسيم</h2>
-		<center><h3>يرسل من قبل قائد المنطقة أو من قبل كبير المسعفين المناوب</h3></center>
+		<p>يرسل من قبل قائد المنطقة أو من قبل كبير المسعفين المناوب</p>
 
                 <div class="form-section">
                     <label for="sector">القطاع:</label>
@@ -1154,7 +1162,7 @@
         } else if (formName === 'support_request') {
             formHTML = `
                <h2>طلب تفعيل خطة المساندة والدعم المتبادل</h2>
-		<center><h3>يرسل من قبل كبير المسعفين المناوب قبل طلب التدعيم</h3></center>
+		<p>يرسل من قبل كبير المسعفين المناوب قبل طلب التدعيم</p>
 
                 <div class="form-section">
                     <label for="sector">القطاع:</label>
@@ -1214,7 +1222,7 @@
 } else if (formName === 'support_activation') {
     formHTML = `
         <h2>نموذج قبول تفعيل خطة المساندة والدعم المتبادل</h2>
-        <center><h3>يرسل من قبل قائد المنطقة</h3></center>
+        <p>يرسل من قبل قائد المنطقة</p>
 
         <div class="form-section">
             <label for="support_status">حالة الدعم:</label>
