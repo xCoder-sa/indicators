@@ -1493,15 +1493,23 @@
         
         <button onclick="sendWhatsAppMessage('regional_leader_form')">إرسال النموذج بالواتساب</button>
     `;
-}
+
+
         }
-	 
 
         formContainer.innerHTML = formHTML;
 
         updateDateTime(formName);
     }
 
+    function updateDateTime(formName) {
+        const today = new Date().toISOString().split('T')[0];
+
+        const dateInputs = document.querySelectorAll("input[type='date']");
+        dateInputs.forEach(input => {
+            input.value = today;
+        });
+    }
     function updateDateTime(formName) {
         const today = new Date().toISOString().split('T')[0];
 
