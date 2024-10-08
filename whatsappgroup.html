@@ -568,9 +568,6 @@
 		    </div>
 		</div>
 		
-		<!-- حقول لعرض الإجماليات -->
-		<label for="internal_vehicles_total">إجمالي مركبات القطاعات الداخلية العاملة :</label>
-		<input type="text" id="internal_vehicles_total" readonly style="background-color: #e0e0e0;">
 
                           <h2>تحضير القطاعات الخارجية</h2>
 		<div class="input-row">
@@ -770,17 +767,21 @@
 		    </div>
 		</div>
 		
-		<!-- حقول لعرض الإجماليات -->
-		<label for="external_vehicles_total">إجمالي مركبات القطاعات الخارجية العاملة :</label>
-		<input type="text" id="external_vehicles_total" readonly style="background-color: #e0e0e0;">
-
 		    <!-- حساب الإجماليات -->
 		<div class="form-section">
-		<!-- حقل عرض إجمالي المركبات العاملة في منطقة الرياض -->
+		    <div class="input-small">
+		<label for="internal_vehicles_total">إجمالي مركبات القطاعات الداخلية العاملة :</label>
+		<input type="text" id="internal_vehicles_total" readonly style="background-color: #e0e0e0;">
+  		    </div>
+		    <div class="input-small">
+		<label for="external_vehicles_total">إجمالي مركبات القطاعات الخارجية العاملة :</label>
+		<input type="text" id="external_vehicles_total" readonly style="background-color: #e0e0e0;">
+      		    </div>
+		    <div class="input-small">
 		<label for="total_working_vehicles_riyadh">إجمالي المركبات العاملة في منطقة الرياض:</label>
 		<input type="text" id="total_working_vehicles_riyadh" readonly style="background-color: #e0e0e0;">
+		    </div>
 		</div>
-
 
 		<label for="updateattendance">اصدار التحديث</label>
 		<select id="updateattendance" onchange="toggleOtherSectorInput()">
