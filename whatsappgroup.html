@@ -1945,6 +1945,16 @@ function getFormData(formName) {
 function sendWhatsAppMessage(formName) {
     let formText = '';
 
+    // التحقق من الحقول المطلوبة قبل إرسال النموذج
+    let requiredFields = document.querySelectorAll('input[required], textarea[required], select[required]');
+    for (let i = 0; i < requiredFields.length; i++) {
+        if (requiredFields[i].value === "") {
+            alert("يرجى تعبئة جميع الحقول المطلوبة.");
+            requiredFields[i].focus();
+            return;  // إيقاف العملية إذا كان هناك حقل فارغ
+        }
+    }
+
     if (formName === 'senior_paramedic') {
         formText += `\n*=== نموذج كبار المسعفين ===*\n\n`;
     	formText += `القطاع: ${document.getElementById('sector').value}\n`;
@@ -2268,11 +2278,10 @@ function sendWhatsAppMessage(formName) {
         } 
 
 	
-    console.log(formText); // تأكيد عرض البيانات المجمعة
+    console.log(formText); 
     const encodedText = encodeURIComponent(formText);
     const whatsappUrl = `https://wa.me/?text=${encodedText}`;
 
-    // فتح الرابط في نافذة جديدة
     window.open(whatsappUrl, '_blank');
 }
 
