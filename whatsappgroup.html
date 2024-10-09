@@ -540,288 +540,395 @@
             `;
 	      } else if (formName === 'attendance') {
             formHTML = `	    
-		<h2>نموذج تحضير</h2>
-		<p>نموذج تحضير منطقة الرياض صلاحيات قائد المنطقة يرسل بعد نصف ساعة من بداية المناوبة ويحدث في حال وجود مستجدات</p>
-                <div class="form-section">
-                    <label for="date">التاريخ:</label>
-        <input type="date" id="date" readonly disabled style="background-color: #e0e0e0;>
-                    <label for="shift">المناوبة</label>
-                    <select id="shift" onchange="toggleOtherSectorInput()" required>
-                        <option value="صباحي">صباحي</option>
-                        <option value="مسائي">مسائي</option>
-                    </select>
+    <div class="form-section">
+        <h2>نموذج تحضير منطقة الرياض</h2>
+        <p>صلاحيات قائد المنطقة يرسل بعد نصف ساعة من بداية المناوبة ويحدث في حال وجود مستجدات</p>
+        
+        <!-- معلومات أساسية -->
+        <div class="form-section">
+            <label for="date">التاريخ:</label>
+            <input type="date" id="date" readonly disabled style="background-color: #e0e0e0;">
+            
+            <label for="shift">المناوبة:</label>
+            <select id="shift" onchange="toggleOtherSectorInput()" required>
+                <option value="صباحي">صباحي</option>
+                <option value="مسائي">مسائي</option>
+            </select>
+        </div>
+        
+        <!-- تحضير القطاعات الداخلية -->
+        <div class="form-section">
+            <h2>تحضير القطاعات الداخلية</h2>
+            <!-- قطاع الوسط -->
+            <div class="input-row">
+                <div class="input-small">
+                    <label for="center_sector_teams">عدد فرق قطاع الوسط العاملة :</label>
+                    <input type="number" id="center_sector_teams" oninput="calculateTotals()" required>
                 </div>
-		<div class="form-section">
-                          <h2>تحضير القطاعات الداخلية</h2>
-		<div class="input-row">
-		    <div class="input-small">
-		        <label for="center_sector_teams">عدد فرق قطاع الوسط العاملة :</label>
-		        <input type="text" id="center_sector_teams" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="center_sector_vehicles_work">مركبات قطاع الوسط العاملة :</label>
-		        <input type="text" id="center_sector_vehicles_work" oninput="calculateTotals()" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="center_sector_vehicles_broken">مركبات قطاع الوسط المتعطلة :</label>
-		        <input type="text" id="center_sector_vehicles_broken" required>
-		    </div>
-		</div>
-		<div class="input-row">
-		    <div class="input-small">
-		        <label for="east_sector_teams">عدد فرق قطاع الشرق العاملة :</label>
-		        <input type="text" id="east_sector_teams" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="east_sector_vehicles_work">مركبات قطاع الشرق العاملة :</label>
-		        <input type="text" id="east_sector_vehicles_work" oninput="calculateTotals()" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="east_sector_vehicles_broken">مركبات قطاع الشرق المتعطلة :</label>
-		        <input type="text" id="east_sector_vehicles_broken" required>
-		    </div>
-		</div>
-		<div class="input-row">
-		    <div class="input-small">
-		        <label for="west_sector_teams">عدد فرق قطاع الغرب العاملة :</label>
-		        <input type="text" id="west_sector_teams" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="west_sector_vehicles_work">مركبات قطاع الغرب العاملة :</label>
-		        <input type="text" id="west_sector_vehicles_work" oninput="calculateTotals()" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="west_sector_vehicles_broken">مركبات قطاع الغرب المتعطلة :</label>
-		        <input type="text" id="west_sector_vehicles_broken" required>
-		    </div>
-		</div>
-		<div class="input-row">
-		    <div class="input-small">
-		        <label for="north_sector_teams">عدد فرق قطاع الشمال العاملة :</label>
-		        <input type="text" id="north_sector_teams" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="north_sector_vehicles_work">مركبات قطاع الشمال العاملة :</label>
-		        <input type="text" id="north_sector_vehicles_work" oninput="calculateTotals()" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="north_sector_vehicles_broken">مركبات قطاع الشمال المتعطلة :</label>
-		        <input type="text" id="north_sector_vehicles_broken" required>
-		    </div>
-		</div>
-		<div class="input-row">
-		    <div class="input-small">
-		        <label for="south_sector_teams">عدد فرق قطاع الجنوب العاملة :</label>
-		        <input type="text" id="south_sector_teams" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="south_sector_vehicles_work">مركبات قطاع الجنوب العاملة :</label>
-		        <input type="text" id="south_sector_vehicles_work" oninput="calculateTotals()" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="south_sector_vehicles_broken">مركبات قطاع الجنوب المتعطلة :</label>
-		        <input type="text" id="south_sector_vehicles_broken" required>
-		    </div>
-		</div>
-		
-
-                          <h2>تحضير قطاعات منطقة الرياض الخارجية</h2>
-		<div class="input-row">
-		    <div class="input-small">
-		        <label for="ramah_sector_teams">عدد فرق رماح العاملة :</label>
-		        <input type="text" id="ramah_sector_teams" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="ramah_sector_vehicles_work">مركبات رماح العاملة :</label>
-		        <input type="text" id="ramah_sector_vehicles_work" oninput="calculateTotals()" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="ramah_sector_vehicles_broken">مركبات رماح المتعطلة :</label>
-		        <input type="text" id="ramah_sector_vehicles_broken" required>
-		    </div>
-		</div>
-		<div class="input-row">
-		    <div class="input-small">
-		        <label for="al_aflag_sector_teams">عدد فرق الافلاج العاملة :</label>
-		        <input type="text" id="al_aflag_sector_teams" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="al_aflag_sector_vehicles_work">مركبات الافلاج العاملة :</label>
-		        <input type="text" id="al_aflag_sector_vehicles_work" oninput="calculateTotals()" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="al_aflag_sector_vehicles_broken">مركبات الافلاج المتعطلة :</label>
-		        <input type="text" id="al_aflag_sector_vehicles_broken" required>
-		    </div>
-		</div>
-		<div class="input-row">
-		    <div class="input-small">
-		        <label for="al_kharj_sector_teams">عدد فرق الخرج العاملة :</label>
-		        <input type="text" id="al_kharj_sector_teams" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="al_kharj_sector_vehicles_work">مركبات الخرج العاملة :</label>
-		        <input type="text" id="al_kharj_sector_vehicles_work" oninput="calculateTotals()" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="al_kharj_sector_vehicles_broken">مركبات الخرج المتعطلة :</label>
-		        <input type="text" id="al_kharj_sector_vehicles_broken" required>
-		    </div>
-		</div>
-		<div class="input-row">
-		    <div class="input-small">
-		        <label for="al_dariya_sector_teams">عدد فرق الدرعية العاملة :</label>
-		        <input type="text" id="al_dariya_sector_teams" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="al_dariya_sector_vehicles_work">مركبات الدرعية العاملة :</label>
-		        <input type="text" id="al_dariya_sector_vehicles_work" oninput="calculateTotals()" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="al_dariya_sector_vehicles_broken">مركبات الدرعية المتعطلة :</label>
-		        <input type="text" id="al_dariya_sector_vehicles_broken" required>
-		    </div>
-		</div>
-		<div class="input-row">
-		    <div class="input-small">
-		        <label for="al_dawadmi_sector_teams">عدد فرق الدوادمي العاملة :</label>
-		        <input type="text" id="al_dawadmi_sector_teams" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="al_dawadmi_sector_vehicles_work">مركبات الدوادمي العاملة :</label>
-		        <input type="text" id="al_dawadmi_sector_vehicles_work" oninput="calculateTotals()" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="al_dawadmi_sector_vehicles_broken">مركبات الدوادمي المتعطلة :</label>
-		        <input type="text" id="al_dawadmi_sector_vehicles_broken" required>
-		    </div>
-		</div>
-		<div class="input-row">
-		    <div class="input-small">
-		        <label for="al_zulfi_sector_teams">عدد فرق الزلفي العاملة :</label>
-		        <input type="text" id="al_zulfi_sector_teams" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="al_zulfi_sector_vehicles_work">مركبات الزلفي العاملة :</label>
-		        <input type="text" id="al_zulfi_sector_vehicles_work" oninput="calculateTotals()" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="al_zulfi_sector_vehicles_broken">مركبات الزلفي المتعطلة :</label>
-		        <input type="text" id="al_zulfi_sector_vehicles_broken" required>
-		    </div>
-		</div>
-		<div class="input-row">
-		    <div class="input-small">
-		        <label for="al_ghat_sector_teams">عدد فرق الغاط العاملة :</label>
-		        <input type="text" id="al_ghat_sector_teams" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="al_ghat_sector_vehicles_work">مركبات الغاط العاملة :</label>
-		        <input type="text" id="al_ghat_sector_vehicles_work" oninput="calculateTotals()">
-		    </div>
-		    <div class="input-small">
-		        <label for="al_ghat_sector_vehicles_broken">مركبات الغاط المتعطلة :</label>
-		        <input type="text" id="al_ghat_sector_vehicles_broken" required>
-		    </div>
-		</div>
-		<div class="input-row">
-		    <div class="input-small">
-		        <label for="al_quwayiyah_sector_teams">عدد فرق القويعية العاملة :</label>
-		        <input type="text" id="al_quwayiyah_sector_teams" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="al_quwayiyah_sector_vehicles_work">مركبات القويعية العاملة :</label>
-		        <input type="text" id="al_quwayiyah_sector_vehicles_work" oninput="calculateTotals()" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="al_quwayiyah_sector_vehicles_broken">مركبات القويعية المتعطلة :</label>
-		        <input type="text" id="al_quwayiyah_sector_vehicles_broken" required>
-		    </div>
-		</div>
-		<div class="input-row">
-		    <div class="input-small">
-		        <label for="al_majmaah_sector_teams">عدد فرق المجمعة العاملة :</label>
-		        <input type="text" id="al_majmaah_sector_teams" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="al_majmaah_sector_vehicles_work">مركبات المجمعة العاملة :</label>
-		        <input type="text" id="al_majmaah_sector_vehicles_work" oninput="calculateTotals()" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="al_majmaah_sector_vehicles_broken">مركبات المجمعة المتعطلة :</label>
-		        <input type="text" id="al_majmaah_sector_vehicles_broken" required>
-		    </div>
-		</div>
-		<div class="input-row">
-		    <div class="input-small">
-		        <label for="al_muzahimiyah_sector_teams">عدد فرق المزاحمية العاملة :</label>
-		        <input type="text" id="al_muzahimiyah_sector_teams" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="al_muzahimiyah_sector_vehicles_work">مركبات المزاحمية العاملة :</label>
-		        <input type="text" id="al_muzahimiyah_sector_vehicles_work" oninput="calculateTotals()" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="al_muzahimiyah_sector_vehicles_broken">مركبات المزاحمية المتعطلة :</label>
-		        <input type="text" id="al_muzahimiyah_sector_vehicles_broken" required>
-		    </div>
-		</div>
-		<div class="input-row">
-		    <div class="input-small">
-		        <label for="hawtat_banee_tamim_sector_teams">عدد فرق حوطة بني تميم العاملة :</label>
-		        <input type="text" id="hawtat_banee_tamim_sector_teams" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="hawtat_banee_tamim_sector_vehicles_work">مركبات حوطة بني تميم العاملة :</label>
-		        <input type="text" id="hawtat_banee_tamim_sector_vehicles_work" oninput="calculateTotals()" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="hawtat_banee_tamim_sector_vehicles_broken">مركبات حوطة بني تميم المتعطلة :</label>
-		        <input type="text" id="hawtat_banee_tamim_sector_vehicles_broken" required>
-		    </div>
-		</div>
-		<div class="input-row">
-		    <div class="input-small">
-		        <label for="shaqra_sector_teams">عدد فرق شقراء العاملة :</label>
-		        <input type="text" id="shaqra_sector_teams" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="shaqra_sector_vehicles_work">مركبات شقراء العاملة :</label>
-		        <input type="text" id="shaqra_sector_vehicles_work" oninput="calculateTotals()" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="shaqra_sector_vehicles_broken">مركبات شقراء المتعطلة :</label>
-		        <input type="text" id="shaqra_sector_vehicles_broken" required>
-		    </div>
-		</div>
-		<div class="input-row">
-		    <div class="input-small">
-		        <label for="afif_sector_teams">عدد فرق عفيف العاملة :</label>
-		        <input type="text" id="afif_sector_teams" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="afif_sector_vehicles_work">مركبات عفيف العاملة :</label>
-		        <input type="text" id="afif_sector_vehicles_work" oninput="calculateTotals()" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="afif_sector_vehicles_broken">مركبات عفيف المتعطلة :</label>
-		        <input type="text" id="afif_sector_vehicles_broken" required>
-		    </div>
-		</div>
-		<div class="input-row">
-		    <div class="input-small">
-		        <label for="wadi_al_dawasir_sector_teams">عدد فرق وادي الدواسر العاملة :</label>
-		        <input type="text" id="wadi_al_dawasir_sector_teams" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="wadi_al_dawasir_sector_vehicles_work">مركبات وادي الدواسر العاملة :</label>
-		        <input type="text" id="wadi_al_dawasir_sector_vehicles_work" oninput="calculateTotals()" required>
-		    </div>
-		    <div class="input-small">
-		        <label for="wadi_al_dawasir_sector_vehicles_broken">مركبات وادي الدواسر المتعطلة :</label>
-		        <input type="text" id="wadi_al_dawasir_sector_vehicles_broken" required>
-		    </div>
-		</div>
+                <div class="input-small">
+                    <label for="center_sector_vehicles_work">مركبات قطاع الوسط العاملة :</label>
+                    <input type="number" id="center_sector_vehicles_work" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="center_sector_vehicles_broken">مركبات قطاع الوسط المتعطلة :</label>
+                    <input type="number" id="center_sector_vehicles_broken" oninput="calculateTotals()" required>
+                </div>
+            </div>
+            
+            <!-- قطاع الشرق -->
+            <div class="input-row">
+                <div class="input-small">
+                    <label for="east_sector_teams">عدد فرق قطاع الشرق العاملة :</label>
+                    <input type="number" id="east_sector_teams" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="east_sector_vehicles_work">مركبات قطاع الشرق العاملة :</label>
+                    <input type="number" id="east_sector_vehicles_work" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="east_sector_vehicles_broken">مركبات قطاع الشرق المتعطلة :</label>
+                    <input type="number" id="east_sector_vehicles_broken" oninput="calculateTotals()" required>
+                </div>
+            </div>
+            
+            <!-- قطاع الغرب -->
+            <div class="input-row">
+                <div class="input-small">
+                    <label for="west_sector_teams">عدد فرق قطاع الغرب العاملة :</label>
+                    <input type="number" id="west_sector_teams" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="west_sector_vehicles_work">مركبات قطاع الغرب العاملة :</label>
+                    <input type="number" id="west_sector_vehicles_work" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="west_sector_vehicles_broken">مركبات قطاع الغرب المتعطلة :</label>
+                    <input type="number" id="west_sector_vehicles_broken" oninput="calculateTotals()" required>
+                </div>
+            </div>
+            
+            <!-- قطاع الشمال -->
+            <div class="input-row">
+                <div class="input-small">
+                    <label for="north_sector_teams">عدد فرق قطاع الشمال العاملة :</label>
+                    <input type="number" id="north_sector_teams" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="north_sector_vehicles_work">مركبات قطاع الشمال العاملة :</label>
+                    <input type="number" id="north_sector_vehicles_work" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="north_sector_vehicles_broken">مركبات قطاع الشمال المتعطلة :</label>
+                    <input type="number" id="north_sector_vehicles_broken" oninput="calculateTotals()" required>
+                </div>
+            </div>
+            
+            <!-- قطاع الجنوب -->
+            <div class="input-row">
+                <div class="input-small">
+                    <label for="south_sector_teams">عدد فرق قطاع الجنوب العاملة :</label>
+                    <input type="number" id="south_sector_teams" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="south_sector_vehicles_work">مركبات قطاع الجنوب العاملة :</label>
+                    <input type="number" id="south_sector_vehicles_work" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="south_sector_vehicles_broken">مركبات قطاع الجنوب المتعطلة :</label>
+                    <input type="number" id="south_sector_vehicles_broken" oninput="calculateTotals()" required>
+                </div>
+            </div>
+        </div>
+        
+        <!-- تحضير قطاعات منطقة الرياض الخارجية -->
+        <div class="form-section">
+            <h2>تحضير قطاعات منطقة الرياض الخارجية</h2>
+            
+            <!-- قطاع رماح -->
+            <div class="input-row">
+                <div class="input-small">
+                    <label for="ramah_sector_teams">عدد فرق رماح العاملة :</label>
+                    <input type="number" id="ramah_sector_teams" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="ramah_sector_vehicles_work">مركبات رماح العاملة :</label>
+                    <input type="number" id="ramah_sector_vehicles_work" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="ramah_sector_vehicles_broken">مركبات رماح المتعطلة :</label>
+                    <input type="number" id="ramah_sector_vehicles_broken" oninput="calculateTotals()" required>
+                </div>
+            </div>
+            
+            <!-- قطاع الأفلاج -->
+            <div class="input-row">
+                <div class="input-small">
+                    <label for="al_aflag_sector_teams">عدد فرق الأفلاج العاملة :</label>
+                    <input type="number" id="al_aflag_sector_teams" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="al_aflag_sector_vehicles_work">مركبات الأفلاج العاملة :</label>
+                    <input type="number" id="al_aflag_sector_vehicles_work" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="al_aflag_sector_vehicles_broken">مركبات الأفلاج المتعطلة :</label>
+                    <input type="number" id="al_aflag_sector_vehicles_broken" oninput="calculateTotals()" required>
+                </div>
+            </div>
+            
+            <!-- قطاع الخرج -->
+            <div class="input-row">
+                <div class="input-small">
+                    <label for="al_kharj_sector_teams">عدد فرق الخرج العاملة :</label>
+                    <input type="number" id="al_kharj_sector_teams" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="al_kharj_sector_vehicles_work">مركبات الخرج العاملة :</label>
+                    <input type="number" id="al_kharj_sector_vehicles_work" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="al_kharj_sector_vehicles_broken">مركبات الخرج المتعطلة :</label>
+                    <input type="number" id="al_kharj_sector_vehicles_broken" oninput="calculateTotals()" required>
+                </div>
+            </div>
+            
+            <!-- قطاع الدرعية -->
+            <div class="input-row">
+                <div class="input-small">
+                    <label for="al_dariya_sector_teams">عدد فرق الدرعية العاملة :</label>
+                    <input type="number" id="al_dariya_sector_teams" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="al_dariya_sector_vehicles_work">مركبات الدرعية العاملة :</label>
+                    <input type="number" id="al_dariya_sector_vehicles_work" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="al_dariya_sector_vehicles_broken">مركبات الدرعية المتعطلة :</label>
+                    <input type="number" id="al_dariya_sector_vehicles_broken" oninput="calculateTotals()" required>
+                </div>
+            </div>
+            
+            <!-- قطاع الدوادمي -->
+            <div class="input-row">
+                <div class="input-small">
+                    <label for="al_dawadmi_sector_teams">عدد فرق الدوادمي العاملة :</label>
+                    <input type="number" id="al_dawadmi_sector_teams" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="al_dawadmi_sector_vehicles_work">مركبات الدوادمي العاملة :</label>
+                    <input type="number" id="al_dawadmi_sector_vehicles_work" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="al_dawadmi_sector_vehicles_broken">مركبات الدوادمي المتعطلة :</label>
+                    <input type="number" id="al_dawadmi_sector_vehicles_broken" oninput="calculateTotals()" required>
+                </div>
+            </div>
+            
+            <!-- قطاع الزلفي -->
+            <div class="input-row">
+                <div class="input-small">
+                    <label for="al_zulfi_sector_teams">عدد فرق الزلفي العاملة :</label>
+                    <input type="number" id="al_zulfi_sector_teams" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="al_zulfi_sector_vehicles_work">مركبات الزلفي العاملة :</label>
+                    <input type="number" id="al_zulfi_sector_vehicles_work" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="al_zulfi_sector_vehicles_broken">مركبات الزلفي المتعطلة :</label>
+                    <input type="number" id="al_zulfi_sector_vehicles_broken" oninput="calculateTotals()" required>
+                </div>
+            </div>
+            
+            <!-- قطاع الغاط -->
+            <div class="input-row">
+                <div class="input-small">
+                    <label for="al_ghat_sector_teams">عدد فرق الغاط العاملة :</label>
+                    <input type="number" id="al_ghat_sector_teams" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="al_ghat_sector_vehicles_work">مركبات الغاط العاملة :</label>
+                    <input type="number" id="al_ghat_sector_vehicles_work" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="al_ghat_sector_vehicles_broken">مركبات الغاط المتعطلة :</label>
+                    <input type="number" id="al_ghat_sector_vehicles_broken" oninput="calculateTotals()" required>
+                </div>
+            </div>
+            
+            <!-- قطاع القويعية -->
+            <div class="input-row">
+                <div class="input-small">
+                    <label for="al_quwayiyah_sector_teams">عدد فرق القويعية العاملة :</label>
+                    <input type="number" id="al_quwayiyah_sector_teams" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="al_quwayiyah_sector_vehicles_work">مركبات القويعية العاملة :</label>
+                    <input type="number" id="al_quwayiyah_sector_vehicles_work" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="al_quwayiyah_sector_vehicles_broken">مركبات القويعية المتعطلة :</label>
+                    <input type="number" id="al_quwayiyah_sector_vehicles_broken" oninput="calculateTotals()" required>
+                </div>
+            </div>
+            
+            <!-- قطاع المجمعة -->
+            <div class="input-row">
+                <div class="input-small">
+                    <label for="al_majmaah_sector_teams">عدد فرق المجمعة العاملة :</label>
+                    <input type="number" id="al_majmaah_sector_teams" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="al_majmaah_sector_vehicles_work">مركبات المجمعة العاملة :</label>
+                    <input type="number" id="al_majmaah_sector_vehicles_work" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="al_majmaah_sector_vehicles_broken">مركبات المجمعة المتعطلة :</label>
+                    <input type="number" id="al_majmaah_sector_vehicles_broken" oninput="calculateTotals()" required>
+                </div>
+            </div>
+            
+            <!-- قطاع المزاحمية -->
+            <div class="input-row">
+                <div class="input-small">
+                    <label for="al_muzahimiyah_sector_teams">عدد فرق المزاحمية العاملة :</label>
+                    <input type="number" id="al_muzahimiyah_sector_teams" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="al_muzahimiyah_sector_vehicles_work">مركبات المزاحمية العاملة :</label>
+                    <input type="number" id="al_muzahimiyah_sector_vehicles_work" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="al_muzahimiyah_sector_vehicles_broken">مركبات المزاحمية المتعطلة :</label>
+                    <input type="number" id="al_muzahimiyah_sector_vehicles_broken" oninput="calculateTotals()" required>
+                </div>
+            </div>
+            
+            <!-- قطاع حوطة بني تميم -->
+            <div class="input-row">
+                <div class="input-small">
+                    <label for="hawtat_banee_tamim_sector_teams">عدد فرق حوطة بني تميم العاملة :</label>
+                    <input type="number" id="hawtat_banee_tamim_sector_teams" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="hawtat_banee_tamim_sector_vehicles_work">مركبات حوطة بني تميم العاملة :</label>
+                    <input type="number" id="hawtat_banee_tamim_sector_vehicles_work" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="hawtat_banee_tamim_sector_vehicles_broken">مركبات حوطة بني تميم المتعطلة :</label>
+                    <input type="number" id="hawtat_banee_tamim_sector_vehicles_broken" oninput="calculateTotals()" required>
+                </div>
+            </div>
+            
+            <!-- قطاع شقراء -->
+            <div class="input-row">
+                <div class="input-small">
+                    <label for="shaqra_sector_teams">عدد فرق شقراء العاملة :</label>
+                    <input type="number" id="shaqra_sector_teams" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="shaqra_sector_vehicles_work">مركبات شقراء العاملة :</label>
+                    <input type="number" id="shaqra_sector_vehicles_work" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="shaqra_sector_vehicles_broken">مركبات شقراء المتعطلة :</label>
+                    <input type="number" id="shaqra_sector_vehicles_broken" oninput="calculateTotals()" required>
+                </div>
+            </div>
+            
+            <!-- قطاع عفيف -->
+            <div class="input-row">
+                <div class="input-small">
+                    <label for="afif_sector_teams">عدد فرق عفيف العاملة :</label>
+                    <input type="number" id="afif_sector_teams" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="afif_sector_vehicles_work">مركبات عفيف العاملة :</label>
+                    <input type="number" id="afif_sector_vehicles_work" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="afif_sector_vehicles_broken">مركبات عفيف المتعطلة :</label>
+                    <input type="number" id="afif_sector_vehicles_broken" oninput="calculateTotals()" required>
+                </div>
+            </div>
+            
+            <!-- قطاع وادي الدواسر -->
+            <div class="input-row">
+                <div class="input-small">
+                    <label for="wadi_al_dawasir_sector_teams">عدد فرق وادي الدواسر العاملة :</label>
+                    <input type="number" id="wadi_al_dawasir_sector_teams" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="wadi_al_dawasir_sector_vehicles_work">مركبات وادي الدواسر العاملة :</label>
+                    <input type="number" id="wadi_al_dawasir_sector_vehicles_work" oninput="calculateTotals()" required>
+                </div>
+                <div class="input-small">
+                    <label for="wadi_al_dawasir_sector_vehicles_broken">مركبات وادي الدواسر المتعطلة :</label>
+                    <input type="number" id="wadi_al_dawasir_sector_vehicles_broken" oninput="calculateTotals()" required>
+                </div>
+            </div>
+        </div>
+        
+        <!-- إحصائيات منطقة الرياض -->
+        <div class="form-section">
+            <h2>إحصائيات منطقة الرياض</h2>
+            
+            <!-- حساب الإجماليات -->
+            <div class="form-section">
+                <div class="input-small">
+                    <label for="internal_vehicles_total">إجمالي مركبات القطاعات الداخلية العاملة :</label>
+                    <input type="number" id="internal_vehicles_total" readonly style="background-color: #e0e0e0;" required>
+                </div>
+                <div class="input-small">
+                    <label for="external_vehicles_total">إجمالي مركبات القطاعات الخارجية العاملة :</label>
+                    <input type="number" id="external_vehicles_total" readonly style="background-color: #e0e0e0;" required>
+                </div>
+            </div>
+            <div class="form-section">
+                <div class="input-small">
+                    <label for="total_working_vehicles_riyadh">إجمالي المركبات العاملة في منطقة الرياض:</label>
+                    <input type="number" id="total_working_vehicles_riyadh" readonly style="background-color: #e0e0e0;" required>
+                </div>
+            </div>
+    
+            <!-- إجمالي الفرق العاملة -->
+            <div class="form-section">
+                <div class="input-small">
+                    <label for="internal_teams_total">إجمالي الفرق العاملة للقطاعات الداخلية :</label>
+                    <input type="number" id="internal_teams_total" readonly style="background-color: #e0e0e0;" required>
+                </div>
+                <div class="input-small">
+                    <label for="external_teams_total">إجمالي الفرق العاملة للقطاعات الخارجية :</label>
+                    <input type="number" id="external_teams_total" readonly style="background-color: #e0e0e0;" required>
+                </div>
+                <div class="input-small">
+                    <label for="total_working_teams_riyadh">إجمالي الفرق العاملة في منطقة الرياض :</label>
+                    <input type="number" id="total_working_teams_riyadh" readonly style="background-color: #e0e0e0;" required>
+                </div>
+            </div>
+    
+            <!-- إجمالي المركبات المتعطلة -->
+            <div class="form-section">
+                <div class="input-small">
+                    <label for="internal_broken_vehicles_total">إجمالي المركبات المتعطلة للقطاعات الداخلية :</label>
+                    <input type="number" id="internal_broken_vehicles_total" readonly style="background-color: #e0e0e0;" required>
+                </div>
+                <div class="input-small">
+                    <label for="external_broken_vehicles_total">إجمالي المركبات المتعطلة للقطاعات الخارجية :</label>
+                    <input type="number" id="external_broken_vehicles_total" readonly style="background-color: #e0e0e0;" required>
+                </div>
+                <div class="input-small">
+                    <label for="total_broken_vehicles_riyadh">إجمالي المركبات المتعطلة في منطقة الرياض :</label>
+                    <input type="number" id="total_broken_vehicles_riyadh" readonly style="background-color: #e0e0e0;" required>
+                </div>
+            </div>
+        </div>
+        
+        <!-- زر إرسال النموذج أو أي إجراءات أخرى -->
+        <div class="form-section">
+            <button type="button" onclick="prepareFormText('attendance')">إرسال</button>
+        </div>
+    </div>
   
 <div class="form-section">
     <h2>إحصائيات منطقة الرياض</h2>       
