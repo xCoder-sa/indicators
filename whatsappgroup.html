@@ -2497,7 +2497,28 @@ document.addEventListener("DOMContentLoaded", function () {
             endMinuteField.disabled = false;
         }
     }
+	    
+   function toggleReports() {
+    const isChecked = document.getElementById('no_reports').checked;
+    const reportInputs = document.querySelectorAll('.report-number, .report-type, .waiting_time');
+    const addReportBtn = document.getElementById('add-report-btn');
     
+    if (isChecked) {
+        // إخفاء وتعطيل الحقول إذا تم اختيار "لا يوجد بلاغات"
+        reportInputs.forEach(input => {
+            input.value = '';  // تفريغ القيم
+            input.disabled = true;  // تعطيل الحقول
+        });
+        addReportBtn.disabled = true;  // تعطيل زر إضافة بلاغ
+    } else {
+        // إعادة تفعيل الحقول إذا تم إلغاء اختيار "لا يوجد بلاغات"
+        reportInputs.forEach(input => {
+            input.disabled = false;  // تفعيل الحقول
+        });
+        addReportBtn.disabled = false;  // تفعيل زر إضافة بلاغ
+    }
+}
+ 
         // فنكشن حساب اجمالي الحالات
     function calculateTotalVictimes() {
     const transferdVictimes = parseInt(document.getElementById('transferd_victimes').value) || 0;
