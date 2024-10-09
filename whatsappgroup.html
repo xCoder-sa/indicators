@@ -560,7 +560,7 @@
 		    </div>
 		    <div class="input-small">
 		        <label for="center_sector_vehicles_work">مركبات قطاع الوسط العاملة :</label>
-		        <input type="text" id="center_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="center_sector_vehicles_work" oninput="calculateTotals()" required>
 		    </div>
 		    <div class="input-small">
 		        <label for="center_sector_vehicles_broken">مركبات قطاع الوسط المتعطلة :</label>
@@ -574,7 +574,7 @@
 		    </div>
 		    <div class="input-small">
 		        <label for="east_sector_vehicles_work">مركبات قطاع الشرق العاملة :</label>
-		        <input type="text" id="east_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="east_sector_vehicles_work" oninput="calculateTotals()" required>
 		    </div>
 		    <div class="input-small">
 		        <label for="east_sector_vehicles_broken">مركبات قطاع الشرق المتعطلة :</label>
@@ -588,7 +588,7 @@
 		    </div>
 		    <div class="input-small">
 		        <label for="west_sector_vehicles_work">مركبات قطاع الغرب العاملة :</label>
-		        <input type="text" id="west_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="west_sector_vehicles_work" oninput="calculateTotals()" required>
 		    </div>
 		    <div class="input-small">
 		        <label for="west_sector_vehicles_broken">مركبات قطاع الغرب المتعطلة :</label>
@@ -602,7 +602,7 @@
 		    </div>
 		    <div class="input-small">
 		        <label for="north_sector_vehicles_work">مركبات قطاع الشمال العاملة :</label>
-		        <input type="text" id="north_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="north_sector_vehicles_work" oninput="calculateTotals()" required>
 		    </div>
 		    <div class="input-small">
 		        <label for="north_sector_vehicles_broken">مركبات قطاع الشمال المتعطلة :</label>
@@ -616,7 +616,7 @@
 		    </div>
 		    <div class="input-small">
 		        <label for="south_sector_vehicles_work">مركبات قطاع الجنوب العاملة :</label>
-		        <input type="text" id="south_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="south_sector_vehicles_work" oninput="calculateTotals()" required>
 		    </div>
 		    <div class="input-small">
 		        <label for="south_sector_vehicles_broken">مركبات قطاع الجنوب المتعطلة :</label>
@@ -633,7 +633,7 @@
 		    </div>
 		    <div class="input-small">
 		        <label for="ramah_sector_vehicles_work">مركبات رماح العاملة :</label>
-		        <input type="text" id="ramah_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="ramah_sector_vehicles_work" oninput="calculateTotals()" required>
 		    </div>
 		    <div class="input-small">
 		        <label for="ramah_sector_vehicles_broken">مركبات رماح المتعطلة :</label>
@@ -647,7 +647,7 @@
 		    </div>
 		    <div class="input-small">
 		        <label for="al_aflag_sector_vehicles_work">مركبات الافلاج العاملة :</label>
-		        <input type="text" id="al_aflag_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="al_aflag_sector_vehicles_work" oninput="calculateTotals()" required>
 		    </div>
 		    <div class="input-small">
 		        <label for="al_aflag_sector_vehicles_broken">مركبات الافلاج المتعطلة :</label>
@@ -661,7 +661,7 @@
 		    </div>
 		    <div class="input-small">
 		        <label for="al_kharj_sector_vehicles_work">مركبات الخرج العاملة :</label>
-		        <input type="text" id="al_kharj_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="al_kharj_sector_vehicles_work" oninput="calculateTotals()" required>
 		    </div>
 		    <div class="input-small">
 		        <label for="al_kharj_sector_vehicles_broken">مركبات الخرج المتعطلة :</label>
@@ -675,7 +675,7 @@
 		    </div>
 		    <div class="input-small">
 		        <label for="al_dariya_sector_vehicles_work">مركبات الدرعية العاملة :</label>
-		        <input type="text" id="al_dariya_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="al_dariya_sector_vehicles_work" oninput="calculateTotals()" required>
 		    </div>
 		    <div class="input-small">
 		        <label for="al_dariya_sector_vehicles_broken">مركبات الدرعية المتعطلة :</label>
@@ -689,7 +689,7 @@
 		    </div>
 		    <div class="input-small">
 		        <label for="al_dawadmi_sector_vehicles_work">مركبات الدوادمي العاملة :</label>
-		        <input type="text" id="al_dawadmi_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="al_dawadmi_sector_vehicles_work" oninput="calculateTotals()" required>
 		    </div>
 		    <div class="input-small">
 		        <label for="al_dawadmi_sector_vehicles_broken">مركبات الدوادمي المتعطلة :</label>
@@ -703,7 +703,7 @@
 		    </div>
 		    <div class="input-small">
 		        <label for="al_zulfi_sector_vehicles_work">مركبات الزلفي العاملة :</label>
-		        <input type="text" id="al_zulfi_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="al_zulfi_sector_vehicles_work" oninput="calculateTotals()" required>
 		    </div>
 		    <div class="input-small">
 		        <label for="al_zulfi_sector_vehicles_broken">مركبات الزلفي المتعطلة :</label>
@@ -717,7 +717,7 @@
 		    </div>
 		    <div class="input-small">
 		        <label for="al_ghat_sector_vehicles_work">مركبات الغاط العاملة :</label>
-		        <input type="text" id="al_ghat_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()">
+		        <input type="text" id="al_ghat_sector_vehicles_work" oninput="calculateTotals()">
 		    </div>
 		    <div class="input-small">
 		        <label for="al_ghat_sector_vehicles_broken">مركبات الغاط المتعطلة :</label>
@@ -731,7 +731,7 @@
 		    </div>
 		    <div class="input-small">
 		        <label for="al_quwayiyah_sector_vehicles_work">مركبات القويعية العاملة :</label>
-		        <input type="text" id="al_quwayiyah_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="al_quwayiyah_sector_vehicles_work" oninput="calculateTotals()" required>
 		    </div>
 		    <div class="input-small">
 		        <label for="al_quwayiyah_sector_vehicles_broken">مركبات القويعية المتعطلة :</label>
@@ -745,7 +745,7 @@
 		    </div>
 		    <div class="input-small">
 		        <label for="al_majmaah_sector_vehicles_work">مركبات المجمعة العاملة :</label>
-		        <input type="text" id="al_majmaah_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="al_majmaah_sector_vehicles_work" oninput="calculateTotals()" required>
 		    </div>
 		    <div class="input-small">
 		        <label for="al_majmaah_sector_vehicles_broken">مركبات المجمعة المتعطلة :</label>
@@ -759,7 +759,7 @@
 		    </div>
 		    <div class="input-small">
 		        <label for="al_muzahimiyah_sector_vehicles_work">مركبات المزاحمية العاملة :</label>
-		        <input type="text" id="al_muzahimiyah_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="al_muzahimiyah_sector_vehicles_work" oninput="calculateTotals()" required>
 		    </div>
 		    <div class="input-small">
 		        <label for="al_muzahimiyah_sector_vehicles_broken">مركبات المزاحمية المتعطلة :</label>
@@ -773,7 +773,7 @@
 		    </div>
 		    <div class="input-small">
 		        <label for="hawtat_banee_tamim_sector_vehicles_work">مركبات حوطة بني تميم العاملة :</label>
-		        <input type="text" id="hawtat_banee_tamim_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="hawtat_banee_tamim_sector_vehicles_work" oninput="calculateTotals()" required>
 		    </div>
 		    <div class="input-small">
 		        <label for="hawtat_banee_tamim_sector_vehicles_broken">مركبات حوطة بني تميم المتعطلة :</label>
@@ -787,7 +787,7 @@
 		    </div>
 		    <div class="input-small">
 		        <label for="shaqra_sector_vehicles_work">مركبات شقراء العاملة :</label>
-		        <input type="text" id="shaqra_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="shaqra_sector_vehicles_work" oninput="calculateTotals()" required>
 		    </div>
 		    <div class="input-small">
 		        <label for="shaqra_sector_vehicles_broken">مركبات شقراء المتعطلة :</label>
@@ -801,7 +801,7 @@
 		    </div>
 		    <div class="input-small">
 		        <label for="afif_sector_vehicles_work">مركبات عفيف العاملة :</label>
-		        <input type="text" id="afif_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="afif_sector_vehicles_work" oninput="calculateTotals()" required>
 		    </div>
 		    <div class="input-small">
 		        <label for="afif_sector_vehicles_broken">مركبات عفيف المتعطلة :</label>
@@ -815,7 +815,7 @@
 		    </div>
 		    <div class="input-small">
 		        <label for="wadi_al_dawasir_sector_vehicles_work">مركبات وادي الدواسر العاملة :</label>
-		        <input type="text" id="wadi_al_dawasir_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="wadi_al_dawasir_sector_vehicles_work" oninput="calculateTotals()" required>
 		    </div>
 		    <div class="input-small">
 		        <label for="wadi_al_dawasir_sector_vehicles_broken">مركبات وادي الدواسر المتعطلة :</label>
