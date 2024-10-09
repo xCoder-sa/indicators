@@ -2210,10 +2210,7 @@ function sendWhatsAppMessage(formName) {
                 formText += `رقم البلاغ: ${number.value}, نوع البلاغ: ${reportTypes[index].value}, زمن الاستجابة (بالدقائق): ${waitingTimes[index].value}\n`;
             }
         });
-    } else {
-        formText += `لم يتم إضافة بلاغات في النموذج.\n`;
-    }
-
+    } 
 
         formText += `*=== المخرجات ===*\n\n`;
         formText += `متوسط زمن الاستجابة للبلاغات (بالدقائق): ${document.getElementById('response_time_to_intervention').value}\n`;
