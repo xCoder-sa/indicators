@@ -2387,29 +2387,38 @@ function showCopyNotification() {
 function selectCurrentTime() {
     // الحصول على التوقيت الحالي حسب توقيت السعودية (UTC+3)
     const currentTime = new Date().toLocaleString("en-US", {timeZone: "Asia/Riyadh"});
-    const hours = new Date(currentTime).getHours();
+    const currentHours = new Date().getHours(); // الحصول على الساعات الحالية
+    
+    // تقليل الساعات بمقدار 6 للحصول على الفترة الزمنية السابقة
+    let previousHours = currentHours - 6;
+    
+    // في حال كانت الساعات سالبة (أقل من 0)، نضيف 24 لتصبح في نطاق الـ 24 ساعة
+    if (previousHours < 0) {
+        previousHours += 24;
+    }
 
     let selectedOption = '';
 
-    // تحديد الفترة الزمنية بناءً على الساعة الحالية
-    if (hours >= 0 && hours < 6) {
+    // تحديد الفترة الزمنية بناءً على الساعات السابقة
+    if (previousHours >= 0 && previousHours < 6) {
         selectedOption = "0:00 إلى 6:00";
-    } else if (hours >= 6 && hours < 12) {
+    } else if (previousHours >= 6 && previousHours < 12) {
         selectedOption = "6:00 إلى 12:00";
-    } else if (hours >= 12 && hours < 18) {
+    } else if (previousHours >= 12 && previousHours < 18) {
         selectedOption = "12:00 إلى 18:00";
-    } else if (hours >= 18 && hours < 24) {
+    } else if (previousHours >= 18 && previousHours < 24) {
         selectedOption = "18:00 إلى 0:00";
     }
 
-    // العثور على جميع عناصر الـ select التي تحتوي على التوقيت
-    const timeSelects = document.querySelectorAll('select[id="time"]');
-    
+    // العثور على جميع عناصر select التي تحتوي على التوقيت
+    const timeSelects = document.querySelectorAll('select.time'); // يفضل استخدام class بدلاً من id
+
     // تطبيق التوقيت المحدد على جميع النماذج
     timeSelects.forEach(function(timeSelect) {
         timeSelect.value = selectedOption;
     });
 }
+
 
 document.addEventListener("DOMContentLoaded", function () {
     // الحصول على المعاملات من رابط URL
