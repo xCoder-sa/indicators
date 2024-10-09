@@ -546,7 +546,7 @@
                     <label for="date">التاريخ:</label>
         <input type="date" id="date" readonly disabled style="background-color: #e0e0e0;>
                     <label for="shift">المناوبة</label>
-                    <select id="shift" onchange="toggleOtherSectorInput()">
+                    <select id="shift" onchange="toggleOtherSectorInput()" required>
                         <option value="صباحي">صباحي</option>
                         <option value="مسائي">مسائي</option>
                     </select>
@@ -892,7 +892,7 @@
 		<p>نموذج كبار المسعفين للقطاعات الخارجية يرسل كل 6 ساعات من قبل كبير المسعفين</p>
                 <div class="form-section">
                     <label for="sector">اختر القطاع:</label>
-                    <select id="sector" onchange="toggleOtherSectorInput()">
+                    <select id="sector" onchange="toggleOtherSectorInput()" required>
                         <option value="رماح">رماح</option>
                         <option value="الافلاج">الافلاج</option>
                         <option value="الخرج">الخرج</option>
@@ -913,7 +913,7 @@
         <input type="date" id="date" readonly disabled style="background-color: #e0e0e0;>
 
                     <label for="time">التوقيت الحالي:</label>
-                    <select id="time">
+                    <select id="time" required>
                         <option value="09:00 إلى 15:00">09:00 إلى 15:00</option>
                         <option value="15:00 إلى 21:00">15:00 إلى 21:00</option>
                         <option value="21:00 إلى 03:00">21:00 إلى 03:00</option>
@@ -924,7 +924,7 @@
         <div class="input-row">
             <div class="input-small">
                     <label for="working_teams">عدد الفرق العاملة:</label>
-                    <input type="text" id="working_teams">
+                    <input type="text" id="working_teams" required>
                  </div>
                         <div class="input-small">
                     <label for="total_teams">من أصل:</label>
@@ -934,15 +934,15 @@
                           <div class="input-row">
 			<div class="input-small">
                             <label for="operating_vehicles">عدد المركبات العاملة:</label>
-                            <input type="text" id="operating_vehicles">
+                            <input type="text" id="operating_vehicles" required>
                         </div>
                         <div class="input-small">
                             <label for="broken_vehicles">عدد المركبات المتعطلة:</label>
-                            <input type="number" id="broken_vehicles">
+                            <input type="number" id="broken_vehicles" required>
                         </div>
                         <div class="input-small">
                             <label for="reserve_vehicles">عدد المركبات الاحتياط:</label>
-                            <input type="number" id="reserve_vehicles">
+                            <input type="number" id="reserve_vehicles" required>
                         </div>
                     </div>
                           <div class="input-row">
@@ -970,19 +970,19 @@
                           <div class="input-row">
 			<div class="input-small">
                     <label for="total_reports">إجمالي بلاغات القطاع:</label>
-                    <input type="number" id="total_reports">
+                    <input type="number" id="total_reports" required>
 		    
 		<label for="related_reports">البلاغات:</label>
 		<div id="reports-container-1">
 		    <div class="input-pair">
-		        <input type="number" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
+		        <input type="number" placeholder="رقم البلاغ" class="report-number" style="width: 120px;" required>
 		        <select class="report-type" style="width: 120px;">
 		            <option value="إيكو">إيكو</option>
 		            <option value="دلتا">دلتا</option>
 		            <option value="تشارلي">تشارلي</option>
 		            <option value="برافو">برافو</option>
 		        </select>
-		        <input type="number" placeholder="(بالدقائق) زمن الاستجابة" class="waiting_time" style="width: 120px;">
+		        <input type="number" placeholder="(بالدقائق) زمن الاستجابة" class="waiting_time" style="width: 120px;" required>
 		        <p>احسب زمن الاستجابة من الرد الى الوصول للموقع</p>
 		    </div>
 		</div>
@@ -1006,7 +1006,7 @@
                           <div class="input-row">
 			<div class="input-small">
                     <label for="absence_in_shift">عدد الغياب في المناوبة:</label>
-                    <input type="text" id="absence_in_shift">
+                    <input type="text" id="absence_in_shift" required>
                       </div>
 		       </div>
                           <div class="input-row">
@@ -1024,7 +1024,7 @@
                           <div class="input-row">
 			<div class="input-small">
                     <label for="senior_paramedic_name"> كبير المسعفين المناوب:</label>
-                    <input type="text" id="senior_paramedic_name">
+                    <input type="text" id="senior_paramedic_name" required>
                     </div>
                 </div>
                 <button onclick="sendWhatsAppMessage('senior_paramedic_outside')">إرسال النموذج بالواتساب</button>
@@ -1038,7 +1038,7 @@
                   <div class="input-row">
                       <div class="input-small">
                           <label for="sector">اختر القطاع:</label>
-                          <select id="sector" onchange="toggleOtherSectorInput()">
+                          <select id="sector" onchange="toggleOtherSectorInput()" required>
                               <option value="الوسط">الوسط</option>
                               <option value="الجنوب">الجنوب</option>
                               <option value="الشرق">الشرق</option>
@@ -1054,12 +1054,12 @@
                   <div class="input-row">
                       <div class="input-small">
                           <label for="report_number">رقم البلاغ:</label>
-                          <input type="text" id="report_number">
+                          <input type="text" id="report_number" required>
                       </div>
         
                       <div class="input-small">
                           <label for="report_type">نوع البلاغ:</label>
-                          <select id="report_type" style="width: 150px;">
+                          <select id="report_type" style="width: 150px;" required>
                               <option value="إيكو">إيكو</option>
                               <option value="دلتا">دلتا</option>
                               <option value="تشارلي">تشارلي</option>
@@ -1072,8 +1072,8 @@
                   <div class="input-row">
                       <label for="event_start">بداية الحدث (نظام 24 ساعة):</label>
                       <div class="input-row">
-                          <input type="text" id="start_hour" placeholder="الساعة" style="width: 45px;">
-                          <input type="text" id="start_minute" placeholder="الدقيقة" style="width: 45px;">
+                          <input type="text" id="start_hour" placeholder="الساعة" style="width: 45px;" required>
+                          <input type="text" id="start_minute" placeholder="الدقيقة" style="width: 45px;" required>
                       </div>
                   </div>
         
@@ -1081,7 +1081,7 @@
                       <div class="input-row">
                           <div class="input-small">
                               <label for="unit_failure">تعطل فرقة إسعافية:</label>
-                              <input type="text" id="unit_failure">
+                              <input type="text" id="unit_failure" >
                           </div>
                           <div class="input-small">
                               <label for="failure_type">نوع العطل:</label>
@@ -1097,16 +1097,16 @@
                   <textarea id="actions_taken" rows="4"></textarea>
         
                   <label for="service_impact">التأثير على الخدمة:</label>
-                  <textarea id="service_impact" rows="4"></textarea>
+                  <textarea id="service_impact" rows="4" required></textarea>
         
                   <label for="event_status">هل الحدث ما زال قائم؟</label>
-                  <select id="event_status">
+                  <select id="event_status" required>
                       <option value="نعم">نعم</option>
                       <option value="لا">لا</option>
                   </select>
         
                   <label for="">نهاية الحدث (نظام 24 ساعة):</label>
-                  <div class="input-row">
+                  <div class="input-row" required>
                       <input type="number" id="end_hour" placeholder="الساعة" style="width: 45px;">
                       <input type="number" id="end_minute" placeholder="الدقيقة" style="width: 45px;">
                       <input type="checkbox" id="event_not_ended" onclick="toggleEndTimeFields()">
@@ -1118,7 +1118,7 @@
                   <div class="input-row">
                       <div class="input-small">
                           <label for="senior_paramedic_name"> كبير المسعفين المناوب:</label>
-                          <input type="text" id="senior_paramedic_name">
+                          <input type="text" id="senior_paramedic_name" required>
                       </div>
                   </div>
               </div>
@@ -1139,11 +1139,11 @@
 
                     <label for="report_time">توقيت التقرير (نظام 24 ساعة):</label>
                     <div class="input-row">
-                        <input type="text" id="report_hour" placeholder="الساعة" style="width: 45px;">
-                        <input type="text" id="report_minute" placeholder="الدقيقة" style="width: 45px;">
+                        <input type="text" id="report_hour" placeholder="الساعة" style="width: 45px;" required>
+                        <input type="text" id="report_minute" placeholder="الدقيقة" style="width: 45px;" required>
                     </div>
                     <label for="sector">اختر القطاع:</label>
-                    <select id="sector" onchange="toggleOtherSectorInput()">
+                    <select id="sector" onchange="toggleOtherSectorInput()" required>
                         <option value="الوسط">الوسط</option>
                         <option value="الجنوب">الجنوب</option>
                         <option value="الشرق">الشرق</option>
@@ -1156,7 +1156,7 @@
                     <div class="input-row">
                   	  <div class="input-small">
                     <label for="report_number">رقم البلاغ:</label>
-                    <input type="text" id="report_number">
+                    <input type="text" id="report_number" required>
                  </div>
                         <div class="input-small">
                     <label for="report_type">نوع البلاغ:</label>
@@ -1164,18 +1164,18 @@
                  </div>
                         <div class="input-small">
                     <label for="report_location">موقع البلاغ:</label>
-                    <input type="text" id="report_location">
+                    <input type="text" id="report_location" required>
              		 </div>
               	   	</div>
               	   </div>
 		          <div class="input-row">
                         <div class="input-small">
                     <label for="responding_units">الوحدات المستجيبة:</label>
-                    <input type="text" id="responding_units">
+                    <input type="text" id="responding_units" required>
               	   </div>
                         <div class="input-small">
                     <label for="response_time">زمن الاستجابة (دقائق):</label>
-                    <input type="number" id="response_time" placeholder="أكتب الدقيقة بالرقم فقط">
+                    <input type="number" id="response_time" placeholder="أكتب الدقيقة بالرقم فقط" required>
                     </div>
               	   	</div>
 		       <div class="input-small">
@@ -1187,7 +1187,7 @@
                     <div class="input-row">
                     <div class="input-small">
                     <label for="senior_paramedic_name"> كبير المسعفين المناوب:</label>
-                    <input type="text" id="senior_paramedic_name">
+                    <input type="text" id="senior_paramedic_name" required>
                     </div>
                 </div>
           </div>
@@ -1200,7 +1200,7 @@
 
                 <div class="form-section">
                     <label for="sector">القطاع:</label>
-                    <select id="sector" onchange="toggleOtherSectorInput()">
+                    <select id="sector" onchange="toggleOtherSectorInput()" required>
                         <option value="الوسط">الوسط</option>
                         <option value="الجنوب">الجنوب</option>
                         <option value="الشرق">الشرق</option>
@@ -1213,35 +1213,35 @@
                     <label for="event_time">وقت وتاريخ الحدث:</label>
                     <input type="date" id="event_time" readonly>
                     <div class="input-row">
-                        <input type="number" id="event_hour" placeholder="الساعة" style="width: 45px;">
-                        <input type="number" id="event_minute" placeholder="الدقيقة" style="width: 45px;">
+                        <input type="number" id="event_hour" placeholder="الساعة" style="width: 45px;" required>
+                        <input type="number" id="event_minute" placeholder="الدقيقة" style="width: 45px;" required>
                     </div>
 
                     <label for="event_details">تفاصيل الحدث:</label>
-                    <textarea id="event_details" rows="4"></textarea>
+                    <textarea id="event_details" rows="4" required></textarea>
 
                     <label for="assigned_units">إيجاز الوضع الراهن أثناء ورود البلاغ:</label>
-                    <textarea id="assigned_units" rows="4"></textarea>
+                    <textarea id="assigned_units" rows="4" required></textarea>
                 <div class="input-row">
                 <div class="input-small">
                     <label for="teams_count">عدد الفرق لكامل القطاع (المشغولة والمتاحة):</label>
-                    <input type="number" id="teams_count">
+                    <input type="number" id="teams_count" required>
                     </div>
                 </div>
                 <div class="input-row">
                 <div class="input-small">
                     <label for="deployment">الانتشار:</label>
-                    <input type="text" id="deployment">
+                    <input type="text" id="deployment" required>
               	   	</div>
 		       <div class="input-small">
                     <label for="team_types">أنواع الفرق المشاركة:</label>
-                    <input type="text" id="team_types">
+                    <input type="text" id="team_types" required>
               	   	</div>
               	   	</div>
               	   	<div class="input-row">
                 <div class="input-small">
                     <label for="saudi_red_crescent">الهلال الأحمر:</label>
-                    <input type="text" id="saudi_red_crescent">
+                    <input type="text" id="saudi_red_crescent" required>
               	   </div>
                         <div class="input-small">
                     <label for="health_ministry">وزارة الصحة:</label>
@@ -1257,8 +1257,8 @@
                 <div class="input-small">
 		      <label for="first_team_arrival">وقت وصول أول فرقة (نظام 24 ساعة):</label>
 		<div class="input-row">
-		    <input type="number" id="arrival_hour" placeholder="الساعة" style="width:80px;">
-		    <input type="number" id="arrival_minute" placeholder="الدقيقة" style="width: 80px;">
+		    <input type="number" id="arrival_hour" placeholder="الساعة" style="width:80px;" required>
+		    <input type="number" id="arrival_minute" placeholder="الدقيقة" style="width: 80px;" required>
 		</div>
              	   </div>
                         <div class="input-small">
@@ -1290,11 +1290,11 @@
                 <div class="input-row">
                     <div class="input-small">
                         <label for="transferd_victimes">الحالات المنقولة:</label>
-                        <input type="number" id="transferd_victimes" oninput="calculateTotalVictimes()">
+                        <input type="number" id="transferd_victimes" oninput="calculateTotalVictimes()" required>
                     </div>
                     <div class="input-small">
                         <label for="non_transferd_victimes">الحالات الغير منقولة:</label>
-                        <input type="number" id="non_transferd_victimes" oninput="calculateTotalVictimes()">
+                        <input type="number" id="non_transferd_victimes" oninput="calculateTotalVictimes()" required>
                     </div>
                     <div class="input-small">
                         <label for="total_victimes">إجمالي الحالات:</label>
@@ -1309,12 +1309,11 @@
 <div class="form-section">
     <div class="input-row" style="display: flex; justify-content: space-between; align-items: center;">
         <!-- إبلاغ العمليات المركزية -->
-        <div class="input-small">
+        <div class="input-small" required>
             <label for="central_operations_notification">إبلاغ العمليات المركزية:</label>
             <div style="display: inline-flex; gap: 5px; align-items: center;">
                 <input type="radio" name="central_operations" id="central_operations_yes" value="yes">
                 <label for="central_operations_yes">نعم</label>
-
                 <input type="radio" name="central_operations" id="central_operations_no" value="no">
                 <label for="central_operations_no">لا</label>
             </div>
@@ -1323,10 +1322,9 @@
         <!-- إبلاغ العمليات المشتركة -->
         <div class="input-small">
             <label for="joint_operations_notification">إبلاغ العمليات المشتركة:</label>
-            <div style="display: inline-flex; gap: 5px; align-items: center;">
+            <div style="display: inline-flex; gap: 5px; align-items: center;" required>
                 <input type="radio" name="joint_operations" id="joint_operations_yes" value="yes">
                 <label for="joint_operations_yes">نعم</label>
-
                 <input type="radio" name="joint_operations" id="joint_operations_no" value="no">
                 <label for="joint_operations_no">لا</label>
             </div>
