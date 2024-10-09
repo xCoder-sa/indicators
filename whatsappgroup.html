@@ -1945,16 +1945,42 @@ function getFormData(formName) {
 function sendWhatsAppMessage(formName) {
     let formText = '';
 
-    // التحقق من الحقول المطلوبة قبل إرسال النموذج
+    // التحقق من الحقول المطلوبة
     let requiredFields = document.querySelectorAll('input[required], textarea[required], select[required]');
-    for (let i = 0; i < requiredFields.length; i++) {
-        if (requiredFields[i].value === "") {
-            alert("يرجى تعبئة جميع الحقول المطلوبة.");
-            requiredFields[i].focus();
-            return;  // إيقاف العملية إذا كان هناك حقل فارغ
-        }
-    }
+    let allFieldsFilled = true;
 
+    requiredFields.forEach((field) => {
+        let label = document.querySelector(`label[for="${field.id}"]`);
+
+        // إزالة التنسيق السابق إذا كان الحقل قد تمت تعبئته
+        field.style.border = '';
+        if (label && label.querySelector('.required-mark')) {
+            label.removeChild(label.querySelector('.required-mark'));
+        }
+
+        // إذا كان الحقل فارغاً
+        if (field.value === "") {
+            field.style.border = '2px solid red'; // تلوين الحواف باللون الأحمر
+
+            // إضافة نجمة حمراء بجانب الحقل المطلوب
+            if (label) {
+                let star = document.createElement('span');
+                star.classList.add('required-mark');
+                star.style.color = 'red';
+                star.textContent = ' *';
+                label.appendChild(star); // إضافة النجمة الحمراء بجانب الحقل
+            }
+
+            // التحقق من أن الحقول لم تملأ بعد
+            allFieldsFilled = false;
+        }
+    });
+
+    if (!allFieldsFilled) {
+        // إيقاف العملية إذا كانت هناك حقول فارغة
+        alert("يرجى تعبئة جميع الحقول المطلوبة.");
+        return;
+    }
     if (formName === 'senior_paramedic') {
         formText += `\n*=== نموذج كبار المسعفين ===*\n\n`;
     	formText += `القطاع: ${document.getElementById('sector').value}\n`;
