@@ -1024,7 +1024,7 @@
                           <div class="input-row">
 			<div class="input-small">
                     <label for="units_notes">نقاط اسعافية مكشوفة:</label>
-                    <input type="text" id="units_notes">
+                    <input type="text" id="units_notes" required>
                       </div>
 		       </div>
                           <div class="input-row">
@@ -1036,7 +1036,7 @@
                           <div class="input-row">
 			<div class="input-small">
                     <label for="senior_paramedic_name"> كبير المسعفين المناوب:</label>
-                    <input type="text" id="senior_paramedic_name">
+                    <input type="text" id="senior_paramedic_name" required>
                     </div>
                 </div>
                 <button onclick="sendWhatsAppMessage('senior_paramedic_outside')">إرسال النموذج بالواتساب</button>
@@ -1050,7 +1050,7 @@
                   <div class="input-row">
                       <div class="input-small">
                           <label for="sector">اختر القطاع:</label>
-                          <select id="sector" onchange="toggleOtherSectorInput()">
+                          <select id="sector" onchange="toggleOtherSectorInput()" required>
                               <option value="الوسط">الوسط</option>
                               <option value="الجنوب">الجنوب</option>
                               <option value="الشرق">الشرق</option>
@@ -1112,7 +1112,7 @@
                   <textarea id="service_impact" rows="4"></textarea>
         
                   <label for="event_status">هل الحدث ما زال قائم؟</label>
-                  <select id="event_status">
+                  <select id="event_status" required>
                       <option value="نعم">نعم</option>
                       <option value="لا">لا</option>
                   </select>
@@ -1130,7 +1130,7 @@
                   <div class="input-row">
                       <div class="input-small">
                           <label for="senior_paramedic_name"> كبير المسعفين المناوب:</label>
-                          <input type="text" id="senior_paramedic_name">
+                          <input type="text" id="senior_paramedic_name" required>
                       </div>
                   </div>
               </div>
@@ -1151,11 +1151,11 @@
 
                     <label for="report_time">توقيت التقرير (نظام 24 ساعة):</label>
                     <div class="input-row">
-                        <input type="text" id="report_hour" placeholder="الساعة" style="width: 45px;">
-                        <input type="text" id="report_minute" placeholder="الدقيقة" style="width: 45px;">
+                        <input type="text" id="report_hour" placeholder="الساعة" style="width: 45px;" required>
+                        <input type="text" id="report_minute" placeholder="الدقيقة" style="width: 45px;" required>
                     </div>
                     <label for="sector">اختر القطاع:</label>
-                    <select id="sector" onchange="toggleOtherSectorInput()">
+                    <select id="sector" onchange="toggleOtherSectorInput()" required>
                         <option value="الوسط">الوسط</option>
                         <option value="الجنوب">الجنوب</option>
                         <option value="الشرق">الشرق</option>
@@ -1168,7 +1168,7 @@
                     <div class="input-row">
                   	  <div class="input-small">
                     <label for="report_number">رقم البلاغ:</label>
-                    <input type="text" id="report_number">
+                    <input type="text" id="report_number" required>
                  </div>
                         <div class="input-small">
                     <label for="report_type">نوع البلاغ:</label>
@@ -1176,18 +1176,18 @@
                  </div>
                         <div class="input-small">
                     <label for="report_location">موقع البلاغ:</label>
-                    <input type="text" id="report_location">
+                    <input type="text" id="report_location" required>
              		 </div>
               	   	</div>
               	   </div>
 		          <div class="input-row">
                         <div class="input-small">
                     <label for="responding_units">الوحدات المستجيبة:</label>
-                    <input type="text" id="responding_units">
+                    <input type="text" id="responding_units" required>
               	   </div>
                         <div class="input-small">
                     <label for="response_time">زمن الاستجابة (دقائق):</label>
-                    <input type="number" id="response_time" placeholder="أكتب الدقيقة بالرقم فقط">
+                    <input type="number" id="response_time" placeholder="أكتب الدقيقة بالرقم فقط" required>
                     </div>
               	   	</div>
 		       <div class="input-small">
@@ -1199,7 +1199,7 @@
                     <div class="input-row">
                     <div class="input-small">
                     <label for="senior_paramedic_name"> كبير المسعفين المناوب:</label>
-                    <input type="text" id="senior_paramedic_name">
+                    <input type="text" id="senior_paramedic_name" required>
                     </div>
                 </div>
           </div>
@@ -1212,7 +1212,7 @@
 
                 <div class="form-section">
                     <label for="sector">القطاع:</label>
-                    <select id="sector" onchange="toggleOtherSectorInput()">
+                    <select id="sector" onchange="toggleOtherSectorInput()" required>
                         <option value="الوسط">الوسط</option>
                         <option value="الجنوب">الجنوب</option>
                         <option value="الشرق">الشرق</option>
@@ -1225,35 +1225,35 @@
                     <label for="event_time">وقت وتاريخ الحدث:</label>
                     <input type="date" id="event_time" readonly>
                     <div class="input-row">
-                        <input type="number" id="event_hour" placeholder="الساعة" style="width: 45px;">
-                        <input type="number" id="event_minute" placeholder="الدقيقة" style="width: 45px;">
+                        <input type="number" id="event_hour" placeholder="الساعة" style="width: 45px;" required>
+                        <input type="number" id="event_minute" placeholder="الدقيقة" style="width: 45px;" required>
                     </div>
 
                     <label for="event_details">تفاصيل الحدث:</label>
-                    <textarea id="event_details" rows="4"></textarea>
+                    <textarea id="event_details" rows="4" required></textarea>
 
                     <label for="assigned_units">إيجاز الوضع الراهن أثناء ورود البلاغ:</label>
-                    <textarea id="assigned_units" rows="4"></textarea>
+                    <textarea id="assigned_units" rows="4" required></textarea>
                 <div class="input-row">
                 <div class="input-small">
                     <label for="teams_count">عدد الفرق لكامل القطاع (المشغولة والمتاحة):</label>
-                    <input type="number" id="teams_count">
+                    <input type="number" id="teams_count" required>
                     </div>
                 </div>
                 <div class="input-row">
                 <div class="input-small">
                     <label for="deployment">الانتشار:</label>
-                    <input type="text" id="deployment">
+                    <input type="text" id="deployment" required>
               	   	</div>
 		       <div class="input-small">
                     <label for="team_types">أنواع الفرق المشاركة:</label>
-                    <input type="text" id="team_types">
+                    <input type="text" id="team_types" required>
               	   	</div>
               	   	</div>
               	   	<div class="input-row">
                 <div class="input-small">
                     <label for="saudi_red_crescent">الهلال الأحمر:</label>
-                    <input type="text" id="saudi_red_crescent">
+                    <input type="text" id="saudi_red_crescent" required>
               	   </div>
                         <div class="input-small">
                     <label for="health_ministry">وزارة الصحة:</label>
@@ -1269,17 +1269,17 @@
                 <div class="input-small">
 		      <label for="first_team_arrival">وقت وصول أول فرقة (نظام 24 ساعة):</label>
 		<div class="input-row">
-		    <input type="number" id="arrival_hour" placeholder="الساعة" style="width:80px;">
-		    <input type="number" id="arrival_minute" placeholder="الدقيقة" style="width: 80px;">
+		    <input type="number" id="arrival_hour" placeholder="الساعة" style="width:80px;" required>
+		    <input type="number" id="arrival_minute" placeholder="الدقيقة" style="width: 80px;" required>
 		</div>
              	   </div>
                         <div class="input-small">
                     <label for="injury_triage">فرز الإصابات:</label>
                     <div class="input-row">
-                        <input type="number" id="critical_injuries" placeholder="حرجة" style="width: 80px;">
-                        <input type="number" id="moderate_injuries" placeholder="متوسطة" style="width:80px;">
-                        <input type="number" id="minor_injuries" placeholder="طفيفة" style="width:80px;">
-                        <input type="number" id="deaths" placeholder="وفاة" style="width:80px;">
+                        <input type="number" id="critical_injuries" placeholder="حرجة" style="width: 80px;" required>
+                        <input type="number" id="moderate_injuries" placeholder="متوسطة" style="width:80px;" required>
+                        <input type="number" id="minor_injuries" placeholder="طفيفة" style="width:80px;" required>
+                        <input type="number" id="deaths" placeholder="وفاة" style="width:80px;" required>
                     </div>
                     </div>
                     </div>
@@ -1302,11 +1302,11 @@
                 <div class="input-row">
                     <div class="input-small">
                         <label for="transferd_victimes">الحالات المنقولة:</label>
-                        <input type="number" id="transferd_victimes" oninput="calculateTotalVictimes()">
+                        <input type="number" id="transferd_victimes" oninput="calculateTotalVictimes()" required>
                     </div>
                     <div class="input-small">
                         <label for="non_transferd_victimes">الحالات الغير منقولة:</label>
-                        <input type="number" id="non_transferd_victimes" oninput="calculateTotalVictimes()">
+                        <input type="number" id="non_transferd_victimes" oninput="calculateTotalVictimes()" required>
                     </div>
                     <div class="input-small">
                         <label for="total_victimes">إجمالي الحالات:</label>
@@ -1316,7 +1316,7 @@
 
                     <div class="form-section">
 			<label for="hospitals">المستشفيات:</label>
-			<textarea id="hospitals" rows="4"></textarea>
+			<textarea id="hospitals" rows="4" required></textarea>
                 </div>
 <div class="form-section">
     <div class="input-row" style="display: flex; justify-content: space-between; align-items: center;">
@@ -1348,8 +1348,8 @@
         <div class="input-small">
             <label for="event_end">انتهاء الحدث (نظام 24 ساعة):</label>
             <div style="display: inline-flex; gap: 5px; align-items: center;">
-                <input type="text" id="end_hour" placeholder="الساعة" style="width: 60px;">
-                <input type="text" id="end_minute" placeholder="الدقيقة" style="width: 60px;">
+                <input type="text" id="end_hour" placeholder="الساعة" style="width: 60px;" required>
+                <input type="text" id="end_minute" placeholder="الدقيقة" style="width: 60px;" required>
             </div>
         </div>
     </div>
@@ -1360,16 +1360,16 @@
             <div class="form-section">
 
                     <label for="field_leader">قائد الحدث الميداني:</label>
-                    <input type="text" id="field_leader">
+                    <input type="text" id="field_leader" required>
 
                     <label for="operational_control">التحكم العملياتي:</label>
-                    <input type="text" id="operational_control">
+                    <input type="text" id="operational_control" required>
 
                     <label for="response_coordination">تنسيق الاستجابة:</label>
-                    <input type="text" id="response_coordination">
+                    <input type="text" id="response_coordination" required>
 
                     <label for="area_leader">قائد المنطقة المناوب:</label>
-                    <input type="text" id="area_leader">
+                    <input type="text" id="area_leader" required>
         </div>
     </div>
 </div>
@@ -1383,7 +1383,7 @@
 
                 <div class="form-section">
                     <label for="sector">القطاع:</label>
-                    <select id="sector" onchange="toggleOtherSectorInput()">
+                    <select id="sector" onchange="toggleOtherSectorInput()" required>
                         <option value="الوسط">الوسط</option>
                         <option value="الجنوب">الجنوب</option>
                         <option value="الشرق">الشرق</option>
@@ -1395,21 +1395,21 @@
 
                     <label for="report_time">توقيت طلب الدعم (نظام 24 ساعة):</label>
                     <div class="input-row">
-                        <input type="text" id="report_hour" placeholder="الساعة" style="width: 45px;">
-                        <input type="text" id="report_minute" placeholder="الدقيقة" style="width: 45px;">
+                        <input type="text" id="report_hour" placeholder="الساعة" style="width: 45px;" required>
+                        <input type="text" id="report_minute" placeholder="الدقيقة" style="width: 45px;" required>
                     </div>
 
                     <label for="units_linked">عدد الوحدات المرتبطة ببلاغ:</label>
-                    <input type="text" id="units_linked">
+                    <input type="text" id="units_linked" required>
 
                     <label for="units_ready">عدد الوحدات الجاهزة:</label>
-                    <input type="text" id="units_ready">
+                    <input type="text" id="units_ready" required>
 
                     <label for="units_out_of_order">عدد الوحدات الخارجة عن الجاهزية:</label>
-                    <input type="text" id="units_out_of_order">
+                    <input type="text" id="units_out_of_order" required>
 
                     <label for="working_teams_shift">عدد فرق القطاع العاملة أثناء المناوبة:</label>
-                    <input type="text" id="working_teams_shift">
+                    <input type="text" id="working_teams_shift" required>
 
                     <label for="challenges">التحديات والاجراءات المتخذة:</label>
                     <textarea id="challenges" rows="4" placeholder="1- ...&#10;2- ..."></textarea>
@@ -1432,7 +1432,7 @@
 		<button type="button" onclick="relatedreports('reports-container-2', 'dispatchTime')">إضافة بلاغ آخر</button>
 
                     <label for="senior_paramedic_name">اسم كبير المسعفين:</label>
-                    <input type="text" id="senior_paramedic_name">
+                    <input type="text" id="senior_paramedic_name" required>
                 </div>
                 <button onclick="sendWhatsAppMessage('support_request')">إرسال النموذج بالواتساب</button>
             `;
@@ -1443,7 +1443,7 @@
 
         <div class="form-section">
             <label for="support_status">حالة الدعم:</label>
-            <select id="support_status" onchange="toggleFieldsBasedOnSupportStatus()">
+            <select id="support_status" onchange="toggleFieldsBasedOnSupportStatus()" required>
                 <option value="الموافقة">الموافقة</option>
                 <option value="الرفض">الرفض</option>
             </select>
@@ -1453,7 +1453,7 @@
 
             <div id="supportDetails">
                 <label for="support_sector">القطاعات الداعمة:</label>
-                <div id="support_sector">
+                <div id="support_sector" required>
                     <label><input type="checkbox" value="الوسط" class="support-sector-checkbox"> الوسط</label><br>
                     <label><input type="checkbox" value="الجنوب" class="support-sector-checkbox"> الجنوب</label><br>
                     <label><input type="checkbox" value="الشرق" class="support-sector-checkbox"> الشرق</label><br>
@@ -1464,7 +1464,7 @@
 
 
                 <label for="supported_sector">القطاع المدعوم:</label>
-                <select id="supported_sector" onchange="toggleOtherSectorInput()">
+                <select id="supported_sector" onchange="toggleOtherSectorInput()" required>
                     <option value="الوسط">الوسط</option>
                     <option value="الجنوب">الجنوب</option>
                     <option value="الشرق">الشرق</option>
@@ -1474,28 +1474,28 @@
 
                 <label for="dispatch_time">توقيت تحريك الدعم (نظام 24 ساعة):</label>
                 <div class="input-row">
-                    <input type="text" id="dispatch_hour" placeholder="الساعة" style="width: 45px;">
-                    <input type="text" id="dispatch_minute" placeholder="الدقيقة" style="width: 45px;">
+                    <input type="text" id="dispatch_hour" placeholder="الساعة" style="width: 45px;" required>
+                    <input type="text" id="dispatch_minute" placeholder="الدقيقة" style="width: 45px;" required>
                 </div>
 
                 <label for="arrival_time">توقيت وصول الدعم (نظام 24 ساعة):</label>
                 <div class="input-row">
-                    <input type="text" id="arrival_hour" placeholder="الساعة" style="width: 45px;">
-                    <input type="text" id="arrival_minute" placeholder="الدقيقة" style="width: 45px;">
+                    <input type="text" id="arrival_hour" placeholder="الساعة" style="width: 45px;" required>
+                    <input type="text" id="arrival_minute" placeholder="الدقيقة" style="width: 45px;" required>
                 </div>
 
                 <label for="support_teams_count">عدد الفرق الداعمة:</label>
-                <input type="text" id="support_teams_count">
+                <input type="text" id="support_teams_count" required>
 
                 <label for="end_time">توقيت انتهاء الدعم (نظام 24 ساعة):</label>
                 <div class="input-row">
-                    <input type="text" id="end_hour" placeholder="الساعة" style="width: 45px;">
-                    <input type="text" id="end_minute" placeholder="الدقيقة" style="width: 45px;">
+                    <input type="text" id="end_hour" placeholder="الساعة" style="width: 45px;" required>
+                    <input type="text" id="end_minute" placeholder="الدقيقة" style="width: 45px;" required>
                 </div>
             </div>
 
             <label for="region_leader_name">اسم قائد المنطقة:</label>
-            <input type="text" id="region_leader_name">
+            <input type="text" id="region_leader_name" required>
         </div>
         <button onclick="sendWhatsAppMessage('support_activation')">إرسال النموذج بالواتساب</button>
     `;
@@ -1505,7 +1505,7 @@
         <p>يرسل من قبل قائد المنطقة كل بداية مناوبة</p>
         <div class="form-section">
             <label for="shift">المناوبة:</label>
-            <select id="shift" onchange="toggleOtherSectorInput()">
+            <select id="shift" onchange="toggleOtherSectorInput()" required>
                 <option value="صباحي">صباحي</option>
                 <option value="مسائي">مسائي</option>
             </select>
@@ -1516,13 +1516,13 @@
         </div>
         <div class="form-section">
             <label for="region_leader">قائد المنطقة المناوب:</label>
-            <input type="text" id="region_leader" placeholder="أدخل اسم قائد المنطقة">
+            <input type="text" id="region_leader" placeholder="أدخل اسم قائد المنطقة" required>
             
             <label for="region_leader_phone">جوال:</label>
-            <input type="text" id="region_leader_phone" placeholder="أدخل رقم الجوال">
+            <input type="text" id="region_leader_phone" placeholder="أدخل رقم الجوال" required>
             
             <label for="region_leader_channel">قناة:</label>
-            <input type="text" id="region_leader_channel" placeholder="أدخل رقم القناة">
+            <input type="text" id="region_leader_channel" placeholder="أدخل رقم القناة" required>
         </div>
         
         <div class="form-section">
@@ -1531,55 +1531,55 @@
             <div class="input-row">
                 <div class="input-small">
                     <label for="east_leader">كبير المسعفين قطاع الشرق:</label>
-                    <input type="text" id="east_leader" placeholder="أدخل اسم كبير المسعفين قطاع الشرق">
+                    <input type="text" id="east_leader" placeholder="أدخل اسم كبير المسعفين قطاع الشرق" required>
                 </div>
                 <div class="input-small">
                     <label for="east_channel">قناة:</label>
-                    <input type="text" id="east_channel" placeholder="أدخل رقم القناة">
+                    <input type="text" id="east_channel" placeholder="أدخل رقم القناة" required>
                 </div>
             </div>
             
             <div class="input-row">
                 <div class="input-small">
                     <label for="west_leader">كبير المسعفين قطاع الغرب:</label>
-                    <input type="text" id="west_leader" placeholder="أدخل اسم كبير المسعفين قطاع الغرب">
+                    <input type="text" id="west_leader" placeholder="أدخل اسم كبير المسعفين قطاع الغرب" required>
                 </div>
                 <div class="input-small">
                     <label for="west_channel">قناة:</label>
-                    <input type="text" id="west_channel" placeholder="أدخل رقم القناة">
+                    <input type="text" id="west_channel" placeholder="أدخل رقم القناة" required>
                 </div>
             </div>
             
             <div class="input-row">
                 <div class="input-small">
                     <label for="south_leader">كبير المسعفين قطاع جنوب:</label>
-                    <input type="text" id="south_leader" placeholder="أدخل اسم كبير المسعفين قطاع جنوب">
+                    <input type="text" id="south_leader" placeholder="أدخل اسم كبير المسعفين قطاع جنوب" required>
                 </div>
                 <div class="input-small">
                     <label for="south_channel">قناة:</label>
-                    <input type="text" id="south_channel" placeholder="أدخل رقم القناة">
+                    <input type="text" id="south_channel" placeholder="أدخل رقم القناة" required>
                 </div>
             </div>
             
             <div class="input-row">
                 <div class="input-small">
                     <label for="central_leader">كبير المسعفين قطاع وسط:</label>
-                    <input type="text" id="central_leader" placeholder="أدخل اسم كبير المسعفين قطاع وسط">
+                    <input type="text" id="central_leader" placeholder="أدخل اسم كبير المسعفين قطاع وسط" required>
                 </div>
                 <div class="input-small">
                     <label for="central_channel">قناة:</label>
-                    <input type="text" id="central_channel" placeholder="أدخل رقم القناة">
+                    <input type="text" id="central_channel" placeholder="أدخل رقم القناة" required>
                 </div>
             </div>
             
             <div class="input-row">
                 <div class="input-small">
                     <label for="north_leader">كبير المسعفين قطاع الشمال:</label>
-                    <input type="text" id="north_leader" placeholder="أدخل اسم كبير المسعفين قطاع الشمال">
+                    <input type="text" id="north_leader" placeholder="أدخل اسم كبير المسعفين قطاع الشمال" required>
                 </div>
                 <div class="input-small">
                     <label for="north_channel">قناة:</label>
-                    <input type="text" id="north_channel" placeholder="أدخل رقم القناة">
+                    <input type="text" id="north_channel" placeholder="أدخل رقم القناة" required>
                 </div>
             </div>
         </div>
