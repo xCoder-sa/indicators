@@ -966,27 +966,34 @@
                         </div>
                     </div>
                     <h2>البلاغات</h2>
-	<div class="form-section">
-	    <div class="input-row">
-	        <div class="input-small">
-	            <label for="total_reports">إجمالي بلاغات القطاع:</label>
-	            <input type="number" id="total_reports" required>
-	            <label for="related_reports">البلاغات:</label>	
-	            <div id="reports-container-1">
-	                <div class="input-pair" style="display: flex; align-items: center; gap: 10px;">
-	                    <input type="checkbox" id="no_reports" onclick="toggleReports()" style="margin-right: 5px;" />
-	                    <label for="no_reports" style="font-weight: bold; color: red;">لا يوجد بلاغات</label>
-	                    <input type="number" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
-	                    <select class="report-type" style="width: 120px;">
-	                        <option value="إيكو">إيكو</option>
-	                        <option value="دلتا">دلتا</option>
-	                        <option value="تشارلي">تشارلي</option>
-	                        <option value="برافو">برافو</option>
-	                    </select>
-	                    <input type="number" placeholder="(بالدقائق) زمن الاستجابة" class="waiting_time" style="width: 120px;">
-	                    <p>احسب زمن الاستجابة من الرد الى الوصول للموقع</p>
-	                </div>
-	            </div>
+<div class="form-section">
+    <div class="input-row">
+        <div class="input-small">
+            <label for="total_reports">إجمالي بلاغات القطاع:</label>
+            <input type="number" id="total_reports" required>
+            <label for="related_reports">البلاغات:</label>
+            <div id="reports-container-1">
+                <div class="input-pair" style="display: flex; align-items: center; gap: 10px;">
+                    <input type="checkbox" id="no_reports" onclick="toggleReports()" style="margin-right: 5px;" />
+                    <label for="no_reports" style="font-weight: bold; color: red; margin-left: 5px;">لا يوجد بلاغات</label>
+                    <input type="number" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
+                    <select class="report-type" style="width: 120px;">
+                        <option value="إيكو">إيكو</option>
+                        <option value="دلتا">دلتا</option>
+                        <option value="تشارلي">تشارلي</option>
+                        <option value="برافو">برافو</option>
+                    </select>
+                    <input type="number" placeholder="(بالدقائق) زمن الاستجابة" class="waiting_time" style="width: 120px;">
+                    <p>احسب زمن الاستجابة من الرد الى الوصول للموقع</p>
+                </div>
+            </div>
+
+            <!-- زر لإضافة بلاغ آخر -->
+            <button type="button" id="add-report-btn" onclick="relatedreports('reports-container-1', 'responseTime')">إضافة بلاغ آخر</button>
+        </div>
+    </div>
+</div>
+
 	            
 	            <!-- زر لإضافة بلاغ آخر -->
 	            <button type="button" id="add-report-btn" onclick="relatedreports('reports-container-1', 'responseTime')">إضافة بلاغ آخر</button>
