@@ -2249,7 +2249,8 @@ if (noReports) {
         formText += `ملاحظات: ${document.getElementById('outsider_notes').value}\n`;
         formText += `اسم كبير المسعفين: ${document.getElementById('senior_paramedic_name').value}\n`;
 } else if (formName === 'rapid_response_reports') {
-        formText += `*=== نموذج بلاغات التدخل السريع ===*\n\n`;
+    calculateTotals(); // تأكد من استدعاء الفنكشن لحساب القيم
+    formText += `*=== نموذج بلاغات التدخل السريع ===*\n\n`;
     formText += `قطاع عمليات الغرب: ${document.getElementById('sector_west').value}\n`;
     formText += `قطاع عمليات الشرق: ${document.getElementById('sector_east').value}\n`;
     formText += `قطاع عمليات الوسط: ${document.getElementById('sector_central').value}\n`;
@@ -2380,7 +2381,6 @@ document.addEventListener("DOMContentLoaded", function () {
     selectCurrentTime();  
 });
 
-    // فنكشن حساب إجمالي مركبات منطقة الرياض  
 // فنكشن حساب إجمالي مركبات وفرق منطقة الرياض  
 function calculateTotals() {
     // حساب إجمالي مركبات القطاعات الداخلية العاملة
