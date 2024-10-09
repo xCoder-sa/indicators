@@ -391,7 +391,7 @@
         <div class="input-row">
             <div class="input-small">
                 <label for="working_teams">عدد الفرق العاملة:</label>
-                <input type="number" id="working_teams" required>
+                <input type="number" id="working_teams">
             </div>
             <div class="input-small">
                 <label for="total_teams">من أصل:</label>
@@ -402,22 +402,22 @@
                         <div class="input-row">
                         <div class="input-small">
                             <label for="operating_vehicles">عدد المركبات العاملة:</label>
-                            <input type="number" id="operating_vehicles" required>
+                            <input type="number" id="operating_vehicles">
                         </div>
                         <div class="input-small">
                             <label for="rapid_response_teams">عدد فرق التدخل السريع:</label>
-                            <input type="number" id="rapid_response_teams" required>
+                            <input type="number" id="rapid_response_teams">
                         </div>
                     </div>
 
                         <div class="input-row">
                         <div class="input-small">
                             <label for="broken_vehicles">عدد المركبات المتعطلة:</label>
-                            <input type="number" id="broken_vehicles" required>
+                            <input type="number" id="broken_vehicles">
                         </div>
                         <div class="input-small">
                             <label for="reserve_vehicles">عدد المركبات الاحتياط:</label>
-                            <input type="number" id="reserve_vehicles" required>
+                            <input type="number" id="reserve_vehicles">
                         </div>
                     </div>
                         <div class="input-row">
@@ -529,12 +529,12 @@
                     <h2>ملاحظات النوبة</h2>
 
                     <label for="absence_in_shift">عدد الغياب في المناوبة:</label>
-                    <input type="text" id="absence_in_shift" required>
+                    <input type="text" id="absence_in_shift">
 
                     <label for="cad_program_notes">ملاحظات عامه:</label>
                     <textarea id="cad_program_notes" rows="4"></textarea>
                     <label for="senior_paramedic_name"> كبير المسعفين المناوب:</label>
-                    <input type="text" id="senior_paramedic_name" required>
+                    <input type="text" id="senior_paramedic_name">
                 </div>
                 <button onclick="sendWhatsAppMessage('senior_paramedic')">إرسال النموذج بالواتساب</button>
             `;
@@ -546,7 +546,7 @@
                     <label for="date">التاريخ:</label>
         <input type="date" id="date" readonly disabled style="background-color: #e0e0e0;>
                     <label for="shift">المناوبة</label>
-                    <select id="shift" onchange="toggleOtherSectorInput()" required>
+                    <select id="shift" onchange="toggleOtherSectorInput()">
                         <option value="صباحي">صباحي</option>
                         <option value="مسائي">مسائي</option>
                     </select>
@@ -556,71 +556,71 @@
 		<div class="input-row">
 		    <div class="input-small">
 		        <label for="center_sector_teams">عدد فرق قطاع الوسط العاملة :</label>
-		        <input type="text" id="center_sector_teams" required>
+		        <input type="text" id="center_sector_teams">
 		    </div>
 		    <div class="input-small">
 		        <label for="center_sector_vehicles_work">مركبات قطاع الوسط العاملة :</label>
-		        <input type="text" id="center_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="center_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()">
 		    </div>
 		    <div class="input-small">
 		        <label for="center_sector_vehicles_broken">مركبات قطاع الوسط المتعطلة :</label>
-		        <input type="text" id="center_sector_vehicles_broken" required>
+		        <input type="text" id="center_sector_vehicles_broken">
 		    </div>
 		</div>
 		<div class="input-row">
 		    <div class="input-small">
 		        <label for="east_sector_teams">عدد فرق قطاع الشرق العاملة :</label>
-		        <input type="text" id="east_sector_teams" required>
+		        <input type="text" id="east_sector_teams">
 		    </div>
 		    <div class="input-small">
 		        <label for="east_sector_vehicles_work">مركبات قطاع الشرق العاملة :</label>
-		        <input type="text" id="east_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="east_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()">
 		    </div>
 		    <div class="input-small">
 		        <label for="east_sector_vehicles_broken">مركبات قطاع الشرق المتعطلة :</label>
-		        <input type="text" id="east_sector_vehicles_broken" required>
+		        <input type="text" id="east_sector_vehicles_broken">
 		    </div>
 		</div>
 		<div class="input-row">
 		    <div class="input-small">
 		        <label for="west_sector_teams">عدد فرق قطاع الغرب العاملة :</label>
-		        <input type="text" id="west_sector_teams" required>
+		        <input type="text" id="west_sector_teams">
 		    </div>
 		    <div class="input-small">
 		        <label for="west_sector_vehicles_work">مركبات قطاع الغرب العاملة :</label>
-		        <input type="text" id="west_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="west_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()">
 		    </div>
 		    <div class="input-small">
 		        <label for="west_sector_vehicles_broken">مركبات قطاع الغرب المتعطلة :</label>
-		        <input type="text" id="west_sector_vehicles_broken" required>
+		        <input type="text" id="west_sector_vehicles_broken">
 		    </div>
 		</div>
 		<div class="input-row">
 		    <div class="input-small">
 		        <label for="north_sector_teams">عدد فرق قطاع الشمال العاملة :</label>
-		        <input type="text" id="north_sector_teams" required>
+		        <input type="text" id="north_sector_teams">
 		    </div>
 		    <div class="input-small">
 		        <label for="north_sector_vehicles_work">مركبات قطاع الشمال العاملة :</label>
-		        <input type="text" id="north_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="north_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()">
 		    </div>
 		    <div class="input-small">
 		        <label for="north_sector_vehicles_broken">مركبات قطاع الشمال المتعطلة :</label>
-		        <input type="text" id="north_sector_vehicles_broken" required>
+		        <input type="text" id="north_sector_vehicles_broken">
 		    </div>
 		</div>
 		<div class="input-row">
 		    <div class="input-small">
 		        <label for="south_sector_teams">عدد فرق قطاع الجنوب العاملة :</label>
-		        <input type="text" id="south_sector_teams" required>
+		        <input type="text" id="south_sector_teams">
 		    </div>
 		    <div class="input-small">
 		        <label for="south_sector_vehicles_work">مركبات قطاع الجنوب العاملة :</label>
-		        <input type="text" id="south_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="south_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()">
 		    </div>
 		    <div class="input-small">
 		        <label for="south_sector_vehicles_broken">مركبات قطاع الجنوب المتعطلة :</label>
-		        <input type="text" id="south_sector_vehicles_broken" required>
+		        <input type="text" id="south_sector_vehicles_broken">
 		    </div>
 		</div>
 		
@@ -629,197 +629,197 @@
 		<div class="input-row">
 		    <div class="input-small">
 		        <label for="ramah_sector_teams">عدد فرق رماح العاملة :</label>
-		        <input type="text" id="ramah_sector_teams" required>
+		        <input type="text" id="ramah_sector_teams">
 		    </div>
 		    <div class="input-small">
 		        <label for="ramah_sector_vehicles_work">مركبات رماح العاملة :</label>
-		        <input type="text" id="ramah_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="ramah_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()">
 		    </div>
 		    <div class="input-small">
 		        <label for="ramah_sector_vehicles_broken">مركبات رماح المتعطلة :</label>
-		        <input type="text" id="ramah_sector_vehicles_broken" required>
+		        <input type="text" id="ramah_sector_vehicles_broken">
 		    </div>
 		</div>
 		<div class="input-row">
 		    <div class="input-small">
 		        <label for="al_aflag_sector_teams">عدد فرق الافلاج العاملة :</label>
-		        <input type="text" id="al_aflag_sector_teams" required>
+		        <input type="text" id="al_aflag_sector_teams">
 		    </div>
 		    <div class="input-small">
 		        <label for="al_aflag_sector_vehicles_work">مركبات الافلاج العاملة :</label>
-		        <input type="text" id="al_aflag_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="al_aflag_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()">
 		    </div>
 		    <div class="input-small">
 		        <label for="al_aflag_sector_vehicles_broken">مركبات الافلاج المتعطلة :</label>
-		        <input type="text" id="al_aflag_sector_vehicles_broken" required>
+		        <input type="text" id="al_aflag_sector_vehicles_broken">
 		    </div>
 		</div>
 		<div class="input-row">
 		    <div class="input-small">
 		        <label for="al_kharj_sector_teams">عدد فرق الخرج العاملة :</label>
-		        <input type="text" id="al_kharj_sector_teams" required>
+		        <input type="text" id="al_kharj_sector_teams">
 		    </div>
 		    <div class="input-small">
 		        <label for="al_kharj_sector_vehicles_work">مركبات الخرج العاملة :</label>
-		        <input type="text" id="al_kharj_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="al_kharj_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()">
 		    </div>
 		    <div class="input-small">
 		        <label for="al_kharj_sector_vehicles_broken">مركبات الخرج المتعطلة :</label>
-		        <input type="text" id="al_kharj_sector_vehicles_broken" required>
+		        <input type="text" id="al_kharj_sector_vehicles_broken">
 		    </div>
 		</div>
 		<div class="input-row">
 		    <div class="input-small">
 		        <label for="al_dariya_sector_teams">عدد فرق الدرعية العاملة :</label>
-		        <input type="text" id="al_dariya_sector_teams" required>
+		        <input type="text" id="al_dariya_sector_teams">
 		    </div>
 		    <div class="input-small">
 		        <label for="al_dariya_sector_vehicles_work">مركبات الدرعية العاملة :</label>
-		        <input type="text" id="al_dariya_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="al_dariya_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()">
 		    </div>
 		    <div class="input-small">
 		        <label for="al_dariya_sector_vehicles_broken">مركبات الدرعية المتعطلة :</label>
-		        <input type="text" id="al_dariya_sector_vehicles_broken" required>
+		        <input type="text" id="al_dariya_sector_vehicles_broken">
 		    </div>
 		</div>
 		<div class="input-row">
 		    <div class="input-small">
 		        <label for="al_dawadmi_sector_teams">عدد فرق الدوادمي العاملة :</label>
-		        <input type="text" id="al_dawadmi_sector_teams" required>
+		        <input type="text" id="al_dawadmi_sector_teams">
 		    </div>
 		    <div class="input-small">
 		        <label for="al_dawadmi_sector_vehicles_work">مركبات الدوادمي العاملة :</label>
-		        <input type="text" id="al_dawadmi_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="al_dawadmi_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()">
 		    </div>
 		    <div class="input-small">
 		        <label for="al_dawadmi_sector_vehicles_broken">مركبات الدوادمي المتعطلة :</label>
-		        <input type="text" id="al_dawadmi_sector_vehicles_broken" required>
+		        <input type="text" id="al_dawadmi_sector_vehicles_broken">
 		    </div>
 		</div>
 		<div class="input-row">
 		    <div class="input-small">
 		        <label for="al_zulfi_sector_teams">عدد فرق الزلفي العاملة :</label>
-		        <input type="text" id="al_zulfi_sector_teams" required>
+		        <input type="text" id="al_zulfi_sector_teams">
 		    </div>
 		    <div class="input-small">
 		        <label for="al_zulfi_sector_vehicles_work">مركبات الزلفي العاملة :</label>
-		        <input type="text" id="al_zulfi_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="al_zulfi_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()">
 		    </div>
 		    <div class="input-small">
 		        <label for="al_zulfi_sector_vehicles_broken">مركبات الزلفي المتعطلة :</label>
-		        <input type="text" id="al_zulfi_sector_vehicles_broken" required>
+		        <input type="text" id="al_zulfi_sector_vehicles_broken">
 		    </div>
 		</div>
 		<div class="input-row">
 		    <div class="input-small">
 		        <label for="al_ghat_sector_teams">عدد فرق الغاط العاملة :</label>
-		        <input type="text" id="al_ghat_sector_teams" required>
+		        <input type="text" id="al_ghat_sector_teams">
 		    </div>
 		    <div class="input-small">
 		        <label for="al_ghat_sector_vehicles_work">مركبات الغاط العاملة :</label>
-		        <input type="text" id="al_ghat_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="al_ghat_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()">
 		    </div>
 		    <div class="input-small">
 		        <label for="al_ghat_sector_vehicles_broken">مركبات الغاط المتعطلة :</label>
-		        <input type="text" id="al_ghat_sector_vehicles_broken" required>
+		        <input type="text" id="al_ghat_sector_vehicles_broken">
 		    </div>
 		</div>
 		<div class="input-row">
 		    <div class="input-small">
 		        <label for="al_quwayiyah_sector_teams">عدد فرق القويعية العاملة :</label>
-		        <input type="text" id="al_quwayiyah_sector_teams" required>
+		        <input type="text" id="al_quwayiyah_sector_teams">
 		    </div>
 		    <div class="input-small">
 		        <label for="al_quwayiyah_sector_vehicles_work">مركبات القويعية العاملة :</label>
-		        <input type="text" id="al_quwayiyah_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="al_quwayiyah_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()">
 		    </div>
 		    <div class="input-small">
 		        <label for="al_quwayiyah_sector_vehicles_broken">مركبات القويعية المتعطلة :</label>
-		        <input type="text" id="al_quwayiyah_sector_vehicles_broken" required>
+		        <input type="text" id="al_quwayiyah_sector_vehicles_broken">
 		    </div>
 		</div>
 		<div class="input-row">
 		    <div class="input-small">
 		        <label for="al_majmaah_sector_teams">عدد فرق المجمعة العاملة :</label>
-		        <input type="text" id="al_majmaah_sector_teams" required>
+		        <input type="text" id="al_majmaah_sector_teams">
 		    </div>
 		    <div class="input-small">
 		        <label for="al_majmaah_sector_vehicles_work">مركبات المجمعة العاملة :</label>
-		        <input type="text" id="al_majmaah_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="al_majmaah_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()">
 		    </div>
 		    <div class="input-small">
 		        <label for="al_majmaah_sector_vehicles_broken">مركبات المجمعة المتعطلة :</label>
-		        <input type="text" id="al_majmaah_sector_vehicles_broken" required>
+		        <input type="text" id="al_majmaah_sector_vehicles_broken">
 		    </div>
 		</div>
 		<div class="input-row">
 		    <div class="input-small">
 		        <label for="al_muzahimiyah_sector_teams">عدد فرق المزاحمية العاملة :</label>
-		        <input type="text" id="al_muzahimiyah_sector_teams" required>
+		        <input type="text" id="al_muzahimiyah_sector_teams">
 		    </div>
 		    <div class="input-small">
 		        <label for="al_muzahimiyah_sector_vehicles_work">مركبات المزاحمية العاملة :</label>
-		        <input type="text" id="al_muzahimiyah_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="al_muzahimiyah_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()">
 		    </div>
 		    <div class="input-small">
 		        <label for="al_muzahimiyah_sector_vehicles_broken">مركبات المزاحمية المتعطلة :</label>
-		        <input type="text" id="al_muzahimiyah_sector_vehicles_broken" required>
+		        <input type="text" id="al_muzahimiyah_sector_vehicles_broken">
 		    </div>
 		</div>
 		<div class="input-row">
 		    <div class="input-small">
 		        <label for="hawtat_banee_tamim_sector_teams">عدد فرق حوطة بني تميم العاملة :</label>
-		        <input type="text" id="hawtat_banee_tamim_sector_teams" required>
+		        <input type="text" id="hawtat_banee_tamim_sector_teams">
 		    </div>
 		    <div class="input-small">
 		        <label for="hawtat_banee_tamim_sector_vehicles_work">مركبات حوطة بني تميم العاملة :</label>
-		        <input type="text" id="hawtat_banee_tamim_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="hawtat_banee_tamim_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()">
 		    </div>
 		    <div class="input-small">
 		        <label for="hawtat_banee_tamim_sector_vehicles_broken">مركبات حوطة بني تميم المتعطلة :</label>
-		        <input type="text" id="hawtat_banee_tamim_sector_vehicles_broken" required>
+		        <input type="text" id="hawtat_banee_tamim_sector_vehicles_broken">
 		    </div>
 		</div>
 		<div class="input-row">
 		    <div class="input-small">
 		        <label for="shaqra_sector_teams">عدد فرق شقراء العاملة :</label>
-		        <input type="text" id="shaqra_sector_teams" required>
+		        <input type="text" id="shaqra_sector_teams">
 		    </div>
 		    <div class="input-small">
 		        <label for="shaqra_sector_vehicles_work">مركبات شقراء العاملة :</label>
-		        <input type="text" id="shaqra_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="shaqra_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()">
 		    </div>
 		    <div class="input-small">
 		        <label for="shaqra_sector_vehicles_broken">مركبات شقراء المتعطلة :</label>
-		        <input type="text" id="shaqra_sector_vehicles_broken" required>
+		        <input type="text" id="shaqra_sector_vehicles_broken">
 		    </div>
 		</div>
 		<div class="input-row">
 		    <div class="input-small">
 		        <label for="afif_sector_teams">عدد فرق عفيف العاملة :</label>
-		        <input type="text" id="afif_sector_teams" required>
+		        <input type="text" id="afif_sector_teams">
 		    </div>
 		    <div class="input-small">
 		        <label for="afif_sector_vehicles_work">مركبات عفيف العاملة :</label>
-		        <input type="text" id="afif_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="afif_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()">
 		    </div>
 		    <div class="input-small">
 		        <label for="afif_sector_vehicles_broken">مركبات عفيف المتعطلة :</label>
-		        <input type="text" id="afif_sector_vehicles_broken" required>
+		        <input type="text" id="afif_sector_vehicles_broken">
 		    </div>
 		</div>
 		<div class="input-row">
 		    <div class="input-small">
 		        <label for="wadi_al_dawasir_sector_teams">عدد فرق وادي الدواسر العاملة :</label>
-		        <input type="text" id="wadi_al_dawasir_sector_teams" required>
+		        <input type="text" id="wadi_al_dawasir_sector_teams">
 		    </div>
 		    <div class="input-small">
 		        <label for="wadi_al_dawasir_sector_vehicles_work">مركبات وادي الدواسر العاملة :</label>
-		        <input type="text" id="wadi_al_dawasir_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()" required>
+		        <input type="text" id="wadi_al_dawasir_sector_vehicles_work" oninput="calculateWorkingVehiclesTotals()">
 		    </div>
 		    <div class="input-small">
 		        <label for="wadi_al_dawasir_sector_vehicles_broken">مركبات وادي الدواسر المتعطلة :</label>
-		        <input type="text" id="wadi_al_dawasir_sector_vehicles_broken" required>
+		        <input type="text" id="wadi_al_dawasir_sector_vehicles_broken">
 		    </div>
 		</div>
   
@@ -852,7 +852,7 @@
 		    <option value="نسخة 5">نسخة 5</option>
 		</select>
                     <label for="senior_paramedic_attendance">قائد المنطقة المناوب :</label>
-                    <input type="text" id="senior_paramedic_attendance" required>
+                    <input type="text" id="senior_paramedic_attendance">
 		    </div>
 		</div>
                 <button onclick="sendWhatsAppMessage('attendance')">إرسال النموذج بالواتساب</button>
@@ -863,26 +863,26 @@
         <p>يرسل من قبل قائد المنطقة كل 6 ساعات</p>
         <div class="form-section">
             <label for="sector_west">قطاع عمليات الغرب:</label>
-            <input type="number" id="sector_west" placeholder="أدخل العدد" oninput="calculateTotal()" required>
+            <input type="number" id="sector_west" placeholder="أدخل العدد" oninput="calculateTotal()">
 
             <label for="sector_east">قطاع عمليات الشرق:</label>
-            <input type="number" id="sector_east" placeholder="أدخل العدد" oninput="calculateTotal()" required>
+            <input type="number" id="sector_east" placeholder="أدخل العدد" oninput="calculateTotal()">
 
             <label for="sector_central">قطاع عمليات الوسط:</label>
-            <input type="number" id="sector_central" placeholder="أدخل العدد" oninput="calculateTotal()" required>
+            <input type="number" id="sector_central" placeholder="أدخل العدد" oninput="calculateTotal()">
 
             <label for="sector_north">قطاع عمليات الشمال:</label>
-            <input type="number" id="sector_north" placeholder="أدخل العدد" oninput="calculateTotal()" required>
+            <input type="number" id="sector_north" placeholder="أدخل العدد" oninput="calculateTotal()">
 
             <label for="sector_south">قطاع عمليات الجنوب:</label>
-            <input type="number" id="sector_south" placeholder="أدخل العدد" oninput="calculateTotal()" required>
+            <input type="number" id="sector_south" placeholder="أدخل العدد" oninput="calculateTotal()">
 	</div>
  		<div class="form-section">
             <label for="total_rapid_response_reports">إجمالي التدخل السريع:</label>
             <input type="number" id="total_rapid_response_reports" placeholder="يظهر العدد بشكل تلقائي" readonly disabled style="background-color: #e0e0e0; color: #000; border: 1px solid #ccc; border-radius: 6px; padding: 10px;">
             
 	    <label for="senior_paramedic_rapid_response_reports">قائد المنطقة المناوب :</label>
-            <input type="text" id="senior_paramedic_rapid_response_reports" required>
+            <input type="text" id="senior_paramedic_rapid_response_reports">
 	</div>
         <button onclick="sendWhatsAppMessage('rapid_response_reports')">إرسال النموذج بالواتساب</button>
     `;
@@ -892,7 +892,7 @@
 		<p>نموذج كبار المسعفين للقطاعات الخارجية يرسل كل 6 ساعات من قبل كبير المسعفين</p>
                 <div class="form-section">
                     <label for="sector">اختر القطاع:</label>
-                    <select id="sector" onchange="toggleOtherSectorInput()" required>
+                    <select id="sector" onchange="toggleOtherSectorInput()">
                         <option value="رماح">رماح</option>
                         <option value="الافلاج">الافلاج</option>
                         <option value="الخرج">الخرج</option>
@@ -913,7 +913,7 @@
         <input type="date" id="date" readonly disabled style="background-color: #e0e0e0;>
 
                     <label for="time">التوقيت الحالي:</label>
-                    <select id="time" required>
+                    <select id="time">
                         <option value="09:00 إلى 15:00">09:00 إلى 15:00</option>
                         <option value="15:00 إلى 21:00">15:00 إلى 21:00</option>
                         <option value="21:00 إلى 03:00">21:00 إلى 03:00</option>
@@ -924,7 +924,7 @@
         <div class="input-row">
             <div class="input-small">
                     <label for="working_teams">عدد الفرق العاملة:</label>
-                    <input type="text" id="working_teams" required>
+                    <input type="text" id="working_teams">
                  </div>
                         <div class="input-small">
                     <label for="total_teams">من أصل:</label>
@@ -934,15 +934,15 @@
                           <div class="input-row">
 			<div class="input-small">
                             <label for="operating_vehicles">عدد المركبات العاملة:</label>
-                            <input type="text" id="operating_vehicles" required>
+                            <input type="text" id="operating_vehicles">
                         </div>
                         <div class="input-small">
                             <label for="broken_vehicles">عدد المركبات المتعطلة:</label>
-                            <input type="number" id="broken_vehicles" required>
+                            <input type="number" id="broken_vehicles">
                         </div>
                         <div class="input-small">
                             <label for="reserve_vehicles">عدد المركبات الاحتياط:</label>
-                            <input type="number" id="reserve_vehicles" required>
+                            <input type="number" id="reserve_vehicles">
                         </div>
                     </div>
                           <div class="input-row">
@@ -970,7 +970,7 @@
                           <div class="input-row">
 			<div class="input-small">
                     <label for="total_reports">إجمالي بلاغات القطاع:</label>
-                    <input type="number" id="total_reports" required>
+                    <input type="number" id="total_reports">
 		    
 		<label for="related_reports">البلاغات:</label>
 		<div>
@@ -991,11 +991,12 @@
 		        <p>احسب زمن الاستجابة من الرد الى الوصول للموقع</p>
 		    </div>
 		</div>
-		</div>
 		
-		<!-- الزر يستخدم الفنكشن مع تمرير المعرف والنوع -->
+		<!-- زر لإضافة بلاغ آخر -->
 		<button type="button" id="add-report-btn" onclick="relatedreports('reports-container-1', 'responseTime')">إضافة بلاغ آخر</button>
 
+                        </div>
+                    </div>
                 </div>
                     <h2>المخرجات</h2>
                 <div class="form-section">
@@ -1011,7 +1012,7 @@
                           <div class="input-row">
 			<div class="input-small">
                     <label for="absence_in_shift">عدد الغياب في المناوبة:</label>
-                    <input type="text" id="absence_in_shift" required>
+                    <input type="text" id="absence_in_shift">
                       </div>
 		       </div>
                           <div class="input-row">
@@ -1029,7 +1030,7 @@
                           <div class="input-row">
 			<div class="input-small">
                     <label for="senior_paramedic_name"> كبير المسعفين المناوب:</label>
-                    <input type="text" id="senior_paramedic_name" required>
+                    <input type="text" id="senior_paramedic_name">
                     </div>
                 </div>
                 <button onclick="sendWhatsAppMessage('senior_paramedic_outside')">إرسال النموذج بالواتساب</button>
@@ -1043,7 +1044,7 @@
                   <div class="input-row">
                       <div class="input-small">
                           <label for="sector">اختر القطاع:</label>
-                          <select id="sector" onchange="toggleOtherSectorInput()" required>
+                          <select id="sector" onchange="toggleOtherSectorInput()">
                               <option value="الوسط">الوسط</option>
                               <option value="الجنوب">الجنوب</option>
                               <option value="الشرق">الشرق</option>
@@ -1059,12 +1060,12 @@
                   <div class="input-row">
                       <div class="input-small">
                           <label for="report_number">رقم البلاغ:</label>
-                          <input type="text" id="report_number" required>
+                          <input type="text" id="report_number">
                       </div>
         
                       <div class="input-small">
                           <label for="report_type">نوع البلاغ:</label>
-                          <select id="report_type" style="width: 150px;" required>
+                          <select id="report_type" style="width: 150px;">
                               <option value="إيكو">إيكو</option>
                               <option value="دلتا">دلتا</option>
                               <option value="تشارلي">تشارلي</option>
@@ -1077,8 +1078,8 @@
                   <div class="input-row">
                       <label for="event_start">بداية الحدث (نظام 24 ساعة):</label>
                       <div class="input-row">
-                          <input type="text" id="start_hour" placeholder="الساعة" style="width: 45px;" required>
-                          <input type="text" id="start_minute" placeholder="الدقيقة" style="width: 45px;" required>
+                          <input type="text" id="start_hour" placeholder="الساعة" style="width: 45px;">
+                          <input type="text" id="start_minute" placeholder="الدقيقة" style="width: 45px;">
                       </div>
                   </div>
         
@@ -1086,7 +1087,7 @@
                       <div class="input-row">
                           <div class="input-small">
                               <label for="unit_failure">تعطل فرقة إسعافية:</label>
-                              <input type="text" id="unit_failure" >
+                              <input type="text" id="unit_failure">
                           </div>
                           <div class="input-small">
                               <label for="failure_type">نوع العطل:</label>
@@ -1102,16 +1103,16 @@
                   <textarea id="actions_taken" rows="4"></textarea>
         
                   <label for="service_impact">التأثير على الخدمة:</label>
-                  <textarea id="service_impact" rows="4" required></textarea>
+                  <textarea id="service_impact" rows="4"></textarea>
         
                   <label for="event_status">هل الحدث ما زال قائم؟</label>
-                  <select id="event_status" required>
+                  <select id="event_status">
                       <option value="نعم">نعم</option>
                       <option value="لا">لا</option>
                   </select>
         
                   <label for="">نهاية الحدث (نظام 24 ساعة):</label>
-                  <div class="input-row" required>
+                  <div class="input-row">
                       <input type="number" id="end_hour" placeholder="الساعة" style="width: 45px;">
                       <input type="number" id="end_minute" placeholder="الدقيقة" style="width: 45px;">
                       <input type="checkbox" id="event_not_ended" onclick="toggleEndTimeFields()">
@@ -1123,7 +1124,7 @@
                   <div class="input-row">
                       <div class="input-small">
                           <label for="senior_paramedic_name"> كبير المسعفين المناوب:</label>
-                          <input type="text" id="senior_paramedic_name" required>
+                          <input type="text" id="senior_paramedic_name">
                       </div>
                   </div>
               </div>
@@ -1144,11 +1145,11 @@
 
                     <label for="report_time">توقيت التقرير (نظام 24 ساعة):</label>
                     <div class="input-row">
-                        <input type="text" id="report_hour" placeholder="الساعة" style="width: 45px;" required>
-                        <input type="text" id="report_minute" placeholder="الدقيقة" style="width: 45px;" required>
+                        <input type="text" id="report_hour" placeholder="الساعة" style="width: 45px;">
+                        <input type="text" id="report_minute" placeholder="الدقيقة" style="width: 45px;">
                     </div>
                     <label for="sector">اختر القطاع:</label>
-                    <select id="sector" onchange="toggleOtherSectorInput()" required>
+                    <select id="sector" onchange="toggleOtherSectorInput()">
                         <option value="الوسط">الوسط</option>
                         <option value="الجنوب">الجنوب</option>
                         <option value="الشرق">الشرق</option>
@@ -1161,7 +1162,7 @@
                     <div class="input-row">
                   	  <div class="input-small">
                     <label for="report_number">رقم البلاغ:</label>
-                    <input type="text" id="report_number" required>
+                    <input type="text" id="report_number">
                  </div>
                         <div class="input-small">
                     <label for="report_type">نوع البلاغ:</label>
@@ -1169,18 +1170,18 @@
                  </div>
                         <div class="input-small">
                     <label for="report_location">موقع البلاغ:</label>
-                    <input type="text" id="report_location" required>
+                    <input type="text" id="report_location">
              		 </div>
               	   	</div>
               	   </div>
 		          <div class="input-row">
                         <div class="input-small">
                     <label for="responding_units">الوحدات المستجيبة:</label>
-                    <input type="text" id="responding_units" required>
+                    <input type="text" id="responding_units">
               	   </div>
                         <div class="input-small">
                     <label for="response_time">زمن الاستجابة (دقائق):</label>
-                    <input type="number" id="response_time" placeholder="أكتب الدقيقة بالرقم فقط" required>
+                    <input type="number" id="response_time" placeholder="أكتب الدقيقة بالرقم فقط">
                     </div>
               	   	</div>
 		       <div class="input-small">
@@ -1192,7 +1193,7 @@
                     <div class="input-row">
                     <div class="input-small">
                     <label for="senior_paramedic_name"> كبير المسعفين المناوب:</label>
-                    <input type="text" id="senior_paramedic_name" required>
+                    <input type="text" id="senior_paramedic_name">
                     </div>
                 </div>
           </div>
@@ -1205,7 +1206,7 @@
 
                 <div class="form-section">
                     <label for="sector">القطاع:</label>
-                    <select id="sector" onchange="toggleOtherSectorInput()" required>
+                    <select id="sector" onchange="toggleOtherSectorInput()">
                         <option value="الوسط">الوسط</option>
                         <option value="الجنوب">الجنوب</option>
                         <option value="الشرق">الشرق</option>
@@ -1218,35 +1219,35 @@
                     <label for="event_time">وقت وتاريخ الحدث:</label>
                     <input type="date" id="event_time" readonly>
                     <div class="input-row">
-                        <input type="number" id="event_hour" placeholder="الساعة" style="width: 45px;" required>
-                        <input type="number" id="event_minute" placeholder="الدقيقة" style="width: 45px;" required>
+                        <input type="number" id="event_hour" placeholder="الساعة" style="width: 45px;">
+                        <input type="number" id="event_minute" placeholder="الدقيقة" style="width: 45px;">
                     </div>
 
                     <label for="event_details">تفاصيل الحدث:</label>
-                    <textarea id="event_details" rows="4" required></textarea>
+                    <textarea id="event_details" rows="4"></textarea>
 
                     <label for="assigned_units">إيجاز الوضع الراهن أثناء ورود البلاغ:</label>
-                    <textarea id="assigned_units" rows="4" required></textarea>
+                    <textarea id="assigned_units" rows="4"></textarea>
                 <div class="input-row">
                 <div class="input-small">
                     <label for="teams_count">عدد الفرق لكامل القطاع (المشغولة والمتاحة):</label>
-                    <input type="number" id="teams_count" required>
+                    <input type="number" id="teams_count">
                     </div>
                 </div>
                 <div class="input-row">
                 <div class="input-small">
                     <label for="deployment">الانتشار:</label>
-                    <input type="text" id="deployment" required>
+                    <input type="text" id="deployment">
               	   	</div>
 		       <div class="input-small">
                     <label for="team_types">أنواع الفرق المشاركة:</label>
-                    <input type="text" id="team_types" required>
+                    <input type="text" id="team_types">
               	   	</div>
               	   	</div>
               	   	<div class="input-row">
                 <div class="input-small">
                     <label for="saudi_red_crescent">الهلال الأحمر:</label>
-                    <input type="text" id="saudi_red_crescent" required>
+                    <input type="text" id="saudi_red_crescent">
               	   </div>
                         <div class="input-small">
                     <label for="health_ministry">وزارة الصحة:</label>
@@ -1262,8 +1263,8 @@
                 <div class="input-small">
 		      <label for="first_team_arrival">وقت وصول أول فرقة (نظام 24 ساعة):</label>
 		<div class="input-row">
-		    <input type="number" id="arrival_hour" placeholder="الساعة" style="width:80px;" required>
-		    <input type="number" id="arrival_minute" placeholder="الدقيقة" style="width: 80px;" required>
+		    <input type="number" id="arrival_hour" placeholder="الساعة" style="width:80px;">
+		    <input type="number" id="arrival_minute" placeholder="الدقيقة" style="width: 80px;">
 		</div>
              	   </div>
                         <div class="input-small">
@@ -1295,11 +1296,11 @@
                 <div class="input-row">
                     <div class="input-small">
                         <label for="transferd_victimes">الحالات المنقولة:</label>
-                        <input type="number" id="transferd_victimes" oninput="calculateTotalVictimes()" required>
+                        <input type="number" id="transferd_victimes" oninput="calculateTotalVictimes()">
                     </div>
                     <div class="input-small">
                         <label for="non_transferd_victimes">الحالات الغير منقولة:</label>
-                        <input type="number" id="non_transferd_victimes" oninput="calculateTotalVictimes()" required>
+                        <input type="number" id="non_transferd_victimes" oninput="calculateTotalVictimes()">
                     </div>
                     <div class="input-small">
                         <label for="total_victimes">إجمالي الحالات:</label>
@@ -1314,11 +1315,12 @@
 <div class="form-section">
     <div class="input-row" style="display: flex; justify-content: space-between; align-items: center;">
         <!-- إبلاغ العمليات المركزية -->
-        <div class="input-small" required>
+        <div class="input-small">
             <label for="central_operations_notification">إبلاغ العمليات المركزية:</label>
             <div style="display: inline-flex; gap: 5px; align-items: center;">
                 <input type="radio" name="central_operations" id="central_operations_yes" value="yes">
                 <label for="central_operations_yes">نعم</label>
+
                 <input type="radio" name="central_operations" id="central_operations_no" value="no">
                 <label for="central_operations_no">لا</label>
             </div>
@@ -1327,9 +1329,10 @@
         <!-- إبلاغ العمليات المشتركة -->
         <div class="input-small">
             <label for="joint_operations_notification">إبلاغ العمليات المشتركة:</label>
-            <div style="display: inline-flex; gap: 5px; align-items: center;" required>
+            <div style="display: inline-flex; gap: 5px; align-items: center;">
                 <input type="radio" name="joint_operations" id="joint_operations_yes" value="yes">
                 <label for="joint_operations_yes">نعم</label>
+
                 <input type="radio" name="joint_operations" id="joint_operations_no" value="no">
                 <label for="joint_operations_no">لا</label>
             </div>
@@ -1874,30 +1877,19 @@ function getFormData(formName) {
         data.response_time_to_intervention = document.getElementById('response_time_to_intervention')?.value || '';
         data.absence_in_shift = document.getElementById('absence_in_shift')?.value || '';
         data.units_notes = document.getElementById('units_notes')?.value || '';
-	// جمع بيانات البلاغات الإسعافية المرتبطة
-	const noReports = document.getElementById('no_reports').checked;
-	data.reports = [];
-	
-	if (noReports) {
-	    data.reports.push({
-	        message: 'لا يوجد بلاغات'
-	    });
-	} else {
-	    const reportNumbers = document.querySelectorAll('.report-number');
-	    const reportTypes = document.querySelectorAll('.report-type');
-	    const waiting_time = document.querySelectorAll('.waiting_time');
-	    
-	    reportNumbers.forEach((number, index) => {
-	        if (number.value && reportTypes[index].value && number.value) {
-	            data.reports.push({
-	                number: number.value,
-	                type: reportTypes[index].value,
-	                waiting_time: waiting_time[index].value
-	            });
-	        }
-	    });
-	}
-
+        // جمع بيانات البلاغات الإسعافية المرتبطة
+        const reportNumbers = document.querySelectorAll('.report-number');
+        const reportTypes = document.querySelectorAll('.report-type');
+        const waiting_time = document.querySelectorAll('.waiting_time');
+        data.reports = [];
+        reportNumbers.forEach((number, index) => {
+            if (number.value && reportTypes[index].value && number.value) {
+                data.reports.push({
+                    number: number.value,
+                    type: reportTypes[index].value
+                });
+            }
+        });
 
         data.outsider_notes = document.getElementById('outsider_notes')?.value || '';
         data.senior_paramedic_name = document.getElementById('senior_paramedic_name')?.value || '';
@@ -1959,42 +1951,6 @@ function getFormData(formName) {
 function sendWhatsAppMessage(formName) {
     let formText = '';
 
-    // التحقق من الحقول المطلوبة
-    let requiredFields = document.querySelectorAll('input[required], textarea[required], select[required]');
-    let allFieldsFilled = true;
-
-    requiredFields.forEach((field) => {
-        let label = document.querySelector(`label[for="${field.id}"]`);
-
-        // إزالة التنسيق السابق إذا كان الحقل قد تمت تعبئته
-        field.style.border = '';
-        if (label && label.querySelector('.required-mark')) {
-            label.removeChild(label.querySelector('.required-mark'));
-        }
-
-        // إذا كان الحقل فارغاً
-        if (field.value === "") {
-            field.style.border = '2px solid red'; // تلوين الحواف باللون الأحمر
-
-            // إضافة نجمة حمراء بجانب الحقل المطلوب
-            if (label) {
-                let star = document.createElement('span');
-                star.classList.add('required-mark');
-                star.style.color = 'red';
-                star.textContent = ' *';
-                label.appendChild(star); // إضافة النجمة الحمراء بجانب الحقل
-            }
-
-            // التحقق من أن الحقول لم تملأ بعد
-            allFieldsFilled = false;
-        }
-    });
-
-    if (!allFieldsFilled) {
-        // إيقاف العملية إذا كانت هناك حقول فارغة
-        alert("يرجى تعبئة جميع الحقول المطلوبة.");
-        return;
-    }
     if (formName === 'senior_paramedic') {
         formText += `\n*=== نموذج كبار المسعفين ===*\n\n`;
     	formText += `القطاع: ${document.getElementById('sector').value}\n`;
@@ -2187,30 +2143,22 @@ function sendWhatsAppMessage(formName) {
         formText += `قائمة المستشفيات خارج الخدمة: ${document.getElementById('hospitals_out_of_service').value}\n`;
         formText += `*=== البلاغات ===*\n\n`;
         formText += `إجمالي بلاغات القطاع: ${document.getElementById('total_reports').value}\n`;
-	// جمع البيانات المتعلقة بالبلاغات الإسعافية المرتبطة
-	const noReports = document.getElementById('no_reports').checked;
-	formText += `\n*=== البلاغات الإسعافية المرتبطة ===*\n`;
-	
-	if (noReports) {
-	    formText += `لا يوجد بلاغات\n`;
-	} else {
-	    const reportNumbers = document.querySelectorAll('.report-number');
-	    const reportTypes = document.querySelectorAll('.report-type');
-	    const waitingTimes = document.querySelectorAll('.waiting_time');
-	    
-	    reportNumbers.forEach((number, index) => {
-	        formText += `رقم البلاغ: ${number.value}, نوع البلاغ: ${reportTypes[index].value}, زمن بقاء البلاغ في قائمة الترحيل (بالدقائق): ${waitingTimes[index].value}\n`;
-	    });
-	}
+        
+// جمع البيانات المتعلقة بالبلاغات الإسعافية المرتبطة
+const noReports = document.getElementById('no_reports').checked;
+formText += `\n*=== البلاغات الإسعافية المرتبطة ===*\n`;
 
-    // إضافة المعلومات إذا كانت هناك إدخالات أو إظهار رسالة في حالة عدم وجودها
-    if (hasReports) {
-        reportNumbers.forEach((number, index) => {
-            if (number.value && reportTypes[index].value && waitingTimes[index].value) {
-                formText += `رقم البلاغ: ${number.value}, نوع البلاغ: ${reportTypes[index].value}, زمن الاستجابة (بالدقائق): ${waitingTimes[index].value}\n`;
-            }
-        });
-    } 
+if (noReports) {
+    formText += `لا يوجد بلاغات\n`;
+} else {
+    const reportNumbers = document.querySelectorAll('.report-number');
+    const reportTypes = document.querySelectorAll('.report-type');
+    const waitingTimes = document.querySelectorAll('.waiting_time');
+    
+    reportNumbers.forEach((number, index) => {
+        formText += `رقم البلاغ: ${number.value}, نوع البلاغ: ${reportTypes[index].value}, زمن بقاء البلاغ في قائمة الترحيل (بالدقائق): ${waitingTimes[index].value}\n`;
+    });
+}
 
         formText += `*=== المخرجات ===*\n\n`;
         formText += `متوسط زمن الاستجابة للبلاغات (بالدقائق): ${document.getElementById('response_time_to_intervention').value}\n`;
@@ -2314,10 +2262,11 @@ function sendWhatsAppMessage(formName) {
         } 
 
 	
-    console.log(formText); 
+    console.log(formText); // تأكيد عرض البيانات المجمعة
     const encodedText = encodeURIComponent(formText);
     const whatsappUrl = `https://wa.me/?text=${encodedText}`;
 
+    // فتح الرابط في نافذة جديدة
     window.open(whatsappUrl, '_blank');
 }
 
@@ -2494,28 +2443,7 @@ document.addEventListener("DOMContentLoaded", function () {
             endMinuteField.disabled = false;
         }
     }
-	    
-   function toggleReports() {
-    const isChecked = document.getElementById('no_reports').checked;
-    const reportInputs = document.querySelectorAll('.report-number, .report-type, .waiting_time');
-    const addReportBtn = document.getElementById('add-report-btn');
     
-    if (isChecked) {
-        // إخفاء وتعطيل الحقول إذا تم اختيار "لا يوجد بلاغات"
-        reportInputs.forEach(input => {
-            input.value = '';  // تفريغ القيم
-            input.disabled = true;  // تعطيل الحقول
-        });
-        addReportBtn.disabled = true;  // تعطيل زر إضافة بلاغ
-    } else {
-        // إعادة تفعيل الحقول إذا تم إلغاء اختيار "لا يوجد بلاغات"
-        reportInputs.forEach(input => {
-            input.disabled = false;  // تفعيل الحقول
-        });
-        addReportBtn.disabled = false;  // تفعيل زر إضافة بلاغ
-    }
-}
- 
         // فنكشن حساب اجمالي الحالات
     function calculateTotalVictimes() {
     const transferdVictimes = parseInt(document.getElementById('transferd_victimes').value) || 0;
@@ -2524,6 +2452,49 @@ document.addEventListener("DOMContentLoaded", function () {
     
     document.getElementById('total_victimes').value = totalVictimes;
 }
+
+function toggleReports() {
+    const isChecked = document.getElementById('no_reports').checked;
+    const reportNumbers = document.querySelectorAll('.report-number');
+    const reportTypes = document.querySelectorAll('.report-type');
+    const waitingTimes = document.querySelectorAll('.waiting_time');
+    const addReportBtn = document.getElementById('add-report-btn');
+
+    // إذا كانت checkbox مفعّلة (أي تم اختيار "لا يوجد بلاغات")
+    if (isChecked) {
+        // تعطيل حقول الإدخال وتفريغ القيم
+        reportNumbers.forEach(input => {
+            input.value = '';
+            input.disabled = true;
+        });
+        reportTypes.forEach(input => {
+            input.value = '';
+            input.disabled = true;
+        });
+        waitingTimes.forEach(input => {
+            input.value = '';
+            input.disabled = true;
+        });
+
+        // تعطيل زر إضافة بلاغ
+        addReportBtn.disabled = true;
+    } else {
+        // إعادة تفعيل حقول الإدخال
+        reportNumbers.forEach(input => {
+            input.disabled = false;
+        });
+        reportTypes.forEach(input => {
+            input.disabled = false;
+        });
+        waitingTimes.forEach(input => {
+            input.disabled = false;
+        });
+
+        // إعادة تفعيل زر إضافة بلاغ
+        addReportBtn.disabled = false;
+    }
+}
+
 
 </script>
 
