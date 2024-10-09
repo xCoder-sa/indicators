@@ -973,6 +973,11 @@
                     <input type="number" id="total_reports" required>
 		    
 		<label for="related_reports">البلاغات:</label>
+		<div>
+		    <input type="checkbox" id="no_reports" onclick="toggleReports()" />
+		    <label for="no_reports" style="font-weight: bold; color: red;">لا يوجد بلاغات</label>
+		</div>
+		
 		<div id="reports-container-1">
 		    <div class="input-pair">
 		        <input type="number" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
@@ -988,9 +993,8 @@
 		</div>
 		
 		<!-- الزر يستخدم الفنكشن مع تمرير المعرف والنوع -->
-		<button type="button" onclick="relatedreports('reports-container-1', 'responseTime')">إضافة بلاغ آخر</button>
-                        </div>
-                    </div>
+		<button type="button" id="add-report-btn" onclick="relatedreports('reports-container-1', 'responseTime')">إضافة بلاغ آخر</button>
+
                 </div>
                     <h2>المخرجات</h2>
                 <div class="form-section">
@@ -1869,19 +1873,30 @@ function getFormData(formName) {
         data.response_time_to_intervention = document.getElementById('response_time_to_intervention')?.value || '';
         data.absence_in_shift = document.getElementById('absence_in_shift')?.value || '';
         data.units_notes = document.getElementById('units_notes')?.value || '';
-        // جمع بيانات البلاغات الإسعافية المرتبطة
-        const reportNumbers = document.querySelectorAll('.report-number');
-        const reportTypes = document.querySelectorAll('.report-type');
-        const waiting_time = document.querySelectorAll('.waiting_time');
-        data.reports = [];
-        reportNumbers.forEach((number, index) => {
-            if (number.value && reportTypes[index].value && number.value) {
-                data.reports.push({
-                    number: number.value,
-                    type: reportTypes[index].value
-                });
-            }
-        });
+	// جمع بيانات البلاغات الإسعافية المرتبطة
+	const noReports = document.getElementById('no_reports').checked;
+	data.reports = [];
+	
+	if (noReports) {
+	    data.reports.push({
+	        message: 'لا يوجد بلاغات'
+	    });
+	} else {
+	    const reportNumbers = document.querySelectorAll('.report-number');
+	    const reportTypes = document.querySelectorAll('.report-type');
+	    const waiting_time = document.querySelectorAll('.waiting_time');
+	    
+	    reportNumbers.forEach((number, index) => {
+	        if (number.value && reportTypes[index].value && number.value) {
+	            data.reports.push({
+	                number: number.value,
+	                type: reportTypes[index].value,
+	                waiting_time: waiting_time[index].value
+	            });
+	        }
+	    });
+	}
+
 
         data.outsider_notes = document.getElementById('outsider_notes')?.value || '';
         data.senior_paramedic_name = document.getElementById('senior_paramedic_name')?.value || '';
@@ -2171,23 +2186,22 @@ function sendWhatsAppMessage(formName) {
         formText += `قائمة المستشفيات خارج الخدمة: ${document.getElementById('hospitals_out_of_service').value}\n`;
         formText += `*=== البلاغات ===*\n\n`;
         formText += `إجمالي بلاغات القطاع: ${document.getElementById('total_reports').value}\n`;
-        
-        // جمع البيانات المتعلقة بالبلاغات الإسعافية المرتبطة
-    const reportNumbers = document.querySelectorAll('.report-number');
-    const reportTypes = document.querySelectorAll('.report-type');
-    const waitingTimes = document.querySelectorAll('.waiting_time');
-    
-    // إضافة العنوان دائمًا
-    formText += `*=== البلاغات الإسعافية المرتبطة ===*\n\n`;
-    
-    // التحقق إذا كان هناك إدخالات
-    let hasReports = false;
-    reportNumbers.forEach((number, index) => {
-        if (number.value && reportTypes[index].value && waitingTimes[index].value) {
-            hasReports = true;
-        }
-    });
-    
+	// جمع البيانات المتعلقة بالبلاغات الإسعافية المرتبطة
+	const noReports = document.getElementById('no_reports').checked;
+	formText += `\n*=== البلاغات الإسعافية المرتبطة ===*\n`;
+	
+	if (noReports) {
+	    formText += `لا يوجد بلاغات\n`;
+	} else {
+	    const reportNumbers = document.querySelectorAll('.report-number');
+	    const reportTypes = document.querySelectorAll('.report-type');
+	    const waitingTimes = document.querySelectorAll('.waiting_time');
+	    
+	    reportNumbers.forEach((number, index) => {
+	        formText += `رقم البلاغ: ${number.value}, نوع البلاغ: ${reportTypes[index].value}, زمن بقاء البلاغ في قائمة الترحيل (بالدقائق): ${waitingTimes[index].value}\n`;
+	    });
+	}
+
     // إضافة المعلومات إذا كانت هناك إدخالات أو إظهار رسالة في حالة عدم وجودها
     if (hasReports) {
         reportNumbers.forEach((number, index) => {
