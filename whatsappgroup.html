@@ -2392,7 +2392,7 @@ function selectCurrentTime() {
     // تقليل الساعات بمقدار 6 للحصول على الفترة الزمنية السابقة
     let previousHours = currentHours - 6;
     
-    // في حال كانت الساعات سالبة (أقل من 0)، نضيف 24 لتصبح في نطاق الـ 24 ساعة
+    // إذا كانت الساعات أقل من 0، نعيدها إلى نطاق 24 ساعة
     if (previousHours < 0) {
         previousHours += 24;
     }
@@ -2411,14 +2411,13 @@ function selectCurrentTime() {
     }
 
     // العثور على جميع عناصر select التي تحتوي على التوقيت
-    const timeSelects = document.querySelectorAll('select.time'); // يفضل استخدام class بدلاً من id
+    const timeSelects = document.querySelectorAll('select[id="time"]');
 
     // تطبيق التوقيت المحدد على جميع النماذج
     timeSelects.forEach(function(timeSelect) {
         timeSelect.value = selectedOption;
     });
 }
-
 
 document.addEventListener("DOMContentLoaded", function () {
     // الحصول على المعاملات من رابط URL
