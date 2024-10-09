@@ -823,25 +823,59 @@
 		    </div>
 		</div>
   
-		<div class="form-section">
-			  <h2>إحصائيات منطقة الرياض</h2>		
-		    <!-- حساب الإجماليات -->
-		<div class="form-section">
-		    <div class="input-small">
-		<label for="internal_vehicles_total">إجمالي مركبات القطاعات الداخلية العاملة :</label>
-		<input type="text" id="internal_vehicles_total" readonly style="background-color: #e0e0e0;" required>
-  		    </div>
-		    <div class="input-small">
-		<label for="external_vehicles_total">إجمالي مركبات القطاعات الخارجية العاملة :</label>
-		<input type="text" id="external_vehicles_total" readonly style="background-color: #e0e0e0;" required>
-		    </div>
-		</div>
-		<div class="form-section">
-		    <div class="input-small">
-		<label for="total_working_vehicles_riyadh">إجمالي المركبات العاملة في منطقة الرياض:</label>
-		<input type="text" id="total_working_vehicles_riyadh" readonly style="background-color: #e0e0e0;" required>
-		    </div>
-		</div>
+<div class="form-section">
+    <h2>إحصائيات منطقة الرياض</h2>       
+    <!-- حساب الإجماليات -->
+    <div class="form-section">
+        <div class="input-small">
+            <label for="internal_vehicles_total">إجمالي مركبات القطاعات الداخلية العاملة :</label>
+            <input type="text" id="internal_vehicles_total" readonly style="background-color: #e0e0e0;" required>
+        </div>
+        <div class="input-small">
+            <label for="external_vehicles_total">إجمالي مركبات القطاعات الخارجية العاملة :</label>
+            <input type="text" id="external_vehicles_total" readonly style="background-color: #e0e0e0;" required>
+        </div>
+    </div>
+    <div class="form-section">
+        <div class="input-small">
+            <label for="total_working_vehicles_riyadh">إجمالي المركبات العاملة في منطقة الرياض:</label>
+            <input type="text" id="total_working_vehicles_riyadh" readonly style="background-color: #e0e0e0;" required>
+        </div>
+    </div>
+
+    <!-- إجمالي الفرق العاملة -->
+    <div class="form-section">
+        <div class="input-small">
+            <label for="internal_teams_total">إجمالي الفرق العاملة للقطاعات الداخلية :</label>
+            <input type="text" id="internal_teams_total" readonly style="background-color: #e0e0e0;" required>
+        </div>
+        <div class="input-small">
+            <label for="external_teams_total">إجمالي الفرق العاملة للقطاعات الخارجية :</label>
+            <input type="text" id="external_teams_total" readonly style="background-color: #e0e0e0;" required>
+        </div>
+        <div class="input-small">
+            <label for="total_working_teams_riyadh">إجمالي الفرق العاملة في منطقة الرياض :</label>
+            <input type="text" id="total_working_teams_riyadh" readonly style="background-color: #e0e0e0;" required>
+        </div>
+    </div>
+
+    <!-- إجمالي المركبات المتعطلة -->
+    <div class="form-section">
+        <div class="input-small">
+            <label for="internal_broken_vehicles_total">إجمالي المركبات المتعطلة للقطاعات الداخلية :</label>
+            <input type="text" id="internal_broken_vehicles_total" readonly style="background-color: #e0e0e0;" required>
+        </div>
+        <div class="input-small">
+            <label for="external_broken_vehicles_total">إجمالي المركبات المتعطلة للقطاعات الخارجية :</label>
+            <input type="text" id="external_broken_vehicles_total" readonly style="background-color: #e0e0e0;" required>
+        </div>
+        <div class="input-small">
+            <label for="total_broken_vehicles_riyadh">إجمالي المركبات المتعطلة في منطقة الرياض :</label>
+            <input type="text" id="total_broken_vehicles_riyadh" readonly style="background-color: #e0e0e0;" required>
+        </div>
+    </div>
+</div>
+
 
 		<label for="updateattendance">نسخة التحديث</label>
 		<select id="updateattendance" onchange="toggleOtherSectorInput()">
@@ -2229,56 +2263,51 @@ if (noReports) {
     formText += `التاريخ: ${document.getElementById('date').value}\n`;
     formText += `المناوبة : ${document.getElementById('shift').value}\n`;
     
-    // القطاع الداخلي
-    formText += `قطاع الوسط - وحدات: ${document.getElementById('center_sector_teams').value}، مركبات عاملة: ${document.getElementById('center_sector_vehicles_work').value} متعطلة: ${document.getElementById('center_sector_vehicles_broken').value}\n`;
-    formText += `قطاع الشرق - وحدات: ${document.getElementById('east_sector_teams').value}، مركبات عاملة: ${document.getElementById('east_sector_vehicles_work').value} متعطلة: ${document.getElementById('east_sector_vehicles_broken').value}\n`;
-    formText += `قطاع الغرب - وحدات: ${document.getElementById('west_sector_teams').value}، مركبات عاملة: ${document.getElementById('west_sector_vehicles_work').value} متعطلة: ${document.getElementById('west_sector_vehicles_broken').value}\n`;
-    formText += `قطاع الشمال - وحدات: ${document.getElementById('north_sector_teams').value}، مركبات عاملة: ${document.getElementById('north_sector_vehicles_work').value} متعطلة: ${document.getElementById('north_sector_vehicles_broken').value}\n`;
-    formText += `قطاع الجنوب - وحدات: ${document.getElementById('south_sector_teams').value}، مركبات عاملة: ${document.getElementById('south_sector_vehicles_work').value} متعطلة: ${document.getElementById('south_sector_vehicles_broken').value}\n`;
+    // القطاعات الداخلية
+    formText += `*قطاع الوسط* - وحدات: ${document.getElementById('center_sector_teams').value}، مركبات عاملة: ${document.getElementById('center_sector_vehicles_work').value} متعطلة: ${document.getElementById('center_sector_vehicles_broken').value}\n`;
+    formText += `*قطاع الشرق* - وحدات: ${document.getElementById('east_sector_teams').value}، مركبات عاملة: ${document.getElementById('east_sector_vehicles_work').value} متعطلة: ${document.getElementById('east_sector_vehicles_broken').value}\n`;
+    formText += `*قطاع الغرب* - وحدات: ${document.getElementById('west_sector_teams').value}، مركبات عاملة: ${document.getElementById('west_sector_vehicles_work').value} متعطلة: ${document.getElementById('west_sector_vehicles_broken').value}\n`;
+    formText += `*قطاع الشمال* - وحدات: ${document.getElementById('north_sector_teams').value}، مركبات عاملة: ${document.getElementById('north_sector_vehicles_work').value} متعطلة: ${document.getElementById('north_sector_vehicles_broken').value}\n`;
+    formText += `*قطاع الجنوب* - وحدات: ${document.getElementById('south_sector_teams').value}، مركبات عاملة: ${document.getElementById('south_sector_vehicles_work').value} متعطلة: ${document.getElementById('south_sector_vehicles_broken').value}\n`;
 
+    // إحصائية القطاعات الداخلية
     formText += `\n*=== إحصائية قطاعات الرياض الداخلية ===*\n`;
-    formText += `*إجمالي مركبات القطاعات الداخلية العاملة:* ${document.getElementById('internal_vehicles_total').value}\n`;
+    formText += `إجمالي الفرق العاملة: ${document.getElementById('internal_teams_total').value}\n`;
+    formText += `إجمالي المركبات المتعطلة: ${document.getElementById('internal_broken_vehicles_total').value}\n`;
+    formText += `إجمالي المركبات العاملة: ${document.getElementById('internal_vehicles_total').value}\n`;
 
+    // القطاعات الخارجية
     formText += `\n*=== تحضير قطاعات الرياض الخارجية ===*\n`;
-    
-    // القطاع الخارجي
-    formText += `رماح - وحدات: ${document.getElementById('ramah_sector_teams').value}، مركبات عاملة: ${document.getElementById('ramah_sector_vehicles_work').value} متعطلة: ${document.getElementById('ramah_sector_vehicles_broken').value}\n`;
-    formText += `الأفلاج - وحدات: ${document.getElementById('al_aflag_sector_teams').value}، مركبات عاملة: ${document.getElementById('al_aflag_sector_vehicles_work').value} متعطلة: ${document.getElementById('al_aflag_sector_vehicles_broken').value}\n`;
-    formText += `الخرج - وحدات: ${document.getElementById('al_kharj_sector_teams').value}، مركبات عاملة: ${document.getElementById('al_kharj_sector_vehicles_work').value} متعطلة: ${document.getElementById('al_kharj_sector_vehicles_broken').value}\n`;
-    formText += `الدرعية - وحدات: ${document.getElementById('al_dariya_sector_teams').value}، مركبات عاملة: ${document.getElementById('al_dariya_sector_vehicles_work').value} متعطلة: ${document.getElementById('al_dariya_sector_vehicles_broken').value}\n`;
-    formText += `الدوادمي - وحدات: ${document.getElementById('al_dawadmi_sector_teams').value}، مركبات عاملة: ${document.getElementById('al_dawadmi_sector_vehicles_work').value} متعطلة: ${document.getElementById('al_dawadmi_sector_vehicles_broken').value}\n`;
-    formText += `الزلفي - وحدات: ${document.getElementById('al_zulfi_sector_teams').value}، مركبات عاملة: ${document.getElementById('al_zulfi_sector_vehicles_work').value} متعطلة: ${document.getElementById('al_zulfi_sector_vehicles_broken').value}\n`;
-    formText += `الغاط - وحدات: ${document.getElementById('al_ghat_sector_teams').value}، مركبات عاملة: ${document.getElementById('al_ghat_sector_vehicles_work').value} متعطلة: ${document.getElementById('al_ghat_sector_vehicles_broken').value}\n`;
-    formText += `القويعية - وحدات: ${document.getElementById('al_quwayiyah_sector_teams').value}، مركبات عاملة: ${document.getElementById('al_quwayiyah_sector_vehicles_work').value} متعطلة: ${document.getElementById('al_quwayiyah_sector_vehicles_broken').value}\n`;
-    formText += `المجمعة - وحدات: ${document.getElementById('al_majmaah_sector_teams').value}، مركبات عاملة: ${document.getElementById('al_majmaah_sector_vehicles_work').value} متعطلة: ${document.getElementById('al_majmaah_sector_vehicles_broken').value}\n`;
-    formText += `المزاحمية - وحدات: ${document.getElementById('al_muzahimiyah_sector_teams').value}، مركبات عاملة: ${document.getElementById('al_muzahimiyah_sector_vehicles_work').value} متعطلة: ${document.getElementById('al_muzahimiyah_sector_vehicles_broken').value}\n`;
-    formText += `حوطة بني تميم - وحدات: ${document.getElementById('hawtat_banee_tamim_sector_teams').value}، مركبات عاملة: ${document.getElementById('hawtat_banee_tamim_sector_vehicles_work').value} متعطلة: ${document.getElementById('hawtat_banee_tamim_sector_vehicles_broken').value}\n`;
-    formText += `شقراء - وحدات: ${document.getElementById('shaqra_sector_teams').value}، مركبات عاملة: ${document.getElementById('shaqra_sector_vehicles_work').value} متعطلة: ${document.getElementById('shaqra_sector_vehicles_broken').value}\n`;
-    formText += `عفيف - وحدات: ${document.getElementById('afif_sector_teams').value}، مركبات عاملة: ${document.getElementById('afif_sector_vehicles_work').value} متعطلة: ${document.getElementById('afif_sector_vehicles_broken').value}\n`;
-    formText += `وادي الدواسر - وحدات: ${document.getElementById('wadi_al_dawasir_sector_teams').value}، مركبات عاملة: ${document.getElementById('wadi_al_dawasir_sector_vehicles_work').value} متعطلة: ${document.getElementById('wadi_al_dawasir_sector_vehicles_broken').value}\n`;
+    formText += `*قطاع رماح* - وحدات: ${document.getElementById('ramah_sector_teams').value}، مركبات عاملة: ${document.getElementById('ramah_sector_vehicles_work').value} متعطلة: ${document.getElementById('ramah_sector_vehicles_broken').value}\n`;
+    formText += `*قطاع الأفلاج* - وحدات: ${document.getElementById('al_aflag_sector_teams').value}، مركبات عاملة: ${document.getElementById('al_aflag_sector_vehicles_work').value} متعطلة: ${document.getElementById('al_aflag_sector_vehicles_broken').value}\n`;
+    formText += `*قطاع الخرج* - وحدات: ${document.getElementById('al_kharj_sector_teams').value}، مركبات عاملة: ${document.getElementById('al_kharj_sector_vehicles_work').value} متعطلة: ${document.getElementById('al_kharj_sector_vehicles_broken').value}\n`;
+    formText += `*قطاع الدرعية* - وحدات: ${document.getElementById('al_dariya_sector_teams').value}، مركبات عاملة: ${document.getElementById('al_dariya_sector_vehicles_work').value} متعطلة: ${document.getElementById('al_dariya_sector_vehicles_broken').value}\n`;
+    formText += `*قطاع الدوادمي* - وحدات: ${document.getElementById('al_dawadmi_sector_teams').value}، مركبات عاملة: ${document.getElementById('al_dawadmi_sector_vehicles_work').value} متعطلة: ${document.getElementById('al_dawadmi_sector_vehicles_broken').value}\n`;
+    formText += `*قطاع الزلفي* - وحدات: ${document.getElementById('al_zulfi_sector_teams').value}، مركبات عاملة: ${document.getElementById('al_zulfi_sector_vehicles_work').value} متعطلة: ${document.getElementById('al_zulfi_sector_vehicles_broken').value}\n`;
+    formText += `*قطاع الغاط* - وحدات: ${document.getElementById('al_ghat_sector_teams').value}، مركبات عاملة: ${document.getElementById('al_ghat_sector_vehicles_work').value} متعطلة: ${document.getElementById('al_ghat_sector_vehicles_broken').value}\n`;
+    formText += `*قطاع القويعية* - وحدات: ${document.getElementById('al_quwayiyah_sector_teams').value}، مركبات عاملة: ${document.getElementById('al_quwayiyah_sector_vehicles_work').value} متعطلة: ${document.getElementById('al_quwayiyah_sector_vehicles_broken').value}\n`;
+    formText += `*قطاع المجمعة* - وحدات: ${document.getElementById('al_majmaah_sector_teams').value}، مركبات عاملة: ${document.getElementById('al_majmaah_sector_vehicles_work').value} متعطلة: ${document.getElementById('al_majmaah_sector_vehicles_broken').value}\n`;
+    formText += `*قطاع المزاحمية* - وحدات: ${document.getElementById('al_muzahimiyah_sector_teams').value}، مركبات عاملة: ${document.getElementById('al_muzahimiyah_sector_vehicles_work').value} متعطلة: ${document.getElementById('al_muzahimiyah_sector_vehicles_broken').value}\n`;
+    formText += `*قطاع حوطة بني تميم* - وحدات: ${document.getElementById('hawtat_banee_tamim_sector_teams').value}، مركبات عاملة: ${document.getElementById('hawtat_banee_tamim_sector_vehicles_work').value} متعطلة: ${document.getElementById('hawtat_banee_tamim_sector_vehicles_broken').value}\n`;
+    formText += `*قطاع شقراء* - وحدات: ${document.getElementById('shaqra_sector_teams').value}، مركبات عاملة: ${document.getElementById('shaqra_sector_vehicles_work').value} متعطلة: ${document.getElementById('shaqra_sector_vehicles_broken').value}\n`;
+    formText += `*قطاع عفيف* - وحدات: ${document.getElementById('afif_sector_teams').value}، مركبات عاملة: ${document.getElementById('afif_sector_vehicles_work').value} متعطلة: ${document.getElementById('afif_sector_vehicles_broken').value}\n`;
+    formText += `*قطاع وادي الدواسر* - وحدات: ${document.getElementById('wadi_al_dawasir_sector_teams').value}، مركبات عاملة: ${document.getElementById('wadi_al_dawasir_sector_vehicles_work').value} متعطلة: ${document.getElementById('wadi_al_dawasir_sector_vehicles_broken').value}\n`;
 
+    // إحصائية القطاعات الخارجية
     formText += `\n*=== إحصائية قطاعات الرياض الخارجية ===*\n`;
-    formText += `*إجمالي مركبات القطاعات الخارجية العاملة:* ${document.getElementById('external_vehicles_total').value}\n`;
+    formText += `إجمالي الفرق العاملة: ${document.getElementById('external_teams_total').value}\n`;
+    formText += `إجمالي المركبات المتعطلة: ${document.getElementById('external_broken_vehicles_total').value}\n`;
+    formText += `إجمالي المركبات العاملة: ${document.getElementById('external_vehicles_total').value}\n`;
 
+    // الإحصائيات الإجمالية لمنطقة الرياض
     formText += `\n*=== إحصائية جميع قطاعات منطقة الرياض ===*\n`;
-    formText += `*إجمالي المركبات العاملة في منطقة الرياض:* ${document.getElementById('total_working_vehicles_riyadh').value}\n`;
+    formText += `إجمالي الفرق العاملة: ${document.getElementById('total_working_teams_riyadh').value}\n`;
+    formText += `إجمالي المركبات المتعطلة: ${document.getElementById('total_broken_vehicles_riyadh').value}\n`;
+    formText += `إجمالي المركبات العاملة: ${document.getElementById('total_working_vehicles_riyadh').value}\n`;
+
     formText += `نسخة التحديث : ${document.getElementById('updateattendance').value}\n`;
     formText += `اسم قائد المنطقة : ${document.getElementById('senior_paramedic_attendance').value}\n`;
-	} else if (formName === 'regional_leader_form') {
-    formText += `*=== نموذج قائد المنطقة المناوب ===*\n\n`;
-	formText += `المناوبة: ${document.getElementById('shift').value}\n`;
-	formText += `التاريخ: ${document.getElementById('date').value}\n\n`;	    
-    formText += `*=== قائد المنطقة المناوب ===*\n`;
-	formText += `اسم: ${document.getElementById('region_leader').value}\n`;
-	formText += `جوال: ${document.getElementById('region_leader_phone').value}\n`;
-	formText += `قناة: ${document.getElementById('region_leader_channel').value}\n\n`;
-    formText += `*=== كبار المسعفين حسب القطاع ===*\n`;
-	formText += `قطاع الشرق: ${document.getElementById('east_leader').value} - قناة (${document.getElementById('east_channel').value})\n`;
-	formText += `قطاع الغرب: ${document.getElementById('west_leader').value} - قناة (${document.getElementById('west_channel').value})\n`;
-	formText += `قطاع الجنوب: ${document.getElementById('south_leader').value} - قناة (${document.getElementById('south_channel').value})\n`;
-	formText += `قطاع الوسط: ${document.getElementById('central_leader').value} - قناة (${document.getElementById('central_channel').value})\n`;
-	formText += `قطاع الشمال: ${document.getElementById('north_leader').value} - قناة (${document.getElementById('north_channel').value})\n`;
-        } 
+}
 
 	
     console.log(formText); // تأكيد عرض البيانات المجمعة
@@ -2352,7 +2381,8 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
     // فنكشن حساب إجمالي مركبات منطقة الرياض  
-    function calculateWorkingVehiclesTotals() {
+// فنكشن حساب إجمالي مركبات وفرق منطقة الرياض  
+function calculateTotals() {
     // حساب إجمالي مركبات القطاعات الداخلية العاملة
     const internal_vehicles_total = 
         (parseInt(document.getElementById('center_sector_vehicles_work').value) || 0) +
@@ -2386,10 +2416,71 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // حساب إجمالي المركبات العاملة في منطقة الرياض
     const total_working_vehicles_riyadh = internal_vehicles_total + external_vehicles_total;
-
-    // عرض إجمالي مركبات منطقة الرياض
     document.getElementById('total_working_vehicles_riyadh').value = total_working_vehicles_riyadh;
+
+    // حساب إجمالي الفرق العاملة للقطاعات الداخلية
+    const internal_teams_total = 
+        (parseInt(document.getElementById('center_sector_teams').value) || 0) +
+        (parseInt(document.getElementById('east_sector_teams').value) || 0) +
+        (parseInt(document.getElementById('west_sector_teams').value) || 0) +
+        (parseInt(document.getElementById('north_sector_teams').value) || 0) +
+        (parseInt(document.getElementById('south_sector_teams').value) || 0);
+    document.getElementById('internal_teams_total').value = internal_teams_total;
+
+    // حساب إجمالي الفرق العاملة للقطاعات الخارجية
+    const external_teams_total = 
+        (parseInt(document.getElementById('ramah_sector_teams').value) || 0) +
+        (parseInt(document.getElementById('al_aflag_sector_teams').value) || 0) +
+        (parseInt(document.getElementById('al_kharj_sector_teams').value) || 0) +
+        (parseInt(document.getElementById('al_dariya_sector_teams').value) || 0) +
+        (parseInt(document.getElementById('al_dawadmi_sector_teams').value) || 0) +
+        (parseInt(document.getElementById('al_zulfi_sector_teams').value) || 0) +
+        (parseInt(document.getElementById('al_ghat_sector_teams').value) || 0) +
+        (parseInt(document.getElementById('al_quwayiyah_sector_teams').value) || 0) +
+        (parseInt(document.getElementById('al_majmaah_sector_teams').value) || 0) +
+        (parseInt(document.getElementById('al_muzahimiyah_sector_teams').value) || 0) +
+        (parseInt(document.getElementById('hawtat_banee_tamim_sector_teams').value) || 0) +
+        (parseInt(document.getElementById('shaqra_sector_teams').value) || 0) +
+        (parseInt(document.getElementById('afif_sector_teams').value) || 0) +
+        (parseInt(document.getElementById('wadi_al_dawasir_sector_teams').value) || 0);
+    document.getElementById('external_teams_total').value = external_teams_total;
+
+    // حساب إجمالي الفرق العاملة في منطقة الرياض
+    const total_working_teams_riyadh = internal_teams_total + external_teams_total;
+    document.getElementById('total_working_teams_riyadh').value = total_working_teams_riyadh;
+
+    // حساب إجمالي المركبات المتعطلة للقطاعات الداخلية
+    const internal_broken_vehicles_total = 
+        (parseInt(document.getElementById('center_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('east_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('west_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('north_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('south_sector_vehicles_broken').value) || 0);
+    document.getElementById('internal_broken_vehicles_total').value = internal_broken_vehicles_total;
+
+    // حساب إجمالي المركبات المتعطلة للقطاعات الخارجية
+    const external_broken_vehicles_total = 
+        (parseInt(document.getElementById('ramah_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('al_aflag_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('al_kharj_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('al_dariya_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('al_dawadmi_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('al_zulfi_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('al_ghat_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('al_quwayiyah_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('al_majmaah_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('al_muzahimiyah_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('hawtat_banee_tamim_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('shaqra_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('afif_sector_vehicles_broken').value) || 0) +
+        (parseInt(document.getElementById('wadi_al_dawasir_sector_vehicles_broken').value) || 0);
+    document.getElementById('external_broken_vehicles_total').value = external_broken_vehicles_total;
+
+    // حساب إجمالي المركبات المتعطلة في منطقة الرياض
+    const total_broken_vehicles_riyadh = internal_broken_vehicles_total + external_broken_vehicles_total;
+    document.getElementById('total_broken_vehicles_riyadh').value = total_broken_vehicles_riyadh;
 }
+
 
 	        // فنكشن حساب تحضير التدخل السريع 
     function calculateTotal() {
