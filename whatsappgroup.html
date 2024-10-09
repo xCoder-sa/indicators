@@ -391,33 +391,33 @@
         <div class="input-row">
             <div class="input-small">
                 <label for="working_teams">عدد الفرق العاملة:</label>
-                <input type="text" id="working_teams">
+                <input type="number" id="working_teams">
             </div>
             <div class="input-small">
                 <label for="total_teams">من أصل:</label>
-                <input type="text" id="total_teams" readonly disabled style="background-color: #e0e0e0;">
+                <input type="number" id="total_teams" readonly disabled style="background-color: #e0e0e0;">
             </div>
         </div>  
 
                         <div class="input-row">
                         <div class="input-small">
                             <label for="operating_vehicles">عدد المركبات العاملة:</label>
-                            <input type="text" id="operating_vehicles">
+                            <input type="number" id="operating_vehicles">
                         </div>
                         <div class="input-small">
                             <label for="rapid_response_teams">عدد فرق التدخل السريع:</label>
-                            <input type="text" id="rapid_response_teams">
+                            <input type="number" id="rapid_response_teams">
                         </div>
                     </div>
 
                         <div class="input-row">
                         <div class="input-small">
                             <label for="broken_vehicles">عدد المركبات المتعطلة:</label>
-                            <input type="text" id="broken_vehicles">
+                            <input type="number" id="broken_vehicles">
                         </div>
                         <div class="input-small">
                             <label for="reserve_vehicles">عدد المركبات الاحتياط:</label>
-                            <input type="text" id="reserve_vehicles">
+                            <input type="number" id="reserve_vehicles">
                         </div>
                     </div>
                         <div class="input-row">
@@ -427,13 +427,13 @@
                         </div>
                         <div class="input-small">
                     <label for="coordination_teams">عدد العاملين في التنسيق والتحكم:</label>
-                    <input type="text" id="coordination_teams">
+                    <input type="number" id="coordination_teams">
                         </div>
                     </div>
                         <div class="input-row">
                         <div class="input-small">
 			<label for="logistics_support_teams">عدد العاملين في الدعم اللوجستي:</label>
-                    <input type="text" id="logistics_support_teams">
+                    <input type="number" id="logistics_support_teams">
                         </div>
                         <div class="input-small">
                     <label for="hospitals_out_of_service">قائمة المستشفيات خارج الخدمة:</label>
@@ -445,51 +445,51 @@
 		<div class="input-row">
 		    <div class="input-small">
 		        <label for="eco_reports">عدد بلاغات إيكو:</label>
-		        <input type="text" id="eco_reports" oninput="calculateTotalReports()">
+		        <input type="number" id="eco_reports" oninput="calculateTotalReports()">
 		    </div>
 		    <div class="input-small">
 		        <label for="delta_reports">عدد بلاغات دلتا:</label>
-		        <input type="text" id="delta_reports" oninput="calculateTotalReports()">
+		        <input type="number" id="delta_reports" oninput="calculateTotalReports()">
 		    </div>
 		</div>
 		
 		<div class="input-row">
 		    <div class="input-small">
 		        <label for="charlie_reports">عدد بلاغات تشارلي:</label>
-		        <input type="text" id="charlie_reports" oninput="calculateTotalReports()">
+		        <input type="number" id="charlie_reports" oninput="calculateTotalReports()">
 		    </div>
 		    <div class="input-small">
 		        <label for="bravo_reports">عدد بلاغات برافو:</label>
-		        <input type="text" id="bravo_reports" oninput="calculateTotalReports()">
+		        <input type="number" id="bravo_reports" oninput="calculateTotalReports()">
 		    </div>
 		</div>
 		
 		<div class="input-row">
 		    <div class="input-small">
 		        <label for="alpha_reports">عدد بلاغات ألفا:</label>
-		        <input type="text" id="alpha_reports" oninput="calculateTotalReports()">
+		        <input type="number" id="alpha_reports" oninput="calculateTotalReports()">
 		    </div>
 		    <div class="input-small">
 		        <label for="omega_reports">عدد بلاغات أوميغا:</label>
-		        <input type="text" id="omega_reports" oninput="calculateTotalReports()">
+		        <input type="number" id="omega_reports" oninput="calculateTotalReports()">
 		    </div>
 		</div>
   		<div class="input-row">
 		    <div class="input-small">
 		<label for="total_reports">إجمالي بلاغات القطاع:</label>
-		<input type="text" id="total_reports" readonly style="background-color: #e0e0e0;">
+		<input type="number" id="total_reports" readonly style="background-color: #e0e0e0;">
 		    </div>
 		</div>
                     <h2>البلاغات</h2>
   		<div class="input-row">
 		    <div class="input-small">
                     <label for="government_transfers">عدد الحالات المنقولة  :</label>
-                    <input type="text" id="government_transfers">
+                    <input type="number" id="government_transfers">
 		    </div>
 		</div>
 		    <div class="input-small">
                     <label for="untransferred_cases">عدد الحالات الغير منقولة:</label>
-                    <input type="text" id="untransferred_cases">
+                    <input type="number" id="untransferred_cases">
 		    </div>
                     <h2>المخرجات</h2>
   		<div class="input-row">
@@ -505,7 +505,7 @@
 		    </div>
 		    <div class="input-small">
                     <label for="average_reports">متوسط عدد البلاغات للفرق الاسعافية:</label>
-                    <input type="text" id="average_reports">
+                    <input type="number" id="average_reports">
 		    </div>
 		</div>
   		<div class="input-row">
@@ -522,8 +522,8 @@
 		</div>
   		<div class="input-row">
 		    <div class="input-small">
-      		<label for="response_time_to_intervention">زمن الاستجابة من الرد الى الوصول:</label>
-                    <input type="text" id="response_time_to_intervention">
+		    <label for="response_time_to_intervention">زمن الاستجابة من الرد الى الوصول (بالدقائق) :</label>
+		    <input type="number" id="response_time_to_intervention" placeholder="أدخل الوقت بالدقائق رقم فقط">
 		    </div>
 		</div>
                     <h2>ملاحظات النوبة</h2>
@@ -975,7 +975,7 @@
 		<label for="related_reports">البلاغات:</label>
 		<div id="reports-container-1">
 		    <div class="input-pair">
-		        <input type="text" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
+		        <input type="number" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
 		        <select class="report-type" style="width: 120px;">
 		            <option value="إيكو">إيكو</option>
 		            <option value="دلتا">دلتا</option>
@@ -1032,80 +1032,98 @@
         } else if (formName === 'operational_failure') {
             formHTML = `
               <h2>نموذج فشل تشغيلي</h2>
-		<p>يرسل من قبل كبار المسعفين في حال وجود فشل تشغيلي</p>
-  
-                <div class="form-section">
-                          <div class="input-row">
-			<div class="input-small">
-                    <label for="sector">اختر القطاع:</label>
-                    <select id="sector" onchange="toggleOtherSectorInput()">
-                        <option value="الوسط">الوسط</option>
-                        <option value="الجنوب">الجنوب</option>
-                        <option value="الشرق">الشرق</option>
-                        <option value="الغرب">الغرب</option>
-                        <option value="الشمال">الشمال</option>
-                        <option value="other">أخرى</option>
-                    </select>
-                    <input type="text" id="other_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
-                    <label for="report_number">رقم البلاغ:</label>
-                    <input type="text" id="report_number">
+              <p>يرسل من قبل كبار المسعفين في حال وجود فشل تشغيلي</p>
+        
+              <div class="form-section">
+                  <div class="input-row">
+                      <div class="input-small">
+                          <label for="sector">اختر القطاع:</label>
+                          <select id="sector" onchange="toggleOtherSectorInput()">
+                              <option value="الوسط">الوسط</option>
+                              <option value="الجنوب">الجنوب</option>
+                              <option value="الشرق">الشرق</option>
+                              <option value="الغرب">الغرب</option>
+                              <option value="الشمال">الشمال</option>
+                              <option value="other">أخرى</option>
+                          </select>
+                          <input type="text" id="other_sector" placeholder="اكتب القطاع" style="display:none; margin-top: 10px;">
                       </div>
+                  </div>
+        
+                  <!-- رقم البلاغ ونوع البلاغ في نفس الصف -->
+                  <div class="input-row">
+                      <div class="input-small">
+                          <label for="report_number">رقم البلاغ:</label>
+                          <input type="text" id="report_number">
                       </div>
-                    <div class="input-row">
-                    <label for="event_start">بداية الحدث (نظام 24 ساعة):</label>
-                    <div class="input-row">
-                        <input type="text" id="start_hour" placeholder="الساعة" style="width: 45px;">
-                        <input type="text" id="start_minute" placeholder="الدقيقة" style="width: 45px;">
+        
+                      <div class="input-small">
+                          <label for="report_type">نوع البلاغ:</label>
+                          <select id="report_type" style="width: 150px;">
+                              <option value="إيكو">إيكو</option>
+                              <option value="دلتا">دلتا</option>
+                              <option value="تشارلي">تشارلي</option>
+                              <option value="برافو">برافو</option>
+                              <option value="none">لا يوجد بلاغ</option>
+                          </select>
                       </div>
-		   </div>
-                <div class="form-section">
-                          <div class="input-row">
-			<div class="input-small">
-                    <label for="unit_failure">تعطل فرقة إسعافية:</label>
-                    <input type="text" id="unit_failure">
-                 </div>
-                        <div class="input-small">
-                    <label for="failure_type">نوع العطل:</label>
-                    <input type="text" id="failure_type">
-                 </div>
-                        <div class="input-small">
-                    <label for="report_type">نوع البلاغ:</label>
-                    <input type="text" id="report_type">
-                 </div>
-		    </div>
-		   </div>
-                    <label for="damages">الأضرار:</label>
-                    <textarea id="damages" rows="4"></textarea>
-
-                    <label for="actions_taken">الإجراءات المتخذة:</label>
-                    <textarea id="actions_taken" rows="4"></textarea>
-
-                    <label for="service_impact">التأثير على الخدمة:</label>
-                    <textarea id="service_impact" rows="4"></textarea>
-
-                    <label for="event_status">هل الحدث ما زال قائم؟</label>
-                    <select id="event_status">
-                        <option value="نعم">نعم</option>
-                        <option value="لا">لا</option>
-                    </select>
-
-            <label for="">نهاية الحدث (نظام 24 ساعة):</label>
-            <div class="input-row">
-                <input type="number" id="end_hour" placeholder="الساعة" style="width: 45px;">
-                <input type="number" id="end_minute" placeholder="الدقيقة" style="width: 45px;">
-                <input type="checkbox" id="event_not_ended" onclick="toggleEndTimeFields()">
-                <label for="event_not_ended" style="font-weight: bold; color: red;">لم ينتهِ حتى الآن</label>
-            </div>
-                </div>
-                <div class="form-section">
-                    <div class="input-row">
-                    <div class="input-small">
-                    <label for="senior_paramedic_name"> كبير المسعفين المناوب:</label>
-                    <input type="text" id="senior_paramedic_name">
-                    </div>
-                </div>
-                </div>
-                <button onclick="sendWhatsAppMessage('operational_failure')">إرسال النموذج بالواتساب</button>
+                  </div>
+        
+                  <div class="input-row">
+                      <label for="event_start">بداية الحدث (نظام 24 ساعة):</label>
+                      <div class="input-row">
+                          <input type="text" id="start_hour" placeholder="الساعة" style="width: 45px;">
+                          <input type="text" id="start_minute" placeholder="الدقيقة" style="width: 45px;">
+                      </div>
+                  </div>
+        
+                  <div class="form-section">
+                      <div class="input-row">
+                          <div class="input-small">
+                              <label for="unit_failure">تعطل فرقة إسعافية:</label>
+                              <input type="text" id="unit_failure">
+                          </div>
+                          <div class="input-small">
+                              <label for="failure_type">نوع العطل:</label>
+                              <input type="text" id="failure_type">
+                          </div>
+                      </div>
+                  </div>
+        
+                  <label for="damages">الأضرار:</label>
+                  <textarea id="damages" rows="4"></textarea>
+        
+                  <label for="actions_taken">الإجراءات المتخذة:</label>
+                  <textarea id="actions_taken" rows="4"></textarea>
+        
+                  <label for="service_impact">التأثير على الخدمة:</label>
+                  <textarea id="service_impact" rows="4"></textarea>
+        
+                  <label for="event_status">هل الحدث ما زال قائم؟</label>
+                  <select id="event_status">
+                      <option value="نعم">نعم</option>
+                      <option value="لا">لا</option>
+                  </select>
+        
+                  <label for="">نهاية الحدث (نظام 24 ساعة):</label>
+                  <div class="input-row">
+                      <input type="number" id="end_hour" placeholder="الساعة" style="width: 45px;">
+                      <input type="number" id="end_minute" placeholder="الدقيقة" style="width: 45px;">
+                      <input type="checkbox" id="event_not_ended" onclick="toggleEndTimeFields()">
+                      <label for="event_not_ended" style="font-weight: bold; color: red;">لم ينتهِ حتى الآن</label>
+                  </div>
+              </div>
+        
+              <div class="form-section">
+                  <div class="input-row">
+                      <div class="input-small">
+                          <label for="senior_paramedic_name"> كبير المسعفين المناوب:</label>
+                          <input type="text" id="senior_paramedic_name">
+                      </div>
+                  </div>
+              </div>
+        
+              <button onclick="sendWhatsAppMessage('operational_failure')">إرسال النموذج بالواتساب</button>
             `;
         } else if (formName === 'eco_reports') {
             formHTML = `
@@ -1195,8 +1213,8 @@
                     <label for="event_time">وقت وتاريخ الحدث:</label>
                     <input type="date" id="event_time" readonly>
                     <div class="input-row">
-                        <input type="text" id="event_hour" placeholder="الساعة" style="width: 45px;">
-                        <input type="text" id="event_minute" placeholder="الدقيقة" style="width: 45px;">
+                        <input type="number" id="event_hour" placeholder="الساعة" style="width: 45px;">
+                        <input type="number" id="event_minute" placeholder="الدقيقة" style="width: 45px;">
                     </div>
 
                     <label for="event_details">تفاصيل الحدث:</label>
@@ -1204,76 +1222,130 @@
 
                     <label for="assigned_units">إيجاز الوضع الراهن أثناء ورود البلاغ:</label>
                     <textarea id="assigned_units" rows="4"></textarea>
-
+                <div class="input-row">
+                <div class="input-small">
                     <label for="teams_count">عدد الفرق لكامل القطاع (المشغولة والمتاحة):</label>
-                    <input type="text" id="teams_count">
-
+                    <input type="number" id="teams_count">
+                    </div>
+                </div>
+                <div class="input-row">
+                <div class="input-small">
                     <label for="deployment">الانتشار:</label>
                     <input type="text" id="deployment">
-
+              	   	</div>
+		       <div class="input-small">
                     <label for="team_types">أنواع الفرق المشاركة:</label>
                     <input type="text" id="team_types">
-
+              	   	</div>
+              	   	</div>
+              	   	<div class="input-row">
+                <div class="input-small">
                     <label for="saudi_red_crescent">الهلال الأحمر:</label>
                     <input type="text" id="saudi_red_crescent">
-
+              	   </div>
+                        <div class="input-small">
                     <label for="health_ministry">وزارة الصحة:</label>
                     <input type="text" id="health_ministry">
-
+              	   </div>
+                        <div class="input-small">
                     <label for="other_authorities">جهات أخرى:</label>
                     <input type="text" id="other_authorities">
-
+                    </div>
+                </div>
+                    <div class="form-section">
+            	   	<div class="input-row">
+                <div class="input-small">
 		      <label for="first_team_arrival">وقت وصول أول فرقة (نظام 24 ساعة):</label>
 		<div class="input-row">
-		    <input type="text" id="arrival_hour" placeholder="الساعة" style="width: 45px;">
-		    <input type="text" id="arrival_minute" placeholder="الدقيقة" style="width: 45px;">
+		    <input type="number" id="arrival_hour" placeholder="الساعة" style="width:80px;">
+		    <input type="number" id="arrival_minute" placeholder="الدقيقة" style="width: 80px;">
 		</div>
-
+             	   </div>
+                        <div class="input-small">
                     <label for="injury_triage">فرز الإصابات:</label>
                     <div class="input-row">
-                        <input type="text" id="critical_injuries" placeholder="حرجة" style="width: 45px;">
-                        <input type="text" id="moderate_injuries" placeholder="متوسطة" style="width: 45px;">
-                        <input type="text" id="minor_injuries" placeholder="طفيفة" style="width: 45px;">
-                        <input type="text" id="deaths" placeholder="وفاة" style="width: 45px;">
+                        <input type="number" id="critical_injuries" placeholder="حرجة" style="width: 80px;">
+                        <input type="number" id="moderate_injuries" placeholder="متوسطة" style="width:80px;">
+                        <input type="number" id="minor_injuries" placeholder="طفيفة" style="width:80px;">
+                        <input type="number" id="deaths" placeholder="وفاة" style="width:80px;">
                     </div>
-
+                    </div>
+                    </div>
+                    <div class="input-row">
+                <div class="input-small">
                     <label for="nationalities">الجنسيات:</label>
                     <div class="input-row">
-                        <input type="text" id="saudi_nationality" placeholder="سعودي" style="width: 45px;">
-                        <input type="text" id="non_saudi_nationality" placeholder="غير سعودي" style="width: 45px;">
-                        <input type="text" id="unknown_nationality" placeholder="غير معروف" style="width: 45px;">
+                        <input type="number" id="saudi_nationality" placeholder="سعودي" style="width: 80px;">
+                        <input type="number" id="non_saudi_nationality" placeholder="غير سعودي" style="width: 90px;">
+                        <input type="number" id="unknown_nationality" placeholder="غير معروف" style="width: 90px;">
                     </div>
-
+                    </div>
+                    </div>                
+                    <div class="input-small">
                     <label for="children_count">عدد الأطفال:</label>
-                    <input type="text" id="children_count">
-		    
-                    <label for="transferd_victimes">الحالات المنقولة:</label>
-                    <input type="text" id="transferd_victimes">
-			
-                    <label for="non_transferd_victimes">الحالات الغير منقولة:</label>
-                    <input type="text" id="non_transferd_victimes">
-			
-			<label for="total_victimes">إجمالي الحالات:</label>
-			<input type="text" id="total_victimes">
-   
-			<label for="hospitals">المستشفيات:</label>
-			<input type="text" id="hospitals">
-   
-                    <label for="central_operations_notification">إبلاغ العمليات المركزية:</label>
-                    <input type="checkbox" id="central_operations_yes"> نعم
-                    <input type="checkbox" id="central_operations_no"> لا
-
-                    <label for="joint_operations_notification">إبلاغ العمليات المشتركة:</label>
-                    <input type="checkbox" id="joint_operations_yes"> نعم
-                    <input type="checkbox" id="joint_operations_no"> لا
-
-                    <label for="event_end">انتهاء الحدث (نظام 24 ساعة)</label>
-                    <div class="input-row">
-                        <input type="text" id="end_hour" placeholder="الساعة" style="width: 45px;">
-                        <input type="text" id="end_minute" placeholder="الدقيقة" style="width: 45px;">
+                    <input type="number" id="children_count" style="width: 80px;">
+             	   </div>
+             	   </div>
+            <div class="form-section">
+                <div class="input-row">
+                    <div class="input-small">
+                        <label for="transferd_victimes">الحالات المنقولة:</label>
+                        <input type="number" id="transferd_victimes" oninput="calculateTotalVictimes()">
+                    </div>
+                    <div class="input-small">
+                        <label for="non_transferd_victimes">الحالات الغير منقولة:</label>
+                        <input type="number" id="non_transferd_victimes" oninput="calculateTotalVictimes()">
+                    </div>
+                    <div class="input-small">
+                        <label for="total_victimes">إجمالي الحالات:</label>
+                        <input type="text" id="total_victimes" readonly disabled style="background-color: #e0e0e0;">
+                    </div>
                     </div>
 
+                    <div class="form-section">
+			<label for="hospitals">المستشفيات:</label>
+			<textarea id="hospitals" rows="4"></textarea>
+                </div>
+<div class="form-section">
+    <div class="input-row" style="display: flex; justify-content: space-between; align-items: center;">
+        <!-- إبلاغ العمليات المركزية -->
+        <div class="input-small">
+            <label for="central_operations_notification">إبلاغ العمليات المركزية:</label>
+            <div style="display: inline-flex; gap: 5px; align-items: center;">
+                <input type="radio" name="central_operations" id="central_operations_yes" value="yes">
+                <label for="central_operations_yes">نعم</label>
+
+                <input type="radio" name="central_operations" id="central_operations_no" value="no">
+                <label for="central_operations_no">لا</label>
+            </div>
+        </div>
+
+        <!-- إبلاغ العمليات المشتركة -->
+        <div class="input-small">
+            <label for="joint_operations_notification">إبلاغ العمليات المشتركة:</label>
+            <div style="display: inline-flex; gap: 5px; align-items: center;">
+                <input type="radio" name="joint_operations" id="joint_operations_yes" value="yes">
+                <label for="joint_operations_yes">نعم</label>
+
+                <input type="radio" name="joint_operations" id="joint_operations_no" value="no">
+                <label for="joint_operations_no">لا</label>
+            </div>
+        </div>
+
+        <!-- انتهاء الحدث -->
+        <div class="input-small">
+            <label for="event_end">انتهاء الحدث (نظام 24 ساعة):</label>
+            <div style="display: inline-flex; gap: 5px; align-items: center;">
+                <input type="text" id="end_hour" placeholder="الساعة" style="width: 60px;">
+                <input type="text" id="end_minute" placeholder="الدقيقة" style="width: 60px;">
+            </div>
+        </div>
+    </div>
+</div>
+
+                    
                     <h2>المسؤولين</h2>
+            <div class="form-section">
 
                     <label for="field_leader">قائد الحدث الميداني:</label>
                     <input type="text" id="field_leader">
@@ -1286,7 +1358,10 @@
 
                     <label for="area_leader">قائد المنطقة المناوب:</label>
                     <input type="text" id="area_leader">
-                </div>
+        </div>
+    </div>
+</div>
+
                 <button onclick="sendWhatsAppMessage('major_event')">إرسال النموذج بالواتساب</button>
             `;
         } else if (formName === 'support_request') {
@@ -1330,15 +1405,15 @@
 		<label for="related_reports">في حال كان طلب الدعم مرتبط ببلاغات إسعافية:</label>
 		<div id="reports-container-2">
 		    <div class="input-pair">
-		        <input type="text" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
+		        <input type="number" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
 		        <select class="report-type" style="width: 120px;">
 		            <option value="إيكو">إيكو</option>
 		            <option value="دلتا">دلتا</option>
 		            <option value="تشارلي">تشارلي</option>
 		            <option value="برافو">برافو</option>
 		        </select>
-		        <input type="text" placeholder="زمن بقاء البلاغ في قائمة الترحيل" class="waiting_time" style="width: 150px;">
-		    </div>
+<input type="number" placeholder="زمن بقاء البلاغ في قائمة الترحيل (بالدقائق)" class="waiting_time" style="width: 230px;">
+</div>
 		</div>
 		
 		<!-- الزر يستخدم الفنكشن مع تمرير معرّف الحاوية والنوع -->
@@ -1365,14 +1440,16 @@
             <textarea id="support_reasons" rows="4"></textarea>
 
             <div id="supportDetails">
-                <label for="support_sector">القطاع الداعم:</label>
-                <select id="support_sector" onchange="toggleOtherSectorInput()">
-                    <option value="الوسط">الوسط</option>
-                    <option value="الجنوب">الجنوب</option>
-                    <option value="الشرق">الشرق</option>
-                    <option value="الغرب">الغرب</option>
-                    <option value="الشمال">الشمال</option>
-                </select>
+                <label for="support_sector">القطاعات الداعمة:</label>
+                <div id="support_sector">
+                    <label><input type="checkbox" value="الوسط" class="support-sector-checkbox"> الوسط</label><br>
+                    <label><input type="checkbox" value="الجنوب" class="support-sector-checkbox"> الجنوب</label><br>
+                    <label><input type="checkbox" value="الشرق" class="support-sector-checkbox"> الشرق</label><br>
+                    <label><input type="checkbox" value="الغرب" class="support-sector-checkbox"> الغرب</label><br>
+                    <label><input type="checkbox" value="الشمال" class="support-sector-checkbox"> الشمال</label><br>
+                </div>
+
+
 
                 <label for="supported_sector">القطاع المدعوم:</label>
                 <select id="supported_sector" onchange="toggleOtherSectorInput()">
@@ -1518,7 +1595,7 @@ function relatedreports(containerId, reportType) {
     
     let newField = `
         <div class="input-pair">
-            <input type="text" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
+            <input type="number" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
             <select class="report-type" style="width: 120px;">
                 <option value="إيكو">إيكو</option>
                 <option value="دلتا">دلتا</option>
@@ -1532,7 +1609,7 @@ function relatedreports(containerId, reportType) {
         newField += `<input type="number" placeholder=" زمن الاستجابة (بالدقائق)" class="waiting_time" style="width: 120px;">`;
         newField += `<p>احسب زمن الاستجابة من الرد الى الوصول للموقع</p>`;
     } else if (reportType === 'dispatchTime') {
-        newField += `<input type="number" placeholder="زمن بقاء البلاغ في قائمة الترحيل (بالدقائق)" class="waiting_time" style="width: 150px;">`;
+        newField += `<input type="number" placeholder="زمن بقاء البلاغ في قائمة الترحيل (بالدقائق)" class="waiting_time" style="width: 230px;">`;
     }
 
     newField += `</div>`; // إغلاق div
@@ -1682,6 +1759,7 @@ function getFormData(formName) {
         data.start_minute = document.getElementById('start_minute')?.value || '';
         data.unit_failure = document.getElementById('unit_failure')?.value || '';
         data.failure_type = document.getElementById('failure_type')?.value || '';
+        data.report_type = document.getElementById('report_number')?.value || '';
         data.report_type = document.getElementById('report_type')?.value || '';
         data.damages = document.getElementById('damages')?.value || '';
         data.actions_taken = document.getElementById('actions_taken')?.value || '';
@@ -1732,16 +1810,16 @@ function getFormData(formName) {
         data.non_saudi_nationality = document.getElementById('non_saudi_nationality')?.value || '';
         data.unknown_nationality = document.getElementById('unknown_nationality')?.value || '';
         data.children_count = document.getElementById('children_count')?.value || '';
-	data.transferred_victimes = document.getElementById('transferd_victimes')?.value || '';
-	data.non_transferred_victimes = document.getElementById('non_transferd_victimes')?.value || '';
-	data.total_victimes = document.getElementById('total_victimes')?.value || '';
-	data.hospitals = document.getElementById('hospitals')?.value || '';
-	data.arrival_hour = document.getElementById('arrival_hour')?.value || '';
-	data.arrival_minute = document.getElementById('arrival_minute')?.value || '';
-        data.central_operations_yes = document.getElementById('central_operations_yes').checked;
-        data.central_operations_no = document.getElementById('central_operations_no').checked;
-        data.joint_operations_yes = document.getElementById('joint_operations_yes').checked;
-        data.joint_operations_no = document.getElementById('joint_operations_no').checked;
+        data.transferred_victimes = document.getElementById('transferd_victimes')?.value || '';
+        data.non_transferred_victimes = document.getElementById('non_transferd_victimes')?.value || '';
+        data.total_victimes = document.getElementById('total_victimes')?.value || '';
+        data.hospitals = document.getElementById('hospitals')?.value || '';
+        data.arrival_hour = document.getElementById('arrival_hour')?.value || '';
+        data.arrival_minute = document.getElementById('arrival_minute')?.value || '';
+        const centralOperationsSelected = document.querySelector('input[name="central_operations"]:checked');
+        data.central_operations = centralOperationsSelected ? centralOperationsSelected.value : 'غير محدد';
+        const jointOperationsSelected = document.querySelector('input[name="joint_operations"]:checked');
+        data.joint_operations = jointOperationsSelected ? jointOperationsSelected.value : 'غير محدد';
         data.end_hour = document.getElementById('end_hour')?.value || '';
         data.end_minute = document.getElementById('end_minute')?.value || '';
         data.field_leader = document.getElementById('field_leader')?.value || '';
@@ -1815,8 +1893,9 @@ function getFormData(formName) {
 	    data.region_leader_name = document.getElementById('region_leader_name').value;
 	
 	    if (data.support_status === 'الموافقة') {
-	        data.support_sector = document.getElementById('support_sector').value || '';
-	        data.other_support_sector = document.getElementById('other_support_sector').value || '';
+	        // جلب القيم المختارة من مربعات الاختيار
+	        const selectedSectors = Array.from(document.querySelectorAll('.support-sector-checkbox:checked')).map(checkbox => checkbox.value);
+	        data.support_sector = selectedSectors.join(', ') || '';
 	        data.supported_sector = document.getElementById('supported_sector').value || '';
 	        data.other_supported_sector = document.getElementById('other_supported_sector').value || '';
 	        data.dispatch_hour = document.getElementById('dispatch_hour').value || '';
@@ -1902,28 +1981,47 @@ function sendWhatsAppMessage(formName) {
         formText += `عدد الغياب في المناوبة: ${document.getElementById('absence_in_shift').value}\n`;
         formText += `ملاحظات عامه: ${document.getElementById('cad_program_notes').value}\n`;
         formText += `*اسم كبير المسعفين:*  ${document.getElementById('senior_paramedic_name').value}\n`;
-    } else if (formName === 'operational_failure') {
-        formText += `*=== نموذج فشل تشغيلي ===*\n\n`;
-        if (document.getElementById('sector').value !== 'other') {
-    formText += `القطاع: ${document.getElementById('sector').value}\n`;
-} else {
-    formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
-}
-	formText += `رقم البلاغ: ${document.getElementById('report_number').value}\n`;
-        formText += `بداية الحدث: ${document.getElementById('start_hour').value}:${document.getElementById('start_minute').value}\n`;
-        formText += `تعطل فرقة إسعافية: ${document.getElementById('unit_failure').value}\n`;
-        formText += `نوع العطل: ${document.getElementById('failure_type').value}\n`;
-        formText += `نوع البلاغ: ${document.getElementById('report_type').value}\n`;
-        formText += `الأضرار: ${document.getElementById('damages').value}\n`;
-        formText += `الإجراءات المتخذة: ${document.getElementById('actions_taken').value}\n`;
-        formText += `التأثير على الخدمة: ${document.getElementById('service_impact').value}\n`;
-        formText += `هل الحدث ما زال قائم؟: ${document.getElementById('event_status').value}\n`;
-    if (document.getElementById('event_not_ended').checked) {
-        formText += `نهاية الحدث: لم ينتهِ حتى الآن\n`;
-    } else {
-        formText += `نهاية الحدث: ${document.getElementById('end_hour').value}:${document.getElementById('end_minute').value}\n`;
-    }
-        formText += `*اسم كبير المسعفين:*  ${document.getElementById('senior_paramedic_name').value}\n`;
+        } else if (formName === 'operational_failure') {
+            formText += `*=== نموذج فشل تشغيلي ===*\n\n`;
+        
+            // التحقق من القطاع
+            if (document.getElementById('sector').value !== 'other') {
+                formText += `القطاع: ${document.getElementById('sector').value}\n`;
+            } else {
+                formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
+            }
+        
+            // التحقق من نوع البلاغ
+            let reportType = document.getElementById('report_type').value;
+        
+            if (reportType !== 'none') {
+                // إذا لم يكن نوع البلاغ "لا يوجد بلاغ"، يتم إضافة رقم البلاغ
+                formText += `رقم البلاغ: ${document.getElementById('report_number').value}\n`;
+            }
+        
+            // عرض نوع البلاغ مع استبدال "none" بعبارة "لا يوجد بلاغ"
+            if (reportType === 'none') {
+                formText += `نوع البلاغ: لا يوجد بلاغ\n`;
+            } else {
+                formText += `نوع البلاغ: ${reportType}\n`;
+            }
+        
+            formText += `بداية الحدث: ${document.getElementById('start_hour').value}:${document.getElementById('start_minute').value}\n`;
+            formText += `تعطل فرقة إسعافية: ${document.getElementById('unit_failure').value}\n`;
+            formText += `نوع العطل: ${document.getElementById('failure_type').value}\n`;
+            formText += `الأضرار: ${document.getElementById('damages').value}\n`;
+            formText += `الإجراءات المتخذة: ${document.getElementById('actions_taken').value}\n`;
+            formText += `التأثير على الخدمة: ${document.getElementById('service_impact').value}\n`;
+            formText += `هل الحدث ما زال قائم؟: ${document.getElementById('event_status').value}\n`;
+        
+            // التحقق من نهاية الحدث
+            if (document.getElementById('event_not_ended').checked) {
+                formText += `نهاية الحدث: لم ينتهِ حتى الآن\n`;
+            } else {
+                formText += `نهاية الحدث: ${document.getElementById('end_hour').value}:${document.getElementById('end_minute').value}\n`;
+            }
+        
+            formText += `*اسم كبير المسعفين:*  ${document.getElementById('senior_paramedic_name').value}\n`;
     } else if (formName === 'eco_reports') {
         formText += `*=== نموذج بلاغات إيكو ===*\n\n`;
         if (document.getElementById('sector').value !== 'other') {
@@ -1970,21 +2068,23 @@ function sendWhatsAppMessage(formName) {
         formText += `الحالات المنقولة: ${document.getElementById('transferd_victimes').value}\n`;
         formText += `الحالات الغير منقولة: ${document.getElementById('non_transferd_victimes').value}\n`;
         formText += `إجمالي الحالات: ${document.getElementById('total_victimes').value}\n`;
-        formText += `إبلاغ العمليات المركزية: ${document.getElementById('central_operations_yes').checked ? 'نعم' : 'لا'}\n`;
         formText += `المستشفيات: ${document.getElementById('hospitals').value}\n`;
-        formText += `إبلاغ العمليات المشتركة: ${document.getElementById('joint_operations_yes').checked ? 'نعم' : 'لا'}\n`;
+        const centralOperationsSelected = document.querySelector('input[name="central_operations"]:checked');
+        formText += `إبلاغ العمليات المركزية: ${centralOperationsSelected ? (centralOperationsSelected.value === 'yes' ? 'نعم' : 'لا') : 'غير محدد'}\n`;
+        const jointOperationsNotification = document.querySelector('input[name="joint_operations"]:checked');
+        formText += `إبلاغ العمليات المشتركة: ${jointOperationsNotification ? (jointOperationsNotification.value === 'yes' ? 'نعم' : 'لا') : 'غير محدد'}\n`;
         formText += `انتهاء الحدث: ${document.getElementById('end_hour').value}:${document.getElementById('end_minute').value}\n`;
         formText += `قائد الحدث الميداني: ${document.getElementById('field_leader').value}\n`;
         formText += `التحكم العملياتي: ${document.getElementById('operational_control').value}\n`;
         formText += `تنسيق الاستجابة: ${document.getElementById('response_coordination').value}\n`;
         formText += `قائد المنطقة المناوب: ${document.getElementById('area_leader').value}\n`;
-    } else if (formName === 'support_request') {
+            } else if (formName === 'support_request') {
         formText += `*=== طلب تفعيل خطة المساندة والدعم المتبادل ===*\n\n`;
         if (document.getElementById('sector').value !== 'other') {
-    formText += `القطاع: ${document.getElementById('sector').value}\n`;
-} else {
-    formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
-}
+        formText += `القطاع: ${document.getElementById('sector').value}\n`;
+        } else {
+        formText += `القطاع: ${document.getElementById('other_sector').value}\n`;
+        }
         formText += `توقيت طلب الدعم: ${document.getElementById('report_hour').value}:${document.getElementById('report_minute').value}\n`;
         formText += `عدد الوحدات المرتبطة ببلاغ: ${document.getElementById('units_linked').value}\n`;
         formText += `عدد الوحدات الجاهزة: ${document.getElementById('units_ready').value}\n`;
@@ -2010,7 +2110,8 @@ function sendWhatsAppMessage(formName) {
 	    formText += `اسم قائد المنطقة: ${document.getElementById('region_leader_name').value}\n`;
 	
 	    if (document.getElementById('support_status').value === 'الموافقة') {
-	        formText += `القطاع الداعم: ${document.getElementById('support_sector').value}\n`;
+	        // إرسال القيم المختارة في الرسالة
+	        formText += `القطاعات الداعمة: ${Array.from(document.querySelectorAll('.support-sector-checkbox:checked')).map(checkbox => checkbox.value).join(', ')}\n`;
 	        formText += `القطاع المدعوم: ${document.getElementById('supported_sector').value}\n`;
 	        formText += `توقيت تحريك الدعم: ${document.getElementById('dispatch_hour').value}:${document.getElementById('dispatch_minute').value}\n`;
 	        formText += `توقيت وصول الدعم: ${document.getElementById('arrival_hour').value}:${document.getElementById('arrival_minute').value}\n`;
@@ -2038,14 +2139,32 @@ function sendWhatsAppMessage(formName) {
         formText += `إجمالي بلاغات القطاع: ${document.getElementById('total_reports').value}\n`;
         
         // جمع البيانات المتعلقة بالبلاغات الإسعافية المرتبطة
-        const reportNumbers = document.querySelectorAll('.report-number');
-        const reportTypes = document.querySelectorAll('.report-type');
-        const waitingTimes = document.querySelectorAll('.waiting_time');
-        
-        formText += `*=== البلاغات الإسعافية المرتبطة ===*\n\n`;
+    const reportNumbers = document.querySelectorAll('.report-number');
+    const reportTypes = document.querySelectorAll('.report-type');
+    const waitingTimes = document.querySelectorAll('.waiting_time');
+    
+    // إضافة العنوان دائمًا
+    formText += `*=== البلاغات الإسعافية المرتبطة ===*\n\n`;
+    
+    // التحقق إذا كان هناك إدخالات
+    let hasReports = false;
+    reportNumbers.forEach((number, index) => {
+        if (number.value && reportTypes[index].value && waitingTimes[index].value) {
+            hasReports = true;
+        }
+    });
+    
+    // إضافة المعلومات إذا كانت هناك إدخالات أو إظهار رسالة في حالة عدم وجودها
+    if (hasReports) {
         reportNumbers.forEach((number, index) => {
-            formText += `رقم البلاغ: ${number.value}, نوع البلاغ: ${reportTypes[index].value}, زمن الاستجابة (بالدقائق): ${waitingTimes[index].value}\n`;
+            if (number.value && reportTypes[index].value && waitingTimes[index].value) {
+                formText += `رقم البلاغ: ${number.value}, نوع البلاغ: ${reportTypes[index].value}, زمن الاستجابة (بالدقائق): ${waitingTimes[index].value}\n`;
+            }
         });
+    } else {
+        formText += `لم يتم إضافة بلاغات في النموذج.\n`;
+    }
+
 
         formText += `*=== المخرجات ===*\n\n`;
         formText += `متوسط زمن الاستجابة للبلاغات (بالدقائق): ${document.getElementById('response_time_to_intervention').value}\n`;
@@ -2330,6 +2449,15 @@ document.addEventListener("DOMContentLoaded", function () {
             endMinuteField.disabled = false;
         }
     }
+    
+        // فنكشن حساب اجمالي الحالات
+    function calculateTotalVictimes() {
+    const transferdVictimes = parseInt(document.getElementById('transferd_victimes').value) || 0;
+    const nonTransferdVictimes = parseInt(document.getElementById('non_transferd_victimes').value) || 0;
+    const totalVictimes = transferdVictimes + nonTransferdVictimes;
+    
+    document.getElementById('total_victimes').value = totalVictimes;
+}
 
 </script>
 
