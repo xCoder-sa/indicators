@@ -1696,43 +1696,6 @@
         
         <div class="form-section">
             <label for="is_resolved">هل انتهى العطل؟</label>
-            <select id="is_resolved" required>
-                <option value="" disabled selected>اختر</option>
-                <option value="نعم">نعم</option>
-                <option value="لا">لا</option>
-            </select>
-        </div>
-
-        <button onclick="sendWhatsAppMessage('technical_failure_form')">إرسال النموذج بالواتساب</button>
-    `;
-if (formName === 'technical_failure_form') {
-    formHTML = `
-        <h2>نموذج فشل تقني</h2>
-        <div class="form-section">
-            <label for="failure_type">نوع العطل:</label>
-            <textarea id="failure_type" placeholder="أدخل نوع العطل" required></textarea>
-        </div>
-        
-        <div class="form-section">
-            <label for="ticket_number">رقم التذكرة:</label>
-            <input type="text" id="ticket_number" placeholder="أدخل رقم التذكرة" required>
-        </div>
-
-        <div class="form-section">
-            <label for="failure_time">وقت العطل (نظام 24 ساعة):</label>
-            <div class="input-row">
-                <input type="text" id="failure_hour" placeholder="الساعة" style="width: 45px;" required>
-                <input type="text" id="failure_minute" placeholder="الدقيقة" style="width: 45px;" required>
-            </div>
-        </div>
-
-        <div class="form-section">
-            <label for="action_taken">الإجراء:</label>
-            <textarea id="action_taken" placeholder="أدخل الإجراءات المتخذة" required></textarea>
-        </div>
-        
-        <div class="form-section">
-            <label for="is_resolved">هل انتهى العطل؟</label>
             <select id="is_resolved" onchange="document.getElementById('resolved_time_section').style.display = this.value === 'نعم' ? 'block' : 'none';" required>
                 <option value="" disabled selected>اختر</option>
                 <option value="نعم">نعم</option>
