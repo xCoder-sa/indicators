@@ -2450,12 +2450,6 @@ if (noReports) {
     formText += `وقت العطل: ${document.getElementById('failure_hour').value}:${document.getElementById('failure_minute').value}\n`;
     formText += `الإجراء: ${document.getElementById('action_taken').value}\n`;
     formText += `هل انتهى العطل: ${document.getElementById('is_resolved').value}\n`;
-    
-    if (document.getElementById('is_resolved').value === 'نعم') {
-        formText += `وقت انتهاء العطل: ${document.getElementById('resolved_hour').value}:${document.getElementById('resolved_minute').value}\n`;
-    } else if (document.getElementById('is_resolved').value === 'لا') {
-        formText += `العطل: ما زال مستمر\n`;
-    }
 }
 
 
