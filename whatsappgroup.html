@@ -380,7 +380,7 @@
         <input type="date" id="date" readonly disabled style="background-color: #e0e0e0;>
         
         <label for="time">التوقيت الحالي:</label>
-        <select id="time"  readonly disabled style="background-color: #e0e0e0;>
+        <select id="time">
             <option value="0:00 إلى 6:00">0:00 إلى 6:00</option>
             <option value="6:00 إلى 12:00">6:00 إلى 12:00</option>
             <option value="12:00 إلى 18:00">12:00 إلى 18:00</option>
@@ -2421,43 +2421,45 @@ function updateDate(formName) {
     }
 }
 
+
+//فنكشن حساب الوقت والتاريخ في نموذج كبير المسعفين الداخلي فقط بشكل تلقائي واستعادة التاريخ بعد ساعة 00 ليوم سابق  لمدة 4 ساعات فقط
 function selectCurrentTime(formName) {
-    // الحصول على التوقيت الحالي حسب توقيت السعودية (UTC+3)
-    const currentTime = new Date().toLocaleString("en-US", { timeZone: "Asia/Riyadh" });
-    const currentHours = new Date(currentTime).getHours();
+        // الحصول على التوقيت الحالي حسب توقيت السعودية (UTC+3)
+        const currentTime = new Date().toLocaleString("en-US", { timeZone: "Asia/Riyadh" });
+        const currentHours = new Date(currentTime).getHours();
+        
+        // تقليل الساعات بمقدار 6 للحصول على الفترة الزمنية السابقة
+        let previousHours = currentHours - 3;
+        
+        // إذا كانت الساعات أقل من 0، نعيدها إلى نطاق 24 ساعة
+        if (previousHours < 0) {
+            previousHours += 24;
+        }
     
-    // تقليل الساعات بمقدار 6 للحصول على الفترة الزمنية السابقة
-    let previousHours = currentHours - 6;
+        let selectedOption = '';
     
-    // إذا كانت الساعات أقل من 0، نعيدها إلى نطاق 24 ساعة
-    if (previousHours < 0) {
-        previousHours += 24;
+        // تحديد الفترة الزمنية بناءً على الساعات السابقة
+        if (previousHours >= 0 && previousHours < 6) {
+            selectedOption = "0:00 إلى 6:00";
+        } else if (previousHours >= 6 && previousHours < 12) {
+            selectedOption = "6:00 إلى 12:00";
+        } else if (previousHours >= 12 && previousHours < 18) {
+            selectedOption = "12:00 إلى 18:00";
+        } else if (previousHours >= 18 && previousHours < 24) {
+            selectedOption = "18:00 إلى 0:00";
+        }
+    
+        // العثور على جميع عناصر select التي تحتوي على التوقيت
+        const timeSelects = document.querySelectorAll('select[id="time"]');
+    
+        // تطبيق التوقيت المحدد على جميع النماذج
+        timeSelects.forEach(function(timeSelect) {
+            timeSelect.value = selectedOption;
+        });
+    
+        // تحديث تاريخ اليوم في خانة التاريخ فقط للنموذج المحدد
+        updateDate(formName); // استدعاء الدالة مع تمرير formName
     }
-
-    let selectedOption = '';
-
-    // تحديد الفترة الزمنية بناءً على الساعات السابقة
-    if (previousHours >= 0 && previousHours < 6) {
-        selectedOption = "0:00 إلى 6:00";
-    } else if (previousHours >= 6 && previousHours < 12) {
-        selectedOption = "6:00 إلى 12:00";
-    } else if (previousHours >= 12 && previousHours < 18) {
-        selectedOption = "12:00 إلى 18:00";
-    } else if (previousHours >= 18 && previousHours < 24) {
-        selectedOption = "18:00 إلى 0:00";
-    }
-
-    // العثور على جميع عناصر select التي تحتوي على التوقيت
-    const timeSelects = document.querySelectorAll('select[id="time"]');
-
-    // تطبيق التوقيت المحدد على جميع النماذج
-    timeSelects.forEach(function(timeSelect) {
-        timeSelect.value = selectedOption;
-    });
-
-    // تحديث تاريخ اليوم في خانة التاريخ فقط للنموذج المحدد
-    updateDate(formName); // استدعاء الدالة مع تمرير formName
-}
 
 document.addEventListener("DOMContentLoaded", function () {
     // الحصول على المعاملات من رابط URL
