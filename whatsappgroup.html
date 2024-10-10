@@ -2424,7 +2424,7 @@ if (noReports) {
     
     formText += `كبير المسعفين قطاع الشمال: ${document.getElementById('north_leader').value}\n`;
     formText += `رقم قناة الشمال: ${document.getElementById('north_channel').value}\n\n`;
-if (formName === 'technical_failure_form') {
+} else if (formName === 'technical_failure_form') {
     formText += `\n*=== نموذج فشل تقني ===*\n\n`;
     formText += `نوع العطل: ${document.getElementById('failure_type').value}\n`;
     formText += `رقم التذكرة: ${document.getElementById('ticket_number').value}\n`;
