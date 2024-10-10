@@ -1695,7 +1695,7 @@
 
         <div class="form-section">
             <label for="is_finished">هل انتهى العطل؟</label>
-            <select id="is_finished" onchange="toggleEndTime()" required>
+            <select id="is_finished" onchange="toggleEndTimeForFailure()" required>
                 <option value="" disabled selected>اختر</option>
                 <option value="yes">نعم</option>
                 <option value="no">لا</option>
@@ -2812,8 +2812,8 @@ function toggleReports() {
     }
 }
 
- // إضافة دالة لعرض أو إخفاء توقيت انتهاء العطل بناءً على الاختيار
-    toggleEndTime = function() {
+    // إضافة دالة جديدة لتجنب التعارض
+    toggleEndTimeForFailure = function() {
         var isFinished = document.getElementById('is_finished').value;
         if (isFinished === 'yes') {
             document.getElementById('end_time_section').style.display = 'block';
