@@ -1673,9 +1673,9 @@
         <h2>نموذج فشل تقني</h2>
         <div class="form-section">
             <label for="failure_type">نوع العطل:</label>
-            <textarea id="failure_type" placeholder="أدخل نوع العطل" rows="4" required></textarea>
+            <textarea id="failure_type" placeholder="أدخل نوع العطل" required></textarea>
         </div>
-
+        
         <div class="form-section">
             <label for="ticket_number">رقم التذكرة:</label>
             <input type="text" id="ticket_number" placeholder="أدخل رقم التذكرة" required>
@@ -1690,25 +1690,17 @@
         </div>
 
         <div class="form-section">
-            <label for="action_taken">الإجراء المتخذ:</label>
-            <textarea id="action_taken" placeholder="أدخل الإجراء" rows="4" required></textarea>
+            <label for="action_taken">الإجراء:</label>
+            <textarea id="action_taken" placeholder="أدخل الإجراءات المتخذة" required></textarea>
         </div>
-
+        
         <div class="form-section">
-            <label for="is_finished">هل انتهى العطل؟</label>
-            <select id="is_finished" onchange="handleTechnicalFailureEndTime()" required>
+            <label for="is_resolved">هل انتهى العطل؟</label>
+            <select id="is_resolved" required>
                 <option value="" disabled selected>اختر</option>
-                <option value="yes">نعم</option>
-                <option value="no">لا</option>
+                <option value="نعم">نعم</option>
+                <option value="لا">لا</option>
             </select>
-        </div>
-
-        <div class="form-section" id="end_time_section" style="display:none;">
-            <label for="end_time">وقت انتهاء العطل (نظام 24 ساعة):</label>
-            <div class="input-row">
-                <input type="text" id="end_hour" placeholder="الساعة" style="width: 45px;">
-                <input type="text" id="end_minute" placeholder="الدقيقة" style="width: 45px;">
-            </div>
         </div>
 
         <button onclick="sendWhatsAppMessage('technical_failure_form')">إرسال النموذج بالواتساب</button>
@@ -2059,12 +2051,8 @@ function getFormData(formName) {
     data.failure_hour = document.getElementById('failure_hour')?.value || '';
     data.failure_minute = document.getElementById('failure_minute')?.value || '';
     data.action_taken = document.getElementById('action_taken')?.value || '';
-    data.is_finished = document.getElementById('is_finished')?.value || '';
-    
-    if (data.is_finished === 'yes') {
-        data.end_hour = document.getElementById('end_hour')?.value || '';
-        data.end_minute = document.getElementById('end_minute')?.value || '';
-    }
+    data.is_resolved = document.getElementById('is_resolved')?.value || '';
+}
 }
 
     return data;
@@ -2429,14 +2417,8 @@ if (noReports) {
     formText += `نوع العطل: ${document.getElementById('failure_type').value}\n`;
     formText += `رقم التذكرة: ${document.getElementById('ticket_number').value}\n`;
     formText += `وقت العطل: ${document.getElementById('failure_hour').value}:${document.getElementById('failure_minute').value}\n`;
-    formText += `الإجراء المتخذ: ${document.getElementById('action_taken').value}\n`;
-
-    if (document.getElementById('is_finished').value === 'yes') {
-        formText += `الحالة: انتهى\n`;
-        formText += `وقت انتهاء العطل: ${document.getElementById('end_hour').value}:${document.getElementById('end_minute').value}\n`;
-    } else {
-        formText += `الحالة: ما زال مستمر\n`;
-    }
+    formText += `الإجراء: ${document.getElementById('action_taken').value}\n`;
+    formText += `هل انتهى العطل: ${document.getElementById('is_resolved').value}\n`;
 }
 
 
