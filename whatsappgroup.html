@@ -1516,6 +1516,51 @@
                 </div>
                 <button onclick="sendWhatsAppMessage('support_request')">إرسال النموذج بالواتساب</button>
             `;
+} else if (formName === 'technical_failure_form') {
+    formHTML = `
+        <h2>نموذج فشل تقني</h2>
+        <div class="form-section">
+            <label for="failure_type">نوع العطل:</label>
+            <textarea id="failure_type" placeholder="أدخل نوع العطل" required></textarea>
+        </div>
+        
+        <div class="form-section">
+            <label for="ticket_number">رقم التذكرة:</label>
+            <input type="text" id="ticket_number" placeholder="أدخل رقم التذكرة" required>
+        </div>
+
+        <div class="form-section">
+            <label for="failure_time">وقت العطل (نظام 24 ساعة):</label>
+            <div class="input-row">
+                <input type="text" id="failure_hour" placeholder="الساعة" style="width: 45px;" required>
+                <input type="text" id="failure_minute" placeholder="الدقيقة" style="width: 45px;" required>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <label for="action_taken">الإجراء:</label>
+            <textarea id="action_taken" placeholder="أدخل الإجراءات المتخذة" required></textarea>
+        </div>
+        
+        <div class="form-section">
+            <label for="is_resolved">هل انتهى العطل؟</label>
+            <select id="is_resolved" onchange="document.getElementById('resolved_time_section').style.display = this.value === 'نعم' ? 'block' : 'none';" required>
+                <option value="" disabled selected>اختر</option>
+                <option value="نعم">نعم</option>
+                <option value="لا">لا</option>
+            </select>
+        </div>
+
+        <div id="resolved_time_section" class="form-section" style="display:none;">
+            <label for="resolved_time">وقت انتهاء العطل (نظام 24 ساعة):</label>
+            <div class="input-row">
+                <input type="text" id="resolved_hour" placeholder="الساعة" style="width: 45px;">
+                <input type="text" id="resolved_minute" placeholder="الدقيقة" style="width: 45px;">
+            </div>
+        </div>
+
+        <button onclick="sendWhatsAppMessage('technical_failure_form')">إرسال النموذج بالواتساب</button>
+    `;
 } else if (formName === 'support_activation') {
     formHTML = `
         <h2>نموذج قبول تفعيل خطة المساندة والدعم المتبادل</h2>
@@ -1666,52 +1711,7 @@
         
         <button onclick="sendWhatsAppMessage('regional_leader_form')">إرسال النموذج بالواتساب</button>
             `;
-} else if (formName === 'technical_failure_form') {
-    formHTML = `
-        <h2>نموذج فشل تقني</h2>
-        <div class="form-section">
-            <label for="failure_type">نوع العطل:</label>
-            <textarea id="failure_type" placeholder="أدخل نوع العطل" required></textarea>
-        </div>
-        
-        <div class="form-section">
-            <label for="ticket_number">رقم التذكرة:</label>
-            <input type="text" id="ticket_number" placeholder="أدخل رقم التذكرة" required>
-        </div>
-
-        <div class="form-section">
-            <label for="failure_time">وقت العطل (نظام 24 ساعة):</label>
-            <div class="input-row">
-                <input type="text" id="failure_hour" placeholder="الساعة" style="width: 45px;" required>
-                <input type="text" id="failure_minute" placeholder="الدقيقة" style="width: 45px;" required>
-            </div>
-        </div>
-
-        <div class="form-section">
-            <label for="action_taken">الإجراء:</label>
-            <textarea id="action_taken" placeholder="أدخل الإجراءات المتخذة" required></textarea>
-        </div>
-        
-        <div class="form-section">
-            <label for="is_resolved">هل انتهى العطل؟</label>
-            <select id="is_resolved" onchange="document.getElementById('resolved_time_section').style.display = this.value === 'نعم' ? 'block' : 'none';" required>
-                <option value="" disabled selected>اختر</option>
-                <option value="نعم">نعم</option>
-                <option value="لا">لا</option>
-            </select>
-        </div>
-
-        <div id="resolved_time_section" class="form-section" style="display:none;">
-            <label for="resolved_time">وقت انتهاء العطل (نظام 24 ساعة):</label>
-            <div class="input-row">
-                <input type="text" id="resolved_hour" placeholder="الساعة" style="width: 45px;">
-                <input type="text" id="resolved_minute" placeholder="الدقيقة" style="width: 45px;">
-            </div>
-        </div>
-
-        <button onclick="sendWhatsAppMessage('technical_failure_form')">إرسال النموذج بالواتساب</button>
-    `;
-}
+        }
 
         formContainer.innerHTML = formHTML;
 
@@ -2072,19 +2072,8 @@ function getFormData(formName) {
             
             data.north_leader = document.getElementById('north_leader')?.value || '';
             data.north_channel = document.getElementById('north_channel')?.value || '';
-	} else if (formName === 'technical_failure_form') {
-	    data.failure_type = document.getElementById('failure_type')?.value || '';
-	    data.ticket_number = document.getElementById('ticket_number')?.value || '';
-	    data.failure_hour = document.getElementById('failure_hour')?.value || '';
-	    data.failure_minute = document.getElementById('failure_minute')?.value || '';
-	    data.action_taken = document.getElementById('action_taken')?.value || '';
-	    data.is_resolved = document.getElementById('is_resolved')?.value || '';
-	    
-	    if (data.is_resolved === 'نعم') {
-	        data.resolved_hour = document.getElementById('resolved_hour')?.value || '';
-	        data.resolved_minute = document.getElementById('resolved_minute')?.value || '';
-	    }
-	}
+    }
+    }
 
     return data;
 }
@@ -2443,15 +2432,7 @@ if (noReports) {
     
     formText += `كبير المسعفين قطاع الشمال: ${document.getElementById('north_leader').value}\n`;
     formText += `رقم قناة الشمال: ${document.getElementById('north_channel').value}\n\n`;
-} else if (formName === 'technical_failure_form') {
-    formText += `\n*=== نموذج فشل تقني ===*\n\n`;
-    formText += `نوع العطل: ${document.getElementById('failure_type').value}\n`;
-    formText += `رقم التذكرة: ${document.getElementById('ticket_number').value}\n`;
-    formText += `وقت العطل: ${document.getElementById('failure_hour').value}:${document.getElementById('failure_minute').value}\n`;
-    formText += `الإجراء: ${document.getElementById('action_taken').value}\n`;
-    formText += `هل انتهى العطل: ${document.getElementById('is_resolved').value}\n`;
 }
-
 
 	
     console.log(formText); // تأكيد عرض البيانات المجمعة
