@@ -307,7 +307,6 @@
             <li><a href="#" onclick="loadForm('support_request')" class="menu-item"><i class="fas fa-handshake"></i> طلب تفعيل خطة المساندة</a></li>
             <li><a href="#" onclick="loadForm('support_activation')" class="menu-item"><i class="fas fa-check-circle"></i> قبول تفعيل خطة المساندة</a></li>
             <li><a href="#" onclick="loadForm('regional_leader_form')" class="menu-item"> <i class="fas fa-moon"></i> نموذج قائد المنطقة المناوب </a></li>
-            <li><a href="#" onclick="loadForm('technical_failure_form')" class="menu-item"> <i class="fas fa-tools"></i> نموذج فشل تقني </a></li>
 
         </ul>
         <!-- إزالة أيقونة الهامبرجر -->
@@ -1695,7 +1694,7 @@
 
         <div class="form-section">
             <label for="is_finished">هل انتهى العطل؟</label>
-            <select id="is_finished" onchange="toggleEndTimeForFailure()" required>
+            <select id="is_finished" onchange="toggleEndTimeFailure()" required>
                 <option value="" disabled selected>اختر</option>
                 <option value="yes">نعم</option>
                 <option value="no">لا</option>
@@ -1712,7 +1711,8 @@
 
         <button onclick="sendWhatsAppMessage('technical_failure_form')">إرسال النموذج بالواتساب</button>
     `;
-}
+
+        }
 
         formContainer.innerHTML = formHTML;
 
@@ -2094,19 +2094,8 @@ function getFormData(formName) {
             
             data.north_leader = document.getElementById('north_leader')?.value || '';
             data.north_channel = document.getElementById('north_channel')?.value || '';
-     } else if (formName === 'technical_failure_form') {
-    data.failure_type = document.getElementById('failure_type')?.value || '';
-    data.ticket_number = document.getElementById('ticket_number')?.value || '';
-    data.failure_hour = document.getElementById('failure_hour')?.value || '';
-    data.failure_minute = document.getElementById('failure_minute')?.value || '';
-    data.action_taken = document.getElementById('action_taken')?.value || '';
-    data.is_finished = document.getElementById('is_finished')?.value || '';
-    
-    if (data.is_finished === 'yes') {
-        data.end_hour = document.getElementById('end_hour')?.value || '';
-        data.end_minute = document.getElementById('end_minute')?.value || '';
     }
-}
+    }
 
     return data;
 }
@@ -2465,7 +2454,7 @@ if (noReports) {
     
     formText += `كبير المسعفين قطاع الشمال: ${document.getElementById('north_leader').value}\n`;
     formText += `رقم قناة الشمال: ${document.getElementById('north_channel').value}\n\n`;
-} else if  (formName === 'technical_failure_form') {
+} else if (formName === 'technical_failure_form') {
     formText += `\n*=== نموذج فشل تقني ===*\n\n`;
     formText += `نوع العطل: ${document.getElementById('failure_type').value}\n`;
     formText += `رقم التذكرة: ${document.getElementById('ticket_number').value}\n`;
@@ -2479,6 +2468,9 @@ if (noReports) {
         formText += `الحالة: ما زال مستمر\n`;
     }
 }
+
+    }
+
 	
     console.log(formText); // تأكيد عرض البيانات المجمعة
     const encodedText = encodeURIComponent(formText);
@@ -2812,16 +2804,17 @@ function toggleReports() {
     }
 }
 
-// تعريف الدالة خارج أي شرط لتكون متاحة عالميا
-function toggleEndTimeForFailure() {
-    var isFinished = document.getElementById('is_finished').value;
-    if (isFinished === 'yes') {
-        document.getElementById('end_time_section').style.display = 'block';
-    } else {
-        document.getElementById('end_time_section').style.display = 'none';
+    // تغيير اسم الدالة إلى toggleEndTimeFailure لتجنب التعارض
+    toggleEndTimeFailure = function() {
+        var isFinished = document.getElementById('is_finished').value;
+        if (isFinished === 'yes') {
+            document.getElementById('end_time_section').style.display = 'block';
+        } else {
+            document.getElementById('end_time_section').style.display = 'none';
+        }
     }
 }
-	}
+
 </script>
 
 </body>
