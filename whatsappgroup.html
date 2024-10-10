@@ -2812,14 +2812,13 @@ function toggleReports() {
     }
 }
 
-    // إضافة دالة جديدة لتجنب التعارض
-    toggleEndTimeForFailure = function() {
-        var isFinished = document.getElementById('is_finished').value;
-        if (isFinished === 'yes') {
-            document.getElementById('end_time_section').style.display = 'block';
-        } else {
-            document.getElementById('end_time_section').style.display = 'none';
-        }
+// تعريف الدالة خارج أي شرط لتكون متاحة عالميا
+function toggleEndTimeForFailure() {
+    var isFinished = document.getElementById('is_finished').value;
+    if (isFinished === 'yes') {
+        document.getElementById('end_time_section').style.display = 'block';
+    } else {
+        document.getElementById('end_time_section').style.display = 'none';
     }
 }
 </script>
