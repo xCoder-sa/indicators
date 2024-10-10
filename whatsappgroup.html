@@ -380,7 +380,7 @@
         <input type="date" id="date" readonly disabled style="background-color: #e0e0e0;>
         
         <label for="time">التوقيت الحالي:</label>
-        <select id="time" required>
+        <select id="time"  readonly disabled style="background-color: #e0e0e0;>
             <option value="0:00 إلى 6:00">0:00 إلى 6:00</option>
             <option value="6:00 إلى 12:00">6:00 إلى 12:00</option>
             <option value="12:00 إلى 18:00">12:00 إلى 18:00</option>
@@ -2283,7 +2283,19 @@ if (noReports) {
     const waitingTimes = document.querySelectorAll('.waiting_time');
     
     reportNumbers.forEach((number, index) => {
-        formText += `رقم البلاغ: ${number.value}, نوع البلاغ: ${reportTypes[index].value}, زمن بقاء البلاغ في قائمة الترحيل (بالدقائق): ${waitingTimes[index].value}\n`;
+        // تحديد النص الصحيح بناءً على اسم النموذج
+        let waitingTimeLabel;
+
+        // تحقق من اسم النموذج
+        if (formName === 'senior_paramedic_outside') {
+            waitingTimeLabel = "زمن الاستجابة (بالدقائق)"; // نموذج كبار المسعفين
+        } else if (formName === 'support_request') {
+            waitingTimeLabel = "زمن بقاء البلاغ في قائمة الترحيل (بالدقائق)"; // نموذج طلب الدعم
+        } else {
+            waitingTimeLabel = "زمن البلاغ (بالدقائق)"; // نص افتراضي في حالة عدم المطابقة
+        }
+
+        formText += `رقم البلاغ: ${number.value}, نوع البلاغ: ${reportTypes[index].value}, ${waitingTimeLabel}: ${waitingTimes[index].value}\n`;
     });
 }
 
@@ -2384,10 +2396,35 @@ function showCopyNotification() {
         }
     }
 
-function selectCurrentTime() {
+    //إذا كانت الساعة الآن 6:41 مساءً في السعودية (18:41)، سيتم إنقاص 6 ساعات، وسيصبح الوقت 12:41 ظهرًا. وبالتالي، الفترة الزمنية السابقة التي سيتم اختيارها هي "12:00 إلى 18:00"
+function updateDate(formName) {
+    // التأكد من أن التعديل يتم فقط للنموذج المحدد
+    if (formName === 'senior_paramedic') {
+        const currentTime = new Date().toLocaleString("en-US", { timeZone: "Asia/Riyadh" });
+        const currentHours = new Date(currentTime).getHours();
+        const currentDate = new Date(currentTime);
+
+        let dateToSet;
+
+        // إذا كانت الفترة الزمنية من 00:00 إلى 04:00
+        if (currentHours >= 0 && currentHours < 4) {
+            // تاريخ اليوم السابق
+            currentDate.setDate(currentDate.getDate() - 1);
+            dateToSet = currentDate.toISOString().split('T')[0]; // تنسيق التاريخ إلى YYYY-MM-DD
+        } else {
+            // تاريخ اليوم الحالي
+            dateToSet = currentDate.toISOString().split('T')[0];
+        }
+
+        // تعيين التاريخ في خانة الإدخال الخاصة بالتاريخ
+        document.getElementById('form_date').value = dateToSet; // تأكد من استخدام id الفريد
+    }
+}
+
+function selectCurrentTime(formName) {
     // الحصول على التوقيت الحالي حسب توقيت السعودية (UTC+3)
-    const currentTime = new Date().toLocaleString("en-US", {timeZone: "Asia/Riyadh"});
-    const currentHours = new Date().getHours(); // الحصول على الساعات الحالية
+    const currentTime = new Date().toLocaleString("en-US", { timeZone: "Asia/Riyadh" });
+    const currentHours = new Date(currentTime).getHours();
     
     // تقليل الساعات بمقدار 6 للحصول على الفترة الزمنية السابقة
     let previousHours = currentHours - 6;
@@ -2417,6 +2454,9 @@ function selectCurrentTime() {
     timeSelects.forEach(function(timeSelect) {
         timeSelect.value = selectedOption;
     });
+
+    // تحديث تاريخ اليوم في خانة التاريخ فقط للنموذج المحدد
+    updateDate(formName); // استدعاء الدالة مع تمرير formName
 }
 
 document.addEventListener("DOMContentLoaded", function () {
