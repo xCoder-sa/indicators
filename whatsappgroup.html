@@ -1694,7 +1694,7 @@
 
         <div class="form-section">
             <label for="is_finished">هل انتهى العطل؟</label>
-            <select id="is_finished" onchange="toggleEndTimeFailure()" required>
+            <select id="is_finished" onchange="handleTechnicalFailureEndTime()" required>
                 <option value="" disabled selected>اختر</option>
                 <option value="yes">نعم</option>
                 <option value="no">لا</option>
@@ -1711,7 +1711,6 @@
 
         <button onclick="sendWhatsAppMessage('technical_failure_form')">إرسال النموذج بالواتساب</button>
     `;
-
         }
 
         formContainer.innerHTML = formHTML;
@@ -2094,8 +2093,20 @@ function getFormData(formName) {
             
             data.north_leader = document.getElementById('north_leader')?.value || '';
             data.north_channel = document.getElementById('north_channel')?.value || '';
+
+     } else if (formName === 'technical_failure_form') {
+    data.failure_type = document.getElementById('failure_type')?.value || '';
+    data.ticket_number = document.getElementById('ticket_number')?.value || '';
+    data.failure_hour = document.getElementById('failure_hour')?.value || '';
+    data.failure_minute = document.getElementById('failure_minute')?.value || '';
+    data.action_taken = document.getElementById('action_taken')?.value || '';
+    data.is_finished = document.getElementById('is_finished')?.value || '';
+    
+    if (data.is_finished === 'yes') {
+        data.end_hour = document.getElementById('end_hour')?.value || '';
+        data.end_minute = document.getElementById('end_minute')?.value || '';
     }
-    }
+}
 
     return data;
 }
@@ -2469,6 +2480,7 @@ if (noReports) {
     }
 }
 
+
     }
 
 	
@@ -2805,7 +2817,7 @@ function toggleReports() {
 }
 
     // تغيير اسم الدالة إلى toggleEndTimeFailure لتجنب التعارض
-    toggleEndTimeFailure = function() {
+    handleTechnicalFailureEndTime = function() {
         var isFinished = document.getElementById('is_finished').value;
         if (isFinished === 'yes') {
             document.getElementById('end_time_section').style.display = 'block';
