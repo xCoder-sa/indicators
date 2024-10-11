@@ -1099,35 +1099,35 @@
 		            <input type="number" id="total_reports" required>
 			    		                    </div>
 				                      </div>
-			<div class="input-small">
-			    <label for="related_reports">البلاغات:</label>
-			    <div id="reports-container-1">
-			        <div class="input-row">
-			            <!-- زر تحديد "لا يوجد بلاغات" مع النص -->
-			            <div class="checkbox-container">
-			                <input type="checkbox" id="no_reports_checkbox" onchange="toggleReports()">
-			                <label for="no_reports_checkbox" style="color: red;">لا يوجد بلاغات</label>
-			            </div>
-			        </div>
-			
-			        <div class="input-row">
-			            <input type="number" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
-			            <select class="report-type" style="width: 120px;">
-			                <option value="إيكو">إيكو</option>
-			                <option value="دلتا">دلتا</option>
-			                <option value="تشارلي">تشارلي</option>
-			                <option value="برافو">برافو</option>
-			            </select>
-			            <input type="number" placeholder="(بالدقائق) زمن الاستجابة" class="waiting_time" style="width: 150px;">
-			        </div>
-			        
-			        <p>احسب زمن الاستجابة من الرد الى الوصول للموقع</p>
-			    </div>
-			
-			    <!-- زر لإضافة بلاغ آخر -->
-			    <button type="button" id="add-report-btn" onclick="relatedreports('reports-container-1', 'responseTime')">إضافة بلاغ آخر</button>
-			</div>
-
+		
+		
+		            <label for="related_reports">البلاغات:</label>
+		            <div id="reports-container-1">
+		                <div class="input-row">
+		    
+		                </div>
+		                    <input type="checkbox" id="no_reports" onclick="toggleReports()" />
+		                    <label for="no_reports" style="font-weight: bold; color: red;">لا يوجد بلاغات</label>
+		                <div class="input-row">
+		                    <input type="number" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
+		                    <select class="report-type" style="width: 120px;">
+		                        <option value="إيكو">إيكو</option>
+		                        <option value="دلتا">دلتا</option>
+		                        <option value="تشارلي">تشارلي</option>
+		                        <option value="برافو">برافو</option>
+		                    </select>
+		                    <input type="number" placeholder="(بالدقائق) زمن الاستجابة" class="waiting_time" style="width: 150px;">
+		
+		                </div>
+		
+		                <p>احسب زمن الاستجابة من الرد الى الوصول للموقع</p>
+		            </div>
+		
+		            <!-- زر لإضافة بلاغ آخر -->
+		            <button type="button" id="add-report-btn" onclick="relatedreports('reports-container-1', 'responseTime')">إضافة بلاغ آخر</button>
+		        </div>
+		    </div>
+		</div>
                     <h2>المخرجات</h2>
                 <div class="form-section">
                           <div class="input-row">
@@ -2339,33 +2339,35 @@ function sendWhatsAppMessage(formName) {
         formText += `قائمة المستشفيات خارج الخدمة: ${document.getElementById('hospitals_out_of_service').value}\n`;
         formText += `*=== البلاغات ===*\n\n`;
         formText += `إجمالي بلاغات القطاع: ${document.getElementById('total_reports').value}\n`;
-	// جمع البيانات المتعلقة بالبلاغات الإسعافية المرتبطة
-	const noReports = document.getElementById('no_reports_checkbox').checked;
-	formText += `\n*=== البلاغات الإسعافية المرتبطة ===*\n`;
-	
-	if (noReports) {
-	    formText += `لا يوجد\n`; // تم تعديل النص إلى "لا يوجد"
-	} else {
-	    const reportNumbers = document.querySelectorAll('.report-number');
-	    const reportTypes = document.querySelectorAll('.report-type');
-	    const waitingTimes = document.querySelectorAll('.waiting_time');
-	    
-	    reportNumbers.forEach((number, index) => {
-	        // تحديد النص الصحيح بناءً على اسم النموذج
-	        let waitingTimeLabel;
-	
-	        // تحقق من اسم النموذج
-	        if (formName === 'senior_paramedic_outside') {
-	            waitingTimeLabel = "زمن الاستجابة (بالدقائق)"; // نموذج كبار المسعفين
-	        } else if (formName === 'support_request') {
-	            waitingTimeLabel = "زمن بقاء البلاغ في قائمة الترحيل (بالدقائق)"; // نموذج طلب الدعم
-	        } else {
-	            waitingTimeLabel = "زمن البلاغ (بالدقائق)"; // نص افتراضي في حالة عدم المطابقة
-	        }
-	
-	        formText += `رقم البلاغ: ${number.value}, نوع البلاغ: ${reportTypes[index].value}, ${waitingTimeLabel}: ${waitingTimes[index].value}\n`;
-	    });
-	}
+        
+// جمع البيانات المتعلقة بالبلاغات الإسعافية المرتبطة
+const noReports = document.getElementById('no_reports').checked;
+formText += `\n*=== البلاغات الإسعافية المرتبطة ===*\n`;
+
+if (noReports) {
+    formText += `لا يوجد بلاغات\n`;
+} else {
+    const reportNumbers = document.querySelectorAll('.report-number');
+    const reportTypes = document.querySelectorAll('.report-type');
+    const waitingTimes = document.querySelectorAll('.waiting_time');
+    
+    reportNumbers.forEach((number, index) => {
+        // تحديد النص الصحيح بناءً على اسم النموذج
+        let waitingTimeLabel;
+
+        // تحقق من اسم النموذج
+        if (formName === 'senior_paramedic_outside') {
+            waitingTimeLabel = "زمن الاستجابة (بالدقائق)"; // نموذج كبار المسعفين
+        } else if (formName === 'support_request') {
+            waitingTimeLabel = "زمن بقاء البلاغ في قائمة الترحيل (بالدقائق)"; // نموذج طلب الدعم
+        } else {
+            waitingTimeLabel = "زمن البلاغ (بالدقائق)"; // نص افتراضي في حالة عدم المطابقة
+        }
+
+        formText += `رقم البلاغ: ${number.value}, نوع البلاغ: ${reportTypes[index].value}, ${waitingTimeLabel}: ${waitingTimes[index].value}\n`;
+    });
+}
+
         formText += `*=== المخرجات ===*\n\n`;
         formText += `متوسط زمن الاستجابة للبلاغات (بالدقائق): ${document.getElementById('response_time_to_intervention').value}\n`;
         formText += `*=== ملاحظات النوبة ===*\n\n`;
@@ -2762,14 +2764,15 @@ function calculateTotals() {
 }
 
 function toggleReports() {
-    const isChecked = document.getElementById('no_reports_checkbox').checked;
+    const isChecked = document.getElementById('no_reports').checked;
     const reportNumbers = document.querySelectorAll('.report-number');
     const reportTypes = document.querySelectorAll('.report-type');
     const waitingTimes = document.querySelectorAll('.waiting_time');
     const addReportBtn = document.getElementById('add-report-btn');
 
+    // إذا كانت checkbox مفعّلة (أي تم اختيار "لا يوجد بلاغات")
     if (isChecked) {
-        // تعطيل الحقول عند تفعيل "لا يوجد بلاغات"
+        // تعطيل حقول الإدخال وتفريغ القيم
         reportNumbers.forEach(input => {
             input.value = '';
             input.disabled = true;
@@ -2782,9 +2785,11 @@ function toggleReports() {
             input.value = '';
             input.disabled = true;
         });
+
+        // تعطيل زر إضافة بلاغ
         addReportBtn.disabled = true;
     } else {
-        // إعادة تفعيل الحقول عند إلغاء التحديد
+        // إعادة تفعيل حقول الإدخال
         reportNumbers.forEach(input => {
             input.disabled = false;
         });
@@ -2794,9 +2799,14 @@ function toggleReports() {
         waitingTimes.forEach(input => {
             input.disabled = false;
         });
+
+        // إعادة تفعيل زر إضافة بلاغ
         addReportBtn.disabled = false;
     }
 }
+
+
+
     </script>
         <footer>
         <div style="font-size: 14px; color: #ccc; text-align: center;">
