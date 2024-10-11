@@ -184,13 +184,18 @@
         }
 	label {
 	    margin-top: 10px;
-	    display: inline-flex; /* تغيير من block إلى inline-flex */
-	    align-items: center; /* لضمان أن العناصر داخل الـ label تكون بمحاذاة رأسية */
-	    gap: 5px; /* مسافة صغيرة بين مربع التحديد والنص */
+	    display: block;
 	    color: #333;
 	    font-weight: bold;
 	    font-size: 15px;
 	}
+	label input[type="checkbox"] {
+	    display: inline-flex;
+	    align-items: center;
+	    gap: 5px; /* تحديد المسافة بين مربع التحديد والنص */
+	}
+
+
         input[type="text"], input[type="date"], input[type="time"], input[type="datetime-local"], textarea, select {
             width: 100%;
             padding: 10px;
