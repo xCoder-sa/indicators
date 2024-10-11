@@ -1092,44 +1092,42 @@
                         </div>
                     </div>
                     <h2>البلاغات</h2>
-    <div class="form-section">
-    <div class="input-row">
-        <div class="input-small">
-            <label for="total_reports">إجمالي بلاغات القطاع:</label>
-            <input type="number" id="total_reports" required>
-	    		                    </div>
-		                      </div>
-
-
-            <label for="related_reports">البلاغات:</label>
-            <div id="reports-container-1">
-                <div class="input-row">
-    
-                </div>
-                    <input type="checkbox" id="no_reports" onclick="toggleReports()" />
-                    <label for="no_reports" style="font-weight: bold; color: red;">لا يوجد بلاغات</label>
-                <div class="input-row">
-                    <input type="number" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
-                    <select class="report-type" style="width: 120px;">
-                        <option value="إيكو">إيكو</option>
-                        <option value="دلتا">دلتا</option>
-                        <option value="تشارلي">تشارلي</option>
-                        <option value="برافو">برافو</option>
-                    </select>
-                    <input type="number" placeholder="(بالدقائق) زمن الاستجابة" class="waiting_time" style="width: 150px;">
-
-                </div>
-
-                <p>احسب زمن الاستجابة من الرد الى الوصول للموقع</p>
-            </div>
-
-            <!-- زر لإضافة بلاغ آخر -->
-            <button type="button" id="add-report-btn" onclick="relatedreports('reports-container-1', 'responseTime')">إضافة بلاغ آخر</button>
-        </div>
-    </div>
-</div>
-
-
+		    <div class="form-section">
+		    <div class="input-row">
+		        <div class="input-small">
+		            <label for="total_reports">إجمالي بلاغات القطاع:</label>
+		            <input type="number" id="total_reports" required>
+			    		                    </div>
+				                      </div>
+		
+		
+		            <label for="related_reports">البلاغات:</label>
+		            <div id="reports-container-1">
+		                <div class="input-row">
+		    
+		                </div>
+		                    <input type="checkbox" id="no_reports" onclick="toggleReports()" />
+		                    <label for="no_reports" style="font-weight: bold; color: red;">لا يوجد بلاغات</label>
+		                <div class="input-row">
+		                    <input type="number" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
+		                    <select class="report-type" style="width: 120px;">
+		                        <option value="إيكو">إيكو</option>
+		                        <option value="دلتا">دلتا</option>
+		                        <option value="تشارلي">تشارلي</option>
+		                        <option value="برافو">برافو</option>
+		                    </select>
+		                    <input type="number" placeholder="(بالدقائق) زمن الاستجابة" class="waiting_time" style="width: 150px;">
+		
+		                </div>
+		
+		                <p>احسب زمن الاستجابة من الرد الى الوصول للموقع</p>
+		            </div>
+		
+		            <!-- زر لإضافة بلاغ آخر -->
+		            <button type="button" id="add-report-btn" onclick="relatedreports('reports-container-1', 'responseTime')">إضافة بلاغ آخر</button>
+		        </div>
+		    </div>
+		</div>
                     <h2>المخرجات</h2>
                 <div class="form-section">
                           <div class="input-row">
@@ -1323,9 +1321,22 @@
                     <input type="number" id="response_time" placeholder="أكتب الدقيقة بالرقم فقط" required>
                     </div>
               	   	</div>
-		       <div class="input-small">
-                    <label for="notes">ملاحظات:</label>
-                    <textarea id="notes" rows="4"></textarea>
+			<div class="input-small">
+			    <label for="notes">ملاحظات:</label>
+			    <!-- إضافة زر التحديد مع النص -->
+			    <div class="checkbox-container">
+			        <input type="checkbox" id="no_notes_checkbox" onchange="
+			            if(this.checked) {
+			                document.getElementById('notes').value = 'لا يوجد';
+			                document.getElementById('notes').disabled = true;
+			            } else {
+			                document.getElementById('notes').value = '';
+			                document.getElementById('notes').disabled = false;
+			            }
+			        ">
+			        <label for="no_notes_checkbox">لا يوجد ملاحظات</label>
+			    </div>
+			    <textarea id="notes" rows="4"></textarea>
 			</div>
                 </div>
 	                <div class="form-section">
@@ -2223,7 +2234,7 @@ function sendWhatsAppMessage(formName) {
         formText += `موقع البلاغ: ${document.getElementById('report_location').value}\n`;
         formText += `الوحدات المستجيبة: ${document.getElementById('responding_units').value}\n`;
         formText += `زمن الاستجابة (دقائق): ${document.getElementById('response_time').value}\n`;
-        formText += `ملاحظات: ${document.getElementById('notes').value}\n`;
+        formText += `ملاحظات: ${document.getElementById('no_notes_checkbox').checked ? 'لا يوجد' : document.getElementById('notes').value}\n`;
         formText += `*اسم كبير المسعفين:* ${document.getElementById('senior_paramedic_name').value}\n`;
     } else if (formName === 'major_event') {
         formText += `*=== نموذج حدث جسيم ===*\n\n`;
