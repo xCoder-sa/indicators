@@ -1109,8 +1109,21 @@
 		       </div>
                           <div class="input-row">
 			<div class="input-small">
-                    <label for="outsider_notes">ملاحظات عامه:</label>
-                    <textarea id="outsider_notes" rows="4"></textarea>
+		<label for="outsider_notes">ملاحظات عامه:</label>
+		<textarea id="outsider_notes" rows="4"></textarea>
+		<br>
+		<label for="no_notes_checkbox">
+		    <input type="checkbox" id="no_notes_checkbox" onchange="
+		        if(this.checked) {
+		            document.getElementById('outsider_notes').value = 'لا يوجد ملاحظات';
+		            document.getElementById('outsider_notes').disabled = true;
+		        } else {
+		            document.getElementById('outsider_notes').value = '';
+		            document.getElementById('outsider_notes').disabled = false;
+		        }
+		    "> لا يوجد ملاحظات
+		</label>
+
                       </div>
 		       </div>
                           <div class="input-row">
@@ -2304,7 +2317,12 @@ if (noReports) {
         formText += `*=== ملاحظات النوبة ===*\n\n`;
         formText += `عدد الغياب في المناوبة: ${document.getElementById('absence_in_shift').value}\n`;
         formText += `نقاط اسعافية مكشوفة: ${document.getElementById('units_notes').value}\n`;
-        formText += `ملاحظات: ${document.getElementById('outsider_notes').value}\n`;
+	    //ملاحظات عامة مربع تحديد لا يوجد من هنا يبداء
+	let notes = document.getElementById('no_notes_checkbox').checked
+	    ? "لا يوجد ملاحظات"
+	    : document.getElementById('outsider_notes').value;
+	
+	formText += `ملاحظات: ${notes}\n`;
         formText += `اسم كبير المسعفين: ${document.getElementById('senior_paramedic_name').value}\n`;
 } else if (formName === 'rapid_response_reports') {
     formText += `*=== نموذج بلاغات التدخل السريع ===*\n\n`;
