@@ -184,17 +184,19 @@
         }
 label {
     margin-top: 10px;
-    display: inline-flex; /* تغيير display إلى inline-flex لتظهر مربعات التحديد بجانب النصوص */
-    align-items: center; /* لضبط المحاذاة الرأسية */
+    display: inline-block; /* تغيير display إلى inline-block لجعل النص يظهر بجانب مربع التحديد */
     color: #333;
     font-weight: bold;
     font-size: 15px;
-    gap: 5px; /* تحديد المسافة بين النص ومربع التحديد */
+    vertical-align: middle; /* لمحاذاة النص مع مربع التحديد عموديًا */
 }
 
 label input[type="checkbox"] {
-    margin-left: 5px; /* يمكنك ضبط المسافة حسب رغبتك بين مربع التحديد والنص */
+    display: inline-block; /* تأكد من أن checkbox يعرض على نفس السطر */
+    vertical-align: middle; /* لمحاذاة مربع التحديد مع النص عموديًا */
+    margin-left: 5px; /* مسافة بين مربع التحديد والنص */
 }
+
 
 
 
