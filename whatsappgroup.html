@@ -1593,12 +1593,12 @@
         <div class="form-section">
             <label for="support_status">حالة الدعم:</label>
             <select id="support_status" onchange="toggleFieldsBasedOnSupportStatus()" required>
-                <option value="الموافقة">الموافقة</option>
-                <option value="الرفض">الرفض</option>
+                <option value="مقبول">مقبول</option>
+                <option value="مرفوض">مرفوض</option>
             </select>
 
             <label for="support_reasons">أسباب القبول أو الرفض:</label>
-            <textarea id="support_reasons" rows="4"></textarea>
+            <textarea id="support_reasons" rows="4" ></textarea>
 
             <div id="supportDetails">
                 <label for="support_sector">القطاعات الداعمة:</label>
@@ -1609,11 +1609,8 @@
                     <label><input type="checkbox" value="الغرب" class="support-sector-checkbox"> الغرب</label><br>
                     <label><input type="checkbox" value="الشمال" class="support-sector-checkbox"> الشمال</label><br>
                 </div>
-
-
-
                 <label for="supported_sector">القطاع المدعوم:</label>
-                <select id="supported_sector" onchange="toggleOtherSectorInput()" required>
+                <select id="supported_sector" onchange="toggleOtherSectorInput()">
                     <option value="الوسط">الوسط</option>
                     <option value="الجنوب">الجنوب</option>
                     <option value="الشرق">الشرق</option>
@@ -1623,23 +1620,23 @@
 
                 <label for="dispatch_time">توقيت تحريك الدعم (نظام 24 ساعة):</label>
                 <div class="input-row">
-                    <input type="text" id="dispatch_hour" placeholder="الساعة" style="width: 45px;" required>
-                    <input type="text" id="dispatch_minute" placeholder="الدقيقة" style="width: 45px;" required>
+                    <input type="text" id="dispatch_hour" placeholder="الساعة" style="width: 45px;">
+                    <input type="text" id="dispatch_minute" placeholder="الدقيقة" style="width: 45px;">
                 </div>
 
                 <label for="arrival_time">توقيت وصول الدعم (نظام 24 ساعة):</label>
                 <div class="input-row">
-                    <input type="text" id="arrival_hour" placeholder="الساعة" style="width: 45px;" required>
-                    <input type="text" id="arrival_minute" placeholder="الدقيقة" style="width: 45px;" required>
+                    <input type="text" id="arrival_hour" placeholder="الساعة" style="width: 45px;">
+                    <input type="text" id="arrival_minute" placeholder="الدقيقة" style="width: 45px;">
                 </div>
 
                 <label for="support_teams_count">عدد الفرق الداعمة:</label>
-                <input type="text" id="support_teams_count" required>
+                <input type="text" id="support_teams_count">
 
                 <label for="end_time">توقيت انتهاء الدعم (نظام 24 ساعة):</label>
                 <div class="input-row">
-                    <input type="text" id="end_hour" placeholder="الساعة" style="width: 45px;" required>
-                    <input type="text" id="end_minute" placeholder="الدقيقة" style="width: 45px;" required>
+                    <input type="text" id="end_hour" placeholder="الساعة" style="width: 45px;">
+                    <input type="text" id="end_minute" placeholder="الدقيقة" style="width: 45px;">
                 </div>
             </div>
 
@@ -2053,7 +2050,7 @@ function getFormData(formName) {
 	    data.support_reasons = document.getElementById('support_reasons').value;
 	    data.region_leader_name = document.getElementById('region_leader_name').value;
 	
-	    if (data.support_status === 'الموافقة') {
+	    if (data.support_status === 'مقبول') {
 	        // جلب القيم المختارة من مربعات الاختيار
 	        const selectedSectors = Array.from(document.querySelectorAll('.support-sector-checkbox:checked')).map(checkbox => checkbox.value);
 	        data.support_sector = selectedSectors.join(', ') || '';
@@ -2315,8 +2312,7 @@ function sendWhatsAppMessage(formName) {
 	    formText += `حالة الدعم: ${document.getElementById('support_status').value}\n`;
 	    formText += `أسباب القبول أو الرفض: ${document.getElementById('support_reasons').value}\n`;
 	    formText += `اسم قائد المنطقة: ${document.getElementById('region_leader_name').value}\n`;
-	
-	    if (document.getElementById('support_status').value === 'الموافقة') {
+	    if (document.getElementById('support_status').value === 'مقبول') {
 	        // إرسال القيم المختارة في الرسالة
 	        formText += `القطاعات الداعمة: ${Array.from(document.querySelectorAll('.support-sector-checkbox:checked')).map(checkbox => checkbox.value).join(', ')}\n`;
 	        formText += `القطاع المدعوم: ${document.getElementById('supported_sector').value}\n`;
@@ -2703,11 +2699,13 @@ function calculateTotals() {
     function toggleFieldsBasedOnSupportStatus() {
         const supportStatus = document.getElementById('support_status').value;
         const supportDetails = document.getElementById('supportDetails');
+        const regionLeaderName = document.getElementById('region_leader_name').value;
+
         
-        if (supportStatus === 'الرفض') {
+        if (supportStatus === 'مرفوض') {
             supportDetails.style.display = 'none'; // إخفاء الحقول عند الرفض
         } else {
-            supportDetails.style.display = 'block'; // إظهار الحقول عند الموافقة
+            supportDetails.style.display = 'block'; // إظهار الحقول عند القبول
         }
     }
 
@@ -2815,7 +2813,7 @@ function toggleReports() {
     </script>
         <footer>
         <div style="font-size: 14px; color: #ccc; text-align: center;">
-            الإصدار 1.3
+            الإصدار 1.4
         </div>
     </footer>
 </body>
