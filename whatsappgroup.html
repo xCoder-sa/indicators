@@ -1091,43 +1091,42 @@
                     <input type="text" id="hospitals_out_of_service">
                         </div>
                     </div>
-                    <h2>البلاغات</h2>
-		    <div class="form-section">
+		<h2>البلاغات</h2>
+		<div class="form-section">
 		    <div class="input-row">
 		        <div class="input-small">
 		            <label for="total_reports">إجمالي بلاغات القطاع:</label>
 		            <input type="number" id="total_reports" required>
-			    		                    </div>
-				                      </div>
-		
-		
-		            <label for="related_reports">البلاغات:</label>
-		            <div id="reports-container-1">
-		                <div class="input-row">
-		    
-		                </div>
-		                    <input type="checkbox" id="no_reports" onclick="toggleReports()" />
-		                    <label for="no_reports" style="font-weight: bold; color: red;">لا يوجد بلاغات</label>
-		                <div class="input-row">
-		                    <input type="number" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
-		                    <select class="report-type" style="width: 120px;">
-		                        <option value="إيكو">إيكو</option>
-		                        <option value="دلتا">دلتا</option>
-		                        <option value="تشارلي">تشارلي</option>
-		                        <option value="برافو">برافو</option>
-		                    </select>
-		                    <input type="number" placeholder="(بالدقائق) زمن الاستجابة" class="waiting_time" style="width: 150px;">
-		
-		                </div>
-		
-		                <p>احسب زمن الاستجابة من الرد الى الوصول للموقع</p>
-		            </div>
-		
-		            <!-- زر لإضافة بلاغ آخر -->
-		            <button type="button" id="add-report-btn" onclick="relatedreports('reports-container-1', 'responseTime')">إضافة بلاغ آخر</button>
 		        </div>
 		    </div>
+		
+		    <label for="related_reports">البلاغات:</label>
+		    <div id="reports-container-1">
+		        <div class="input-row"></div>
+		
+		        <!-- تغليف checkbox والنص في div واستخدام flexbox -->
+		        <div style="display: flex; align-items: center; gap: 10px;">
+		            <input type="checkbox" id="no_reports" onclick="toggleReports()" />
+		            <label for="no_reports" style="font-weight: bold; color: red;">لا يوجد بلاغات</label>
+		        </div>
+		
+		        <div class="input-row">
+		            <input type="number" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
+		            <select class="report-type" style="width: 120px;">
+		                <option value="إيكو">إيكو</option>
+		                <option value="دلتا">دلتا</option>
+		                <option value="تشارلي">تشارلي</option>
+		                <option value="برافو">برافو</option>
+		            </select>
+		            <input type="number" placeholder="(بالدقائق) زمن الاستجابة" class="waiting_time" style="width: 150px;">
+		        </div>
+		        <p>احسب زمن الاستجابة من الرد الى الوصول للموقع</p>
+		    </div>
+		
+		    <!-- زر لإضافة بلاغ آخر -->
+		    <button type="button" id="add-report-btn" onclick="relatedreports('reports-container-1', 'responseTime')">إضافة بلاغ آخر</button>
 		</div>
+
                     <h2>المخرجات</h2>
                 <div class="form-section">
                           <div class="input-row">
