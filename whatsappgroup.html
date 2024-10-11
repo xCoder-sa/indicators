@@ -538,16 +538,23 @@
 		    </div>
 		</div>
   		<div class="input-row">
-		    <div class="input-small">
-		    <label for="response_time_to_intervention">زمن الاستجابة من الرد الى الوصول (بالدقائق) :</label>
-		    <input type="number" id="response_time_to_intervention" placeholder="أدخل الوقت بالدقائق رقم فقط">
-		    </div>
-		</div>
-                    <h2>ملاحظات النوبة</h2>
-
-                    <label for="absence_in_shift">عدد الغياب في المناوبة:</label>
-                    <input type="text" id="absence_in_shift" required>
-
+	    <div class="input-small">
+	        <label for="response_time_to_intervention">زمن الاستجابة من الرد الى الوصول (بالدقائق) :</label>
+	        <input type="number" id="response_time_to_intervention" placeholder="أدخل الوقت بالدقائق رقم فقط">
+	    </div>
+	</div>
+	
+	<h2>ملاحظات النوبة</h2>
+	
+	<div class="input-row">
+	    <div class="input-small">
+	        <label for="absence_in_shift">عدد الغياب في المناوبة:</label>
+	        <input type="text" id="absence_in_shift" required>
+	    </div>
+	</div>
+	
+	<div class="input-row">
+	    <div class="input-small">
 	        <label for="cad_program_notes">ملاحظات عامه:</label>
 	        <!-- إضافة زر التحديد مع النص -->
 	        <div class="checkbox-container">
@@ -562,9 +569,17 @@
 	            ">
 	            <label for="no_cad_notes_checkbox">لا يوجد ملاحظات</label>
 	            <textarea id="cad_program_notes" rows="4"></textarea>
-                    <label for="senior_paramedic_name"> كبير المسعفين المناوب:</label>
-                    <input type="text" id="senior_paramedic_name" required>
-                </div>
+	        </div>
+	    </div>
+	</div>
+	
+	<div class="input-row">
+	    <div class="input-small">
+	        <label for="senior_paramedic_name">كبير المسعفين المناوب:</label>
+	        <input type="text" id="senior_paramedic_name" required>
+	    </div>
+	</div>
+
                 <button onclick="sendWhatsAppMessage('senior_paramedic')">إرسال النموذج بالواتساب</button>
             `;
 	      } else if (formName === 'attendance') {
