@@ -208,6 +208,11 @@
 	    width: 20px; /* عرض مربع التحديد */
 	    height: 20px; /* ارتفاع مربع التحديد */
 	}
+	    /* كلاس لتلوين النص باللون الأحمر */
+	.red-text {
+	    color: red;
+	}
+
         input[type="text"], input[type="date"], input[type="time"], input[type="datetime-local"], textarea, select {
             width: 100%;
             padding: 10px;
@@ -1129,20 +1134,21 @@
 		<div class="input-row">
 		    <div class="input-small">
 		        <label for="outsider_notes">ملاحظات عامه:</label>
-			        <!-- تنسيق مربع التحديد والنص باستخدام flexbox -->
+		        <!-- تنسيق مربع التحديد والنص باستخدام flexbox -->
 		        <div class="checkbox-container">
 		            <input type="checkbox" id="no_notes_checkbox" onchange="
 		                if(this.checked) {
 		                    document.getElementById('outsider_notes').value = 'لا يوجد ملاحظات';
 		                    document.getElementById('outsider_notes').disabled = true;
+		                    document.getElementById('outsider_notes').classList.add('red-text'); // إضافة اللون الأحمر
 		                } else {
 		                    document.getElementById('outsider_notes').value = '';
 		                    document.getElementById('outsider_notes').disabled = false;
+		                    document.getElementById('outsider_notes').classList.remove('red-text'); // إزالة اللون الأحمر
 		                }
 		            ">
-		        <label for="no_notes_checkbox">لا يوجد ملاحظات</label>
-		        <textarea id="outsider_notes" rows="4"></textarea>
-		
+		            <label for="no_notes_checkbox">لا يوجد ملاحظات</label>
+		            <textarea id="outsider_notes" rows="4"></textarea>
 		        </div>
 		    </div>
 		</div>
