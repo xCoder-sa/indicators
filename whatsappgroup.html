@@ -1120,34 +1120,32 @@
                     <input type="text" id="absence_in_shift">
                       </div>
 		       </div>
- <div class="input-row">
-    <div class="input-small">
-        <label for="units_notes">نقاط اسعافية مكشوفة:</label>
-        <input type="text" id="units_notes" required>
-    </div>
-</div>
-
-<div class="input-row">
-    <div class="input-small">
-        <label for="outsider_notes">ملاحظات عامه:</label>
-        <textarea id="outsider_notes" rows="4"></textarea>
-        <br>
-
-        <!-- تنسيق مربع التحديد والنص باستخدام flexbox -->
-        <div class="checkbox-container">
-            <input type="checkbox" id="no_notes_checkbox" onchange="
-                if(this.checked) {
-                    document.getElementById('outsider_notes').value = 'لا يوجد ملاحظات';
-                    document.getElementById('outsider_notes').disabled = true;
-                } else {
-                    document.getElementById('outsider_notes').value = '';
-                    document.getElementById('outsider_notes').disabled = false;
-                }
-            ">
-            <label for="no_notes_checkbox">لا يوجد ملاحظات</label>
-        </div>
-    </div>
-</div>
+		 <div class="input-row">
+		    <div class="input-small">
+		        <label for="units_notes">نقاط اسعافية مكشوفة:</label>
+		        <input type="text" id="units_notes" required>
+		    </div>
+		</div>
+		<div class="input-row">
+		    <div class="input-small">
+		        <label for="outsider_notes">ملاحظات عامه:</label>
+			        <!-- تنسيق مربع التحديد والنص باستخدام flexbox -->
+		        <div class="checkbox-container">
+		            <input type="checkbox" id="no_notes_checkbox" onchange="
+		                if(this.checked) {
+		                    document.getElementById('outsider_notes').value = 'لا يوجد ملاحظات';
+		                    document.getElementById('outsider_notes').disabled = true;
+		                } else {
+		                    document.getElementById('outsider_notes').value = '';
+		                    document.getElementById('outsider_notes').disabled = false;
+		                }
+		            ">
+		        <label for="no_notes_checkbox">لا يوجد ملاحظات</label>
+		        <textarea id="outsider_notes" rows="4"></textarea>
+		
+		        </div>
+		    </div>
+		</div>
 
                           <div class="input-row">
 			<div class="input-small">
