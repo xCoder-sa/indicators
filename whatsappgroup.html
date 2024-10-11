@@ -182,28 +182,32 @@
             margin-bottom: 20px;
             text-align: center;
         }
-/* تنسيق النص ومربعات التحديد */
-.checkbox-container {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* مسافة بين مربع التحديد والنص */
-    margin-top: 10px;
-}
-
-.checkbox-container label {
-    color: #333;
-    font-weight: bold;
-    font-size: 15px;
-    cursor: pointer; /* لجعل النص قابل للنقر مع مربع التحديد */
-}
-
-.checkbox-container input[type="checkbox"] {
-    width: 20px; /* عرض مربع التحديد */
-    height: 20px; /* ارتفاع مربع التحديد */
-}
-
-
-
+        label {
+            margin-top: 10px;
+            display: block;
+            color: #333;
+            font-weight: bold;
+            font-size: 15px;
+        }
+	/* تنسيق النص ومربعات التحديد */
+	.checkbox-container {
+	    display: flex;
+	    align-items: center;
+	    gap: 10px; /* مسافة بين مربع التحديد والنص */
+	    margin-top: 10px;
+	}
+	
+	.checkbox-container label {
+	    color: #333;
+	    font-weight: bold;
+	    font-size: 15px;
+	    cursor: pointer; /* لجعل النص قابل للنقر مع مربع التحديد */
+	}
+	
+	.checkbox-container input[type="checkbox"] {
+	    width: 20px; /* عرض مربع التحديد */
+	    height: 20px; /* ارتفاع مربع التحديد */
+	}
         input[type="text"], input[type="date"], input[type="time"], input[type="datetime-local"], textarea, select {
             width: 100%;
             padding: 10px;
