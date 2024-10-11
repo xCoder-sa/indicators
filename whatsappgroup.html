@@ -195,24 +195,17 @@
 	    align-items: center;
 	    gap: 10px; /* مسافة بين مربع التحديد والنص */
 	    margin-top: 10px;
-	}
-	
+	}	
 	.checkbox-container label {
-	    color: #333;
+	    color: red; /* تحديد اللون الأحمر لنص "لا يوجد ملاحظات" */
 	    font-weight: bold;
 	    font-size: 15px;
 	    cursor: pointer; /* لجعل النص قابل للنقر مع مربع التحديد */
 	}
-	
 	.checkbox-container input[type="checkbox"] {
 	    width: 20px; /* عرض مربع التحديد */
 	    height: 20px; /* ارتفاع مربع التحديد */
 	}
-	    /* كلاس لتلوين النص باللون الأحمر */
-	.red-text {
-	    color: red;
-	}
-
         input[type="text"], input[type="date"], input[type="time"], input[type="datetime-local"], textarea, select {
             width: 100%;
             padding: 10px;
@@ -1125,12 +1118,6 @@
                     <input type="text" id="absence_in_shift">
                       </div>
 		       </div>
-		 <div class="input-row">
-		    <div class="input-small">
-		        <label for="units_notes">نقاط اسعافية مكشوفة:</label>
-		        <input type="text" id="units_notes" required>
-		    </div>
-		</div>
 		<div class="input-row">
 		    <div class="input-small">
 		        <label for="outsider_notes">ملاحظات عامه:</label>
@@ -1140,19 +1127,16 @@
 		                if(this.checked) {
 		                    document.getElementById('outsider_notes').value = 'لا يوجد ملاحظات';
 		                    document.getElementById('outsider_notes').disabled = true;
-		                    document.getElementById('outsider_notes').classList.add('red-text'); // إضافة اللون الأحمر
 		                } else {
 		                    document.getElementById('outsider_notes').value = '';
 		                    document.getElementById('outsider_notes').disabled = false;
-		                    document.getElementById('outsider_notes').classList.remove('red-text'); // إزالة اللون الأحمر
 		                }
 		            ">
-		            <label for="no_notes_checkbox">لا يوجد ملاحظات</label>
+		            <label for="no_notes_checkbox">لا يوجد ملاحظات</label> <!-- النص هنا سيكون باللون الأحمر -->
 		            <textarea id="outsider_notes" rows="4"></textarea>
 		        </div>
 		    </div>
 		</div>
-
                           <div class="input-row">
 			<div class="input-small">
                     <label for="senior_paramedic_name"> كبير المسعفين المناوب:</label>
