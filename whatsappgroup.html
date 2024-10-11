@@ -182,18 +182,20 @@
             margin-bottom: 20px;
             text-align: center;
         }
-	label {
-	    margin-top: 10px;
-	    display: block;
-	    color: #333;
-	    font-weight: bold;
-	    font-size: 15px;
-	}
-	label input[type="checkbox"] {
-	    display: inline-flex;
-	    align-items: center;
-	    gap: 5px; /* تحديد المسافة بين مربع التحديد والنص */
-	}
+label {
+    margin-top: 10px;
+    display: inline-flex; /* تغيير display إلى inline-flex لتظهر مربعات التحديد بجانب النصوص */
+    align-items: center; /* لضبط المحاذاة الرأسية */
+    color: #333;
+    font-weight: bold;
+    font-size: 15px;
+    gap: 5px; /* تحديد المسافة بين النص ومربع التحديد */
+}
+
+label input[type="checkbox"] {
+    margin-left: 5px; /* يمكنك ضبط المسافة حسب رغبتك بين مربع التحديد والنص */
+}
+
 
 
         input[type="text"], input[type="date"], input[type="time"], input[type="datetime-local"], textarea, select {
