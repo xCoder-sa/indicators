@@ -189,25 +189,6 @@
             font-weight: bold;
             font-size: 15px;
         }
-	/* تنسيق النص ومربعات التحديد */
-	.checkbox-container {
-	    display: flex;
-	    align-items: center;
-	    gap: 10px; /* مسافة بين مربع التحديد والنص */
-	    margin-top: 10px;
-	}	
-	.checkbox-container label {
-	    color: red; /* تحديد اللون الأحمر لنص "لا يوجد ملاحظات" */
-	    font-weight: bold;
-	    font-size: 15px;
-	    cursor: pointer; /* لجعل النص قابل للنقر مع مربع التحديد */
-	    white-space: nowrap; /* لمنع النص من الانقسام إلى سطرين */
-
-	}
-	.checkbox-container input[type="checkbox"] {
-	    width: 20px; /* عرض مربع التحديد */
-	    height: 20px; /* ارتفاع مربع التحديد */
-	}
         input[type="text"], input[type="date"], input[type="time"], input[type="datetime-local"], textarea, select {
             width: 100%;
             padding: 10px;
@@ -316,10 +297,10 @@
         <div class="logo">لوحة التحكم</div>
         <div class="menu-header">القائمة</div> <!-- العنوان الجديد -->
         <ul class="menu" id="menu">
-            <li><a href="#" onclick="loadForm('senior_paramedic')" class="menu-item"><i class="fas fa-user-md"></i>نموذج كبار المسعفين قطاعات منطقة الرياض الداخلية</a></li>
-	    <li><a href="#" onclick="loadForm('attendance')" class="menu-item"><i class="fas fa-check-circle"></i> نموذج تحضير</a></li>
+            <li><a href="#" onclick="loadForm('senior_paramedic')" class="menu-item"><i class="fas fa-user-md"></i>نموذج كبار المسعفين قطاعات الرياض الداخلية</a></li>
+            <li><a href="#" onclick="loadForm('attendance')" class="menu-item"><i class="fas fa-check-circle"></i> نموذج تحضير</a></li>
             <li><a href="#" onclick="loadForm('rapid_response_reports')" class="menu-item"><i class="fas fa-car-crash"></i> نموذج بلاغات التدخل السريع</a></li>
-            <li><a href="#" onclick="loadForm('senior_paramedic_outside')" class="menu-item"><i class="fas fa-user-md"></i> نموذج كبار المسعفين قطاعات منطقة الرياض الخارجية</a></li>
+            <li><a href="#" onclick="loadForm('senior_paramedic_outside')" class="menu-item"><i class="fas fa-user-md"></i> نموذج كبار المسعفين قطاعات الرياض الخارجية</a></li>
             <li><a href="#" onclick="loadForm('operational_failure')" class="menu-item"><i class="fas fa-exclamation-triangle"></i> نموذج فشل تشغيلي</a></li>
             <li><a href="#" onclick="loadForm('eco_reports')" class="menu-item"><i class="fas fa-file-alt"></i> نموذج بلاغات إيكو</a></li>
             <li><a href="#" onclick="loadForm('major_event')" class="menu-item"><i class="fas fa-calendar-alt"></i> نموذج حدث جسيم</a></li>
@@ -540,48 +521,24 @@
 		    </div>
 		</div>
   		<div class="input-row">
-	    <div class="input-small">
-	        <label for="response_time_to_intervention">زمن الاستجابة من الرد الى الوصول (بالدقائق) :</label>
-	        <input type="number" id="response_time_to_intervention" placeholder="أدخل الوقت بالدقائق رقم فقط">
-	    </div>
-	</div>
-	
-	<h2>ملاحظات النوبة</h2>
-	
-	<div class="input-row">
-	    <div class="input-small">
-	        <label for="absence_in_shift">عدد الغياب في المناوبة:</label>
-	        <input type="text" id="absence_in_shift" required>
-	    </div>
-	</div>
-	
-	<div class="input-row">
-	    <div class="input-small">
-	        <label for="cad_program_notes">ملاحظات عامه:</label>
-	        <!-- إضافة زر التحديد مع النص -->
-	        <div class="checkbox-container">
-	            <input type="checkbox" id="no_cad_notes_checkbox" onchange="
-	                if(this.checked) {
-	                    document.getElementById('cad_program_notes').value = 'لا يوجد';
-	                    document.getElementById('cad_program_notes').disabled = true;
-	                } else {
-	                    document.getElementById('cad_program_notes').value = '';
-	                    document.getElementById('cad_program_notes').disabled = false;
-	                }
-	            ">
-	            <label for="no_cad_notes_checkbox">لا يوجد ملاحظات</label>
-	            <textarea id="cad_program_notes" rows="4"></textarea>
-	        </div>
-	    </div>
-	</div>
-	
-	<div class="input-row">
-	    <div class="input-small">
-	        <label for="senior_paramedic_name">كبير المسعفين المناوب:</label>
-	        <input type="text" id="senior_paramedic_name" required>
-	    </div>
-	</div>
+		    <div class="input-small">
+		    <label for="response_time_to_intervention">زمن الاستجابة من الرد الى الوصول (بالدقائق) :</label>
+		    <input type="number" id="response_time_to_intervention" placeholder="أدخل الوقت بالدقائق رقم فقط">
+		    </div>
+		</div>
+                    <h2>ملاحظات النوبة</h2>
 
+                    <label for="absence_in_shift">عدد الغياب في المناوبة:</label>
+                    <input type="text" id="absence_in_shift" required>
+
+                    <label for="cad_program_notes">ملاحظات عامه:</label>
+            <textarea id="cad_program_notes" rows="4">لا يوجد</textarea>
+            <label for="assistant_senior_paramedic_name">مساعد كبير المسعفين المناوب:</label>
+            <input type="text" id="assistant_senior_paramedic_name" placeholder="أدخل اسم مساعد كبير المسعفين المناوب" required>
+            <label for="senior_paramedic_name">كبير المسعفين المناوب:</label> 
+            <input type="text" id="senior_paramedic_name" placeholder="أدخل اسم كبير المسعفين المناوب" required>
+
+                </div>
                 <button onclick="sendWhatsAppMessage('senior_paramedic')">إرسال النموذج بالواتساب</button>
             `;
 	      } else if (formName === 'attendance') {
@@ -1091,41 +1048,44 @@
                     <input type="text" id="hospitals_out_of_service">
                         </div>
                     </div>
-		<h2>البلاغات</h2>
-		<div class="form-section">
-		    <div class="input-row">
-		        <div class="input-small">
-		            <label for="total_reports">إجمالي بلاغات القطاع:</label>
-		            <input type="number" id="total_reports" required>
-		        </div>
-		    </div>
-		
-		    <label for="related_reports">البلاغات:</label>
-		    <div id="reports-container-1">
-		        <div class="input-row"></div>
-		
-		        <!-- تغليف checkbox والنص في div واستخدام flexbox -->
-		        <div style="display: flex; align-items: center; gap: 10px;">
-		            <input type="checkbox" id="no_reports" onclick="toggleReports()" />
-		            <label for="no_reports" style="font-weight: bold; color: red;">لا يوجد بلاغات</label>
-		        </div>
-		
-		        <div class="input-row">
-		            <input type="number" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
-		            <select class="report-type" style="width: 120px;">
-		                <option value="إيكو">إيكو</option>
-		                <option value="دلتا">دلتا</option>
-		                <option value="تشارلي">تشارلي</option>
-		                <option value="برافو">برافو</option>
-		            </select>
-		            <input type="number" placeholder="(بالدقائق) زمن الاستجابة" class="waiting_time" style="width: 150px;">
-		        </div>
-		        <p>احسب زمن الاستجابة من الرد الى الوصول للموقع</p>
-		    </div>
-		
-		    <!-- زر لإضافة بلاغ آخر -->
-		    <button type="button" id="add-report-btn" onclick="relatedreports('reports-container-1', 'responseTime')">إضافة بلاغ آخر</button>
-		</div>
+                    <h2>البلاغات</h2>
+    <div class="form-section">
+    <div class="input-row">
+        <div class="input-small">
+            <label for="total_reports">إجمالي بلاغات القطاع:</label>
+            <input type="number" id="total_reports" required>
+	    		                    </div>
+		                      </div>
+
+
+            <label for="related_reports">البلاغات:</label>
+            <div id="reports-container-1">
+                <div class="input-row">
+    
+                </div>
+                    <input type="checkbox" id="no_reports" onclick="toggleReports()" />
+                    <label for="no_reports" style="font-weight: bold; color: red;">لا يوجد بلاغات</label>
+                <div class="input-row">
+                    <input type="number" placeholder="رقم البلاغ" class="report-number" style="width: 120px;">
+                    <select class="report-type" style="width: 120px;">
+                        <option value="إيكو">إيكو</option>
+                        <option value="دلتا">دلتا</option>
+                        <option value="تشارلي">تشارلي</option>
+                        <option value="برافو">برافو</option>
+                    </select>
+                    <input type="number" placeholder="(بالدقائق) زمن الاستجابة" class="waiting_time" style="width: 150px;">
+
+                </div>
+
+                <p>احسب زمن الاستجابة من الرد الى الوصول للموقع</p>
+            </div>
+
+            <!-- زر لإضافة بلاغ آخر -->
+            <button type="button" id="add-report-btn" onclick="relatedreports('reports-container-1', 'responseTime')">إضافة بلاغ آخر</button>
+        </div>
+    </div>
+</div>
+
 
                     <h2>المخرجات</h2>
                 <div class="form-section">
@@ -1144,31 +1104,18 @@
                     <input type="text" id="absence_in_shift">
                       </div>
 		       </div>
-		 <div class="input-row">
-		    <div class="input-small">
-		        <label for="units_notes">نقاط اسعافية مكشوفة:</label>
-		        <input type="text" id="units_notes" required>
-		    </div>
-		</div>
-		<div class="input-row">
-		    <div class="input-small">
-		        <label for="outsider_notes">ملاحظات عامه:</label>
-		        <!-- تنسيق مربع التحديد والنص باستخدام flexbox -->
-		        <div class="checkbox-container">
-		            <input type="checkbox" id="no_notes_checkbox" onchange="
-		                if(this.checked) {
-		                    document.getElementById('outsider_notes').value = 'لا يوجد ملاحظات';
-		                    document.getElementById('outsider_notes').disabled = true;
-		                } else {
-		                    document.getElementById('outsider_notes').value = '';
-		                    document.getElementById('outsider_notes').disabled = false;
-		                }
-		            ">
-		            <label for="no_notes_checkbox">لا يوجد ملاحظات</label> <!-- النص هنا سيكون باللون الأحمر -->
-		            <textarea id="outsider_notes" rows="4"></textarea>
-		        </div>
-		    </div>
-		</div>
+                          <div class="input-row">
+			<div class="input-small">
+                    <label for="units_notes">نقاط اسعافية مكشوفة:</label>
+                    <input type="text" id="units_notes" required>
+                      </div>
+		       </div>
+                          <div class="input-row">
+			<div class="input-small">
+                    <label for="outsider_notes">ملاحظات عامه:</label>
+            <textarea id="outsider_notes" rows="4">لا يوجد</textarea>
+                      </div>
+		       </div>
                           <div class="input-row">
 			<div class="input-small">
                     <label for="senior_paramedic_name"> كبير المسعفين المناوب:</label>
@@ -1220,8 +1167,8 @@
                   <div class="input-row">
                       <label for="event_start">بداية الحدث (نظام 24 ساعة):</label>
                       <div class="input-row">
-                          <input type="text" id="start_hour" placeholder="الساعة" style="width: 45px;">
                           <input type="text" id="start_minute" placeholder="الدقيقة" style="width: 45px;">
+                          <input type="text" id="start_hour" placeholder="الساعة" style="width: 45px;">
                       </div>
                   </div>
         
@@ -1255,8 +1202,8 @@
         
                   <label for="">نهاية الحدث (نظام 24 ساعة):</label>
                   <div class="input-row">
-                      <input type="number" id="end_hour" placeholder="الساعة" style="width: 45px;">
                       <input type="number" id="end_minute" placeholder="الدقيقة" style="width: 45px;">
+                      <input type="number" id="end_hour" placeholder="الساعة" style="width: 45px;">
                       <input type="checkbox" id="event_not_ended" onclick="toggleEndTimeFields()">
                       <label for="event_not_ended" style="font-weight: bold; color: red;">لم ينتهِ حتى الآن</label>
                   </div>
@@ -1287,8 +1234,8 @@
 
                     <label for="report_time">توقيت التقرير (نظام 24 ساعة):</label>
                     <div class="input-row">
-                        <input type="text" id="report_hour" placeholder="الساعة" style="width: 45px;" required>
                         <input type="text" id="report_minute" placeholder="الدقيقة" style="width: 45px;" required>
+                        <input type="text" id="report_hour" placeholder="الساعة" style="width: 45px;" required>
                     </div>
                     <label for="sector">اختر القطاع:</label>
                     <select id="sector" onchange="toggleOtherSectorInput()" required>
@@ -1326,22 +1273,9 @@
                     <input type="number" id="response_time" placeholder="أكتب الدقيقة بالرقم فقط" required>
                     </div>
               	   	</div>
-			<div class="input-small">
-			    <label for="notes">ملاحظات:</label>
-			    <!-- إضافة زر التحديد مع النص -->
-			    <div class="checkbox-container">
-			        <input type="checkbox" id="no_notes_checkbox" onchange="
-			            if(this.checked) {
-			                document.getElementById('notes').value = 'لا يوجد';
-			                document.getElementById('notes').disabled = true;
-			            } else {
-			                document.getElementById('notes').value = '';
-			                document.getElementById('notes').disabled = false;
-			            }
-			        ">
-			        <label for="no_notes_checkbox">لا يوجد ملاحظات</label>
-			    </div>
-			    <textarea id="notes" rows="4"></textarea>
+		       <div class="input-small">
+                    <label for="notes">ملاحظات:</label>
+            <textarea id="notes" rows="4">لا يوجد</textarea>
 			</div>
                 </div>
 	                <div class="form-section">
@@ -1374,8 +1308,8 @@
                     <label for="event_time">وقت وتاريخ الحدث:</label>
                     <input type="date" id="event_time" readonly>
                     <div class="input-row">
-                        <input type="number" id="event_hour" placeholder="الساعة" style="width: 45px;" required>
                         <input type="number" id="event_minute" placeholder="الدقيقة" style="width: 45px;" required>
+                        <input type="number" id="event_hour" placeholder="الساعة" style="width: 45px;" required>
                     </div>
 
                     <label for="event_details">تفاصيل الحدث:</label>
@@ -1418,8 +1352,8 @@
                 <div class="input-small">
 		      <label for="first_team_arrival">وقت وصول أول فرقة (نظام 24 ساعة):</label>
 		<div class="input-row">
-		    <input type="number" id="arrival_hour" placeholder="الساعة" style="width:80px;" required>
 		    <input type="number" id="arrival_minute" placeholder="الدقيقة" style="width: 80px;" required>
+		    <input type="number" id="arrival_hour" placeholder="الساعة" style="width:80px;" required>
 		</div>
              	   </div>
                         <div class="input-small">
@@ -1465,7 +1399,7 @@
 
                     <div class="form-section">
 			<label for="hospitals">المستشفيات:</label>
-			<textarea id="hospitals" rows="4" required></textarea>
+			<textarea id="hospitals" rows="4"></textarea>
                 </div>
 <div class="form-section">
     <div class="input-row" style="display: flex; justify-content: space-between; align-items: center;">
@@ -1497,8 +1431,8 @@
         <div class="input-small">
             <label for="event_end">انتهاء الحدث (نظام 24 ساعة):</label>
             <div style="display: inline-flex; gap: 5px; align-items: center;">
-                <input type="text" id="end_hour" placeholder="الساعة" style="width: 60px;" required>
                 <input type="text" id="end_minute" placeholder="الدقيقة" style="width: 60px;" required>
+                <input type="text" id="end_hour" placeholder="الساعة" style="width: 60px;" required>
             </div>
         </div>
     </div>
@@ -1508,17 +1442,18 @@
                     <h2>المسؤولين</h2>
             <div class="form-section">
 
-                    <label for="field_leader">قائد الحدث الميداني:</label>
-                    <input type="text" id="field_leader" required>
+        <label for="field_leader">قائد الحدث الميداني:</label>
+        <input type="text" id="field_leader" placeholder="أدخل اسم قائد الحدث الميداني" required>
+        
+        <label for="operational_control">التحكم العملياتي:</label>
+        <input type="text" id="operational_control" placeholder="أدخل اسم التحكم العملياتي" required>
+        
+        <label for="response_coordination">تنسيق الاستجابة:</label>
+        <input type="text" id="response_coordination" placeholder="أدخل اسم تنسيق الاستجابة" required>
+        
+        <label for="area_leader">قائد المنطقة المناوب:</label>
+        <input type="text" id="area_leader" placeholder="أدخل اسم قائد المنطقة المناوب" required>
 
-                    <label for="operational_control">التحكم العملياتي:</label>
-                    <input type="text" id="operational_control" required>
-
-                    <label for="response_coordination">تنسيق الاستجابة:</label>
-                    <input type="text" id="response_coordination" required>
-
-                    <label for="area_leader">قائد المنطقة المناوب:</label>
-                    <input type="text" id="area_leader" required>
         </div>
     </div>
 </div>
@@ -1544,8 +1479,8 @@
 
                     <label for="report_time">توقيت طلب الدعم (نظام 24 ساعة):</label>
                     <div class="input-row">
-                        <input type="text" id="report_hour" placeholder="الساعة" style="width: 45px;" required>
                         <input type="text" id="report_minute" placeholder="الدقيقة" style="width: 45px;" required>
+                        <input type="text" id="report_hour" placeholder="الساعة" style="width: 45px;" required>
                     </div>
 
                     <label for="units_linked">عدد الوحدات المرتبطة ببلاغ:</label>
@@ -1593,12 +1528,12 @@
         <div class="form-section">
             <label for="support_status">حالة الدعم:</label>
             <select id="support_status" onchange="toggleFieldsBasedOnSupportStatus()" required>
-                <option value="مقبول">مقبول</option>
-                <option value="مرفوض">مرفوض</option>
+                <option value="الموافقة">الموافقة</option>
+                <option value="الرفض">الرفض</option>
             </select>
 
             <label for="support_reasons">أسباب القبول أو الرفض:</label>
-            <textarea id="support_reasons" rows="4" ></textarea>
+            <textarea id="support_reasons" rows="4"></textarea>
 
             <div id="supportDetails">
                 <label for="support_sector">القطاعات الداعمة:</label>
@@ -1609,6 +1544,9 @@
                     <label><input type="checkbox" value="الغرب" class="support-sector-checkbox"> الغرب</label><br>
                     <label><input type="checkbox" value="الشمال" class="support-sector-checkbox"> الشمال</label><br>
                 </div>
+
+
+
                 <label for="supported_sector">القطاع المدعوم:</label>
                 <select id="supported_sector" onchange="toggleOtherSectorInput()">
                     <option value="الوسط">الوسط</option>
@@ -1620,14 +1558,14 @@
 
                 <label for="dispatch_time">توقيت تحريك الدعم (نظام 24 ساعة):</label>
                 <div class="input-row">
-                    <input type="text" id="dispatch_hour" placeholder="الساعة" style="width: 45px;">
                     <input type="text" id="dispatch_minute" placeholder="الدقيقة" style="width: 45px;">
+                    <input type="text" id="dispatch_hour" placeholder="الساعة" style="width: 45px;">
                 </div>
 
                 <label for="arrival_time">توقيت وصول الدعم (نظام 24 ساعة):</label>
                 <div class="input-row">
-                    <input type="text" id="arrival_hour" placeholder="الساعة" style="width: 45px;">
                     <input type="text" id="arrival_minute" placeholder="الدقيقة" style="width: 45px;">
+                    <input type="text" id="arrival_hour" placeholder="الساعة" style="width: 45px;">
                 </div>
 
                 <label for="support_teams_count">عدد الفرق الداعمة:</label>
@@ -1635,13 +1573,13 @@
 
                 <label for="end_time">توقيت انتهاء الدعم (نظام 24 ساعة):</label>
                 <div class="input-row">
-                    <input type="text" id="end_hour" placeholder="الساعة" style="width: 45px;">
                     <input type="text" id="end_minute" placeholder="الدقيقة" style="width: 45px;">
+                    <input type="text" id="end_hour" placeholder="الساعة" style="width: 45px;">
                 </div>
             </div>
 
             <label for="region_leader_name">اسم قائد المنطقة:</label>
-            <input type="text" id="region_leader_name" required>
+            <input type="text" id="region_leader_name">
         </div>
         <button onclick="sendWhatsAppMessage('support_activation')">إرسال النموذج بالواتساب</button>
     `;
@@ -2050,7 +1988,7 @@ function getFormData(formName) {
 	    data.support_reasons = document.getElementById('support_reasons').value;
 	    data.region_leader_name = document.getElementById('region_leader_name').value;
 	
-	    if (data.support_status === 'مقبول') {
+	    if (data.support_status === 'الموافقة') {
 	        // جلب القيم المختارة من مربعات الاختيار
 	        const selectedSectors = Array.from(document.querySelectorAll('.support-sector-checkbox:checked')).map(checkbox => checkbox.value);
 	        data.support_sector = selectedSectors.join(', ') || '';
@@ -2141,7 +2079,7 @@ function sendWhatsAppMessage(formName) {
     }
 
     if (formName === 'senior_paramedic') {
-        formText += `\n*=== نموذج كبار مسعفين قطاعات الرياض الداخلية ===*\n\n`;
+        formText += `\n*== كبار مسعفين قطاعات الرياض الداخلية ==*\n\n`; 
     	formText += `القطاع: ${document.getElementById('sector').value}\n`;
     	formText += `التاريخ: ${document.getElementById('date').value}\n`;
         formText += `التوقيت الحالي: ${document.getElementById('time').value}\n`;
@@ -2174,13 +2112,9 @@ function sendWhatsAppMessage(formName) {
         formText += `زمن الاستجابة من الرد حتى الوصول (بالدقائق): ${document.getElementById('response_time_to_intervention').value}\n\n`;
         formText += `\n*=== ملاحظات النوبة ===*\n`;
         formText += `عدد الغياب في المناوبة: ${document.getElementById('absence_in_shift').value}\n`;
-	    //اضافة زر لايوجد
-	let cadProgramNotes = document.getElementById('no_cad_notes_checkbox').checked
-	    ? "لا يوجد"
-	    : document.getElementById('cad_program_notes').value;
-	
-	formText += `ملاحظات عامه: ${cadProgramNotes}\n`;
-	formText += `*اسم كبير المسعفين:*  ${document.getElementById('senior_paramedic_name').value}\n`;
+        formText += `ملاحظات عامه: ${document.getElementById('cad_program_notes').value}\n`;
+        formText += `*مساعد كبير المسعفين:*  ${document.getElementById('assistant_senior_paramedic_name').value}\n`;
+        formText += `*كبير المسعفين:*  ${document.getElementById('senior_paramedic_name').value}\n`;
         } else if (formName === 'operational_failure') {
             formText += `*=== نموذج فشل تشغيلي ===*\n\n`;
         
@@ -2236,7 +2170,7 @@ function sendWhatsAppMessage(formName) {
         formText += `موقع البلاغ: ${document.getElementById('report_location').value}\n`;
         formText += `الوحدات المستجيبة: ${document.getElementById('responding_units').value}\n`;
         formText += `زمن الاستجابة (دقائق): ${document.getElementById('response_time').value}\n`;
-        formText += `ملاحظات: ${document.getElementById('no_notes_checkbox').checked ? 'لا يوجد' : document.getElementById('notes').value}\n`;
+        formText += `ملاحظات: ${document.getElementById('notes').value}\n`;
         formText += `*اسم كبير المسعفين:* ${document.getElementById('senior_paramedic_name').value}\n`;
     } else if (formName === 'major_event') {
         formText += `*=== نموذج حدث جسيم ===*\n\n`;
@@ -2312,7 +2246,8 @@ function sendWhatsAppMessage(formName) {
 	    formText += `حالة الدعم: ${document.getElementById('support_status').value}\n`;
 	    formText += `أسباب القبول أو الرفض: ${document.getElementById('support_reasons').value}\n`;
 	    formText += `اسم قائد المنطقة: ${document.getElementById('region_leader_name').value}\n`;
-	    if (document.getElementById('support_status').value === 'مقبول') {
+	
+	    if (document.getElementById('support_status').value === 'الموافقة') {
 	        // إرسال القيم المختارة في الرسالة
 	        formText += `القطاعات الداعمة: ${Array.from(document.querySelectorAll('.support-sector-checkbox:checked')).map(checkbox => checkbox.value).join(', ')}\n`;
 	        formText += `القطاع المدعوم: ${document.getElementById('supported_sector').value}\n`;
@@ -2322,7 +2257,7 @@ function sendWhatsAppMessage(formName) {
 	        formText += `توقيت انتهاء الدعم: ${document.getElementById('end_hour').value}:${document.getElementById('end_minute').value}\n`;
 		      }
    } else if (formName === 'senior_paramedic_outside') {
-        formText += `*=== نموذج كبار مسعفين قطاعات الرياض الخارجية ===*\n\n`;
+        formText += `*==كبار مسعفين قطاعات الرياض الخارجية ==*\n\n`;
         if (document.getElementById('sector').value !== 'other') {
             formText += `القطاع: قطاع محافظة ${document.getElementById('sector').value}\n`;
         } else {
@@ -2374,12 +2309,7 @@ if (noReports) {
         formText += `*=== ملاحظات النوبة ===*\n\n`;
         formText += `عدد الغياب في المناوبة: ${document.getElementById('absence_in_shift').value}\n`;
         formText += `نقاط اسعافية مكشوفة: ${document.getElementById('units_notes').value}\n`;
-	    //ملاحظات عامة مربع تحديد لا يوجد من هنا يبداء
-	let notes = document.getElementById('no_notes_checkbox').checked
-	    ? "لا يوجد ملاحظات"
-	    : document.getElementById('outsider_notes').value;
-	
-	formText += `ملاحظات: ${notes}\n`;
+        formText += `ملاحظات: ${document.getElementById('outsider_notes').value}\n`;
         formText += `اسم كبير المسعفين: ${document.getElementById('senior_paramedic_name').value}\n`;
 } else if (formName === 'rapid_response_reports') {
     formText += `*=== نموذج بلاغات التدخل السريع ===*\n\n`;
@@ -2427,7 +2357,7 @@ if (noReports) {
     formText += `*قطاع عفيف* - وحدات: ${document.getElementById('afif_sector_teams').value}، مركبات عاملة: ${document.getElementById('afif_sector_vehicles_work').value} متعطلة: ${document.getElementById('afif_sector_vehicles_broken').value}\n`;
     formText += `*قطاع وادي الدواسر* - وحدات: ${document.getElementById('wadi_al_dawasir_sector_teams').value}، مركبات عاملة: ${document.getElementById('wadi_al_dawasir_sector_vehicles_work').value} متعطلة: ${document.getElementById('wadi_al_dawasir_sector_vehicles_broken').value}\n`;
     // إحصائية القطاعات الخارجية
-    formText += `\n*=== الوضع الراهن لقطاعات المحاظفات ===*\n`;
+    formText += `\n*=== الوضع الراهن لقطاعات المحافظات ===*\n`;
     formText += `إجمالي الفرق العاملة: ${document.getElementById('external_teams_total').value}\n`;
     formText += `إجمالي المركبات العاملة: ${document.getElementById('external_vehicles_total').value}\n`;
     formText += `إجمالي المركبات المتعطلة: ${document.getElementById('external_broken_vehicles_total').value}\n`;
@@ -2699,13 +2629,11 @@ function calculateTotals() {
     function toggleFieldsBasedOnSupportStatus() {
         const supportStatus = document.getElementById('support_status').value;
         const supportDetails = document.getElementById('supportDetails');
-        const regionLeaderName = document.getElementById('region_leader_name').value;
-
         
-        if (supportStatus === 'مرفوض') {
+        if (supportStatus === 'الرفض') {
             supportDetails.style.display = 'none'; // إخفاء الحقول عند الرفض
         } else {
-            supportDetails.style.display = 'block'; // إظهار الحقول عند القبول
+            supportDetails.style.display = 'block'; // إظهار الحقول عند الموافقة
         }
     }
 
@@ -2813,7 +2741,7 @@ function toggleReports() {
     </script>
         <footer>
         <div style="font-size: 14px; color: #ccc; text-align: center;">
-            الإصدار 1.4
+            الإصدار 1.3
         </div>
     </footer>
 </body>
