@@ -86,7 +86,7 @@
 
 <footer>
     Design and Development by Ali Alshahrani<br>
-    إصدار النسخة: 1.5
+    إصدار النسخة: 1.6
 </footer>
 
 <script>
@@ -120,17 +120,22 @@ function parseHTMLSource() {
 
     rows.forEach(function(row) {
         var columns = row.querySelectorAll("td.htCenter, td.htDimmed");
-        var shifts = Array.from(columns).slice(4, 35).map(function(col) { return col.innerText.trim(); }); // Extract shift details from the shift cells
+        
+        // Extract employee data in correct order
+        var employeeNumber = columns[0]?.innerText.trim() || "";
+        var employeeName = columns[1]?.innerText.trim() || "";
+        var employeeJob = columns[2]?.innerText.trim() || "";
+        var teamNumber = columns[3]?.innerText.trim() || "";
+
+        // Extract shift data starting from the 4th column onward
+        var shifts = Array.from(columns).slice(4, 35).map(function(col) { return col.innerText.trim(); });
         var counts = countShifts(shifts);
 
         // Check if total shifts are less than 16 to highlight row
         var rowClass = counts.Total < 16 ? "highlight" : "";
 
         table += `<tr class="${rowClass}">`;
-        table += "<td>" + (columns[0]?.innerText.trim() || "") + "</td>";  // Employee number
-        table += "<td>" + (columns[1]?.innerText.trim() || "") + "</td>";  // Employee name
-        table += "<td>" + (columns[2]?.innerText.trim() || "") + "</td>";  // Job title
-        table += "<td>" + (columns[3]?.innerText.trim() || "") + "</td>";  // Team number
+        table += `<td>${employeeNumber}</td><td>${employeeName}</td><td>${employeeJob}</td><td>${teamNumber}</td>`;
 
         // Add shift details in separate numbered columns
         shifts.forEach(function(shift) {
