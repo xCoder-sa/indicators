@@ -86,7 +86,7 @@
 
 <footer>
     Design and Development by Ali Alshahrani<br>
-    إصدار النسخة: 1.6
+    إصدار النسخة: 1.7
 </footer>
 
 <script>
@@ -121,11 +121,11 @@ function parseHTMLSource() {
     rows.forEach(function(row) {
         var columns = row.querySelectorAll("td.htCenter, td.htDimmed");
         
-        // Extract employee data in correct order
-        var employeeNumber = columns[0]?.innerText.trim() || "";
-        var employeeName = columns[1]?.innerText.trim() || "";
-        var employeeJob = columns[2]?.innerText.trim() || "";
-        var teamNumber = columns[3]?.innerText.trim() || "";
+        // Adjusted order to ensure columns are correctly mapped
+        var teamNumber = columns[0]?.innerText.trim() || "";
+        var employeeJob = columns[1]?.innerText.trim() || "";
+        var employeeName = columns[2]?.innerText.trim() || "";
+        var employeeNumber = columns[3]?.innerText.trim() || "";
 
         // Extract shift data starting from the 4th column onward
         var shifts = Array.from(columns).slice(4, 35).map(function(col) { return col.innerText.trim(); });
