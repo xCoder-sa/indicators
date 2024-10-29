@@ -109,7 +109,7 @@ function parseHTMLSource() {
     var parser = new DOMParser();
     var doc = parser.parseFromString(inputText, "text/html");
     var rows = doc.querySelectorAll("tr"); // Select table rows
-
+    
     var table = "<table><thead><tr><th>الرقم</th><th>الاسم</th><th>الوظيفة</th><th>الفرقة</th>";
 
     // Add numbered shift columns from 1 to 31
@@ -120,26 +120,26 @@ function parseHTMLSource() {
 
     rows.forEach(function(row) {
         var columns = row.querySelectorAll("td.htCenter, td.htDimmed");
-        if (columns.length === 0) return;  // Skip empty rows
-
-        // Extract shift details starting from the correct day
-        var shifts = Array.from(columns).map(function(col) { return col.innerText.trim(); }).filter(Boolean); // Filter out empty cells
-        if (shifts.length === 0) return;  // Skip rows with no shift data
-
+        var shifts = Array.from(columns).slice(4, 35).map(function(col) { return col.innerText.trim(); }); // Extract shift details from the shift cells
         var counts = countShifts(shifts);
 
         // Check if total shifts are less than 16 to highlight row
         var rowClass = counts.Total < 16 ? "highlight" : "";
 
         table += `<tr class="${rowClass}">`;
-        table += "<td>" + (columns[35]?.innerText.trim() || "") + "</td>";  // Employee number
-        table += "<td>" + (columns[34]?.innerText.trim() || "") + "</td>";  // Employee name
-        table += "<td>" + (columns[33]?.innerText.trim() || "") + "</td>";  // Job title
-        table += "<td>" + (columns[32]?.innerText.trim() || "") + "</td>";  // Team number
+        table += "<td>" + (columns[0]?.innerText.trim() || "") + "</td>";  // Employee number
+        table += "<td>" + (columns[1]?.innerText.trim() || "") + "</td>";  // Employee name
+        table += "<td>" + (columns[2]?.innerText.trim() || "") + "</td>";  // Job title
+        table += "<td>" + (columns[3]?.innerText.trim() || "") + "</td>";  // Team number
 
-        // Add shift details in separate numbered columns, aligning with actual shift days
-        for (var i = 0; i < 31; i++) {
-            table += "<td>" + (shifts[i] || "") + "</td>";
+        // Add shift details in separate numbered columns
+        shifts.forEach(function(shift) {
+            table += "<td>" + (shift || "") + "</td>";  // empty cell for empty shifts
+        });
+
+        // Fill remaining cells if shifts are less than 31
+        for (var i = shifts.length; i < 31; i++) {
+            table += "<td></td>";
         }
 
         // Add statistics columns and highlight total if less than 16
