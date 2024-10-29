@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Shift Table with Handsontable Parsing</title>
+    <title>Employee Shift Table with Enhanced Parsing</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -86,7 +86,7 @@
 
 <footer>
     Design and Development by Ali Alshahrani<br>
-    إصدار النسخة: 1.3
+    إصدار النسخة: 1.4
 </footer>
 
 <script>
@@ -119,7 +119,7 @@ function parseHTMLSource() {
     table += "<th>مناوبات صباحية (D)</th><th>مناوبات ليلية (N)</th><th>أيام الإجازة (WO)</th><th>إجازات (V)</th><th>مناوبات مسائية (E)</th><th>تغطية إجازات (VC)</th><th>مناوبات 24 ساعة (F)</th><th>إجمالي المناوبات (D و N فقط)</th></tr></thead><tbody>";
 
     rows.forEach(function(row) {
-        var columns = row.querySelectorAll("td.htCenter");
+        var columns = row.querySelectorAll("td.htCenter, td.htDimmed");
         var shifts = Array.from(columns).slice(0, 31).map(function(col) { return col.innerText.trim(); }); // Extract shift details from the first 31 cells
         var counts = countShifts(shifts);
 
