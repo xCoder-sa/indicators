@@ -116,7 +116,7 @@ function parseHTMLSource() {
     for (var i = 1; i <= 31; i++) {
         table += "<th>" + i + "</th>";
     }
-    table += "<th>مناوبات صباحية (D)</th><th>مناوبات ليلية (N)</th><th>دوام رسمي(WO)</th><th>إجازات (V)</th><th>إختبارات (E)</th><th> إجازات تعويضية (VC)</th><th>مناوبات 24 ساعة (F)</th><th>إجمالي المناوبات (D و N فقط)</th></tr></thead><tbody>";
+    table += "<th>مناوبات صباحية (D)</th><th>مناوبات ليلية (N)</th><th>دوام رسمي(WO)</th><th>إجازات إعتيادية (V)</th><th>إختبارات (E)</th><th> إجازات تعويضية (VC)</th><th>مناوبات 24 ساعة (F)</th><th>إجمالي المناوبات (D و N فقط)</th></tr></thead><tbody>";
 
     rows.forEach(function(row) {
         var columns = Array.from(row.querySelectorAll("td.htCenter, td.htDimmed"));
