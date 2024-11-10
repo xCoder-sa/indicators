@@ -5,80 +5,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>أداة تنظيم الجدول</title>
     <style>
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    direction: rtl;
-    text-align: center;
-    padding: 20px;
-    background-color: #ffffff; /* خلفية بيضاء */
-    color: #000000; /* النص باللون الأسود */
-}
-textarea {
-    width: 100%;
-    height: 200px;
-    margin-bottom: 20px;
-    padding: 10px;
-    font-size: 16px;
-    background-color: #f9f9f9; /* خلفية صندوق النص فاتحة */
-    color: #000000; /* النص داخل الصندوق باللون الأسود */
-    border: 1px solid #ccc; /* حدود بلون رمادي فاتح */
-}
-button {
-    padding: 12px 24px;
-    font-size: 18px;
-    background-color: #c7cfc2;
-    color: white;
-    border: none;
-    cursor: pointer;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
-}
-button:hover {
-    background-color: #000000;
-}
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    background-color: #ffffff; /* خلفية الجدول بيضاء */
-    color: #000000; /* لون النص في الجدول بالأسود */
-}
-th, td {
-    border: 1px solid #ddd; /* حدود بلون رمادي فاتح */
-    padding: 12px;
-    text-align: center;
-}
-th {
-    background-color: #f2f2f2; /* خلفية الرأس فاتحة */
-    font-weight: bold;
-    color: #000000; /* لون النص في الرأس أسود */
-}
-td {
-    font-size: 14px;
-    color: #000000; /* لون النص في الخلايا أسود */
-}
-.highlight {
-    background-color: rgba(255, 69, 0, 0.2); /* تظليل شفاف برتقالي فاتح */
-}
-.highlight-total {
-    background-color: rgba(255, 69, 0, 0.5); /* تظليل أغمق قليلاً للخلايا الإجمالية */
-}
-footer {
-    margin-top: 40px;
-    font-size: 14px;
-    color: #333333; /* النص باللون الرمادي */
-    background-color: #f9f9f9; /* خلفية الفوتر فاتحة */
-    padding: 10px 0;
-    border-top: 1px solid #ccc; /* حدود بلون رمادي فاتح */
-}
-  .gray-border-background {
-    background-color: grey;
-    display: inline;
-    padding: 5px; /* إضافة مساحة حول النص */
-    border-radius: 3px; /* جعل الزوايا مستديرة (اختياري) */
-  }
-
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            direction: rtl;
+            text-align: center;
+            padding: 20px;
+            background-color: #ffffff;
+            color: #000000;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 20px;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #f9f9f9;
+            color: #000000;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 18px;
+            background-color: #c7cfc2;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #000000;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #ffffff;
+            color: #000000;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            color: #000000;
+        }
+        td {
+            font-size: 14px;
+            color: #000000;
+        }
+        .highlight {
+            background-color: rgba(255, 69, 0, 0.2);
+        }
+        .highlight-total {
+            background-color: rgba(255, 69, 0, 0.5);
+        }
+        footer {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #333333;
+            background-color: #f9f9f9;
+            padding: 10px 0;
+            border-top: 1px solid #ccc;
+        }
+        .gray-border-background {
+            background-color: grey;
+            display: inline;
+            padding: 5px;
+            border-radius: 3px;
+        }
+        .blue-highlight {
+            background-color: blue;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -96,7 +99,7 @@ footer {
 <footer>
     Design and Development by Ali Alshahrani<br>
     This script was created for Mansour<br>
-    إصدار النسخة: 1.5
+    إصدار النسخة: 2.0
 </footer>
 
 <script>
@@ -119,14 +122,14 @@ function parseHTMLSource() {
     var parser = new DOMParser();
     var doc = parser.parseFromString(inputText, "text/html");
     var rows = doc.querySelectorAll("tr"); // Select table rows
-    
+
     var table = "<table><thead><tr><th>الرقم</th><th>الاسم</th><th>الوظيفة</th><th>الرقم التسلسلي</th>";
 
     // Add numbered shift columns from 1 to 31
     for (var i = 1; i <= 31; i++) {
         table += "<th>" + i + "</th>";
     }
-    table += "<th>مناوبات صباحية (D)</th><th>مناوبات مسائية (N)</th><th>دوام رسمي (WO)</th><th>إجازة اعتيادية (V)</th><th>اجازة اختبار (E)</th><th>اجازة تعويضية (VC)</th><th>مناوبات 24 ساعة (F)</th><th>إجمالي المناوبات (D و N فقط)</th></tr></thead><tbody>";
+    table += "<th>مناوبات صباحية (D)</th><th>مناوبات مسائية (N)</th><th>دوام رسمي (WO)</th><th>إجازة اعتيادية (V)</th><th>إجازة اختبار (E)</th><th>إجازة تعويضية (VC)</th><th>مناوبات 24 ساعة (F)</th><th>إجمالي المناوبات (D و N فقط)</th></tr></thead><tbody>";
 
     rows.forEach(function(row) {
         var columns = row.querySelectorAll("td div");
@@ -136,6 +139,15 @@ function parseHTMLSource() {
         // Check if total shifts are less than 16 to highlight row
         var rowClass = counts.Total < 16 ? "highlight" : "";
 
+        // Identify cells to be highlighted in blue
+        var highlightCells = [];
+        for (var i = 0; i < shifts.length - 1; i++) {
+            if (shifts[i] === 'N' && shifts[i + 1] === 'D') {
+                highlightCells.push(i);
+                highlightCells.push(i + 1);
+            }
+        }
+
         table += `<tr class="${rowClass}">`;
         columns.forEach(function(column, index) {
             if (index < 4) {
@@ -143,14 +155,11 @@ function parseHTMLSource() {
             }
         });
 
-        // Add shift details in separate numbered columns
-        shifts.forEach(function(shift) {
-            table += "<td>" + (shift || "") + "</td>";  // empty cell for empty shifts
-        });
-
-        // Fill empty cells for remaining days if there are less than 31 days of shifts
-        for (var i = shifts.length; i < 31; i++) {
-            table += "<td></td>";
+        // Add shift details in separate numbered columns with highlighting
+        for (var i = 0; i < 31; i++) {
+            var shift = shifts[i] || "";
+            var cellClass = highlightCells.includes(i) ? 'blue-highlight' : '';
+            table += `<td class="${cellClass}">${shift}</td>`;
         }
 
         // Add statistics columns and highlight total if less than 16
