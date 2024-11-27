@@ -38,11 +38,12 @@
             background-color: #000000;
         }
         .table-container {
-            max-height: 500px; /* حدد الارتفاع الأقصى حسب الحاجة */
             overflow-x: auto; /* يسمح بالتمرير الأفقي عند الحاجة */
-            overflow-y: auto; /* يسمح بالتمرير العمودي عند الحاجة */
             margin-top: 20px;
-            border: 1px solid #ccc; /* إضافة حدود للوضوح */
+            /* إزالة max-height و overflow-y لعدم تقييد ارتفاع الجدول */
+            /* max-height: 500px; */
+            /* overflow-y: auto; */
+            /* border: 1px solid #ccc; */ /* يمكن إزالة الحدود إذا لم تكن ضرورية */
         }
         table {
             width: 100%;
