@@ -22,7 +22,6 @@
             background-color: #f9f9f9;
             color: #000000;
             border: 1px solid #ccc;
-            resize: vertical;
         }
         button {
             padding: 12px 24px;
@@ -39,7 +38,7 @@
             background-color: #000000;
         }
         .table-container {
-            overflow-x: auto;
+            overflow-x: auto; /* يسمح بالتمرير الأفقي عند الحاجة */
             margin-top: 20px;
         }
         table {
@@ -47,15 +46,12 @@
             border-collapse: collapse;
             background-color: #ffffff;
             color: #000000;
-            table-layout: fixed; /* لضمان توزيع الأعمدة بشكل ثابت */
-            min-width: 1000px; /* تحديد حد أدنى لعرض الجدول */
         }
         th, td {
             border: 1px solid #ddd;
-            padding: 8px; /* تقليل الهوامش */
+            padding: 12px;
             text-align: center;
-            font-size: 12px; /* تقليل حجم الخط */
-            white-space: nowrap; /* منع التفاف النص */
+            font-size: 14px;
         }
         th {
             background-color: #f2f2f2;
@@ -163,21 +159,21 @@ function parseHTMLSource() {
     var doc = parser.parseFromString(inputText, "text/html");
     var rows = doc.querySelectorAll("tr"); // تحديد صفوف الجدول
 
-    var table = "<table><thead><tr><th style='width:40px;'>الرقم</th><th style='width:100px;'>الاسم</th><th style='width:100px;'>الوظيفة</th><th style='width:120px;'>الرقم التسلسلي</th>";
+    var table = "<table><thead><tr><th>الرقم</th><th>الاسم</th><th>الوظيفة</th><th>الرقم التسلسلي</th>";
 
     // إضافة أعمدة المناوبات من 1 إلى 31
     for (var i = 1; i <= 31; i++) {
-        table += "<th style='width:30px;'>" + i + "</th>";
+        table += "<th>" + i + "</th>";
     }
     // إضافة أعمدة الإحصائيات مع الأصناف المميزة لكل عمود
-    table += "<th class='stat-D' style='width:80px;'>مناوبات صباحية (D)</th>";
-    table += "<th class='stat-N' style='width:80px;'>مناوبات مسائية (N)</th>";
-    table += "<th class='stat-WO' style='width:80px;'>دوام رسمي (WO)</th>";
-    table += "<th class='stat-V' style='width:80px;'>إجازة اعتيادية (V)</th>";
-    table += "<th class='stat-E' style='width:80px;'>إجازة اختبار (E)</th>";
-    table += "<th class='stat-VC' style='width:80px;'>إجازة تعويضية (VC)</th>";
-    table += "<th class='stat-F' style='width:80px;'>مناوبات 24 ساعة (F)</th>";
-    table += "<th class='stat-Total' style='width:120px;'>إجمالي المناوبات (D و N فقط)</th></tr></thead><tbody>";
+    table += "<th class='stat-D'>مناوبات صباحية (D)</th>";
+    table += "<th class='stat-N'>مناوبات مسائية (N)</th>";
+    table += "<th class='stat-WO'>دوام رسمي (WO)</th>";
+    table += "<th class='stat-V'>إجازة اعتيادية (V)</th>";
+    table += "<th class='stat-E'>إجازة اختبار (E)</th>";
+    table += "<th class='stat-VC'>إجازة تعويضية (VC)</th>";
+    table += "<th class='stat-F'>مناوبات 24 ساعة (F)</th>";
+    table += "<th class='stat-Total'>إجمالي المناوبات (D و N فقط)</th></tr></thead><tbody>";
 
     rows.forEach(function(row) {
         var columns = row.querySelectorAll("td div");
