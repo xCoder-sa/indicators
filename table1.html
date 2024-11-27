@@ -5,82 +5,119 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>أداة تنظيم الجدول</title>
     <style>
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    direction: rtl;
-    text-align: center;
-    padding: 20px;
-    background-color: #ffffff;
-    color: #000000;
-}
-textarea {
-    width: 100%;
-    height: 200px;
-    margin-bottom: 20px;
-    padding: 10px;
-    font-size: 16px;
-    background-color: #f9f9f9;
-    color: #000000;
-    border: 1px solid #ccc;
-}
-button {
-    padding: 12px 24px;
-    font-size: 18px;
-    background-color: #c7cfc2;
-    color: white;
-    border: none;
-    cursor: pointer;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
-}
-button:hover {
-    background-color: #000000;
-}
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    background-color: #ffffff;
-    color: #000000;
-}
-th, td {
-    border: 1px solid #ddd;
-    padding: 12px;
-    text-align: center;
-}
-th {
-    background-color: #f2f2f2;
-    font-weight: bold;
-    color: #000000;
-}
-td {
-    font-size: 14px;
-    color: #000000;
-}
-.highlight {
-    background-color: rgba(255, 69, 0, 0.2);
-}
-.highlight-total {
-    background-color: rgba(255, 69, 0, 0.5);
-}
-.highlight-shift {
-    background-color: #add8e6; /* لون أزرق */
-}
-footer {
-    margin-top: 40px;
-    font-size: 14px;
-    color: #333333;
-    background-color: #f9f9f9;
-    padding: 10px 0;
-    border-top: 1px solid #ccc;
-}
-.gray-border-background {
-    background-color: grey;
-    display: inline;
-    padding: 5px;
-    border-radius: 3px;
-}
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            direction: rtl;
+            text-align: center;
+            padding: 20px;
+            background-color: #ffffff;
+            color: #000000;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 20px;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #f9f9f9;
+            color: #000000;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 18px;
+            background-color: #c7cfc2;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #000000;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #ffffff;
+            color: #000000;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            color: #000000;
+        }
+        td {
+            font-size: 14px;
+            color: #000000;
+        }
+        .highlight {
+            background-color: rgba(255, 69, 0, 0.2); /* تمييز الصف باللون البرتقالي الفاتح */
+        }
+        .highlight-total {
+            background-color: rgba(255, 69, 0, 0.5); /* تمييز الخلية باللون البرتقالي الداكن */
+        }
+        .highlight-red {
+            background-color: rgba(255, 0, 0, 0.5); /* تمييز الصف باللون الأحمر */
+        }
+        footer {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #333333;
+            background-color: #f9f9f9;
+            padding: 10px 0;
+            border-top: 1px solid #ccc;
+        }
+        .gray-border-background {
+            background-color: grey;
+            display: inline;
+            padding: 5px;
+            border-radius: 3px;
+        }
+        .blue-highlight {
+            background-color: blue;
+            color: white;
+        }
+        /* ألوان مميزة لكل عمود إحصائيات */
+        .stat-D {
+            background-color: #FFD700; /* ذهبي */
+            color: #000;
+        }
+        .stat-N {
+            background-color: #ADFF2F; /* أخضر فاتح */
+            color: #000;
+        }
+        .stat-WO {
+            background-color: #87CEFA; /* أزرق سماوي */
+            color: #000;
+        }
+        .stat-V {
+            background-color: #FFB6C1; /* وردي فاتح */
+            color: #000;
+        }
+        .stat-E {
+            background-color: #FFA07A; /* لوزي */
+            color: #000;
+        }
+        .stat-VC {
+            background-color: #20B2AA; /* أخضر مزرق */
+            color: #000;
+        }
+        .stat-F {
+            background-color: #9370DB; /* أرجواني */
+            color: #fff;
+        }
+        .stat-Total {
+            background-color: #FF8C00; /* برتقالي داكن */
+            color: #fff;
+        }
     </style>
 </head>
 <body>
@@ -98,11 +135,11 @@ footer {
 <footer>
     Design and Development by Ali Alshahrani<br>
     This script was created for Mansour<br>
-    إصدار النسخة: 1.6
+    إصدار النسخة: 2.0
 </footer>
 
 <script>
-// Function to count shifts, now including "F" (24-hour shifts) and only counting 'D' and 'N' in total
+// دالة لحساب المناوبات، تشمل "F" (مناوبات 24 ساعة) وتحتسب فقط 'D' و 'N' في الإجمالي
 function countShifts(shiftArray) {
     var shiftCounts = { D: 0, N: 0, WO: 0, V: 0, E: 0, VC: 0, F: 0 };
     shiftArray.forEach(function(shift) {
@@ -110,33 +147,59 @@ function countShifts(shiftArray) {
             shiftCounts[shift]++;
         }
     });
-    // Only count 'D' and 'N' shifts in the total
+    // فقط احتساب مناوبات 'D' و 'N' في الإجمالي
     shiftCounts['Total'] = shiftCounts.D + shiftCounts.N;
     return shiftCounts;
 }
 
-// Function to parse the pasted HTML source and extract the employee table
+// دالة لتحليل سورس الـ HTML ولصق الجدول الخاص بالموظفين
 function parseHTMLSource() {
     var inputText = document.getElementById("inputText").value;
     var parser = new DOMParser();
     var doc = parser.parseFromString(inputText, "text/html");
-    var rows = doc.querySelectorAll("tr"); // Select table rows
+    var rows = doc.querySelectorAll("tr"); // تحديد صفوف الجدول
 
     var table = "<table><thead><tr><th>الرقم</th><th>الاسم</th><th>الوظيفة</th><th>الرقم التسلسلي</th>";
 
-    // Add numbered shift columns from 1 to 31
+    // إضافة أعمدة المناوبات من 1 إلى 31
     for (var i = 1; i <= 31; i++) {
         table += "<th>" + i + "</th>";
     }
-    table += "<th>مناوبات صباحية (D)</th><th>مناوبات مسائية (N)</th><th>دوام رسمي (WO)</th><th>إجازة اعتيادية (V)</th><th>إجازة اختبار (E)</th><th>إجازة تعويضية (VC)</th><th>مناوبات 24 ساعة (F)</th><th>إجمالي المناوبات (D و N فقط)</th></tr></thead><tbody>";
+    // إضافة أعمدة الإحصائيات مع الأصناف المميزة لكل عمود
+    table += "<th class='stat-D'>مناوبات صباحية (D)</th><th class='stat-N'>مناوبات مسائية (N)</th><th class='stat-WO'>دوام رسمي (WO)</th><th class='stat-V'>إجازة اعتيادية (V)</th><th class='stat-E'>إجازة اختبار (E)</th><th class='stat-VC'>إجازة تعويضية (VC)</th><th class='stat-F'>مناوبات 24 ساعة (F)</th><th class='stat-Total'>إجمالي المناوبات (D و N فقط)</th></tr></thead><tbody>";
 
     rows.forEach(function(row) {
         var columns = row.querySelectorAll("td div");
-        var shifts = Array.from(columns).slice(4).map(function(col) { return col.innerText.trim(); }); // Extract shift details
+        if (columns.length === 0) return; // تخطي الصفوف التي لا تحتوي على بيانات
+
+        var shifts = Array.from(columns).slice(4).map(function(col) { return col.innerText.trim(); }); // استخراج تفاصيل المناوبات
         var counts = countShifts(shifts);
 
-        // Check if total shifts are less than 16 to highlight row
-        var rowClass = counts.Total < 16 ? "highlight" : "";
+        // التحقق مما إذا كانت جميع المناوبات 'F'
+        var allF = shifts.every(function(shift) { return shift === 'F' || shift === ''; });
+        var onlyF = shifts.filter(shift => shift === 'F').length === shifts.length;
+
+        // تحديد صنف الصف بناءً على الشروط
+        var rowClass = "";
+        if (onlyF) {
+            if (counts.F < 8) {
+                rowClass = "highlight-red"; // نقص في مناوبات F
+            }
+            // إذا كان F >=8، لا يتم تمييز الصف
+        } else {
+            if (counts.Total < 16) {
+                rowClass = "highlight"; // تمييز الصف إذا كان مجموع D و N أقل من 16
+            }
+        }
+
+        // تحديد الخلايا التي يجب تمييزها باللون الأزرق للمناوبات F المتتالية
+        var highlightCells = [];
+        for (var i = 0; i < shifts.length - 1; i++) {
+            if (shifts[i] === 'F' && shifts[i + 1] === 'F') {
+                highlightCells.push(i);
+                highlightCells.push(i + 1);
+            }
+        }
 
         table += `<tr class="${rowClass}">`;
         columns.forEach(function(column, index) {
@@ -145,39 +208,23 @@ function parseHTMLSource() {
             }
         });
 
-        // Process shifts and apply highlighting
-        var shiftCells = [];
+        // إضافة تفاصيل المناوبات في أعمدة منفصلة مع التمييز الأزرق إذا لزم الأمر
         for (var i = 0; i < 31; i++) {
             var shift = shifts[i] || "";
-            var cellClass = "";
-
-            // Check for D followed by N or N followed by D
-            if ((shift === "D" && shifts[i + 1] === "N") || (shift === "N" && shifts[i + 1] === "D")) {
-                cellClass = "highlight-shift";
-                shiftCells[i] = `<td class="${cellClass}">${shift}</td>`;
-                // Also highlight the next cell
-                var nextShift = shifts[i + 1] || "";
-                shiftCells[i + 1] = `<td class="${cellClass}">${nextShift}</td>`;
-                i++; // Skip next shift as it's already processed
-            } else if (shiftCells[i] === undefined) {
-                shiftCells[i] = `<td>${shift}</td>`;
-            }
+            var cellClass = highlightCells.includes(i) ? 'blue-highlight' : '';
+            table += `<td class="${cellClass}">${shift}</td>`;
         }
 
-        // Add shift cells to the table
-        for (var i = 0; i < 31; i++) {
-            table += shiftCells[i] || "<td></td>";
-        }
-
-        // Add statistics columns and highlight total if less than 16
-        table += `<td>${counts.D}</td>`;
-        table += `<td>${counts.N}</td>`;
-        table += `<td>${counts.WO}</td>`;
-        table += `<td>${counts.V}</td>`;
-        table += `<td>${counts.E}</td>`;
-        table += `<td>${counts.VC}</td>`;
-        table += `<td>${counts.F}</td>`;
-        table += `<td class="${counts.Total < 16 ? 'highlight-total' : ''}">${counts.Total}</td>`;
+        // إضافة أعمدة الإحصائيات مع الأصناف المميزة لكل عمود
+        table += `<td class="stat-D">${counts.D}</td>`;
+        table += `<td class="stat-N">${counts.N}</td>`;
+        table += `<td class="stat-WO">${counts.WO}</td>`;
+        table += `<td class="stat-V">${counts.V}</td>`;
+        table += `<td class="stat-E">${counts.E}</td>`;
+        table += `<td class="stat-VC">${counts.VC}</td>`;
+        table += `<td class="stat-F">${counts.F}</td>`;
+        // تمييز عمود الإجمالي إذا كان أقل من 16 ولا يحتوي فقط على 'F'
+        table += `<td class="stat-Total ${counts.Total < 16 && !onlyF ? 'highlight-total' : ''}">${counts.Total}</td>`;
         table += "</tr>";
     });
 
