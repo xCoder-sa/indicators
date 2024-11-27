@@ -40,6 +40,8 @@
         .table-container {
             overflow-x: auto; /* يسمح بالتمرير الأفقي عند الحاجة */
             margin-top: 20px;
+            max-height: 500px; /* حد أقصى للارتفاع لتمكين التمرير العمودي */
+            overflow-y: auto; /* تمكين التمرير العمودي */
         }
         table {
             width: 100%;
@@ -57,6 +59,9 @@
             background-color: #f2f2f2;
             font-weight: bold;
             color: #000000;
+            position: sticky; /* جعل العنوان ثابتًا */
+            top: 0; /* تثبيت العنوان في الأعلى */
+            z-index: 1; /* لضمان بقاء العنوان فوق باقي الصفوف */
         }
         .highlight {
             background-color: rgba(255, 69, 0, 0.2); /* برتقالي فاتح */
@@ -139,108 +144,108 @@
 </footer>
 
 <script>
-// دالة لحساب المناوبات، تشمل "F" (مناوبات 24 ساعة) وتحتسب فقط 'D' و 'N' في الإجمالي
-function countShifts(shiftArray) {
-    var shiftCounts = { D: 0, N: 0, WO: 0, V: 0, E: 0, VC: 0, F: 0 };
-    shiftArray.forEach(function(shift) {
-        if (shiftCounts.hasOwnProperty(shift)) {
-            shiftCounts[shift]++;
-        }
-    });
-    // فقط احتساب مناوبات 'D' و 'N' في الإجمالي
-    shiftCounts['Total'] = shiftCounts.D + shiftCounts.N;
-    return shiftCounts;
-}
-
-// دالة لتحليل سورس الـ HTML ولصق الجدول الخاص بالموظفين
-function parseHTMLSource() {
-    var inputText = document.getElementById("inputText").value;
-    var parser = new DOMParser();
-    var doc = parser.parseFromString(inputText, "text/html");
-    var rows = doc.querySelectorAll("tr"); // تحديد صفوف الجدول
-
-    var table = "<table><thead><tr><th>الرقم</th><th>الاسم</th><th>الوظيفة</th><th>الرقم التسلسلي</th>";
-
-    // إضافة أعمدة المناوبات من 1 إلى 31
-    for (var i = 1; i <= 31; i++) {
-        table += "<th>" + i + "</th>";
-    }
-    // إضافة أعمدة الإحصائيات مع الأصناف المميزة لكل عمود
-    table += "<th class='stat-D'>مناوبات صباحية (D)</th>";
-    table += "<th class='stat-N'>مناوبات مسائية (N)</th>";
-    table += "<th class='stat-WO'>دوام رسمي (WO)</th>";
-    table += "<th class='stat-V'>إجازة اعتيادية (V)</th>";
-    table += "<th class='stat-E'>إجازة اختبار (E)</th>";
-    table += "<th class='stat-VC'>إجازة تعويضية (VC)</th>";
-    table += "<th class='stat-F'>مناوبات 24 ساعة (F)</th>";
-    table += "<th class='stat-Total'>إجمالي المناوبات (D و N فقط)</th></tr></thead><tbody>";
-
-    rows.forEach(function(row) {
-        var columns = row.querySelectorAll("td div");
-        if (columns.length === 0) return; // تخطي الصفوف التي لا تحتوي على بيانات
-
-        var shifts = Array.from(columns).slice(4).map(function(col) { return col.innerText.trim(); }); // استخراج تفاصيل المناوبات
-        var counts = countShifts(shifts);
-
-        // التحقق مما إذا كانت جميع المناوبات 'F' أو خلايا فارغة
-        var onlyF = shifts.every(function(shift) { return shift === 'F' || shift === ''; });
-
-        // تحديد صنف الصف بناءً على الشروط
-        var rowClass = "";
-        if (onlyF) {
-            if (counts.F < 8) {
-                rowClass = "highlight-red"; // نقص في مناوبات F
-            }
-            // إذا كان F >=8، لا يتم تمييز الصف
-        } else {
-            if (counts.Total < 16) {
-                rowClass = "highlight"; // تمييز الصف إذا كان مجموع D و N أقل من 16
-            }
-        }
-
-        // تحديد الخلايا التي يجب تمييزها باللون الأزرق للمناوبات F المتتالية
-        var highlightCells = [];
-        for (var i = 0; i < shifts.length - 1; i++) {
-            if (shifts[i] === 'F' && shifts[i + 1] === 'F') {
-                highlightCells.push(i);
-                highlightCells.push(i + 1);
-            }
-        }
-
-        table += `<tr class="${rowClass}">`;
-        columns.forEach(function(column, index) {
-            if (index < 4) {
-                table += "<td>" + column.innerText.trim() + "</td>";
+    // دالة لحساب المناوبات، تشمل "F" (مناوبات 24 ساعة) وتحتسب فقط 'D' و 'N' في الإجمالي
+    function countShifts(shiftArray) {
+        var shiftCounts = { D: 0, N: 0, WO: 0, V: 0, E: 0, VC: 0, F: 0 };
+        shiftArray.forEach(function(shift) {
+            if (shiftCounts.hasOwnProperty(shift)) {
+                shiftCounts[shift]++;
             }
         });
+        // فقط احتساب مناوبات 'D' و 'N' في الإجمالي
+        shiftCounts['Total'] = shiftCounts.D + shiftCounts.N;
+        return shiftCounts;
+    }
 
-        // إضافة تفاصيل المناوبات في أعمدة منفصلة مع التمييز الأزرق إذا لزم الأمر
-        for (var i = 0; i < 31; i++) {
-            var shift = shifts[i] || "";
-            var cellClass = highlightCells.includes(i) ? 'blue-highlight' : '';
-            table += `<td class="${cellClass}">${shift}</td>`;
+    // دالة لتحليل سورس الـ HTML ولصق الجدول الخاص بالموظفين
+    function parseHTMLSource() {
+        var inputText = document.getElementById("inputText").value;
+        var parser = new DOMParser();
+        var doc = parser.parseFromString(inputText, "text/html");
+        var rows = doc.querySelectorAll("tr"); // تحديد صفوف الجدول
+
+        var table = "<table><thead><tr><th>الرقم</th><th>الاسم</th><th>الوظيفة</th><th>الرقم التسلسلي</th>";
+
+        // إضافة أعمدة المناوبات من 1 إلى 31
+        for (var i = 1; i <= 31; i++) {
+            table += "<th>" + i + "</th>";
         }
-
         // إضافة أعمدة الإحصائيات مع الأصناف المميزة لكل عمود
-        table += `<td class="stat-D">${counts.D}</td>`;
-        table += `<td class="stat-N">${counts.N}</td>`;
-        table += `<td class="stat-WO">${counts.WO}</td>`;
-        table += `<td class="stat-V">${counts.V}</td>`;
-        table += `<td class="stat-E">${counts.E}</td>`;
-        table += `<td class="stat-VC">${counts.VC}</td>`;
-        table += `<td class="stat-F">${counts.F}</td>`;
-        // تمييز عمود الإجمالي إذا كان أقل من 16 ولا يحتوي فقط على 'F'
-        if (counts.Total < 16 && !onlyF) {
-            table += `<td class="stat-Total highlight-total">${counts.Total}</td>`;
-        } else {
-            table += `<td class="stat-Total">${counts.Total}</td>`;
-        }
-        table += "</tr>";
-    });
+        table += "<th class='stat-D'>مناوبات صباحية (D)</th>";
+        table += "<th class='stat-N'>مناوبات مسائية (N)</th>";
+        table += "<th class='stat-WO'>دوام رسمي (WO)</th>";
+        table += "<th class='stat-V'>إجازة اعتيادية (V)</th>";
+        table += "<th class='stat-E'>إجازة اختبار (E)</th>";
+        table += "<th class='stat-VC'>إجازة تعويضية (VC)</th>";
+        table += "<th class='stat-F'>مناوبات 24 ساعة (F)</th>";
+        table += "<th class='stat-Total'>إجمالي المناوبات (D و N فقط)</th></tr></thead><tbody>";
 
-    table += "</tbody></table>";
-    document.getElementById("outputTable").innerHTML = table;
-}
+        rows.forEach(function(row) {
+            var columns = row.querySelectorAll("td div");
+            if (columns.length === 0) return; // تخطي الصفوف التي لا تحتوي على بيانات
+
+            var shifts = Array.from(columns).slice(4).map(function(col) { return col.innerText.trim(); }); // استخراج تفاصيل المناوبات
+            var counts = countShifts(shifts);
+
+            // التحقق مما إذا كانت جميع المناوبات 'F' أو خلايا فارغة
+            var onlyF = shifts.every(function(shift) { return shift === 'F' || shift === ''; });
+
+            // تحديد صنف الصف بناءً على الشروط
+            var rowClass = "";
+            if (onlyF) {
+                if (counts.F < 8) {
+                    rowClass = "highlight-red"; // نقص في مناوبات F
+                }
+                // إذا كان F >=8، لا يتم تمييز الصف
+            } else {
+                if (counts.Total < 16) {
+                    rowClass = "highlight"; // تمييز الصف إذا كان مجموع D و N أقل من 16
+                }
+            }
+
+            // تحديد الخلايا التي يجب تمييزها باللون الأزرق للمناوبات F المتتالية
+            var highlightCells = [];
+            for (var i = 0; i < shifts.length - 1; i++) {
+                if (shifts[i] === 'F' && shifts[i + 1] === 'F') {
+                    highlightCells.push(i);
+                    highlightCells.push(i + 1);
+                }
+            }
+
+            table += `<tr class="${rowClass}">`;
+            columns.forEach(function(column, index) {
+                if (index < 4) {
+                    table += "<td>" + column.innerText.trim() + "</td>";
+                }
+            });
+
+            // إضافة تفاصيل المناوبات في أعمدة منفصلة مع التمييز الأزرق إذا لزم الأمر
+            for (var i = 0; i < 31; i++) {
+                var shift = shifts[i] || "";
+                var cellClass = highlightCells.includes(i) ? 'blue-highlight' : '';
+                table += `<td class="${cellClass}">${shift}</td>`;
+            }
+
+            // إضافة أعمدة الإحصائيات مع الأصناف المميزة لكل عمود
+            table += `<td class="stat-D">${counts.D}</td>`;
+            table += `<td class="stat-N">${counts.N}</td>`;
+            table += `<td class="stat-WO">${counts.WO}</td>`;
+            table += `<td class="stat-V">${counts.V}</td>`;
+            table += `<td class="stat-E">${counts.E}</td>`;
+            table += `<td class="stat-VC">${counts.VC}</td>`;
+            table += `<td class="stat-F">${counts.F}</td>`;
+            // تمييز عمود الإجمالي إذا كان أقل من 16 ولا يحتوي فقط على 'F'
+            if (counts.Total < 16 && !onlyF) {
+                table += `<td class="stat-Total highlight-total">${counts.Total}</td>`;
+            } else {
+                table += `<td class="stat-Total">${counts.Total}</td>`;
+            }
+            table += "</tr>";
+        });
+
+        table += "</tbody></table>";
+        document.getElementById("outputTable").innerHTML = table;
+    }
 </script>
 
 </body>
