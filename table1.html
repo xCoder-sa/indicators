@@ -22,6 +22,7 @@
             background-color: #f9f9f9;
             color: #000000;
             border: 1px solid #ccc;
+            resize: vertical;
         }
         button {
             padding: 12px 24px;
@@ -43,6 +44,8 @@
             margin-top: 20px;
             background-color: #ffffff;
             color: #000000;
+            table-layout: fixed;
+            word-wrap: break-word;
         }
         th, td {
             border: 1px solid #ddd;
@@ -59,13 +62,13 @@
             color: #000000;
         }
         .highlight {
-            background-color: rgba(255, 69, 0, 0.2); /* تمييز الصف باللون البرتقالي الفاتح */
+            background-color: rgba(255, 69, 0, 0.2); /* برتقالي فاتح */
         }
         .highlight-total {
-            background-color: rgba(255, 69, 0, 0.5); /* تمييز الخلية باللون البرتقالي الداكن */
+            background-color: rgba(255, 69, 0, 0.5); /* برتقالي داكن */
         }
         .highlight-red {
-            background-color: rgba(255, 0, 0, 0.5); /* تمييز الصف باللون الأحمر */
+            background-color: rgba(255, 0, 0, 0.5); /* أحمر */
         }
         footer {
             margin-top: 40px;
@@ -123,11 +126,11 @@
 <body>
 
 <h2>أداة تنظيم الجدول</h2>
-<textarea id="inputText" placeholder=" لصق سورس الصفحة هنا ..."></textarea>
+<textarea id="inputText" placeholder="لصق سورس الصفحة هنا ..."></textarea>
 <br>
 <button onclick="parseHTMLSource()">ترتيب الجدول مع الإحصائيات</button>
 <br>
-<h2 style="background-color: grey; color: white; display: inline; padding: 5px; border-radius: 3px;">
+<h2 class="gray-border-background" style="color: white;">
   الجدول المرتب مع إحصائيات المناوبات:
 </h2>
 <div id="outputTable"></div>
@@ -175,9 +178,8 @@ function parseHTMLSource() {
         var shifts = Array.from(columns).slice(4).map(function(col) { return col.innerText.trim(); }); // استخراج تفاصيل المناوبات
         var counts = countShifts(shifts);
 
-        // التحقق مما إذا كانت جميع المناوبات 'F'
-        var allF = shifts.every(function(shift) { return shift === 'F' || shift === ''; });
-        var onlyF = shifts.filter(shift => shift === 'F').length === shifts.length;
+        // التحقق مما إذا كانت جميع المناوبات 'F' أو خلايا فارغة
+        var onlyF = shifts.every(function(shift) { return shift === 'F' || shift === ''; });
 
         // تحديد صنف الصف بناءً على الشروط
         var rowClass = "";
@@ -224,7 +226,11 @@ function parseHTMLSource() {
         table += `<td class="stat-VC">${counts.VC}</td>`;
         table += `<td class="stat-F">${counts.F}</td>`;
         // تمييز عمود الإجمالي إذا كان أقل من 16 ولا يحتوي فقط على 'F'
-        table += `<td class="stat-Total ${counts.Total < 16 && !onlyF ? 'highlight-total' : ''}">${counts.Total}</td>`;
+        if (counts.Total < 16 && !onlyF) {
+            table += `<td class="stat-Total highlight-total">${counts.Total}</td>`;
+        } else {
+            table += `<td class="stat-Total">${counts.Total}</td>`;
+        }
         table += "</tr>";
     });
 
