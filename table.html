@@ -12,7 +12,6 @@
             padding: 20px;
             background-color: #ffffff;
             color: #000000;
-            margin: 0; /* إزالة الهوامش الافتراضية */
         }
         textarea {
             width: 100%;
@@ -23,7 +22,6 @@
             background-color: #f9f9f9;
             color: #000000;
             border: 1px solid #ccc;
-            box-sizing: border-box; /* لضمان احتساب الحشو ضمن العرض */
         }
         button {
             padding: 12px 24px;
@@ -42,29 +40,23 @@
         .table-container {
             overflow-x: auto; /* يسمح بالتمرير الأفقي عند الحاجة */
             margin-top: 20px;
-            /* التأكد من عدم وجود overflow-y لتجنب تقييد ارتفاع الجدول */
         }
         table {
             width: 100%;
             border-collapse: collapse;
             background-color: #ffffff;
             color: #000000;
-            table-layout: fixed; /* لضمان توزيع الأعمدة بشكل متساوي */
         }
         th, td {
             border: 1px solid #ddd;
             padding: 12px;
             text-align: center;
             font-size: 14px;
-            word-wrap: break-word; /* لضمان عدم تجاوز النص للعرض المحدد */
         }
-        thead th {
+        th {
             background-color: #f2f2f2;
             font-weight: bold;
             color: #000000;
-            position: sticky;
-            top: 0;
-            z-index: 2; /* لضمان بقاء العناوين فوق باقي الخلايا */
         }
         .highlight {
             background-color: rgba(255, 69, 0, 0.2); /* برتقالي فاتح */
