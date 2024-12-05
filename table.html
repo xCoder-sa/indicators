@@ -91,6 +91,10 @@
             color: white;
         }
         /* ألوان مميزة لكل عمود إحصائيات */
+        .stat-Result {
+            background-color: #98FB98; /* أخضر فاتح */
+            color: #000;
+        }
         .stat-D {
             background-color: #FFD700; /* ذهبي */
             color: #000;
@@ -113,6 +117,10 @@
         }
         .stat-VC {
             background-color: #20B2AA; /* أخضر مزرق */
+            color: #000;
+        }
+        .stat-S {
+            background-color: #DA70D6; /* أوركيد */
             color: #000;
         }
         .stat-F {
@@ -144,16 +152,22 @@
 </footer>
 
 <script>
-    // دالة لحساب المناوبات، تشمل "F" (مناوبات 24 ساعة) وتحتسب فقط 'D' و 'N' في الإجمالي
+    // دالة لحساب المناوبات، تشمل "F" (مناوبات 24 ساعة) وتحتسب 'D' و 'N' والأرقام من 0 إلى 24 في الإجمالي
     function countShifts(shiftArray) {
-        var shiftCounts = { D: 0, N: 0, WO: 0, V: 0, E: 0, VC: 0, F: 0 };
+        var shiftCounts = { D: 0, N: 0, WO: 0, V: 0, E: 0, VC: 0, F: 0, S: 0, HoursShifts: 0 };
         shiftArray.forEach(function(shift) {
+            shift = shift.trim();
             if (shiftCounts.hasOwnProperty(shift)) {
                 shiftCounts[shift]++;
+            } else {
+                var num = parseFloat(shift);
+                if (!isNaN(num) && num >= 0 && num <= 24) {
+                    shiftCounts.HoursShifts++;
+                }
             }
         });
-        // فقط احتساب مناوبات 'D' و 'N' في الإجمالي
-        shiftCounts['Total'] = shiftCounts.D + shiftCounts.N;
+        // Total shifts includes D, N, and HoursShifts
+        shiftCounts['Total'] = shiftCounts.D + shiftCounts.N + shiftCounts.HoursShifts;
         return shiftCounts;
     }
 
@@ -170,6 +184,8 @@
         for (var i = 1; i <= 31; i++) {
             table += "<th>" + i + "</th>";
         }
+        // إضافة العمود الجديد للنتيجة
+        table += "<th class='stat-Result'>نتيجة المعادلة</th>";
         // إضافة أعمدة الإحصائيات مع الأصناف المميزة لكل عمود
         table += "<th class='stat-D'>مناوبات صباحية (D)</th>";
         table += "<th class='stat-N'>مناوبات مسائية (N)</th>";
@@ -177,8 +193,9 @@
         table += "<th class='stat-V'>إجازة اعتيادية (V)</th>";
         table += "<th class='stat-E'>إجازة اختبار (E)</th>";
         table += "<th class='stat-VC'>إجازة تعويضية (VC)</th>";
+        table += "<th class='stat-S'>إجازة مرضية (S)</th>";
         table += "<th class='stat-F'>مناوبات 24 ساعة (F)</th>";
-        table += "<th class='stat-Total'>إجمالي المناوبات (D و N فقط)</th></tr></thead><tbody>";
+        table += "<th class='stat-Total'>إجمالي المناوبات (D و N وساعات)</th></tr></thead><tbody>";
 
         rows.forEach(function(row) {
             var columns = row.querySelectorAll("td div");
@@ -199,7 +216,7 @@
                 // إذا كان F >=8، لا يتم تمييز الصف
             } else {
                 if (counts.Total < 16) {
-                    rowClass = "highlight"; // تمييز الصف إذا كان مجموع D و N أقل من 16
+                    rowClass = "highlight"; // تمييز الصف إذا كان مجموع D و N و HoursShifts أقل من 16
                 }
             }
 
@@ -226,6 +243,15 @@
                 table += `<td class="${cellClass}">${shift}</td>`;
             }
 
+            // حساب مجموع V و VC و S
+            var totalVVCandS = counts.V + counts.VC + counts.S;
+            // تطبيق المعادلة: نتيجة = |(8 * مجموع V,VC,S) - 192| / 12
+            var equationResult = Math.abs((8 * totalVVCandS) - 192) / 12;
+            equationResult = equationResult.toFixed(2);
+
+            // إضافة نتيجة المعادلة في العمود الجديد
+            table += `<td class="stat-Result">${equationResult}</td>`;
+
             // إضافة أعمدة الإحصائيات مع الأصناف المميزة لكل عمود
             table += `<td class="stat-D">${counts.D}</td>`;
             table += `<td class="stat-N">${counts.N}</td>`;
@@ -233,6 +259,7 @@
             table += `<td class="stat-V">${counts.V}</td>`;
             table += `<td class="stat-E">${counts.E}</td>`;
             table += `<td class="stat-VC">${counts.VC}</td>`;
+            table += `<td class="stat-S">${counts.S}</td>`;
             table += `<td class="stat-F">${counts.F}</td>`;
             // تمييز عمود الإجمالي إذا كان أقل من 16 ولا يحتوي فقط على 'F'
             if (counts.Total < 16 && !onlyF) {
