@@ -138,6 +138,14 @@
         .row-highlight {
             background-color: #98FB98; /* نفس لون stat-Result */
         }
+        /* الفئة الجديدة لتمييز الأسماء في التذييل */
+        .footer-highlight {
+            background-color: #FFD700; /* اللون الذهبي */
+            color: #000000; /* لون النص */
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -152,16 +160,16 @@
 </h2>
 <div class="table-container" id="outputTable"></div>
 
-<footer>
-    Design and Development by Ali Alshahrani<br>
-    This script was created for Mansour<br>
-    إصدار النسخة: 3.0
-</footer>
-
+    <footer>
+        Design and Development by <span class="footer-highlight">Ali Alshahrani</span><br>
+        This script was created for <span class="footer-highlight">Mansour</span><br>
+        إصدار النسخة: 4.0
+    </footer>
+    
 <script>
     // دالة لحساب المناوبات، تشمل "F" (مناوبات 24 ساعة) وتحتسب 'D' و 'N' والأرقام من 0 إلى 24 في الإجمالي
     function countShifts(shiftArray) {
-        var shiftCounts = { D: 0, N: 0, WO: 0, V: 0, E: 0, VC: 0, F: 0, S: 0, HoursShifts: 0 };
+        var shiftCounts = { D: 0, N: 0, WO: 0, V: 0, E: 0, VC: 0, F: 0, S: 0, HoursShifts: 0, HoursValues: [] };
         shiftArray.forEach(function(shift) {
             shift = shift.trim();
             if (shiftCounts.hasOwnProperty(shift)) {
@@ -170,6 +178,7 @@
                 var num = parseFloat(shift);
                 if (!isNaN(num) && num >= 0 && num <= 24) {
                     shiftCounts.HoursShifts++;
+                    shiftCounts.HoursValues.push(num); // جمع القيم الرقمية
                 }
             }
         });
@@ -275,12 +284,14 @@
             }
             equationResult = equationResult.toFixed(2);
 
-            // حساب فرق الساعات: إذا كان الصف يحتوي على V أو VC أو S، نحسب الفرق من 192 ساعة
-            var hoursDifference = "";
-            if (hasVVCorS) {
-                var totalHours = totalVVCandS * 8;
-                hoursDifference = 192 - totalHours;
+            // حساب إجمالي الساعات الفعلية للموظف
+            var totalWorkingHours = (counts.D * 12) + (counts.N * 12) + (counts.F * 24);
+            // إضافة الساعات من المناوبات الرقمية
+            if (counts.HoursValues.length > 0) {
+                totalWorkingHours += counts.HoursValues.reduce(function(a, b) { return a + b; }, 0);
             }
+            // حساب فرق الساعات: المتبقي للوصول إلى 192 ساعة
+            var hoursDifference = 192 - totalWorkingHours;
 
             // إضافة نتيجة المعادلة وفرق الساعات في الأعمدة الجديدة
             table += `<td class="stat-Result">${equationResult}</td>`;
