@@ -138,9 +138,16 @@
         .row-highlight {
             background-color: #98FB98; /* نفس لون stat-Result */
         }
-        /* الفئة الجديدة لتمييز الأسماء في التذييل */
-        .footer-highlight {
-            background-color: #FFD700; /* اللون الذهبي */
+        /* الفئات الجديدة لتمييز الأسماء في التذييل */
+        .footer-highlight-ali {
+            background-color: #D3D3D3; /* رمادي فاتح */
+            color: #000000; /* لون النص */
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .footer-highlight-mansour {
+            background-color: #ADD8E6; /* أزرق فاتح */
             color: #000000; /* لون النص */
             padding: 2px 6px;
             border-radius: 4px;
@@ -160,16 +167,16 @@
 </h2>
 <div class="table-container" id="outputTable"></div>
 
-    <footer>
-        Design and Development by <span class="footer-highlight">Ali Alshahrani</span><br>
-        This script was created for <span class="footer-highlight">Mansour</span><br>
-        إصدار النسخة: 4.0
-    </footer>
-    
+<footer>
+    Design and Development by <span class="footer-highlight-ali">Ali Alshahrani</span><br>
+    This script was created for <span class="footer-highlight-mansour">Mansour</span><br>
+    إصدار النسخة: 4.1
+</footer>
+
 <script>
     // دالة لحساب المناوبات، تشمل "F" (مناوبات 24 ساعة) وتحتسب 'D' و 'N' والأرقام من 0 إلى 24 في الإجمالي
     function countShifts(shiftArray) {
-        var shiftCounts = { D: 0, N: 0, WO: 0, V: 0, E: 0, VC: 0, F: 0, S: 0, HoursShifts: 0, HoursValues: [] };
+        var shiftCounts = { D: 0, N: 0, WO: 0, V: 0, E: 0, VC: 0, F: 0, S: 0, M: 0, ME: 0, HoursShifts: 0, HoursValues: [] };
         shiftArray.forEach(function(shift) {
             shift = shift.trim();
             if (shiftCounts.hasOwnProperty(shift)) {
@@ -191,6 +198,13 @@
     function containsVVCorS(shiftArray) {
         return shiftArray.some(function(shift) {
             return shift === 'V' || shift === 'VC' || shift === 'S';
+        });
+    }
+
+    // دالة للتحقق مما إذا كان الصف يحتوي على M أو ME
+    function containsMorME(shiftArray) {
+        return shiftArray.some(function(shift) {
+            return shift === 'M' || shift === 'ME';
         });
     }
 
@@ -291,7 +305,12 @@
                 totalWorkingHours += counts.HoursValues.reduce(function(a, b) { return a + b; }, 0);
             }
             // حساب فرق الساعات: المتبقي للوصول إلى 192 ساعة
-            var hoursDifference = 192 - totalWorkingHours;
+            var hoursDifference = "";
+            // إذا كان الصف لا يحتوي على M أو ME، نقوم بحساب فرق الساعات
+            var hasMorME = containsMorME(shifts);
+            if (!hasMorME) {
+                hoursDifference = 192 - totalWorkingHours;
+            }
 
             // إضافة نتيجة المعادلة وفرق الساعات في الأعمدة الجديدة
             table += `<td class="stat-Result">${equationResult}</td>`;
