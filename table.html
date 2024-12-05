@@ -95,6 +95,10 @@
             background-color: #98FB98; /* أخضر فاتح */
             color: #000;
         }
+        .stat-Diff {
+            background-color: #FFDAB9; /* خوخي */
+            color: #000;
+        }
         .stat-D {
             background-color: #FFD700; /* ذهبي */
             color: #000;
@@ -130,6 +134,9 @@
         .stat-Total {
             background-color: #FF8C00; /* برتقالي داكن */
             color: #fff;
+        }
+        .row-highlight {
+            background-color: #98FB98; /* نفس لون stat-Result */
         }
     </style>
 </head>
@@ -171,6 +178,13 @@
         return shiftCounts;
     }
 
+    // دالة للتحقق مما إذا كان الصف يحتوي على V أو VC أو S
+    function containsVVCorS(shiftArray) {
+        return shiftArray.some(function(shift) {
+            return shift === 'V' || shift === 'VC' || shift === 'S';
+        });
+    }
+
     // دالة لتحليل سورس الـ HTML ولصق الجدول الخاص بالموظفين
     function parseHTMLSource() {
         var inputText = document.getElementById("inputText").value;
@@ -184,8 +198,9 @@
         for (var i = 1; i <= 31; i++) {
             table += "<th>" + i + "</th>";
         }
-        // إضافة العمود الجديد للنتيجة
+        // إضافة العمود الجديد للنتيجة وفرق الساعات
         table += "<th class='stat-Result'>نتيجة المعادلة</th>";
+        table += "<th class='stat-Diff'>فرق الساعات</th>";
         // إضافة أعمدة الإحصائيات مع الأصناف المميزة لكل عمود
         table += "<th class='stat-D'>مناوبات صباحية (D)</th>";
         table += "<th class='stat-N'>مناوبات مسائية (N)</th>";
@@ -220,6 +235,12 @@
                 }
             }
 
+            // إذا كان الصف يحتوي على V أو VC أو S، تغيير لون الصف ليتوافق مع لون عمود نتيجة المعادلة
+            var hasVVCorS = containsVVCorS(shifts);
+            if (hasVVCorS) {
+                rowClass = "row-highlight";
+            }
+
             // تحديد الخلايا التي يجب تمييزها باللون الأزرق للمناوبات F المتتالية
             var highlightCells = [];
             for (var i = 0; i < shifts.length - 1; i++) {
@@ -247,10 +268,23 @@
             var totalVVCandS = counts.V + counts.VC + counts.S;
             // تطبيق المعادلة: نتيجة = |(8 * مجموع V,VC,S) - 192| / 12
             var equationResult = Math.abs((8 * totalVVCandS) - 192) / 12;
+
+            // تحسين نتيجة المعادلة: إذا كانت النتيجة 16، نجعلها 0
+            if (equationResult == 16) {
+                equationResult = 0;
+            }
             equationResult = equationResult.toFixed(2);
 
-            // إضافة نتيجة المعادلة في العمود الجديد
+            // حساب فرق الساعات: إذا كان الصف يحتوي على V أو VC أو S، نحسب الفرق من 192 ساعة
+            var hoursDifference = "";
+            if (hasVVCorS) {
+                var totalHours = totalVVCandS * 8;
+                hoursDifference = 192 - totalHours;
+            }
+
+            // إضافة نتيجة المعادلة وفرق الساعات في الأعمدة الجديدة
             table += `<td class="stat-Result">${equationResult}</td>`;
+            table += `<td class="stat-Diff">${hoursDifference}</td>`;
 
             // إضافة أعمدة الإحصائيات مع الأصناف المميزة لكل عمود
             table += `<td class="stat-D">${counts.D}</td>`;
