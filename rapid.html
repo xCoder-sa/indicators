@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أداة تنظيم نموذج بلاغات التدخل السريع</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            direction: rtl;
+            text-align: center;
+            background-color: white;
+            color: #333;
+        }
+        h1 {
+            color: #2196F3;
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-shadow: 0px 0px 5px #2196F3;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        textarea {
+            width: 80%;
+            height: 200px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            border: 2px solid #2196F3;
+            padding: 10px;
+            font-size: 1em;
+            background-color: white;
+            color: #333;
+            resize: none;
+            box-shadow: 0px 0px 10px #2196F3;
+        }
+        button {
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+            transition: 0.3s;
+            box-shadow: 0px 0px 15px #2196F3;
+        }
+        button:hover {
+            background-color: #1976D2;
+            box-shadow: 0px 0px 20px #1976D2;
+        }
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0px 0px 20px #2196F3;
+        }
+        table, th, td {
+            border: 1px solid #2196F3;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            color: #2196F3;
+            font-size: 1em;
+        }
+        th {
+            background-color: #2196F3;
+            color: white;
+        }
+        .instruction {
+            font-size: 1em;
+            color: #2196F3;
+            margin-bottom: 15px;
+            text-shadow: 0px 0px 5px #2196F3;
+        }
+        .hidden {
+            display: none;
+        }
+        footer {
+            margin-top: 30px;
+            font-size: 0.8em;
+            color: red;
+            text-shadow: 1px 1px 2px #000;
+            text-align: center;
+        }
+        footer a {
+            color: #2196F3;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        .version {
+            font-size: 0.9em;
+            color: #555;
+            margin-top: 10px;
+        }
+        .leader {
+            font-size: 1.2em;
+            color: #2196F3;
+            margin-top: 20px;
+            text-shadow: 0px 0px 5px #2196F3;
+        }
+    </style>
+</head>
+<body>
+
+    <h1> أداة تنظيم نموذج بلاغات التدخل السريع 🐪 </h1>
+
+    <div class="container">
+        <label class="instruction">أدخل نص نموذج البلاغات هنا:</label>
+        <textarea id="dataInput" placeholder="الصق النموذج هنا..."></textarea>
+        <button onclick="processData()">تنظيم البيانات</button>
+    </div>
+
+    <table id="dataTable" class="hidden">
+        <thead>
+            <tr>
+                <th>القطاع</th>
+                <th>استجابة أولية</th>
+                <th>استجابة داعمة</th>
+                <th>إجمالي القطاع</th>
+                <th>أرقام البلاغات</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <div id="totalContainer" class="hidden">
+        <h2 style="color:#2196F3; margin-top:30px; text-shadow:0px 0px 5px #2196F3;">إجمالي منطقة الرياض: <span id="totalRiyadh"></span></h2>
+    </div>
+
+    <div id="leaderContainer" class="leader hidden">
+        قائد المنطقة المناوب: <span id="leaderName"></span>
+    </div>
+
+    <button id="copyButton" class="hidden" onclick="copyTableData()">نسخ البيانات</button>
+
+    <footer>
+        <p><span style="color: #000000;">Design and Development by</span> <span style="color: #ff0000;">Ali Alshahrani</span></p>
+        <div class="version">إصدار النسخة: 1.0.0</div>
+    </footer>
+
+    <script>
+        function processData() {
+            const input = document.getElementById("dataInput").value;
+            if (!input.trim()) {
+                alert("الرجاء إدخال البيانات أولاً");
+                return;
+            }
+
+            // نقوم باستخراج القطاعات باستخدام النمط المحدد
+            // القطاعات تأتي بهذا الشكل: *قطاع عمليات [اسم القطاع]:*
+            // بعد ذلك نبحث عن الاستجابة الأولية, الاستجابة الداعمة, إجمالي القطاع, وأرقام البلاغات
+            const sectors = input.split(/\*قطاع\s+عمليات\s+(.*?)\:\*/);
+            // المصفوفة ستحتوي على عناصر فارغة في البداية لذلك نتجاهل الأول
+            let parsedSectors = [];
+            let totalRiyadh = null;
+            let leaderName = null;
+
+            // البحث عن إجمالي منطقة الرياض
+            const totalMatch = input.match(/\*إجمالي منطقة الرياض:\*\s*(\d+)/);
+            if (totalMatch) {
+                totalRiyadh = totalMatch[1];
+            }
+
+            // البحث عن قائد المنطقة المناوب
+            const leaderMatch = input.match(/\*قائد المنطقة المناوب:\*\s*(.*)/);
+            if (leaderMatch) {
+                leaderName = leaderMatch[1].trim();
+            }
+
+            // لاحظنا أن السبلت سيجلب أسماء القطاعات في المواقع الفردية (1,3,5...) مع بقية المحتوى في نفس العنصر
+            // كل قطاع سيكون في شكل:
+            // [اسم القطاع] : [محتوى القطاع]
+            // sectors = ["", "الغرب", "\n- استجابة أولية: 0 ...", "الشرق", "\n- استجابة أولية: 5 ...", ...]
+            // لذلك نتعامل معها على شكل أزواج: اسم القطاع والعنصر الذي يليه
+            for (let i = 1; i < sectors.length; i += 2) {
+                const sectorName = sectors[i].trim();
+                const sectorContent = sectors[i+1] ? sectors[i+1] : "";
+
+                if (!sectorName) continue;
+
+                const initialMatch = sectorContent.match(/استجابة أولية:\s*(\d+)/);
+                const supportMatch = sectorContent.match(/استجابة داعمة:\s*(\d+)/);
+                const totalSectorMatch = sectorContent.match(/إجمالي قطاع.*:\s*(\d+)/);
+
+                let initial = initialMatch ? initialMatch[1] : "0";
+                let support = supportMatch ? supportMatch[1] : "0";
+                let sectorTotal = totalSectorMatch ? totalSectorMatch[1] : "0";
+
+                // أرقام البلاغات
+                let reports = [];
+                // النمط: رقم البلاغ 1: 120293
+                // نبحث عن جميع أرقام البلاغات
+                let reportRegex = /رقم البلاغ\s*\d+:\s*(\d+)/g;
+                let reportMatch;
+                while ((reportMatch = reportRegex.exec(sectorContent)) !== null) {
+                    reports.push(reportMatch[1]);
+                }
+
+                parsedSectors.push({
+                    name: sectorName,
+                    initial: initial,
+                    support: support,
+                    total: sectorTotal,
+                    reports: reports
+                });
+            }
+
+            // الآن نعرض البيانات في الجدول
+            const table = document.getElementById("dataTable");
+            const tbody = table.querySelector("tbody");
+            tbody.innerHTML = "";
+
+            parsedSectors.forEach(sector => {
+                const tr = document.createElement("tr");
+
+                const tdName = document.createElement("td");
+                tdName.textContent = sector.name;
+                tr.appendChild(tdName);
+
+                const tdInitial = document.createElement("td");
+                tdInitial.textContent = sector.initial;
+                tr.appendChild(tdInitial);
+
+                const tdSupport = document.createElement("td");
+                tdSupport.textContent = sector.support;
+                tr.appendChild(tdSupport);
+
+                const tdTotal = document.createElement("td");
+                tdTotal.textContent = sector.total;
+                tr.appendChild(tdTotal);
+
+                const tdReports = document.createElement("td");
+                tdReports.textContent = sector.reports.length > 0 ? sector.reports.join("، ") : "لا يوجد";
+                tr.appendChild(tdReports);
+
+                tbody.appendChild(tr);
+            });
+
+            // إظهار الجدول
+            table.classList.remove("hidden");
+
+            // إظهار الإجمالي إذا وجد
+            if (totalRiyadh !== null) {
+                document.getElementById("totalRiyadh").textContent = totalRiyadh;
+                document.getElementById("totalContainer").classList.remove("hidden");
+            } else {
+                document.getElementById("totalContainer").classList.add("hidden");
+            }
+
+            // إظهار القائد المناوب إذا وجد
+            if (leaderName !== null && leaderName !== "") {
+                document.getElementById("leaderName").textContent = leaderName;
+                document.getElementById("leaderContainer").classList.remove("hidden");
+            } else {
+                document.getElementById("leaderContainer").classList.add("hidden");
+            }
+
+            // إظهار زر النسخ
+            const copyButton = document.getElementById("copyButton");
+            if (parsedSectors.length > 0) {
+                copyButton.classList.remove("hidden");
+            } else {
+                copyButton.classList.add("hidden");
+            }
+        }
+
+        function copyTableData() {
+            const table = document.querySelector("#dataTable");
+            const range = document.createRange();
+            range.selectNodeContents(table);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            document.execCommand("copy");
+            selection.removeAllRanges();
+            alert("تم نسخ البيانات بنجاح!");
+        }
+    </script>
+
+</body>
+</html>
