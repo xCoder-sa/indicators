@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f4f8;
+            font-family: 'Cairo', sans-serif;
+            background-color: #fdf6e3;
             margin: 0;
             padding: 0;
             direction: rtl;
@@ -18,7 +18,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #3498db; /* تغيير الخلفية إلى لون أزرق */
+            background-color: #2c3e50; /* لون داكن */
             padding: 15px 20px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             position: fixed;
@@ -29,17 +29,17 @@
         .navbar .logo {
             font-size: 24px;
             font-weight: bold;
-            color: #ffffff; /* لون النص أبيض */
+            color: #ecf0f1; /* لون فاتح */
         }
         .menu-header {
             display: none; /* سيتم عرضه فقط على الشاشات الصغيرة */
             font-size: 18px;
             font-weight: bold;
             padding: 10px 20px;
-            background-color: #3498db; /* مطابقة لون الخلفية */
+            background-color: #2c3e50; /* مطابقة لون الخلفية */
             width: 100%;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            color: #ffffff; /* لون النص أبيض */
+            color: #ecf0f1; /* لون النص فاتح */
         }
         .navbar .menu {
             display: none; /* إخفاء القائمة لأنها غير مستخدمة بعد الآن */
@@ -48,82 +48,87 @@
         .hamburger {
             display: none;
             font-size: 24px;
-            color: #ffffff; /* لون الأيقونة أبيض */
+            color: #ecf0f1; /* لون الأيقونة فاتح */
             cursor: pointer;
         }
         /* المحتوى الرئيسي */
         .container {
-            padding: 90px 20px 20px 20px; /* زيادة padding-top للعلامة الثابتة */
+            padding: 100px 20px 20px 20px; /* زيادة padding-top لتعويض شريط التنقل */
             max-width: 1200px;
             margin: 0 auto;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            overflow-y: auto;
-        }
-        @media (max-width: 767px) {
-            .container {
-                padding-top: 150px; /* زيادة المساحة لتعويض ارتفاع شريط التنقل */
-            }
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
         h2 {
-            color: #3498db;
-            font-size: 24px;
+            color: #2980b9;
+            font-size: 28px;
             margin-bottom: 20px;
             text-align: center;
+            border-bottom: 2px solid #2980b9;
+            padding-bottom: 10px;
         }
         h3 {
-            color: #3498db;
-            font-size: 20px;
+            color: #2980b9;
+            font-size: 22px;
             margin-bottom: 10px;
         }
         label {
             margin-top: 10px;
             display: block;
-            color: #333;
+            color: #34495e;
             font-weight: bold;
-            font-size: 15px;
+            font-size: 16px;
         }
         input[type="text"], input[type="number"], textarea, select {
             width: 100%;
-            padding: 10px;
-            margin: 5px 0 15px;
-            border: 1px solid #ccc;
+            padding: 12px;
+            margin: 5px 0 20px;
+            border: 1px solid #bdc3c7;
             border-radius: 6px;
-            font-size: 14px;
+            font-size: 16px;
             transition: border-color 0.3s;
+            background-color: #ecf0f1;
         }
-        input[type="text"]:focus, input[type="number"]:focus, select:focus {
-            border-color: #3498db;
+        input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:focus {
+            border-color: #2980b9;
             outline: none;
+            background-color: #ffffff;
         }
         button {
             width: 100%;
-            padding: 12px;
-            background-color: #3498db;
+            padding: 15px;
+            background-color: #2980b9;
             border: none;
             border-radius: 6px;
             color: white;
-            font-size: 16px;
+            font-size: 18px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
         button:hover {
-            background-color: #1d6a9c;
-        }
-        .copy-notification {
-            display: none;
-            text-align: center;
-            color: green;
-            font-size: 14px;
-            margin-top: 15px;
+            background-color: #1c5980;
         }
         .form-section {
-            margin-bottom: 30px;
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            background-color: #ecf0f1;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        table th, table td {
+            border: 1px solid #bdc3c7;
+            padding: 12px;
+            text-align: center;
+        }
+        table th {
+            background-color: #3498db;
+            color: #ffffff;
         }
         /* تصميم متجاوب لشاشات الهواتف المحمولة */
         @media (max-width: 767px) {
@@ -137,18 +142,9 @@
             .hamburger {
                 display: block;
             }
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        table th, table td {
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: center;
-        }
-        table th {
-            background-color: #e0e0e0;
+            .container {
+                padding: 120px 15px 15px 15px;
+            }
         }
     </style>
 </head>
@@ -157,7 +153,6 @@
     <!-- شريط التنقل العلوي -->
     <nav class="navbar">
         <div class="logo">لوحة التحكم</div>
-        <!-- إزالة قائمة التنقل الحالية -->
         <div class="menu-header">القائمة</div>
         <ul class="menu" id="menu">
             <!-- يمكن إضافة عناصر جديدة هنا إذا لزم الأمر -->
@@ -199,8 +194,31 @@
             <input type="number" id="vehicle_teams" placeholder="عدد فرق مركبات" required>
         </div>
         <div class="form-section">
-            <label for="team_distribution">توزيع الفرق بحسب مواقعها:</label>
-            <textarea id="team_distribution" rows="4" placeholder="الحرم المكي، العاصمة المقدسة، مزدلفة، عرفات، منى، طريق الحاج" required></textarea>
+            <label>توزيع الفرق بحسب مواقعها:</label>
+            <div>
+                <label for="haram">الحرم المكي:</label>
+                <input type="number" id="haram" placeholder="عدد الفرق في الحرم المكي" required>
+            </div>
+            <div>
+                <label for="holy_capital">العاصمة المقدسة:</label>
+                <input type="number" id="holy_capital" placeholder="عدد الفرق في العاصمة المقدسة" required>
+            </div>
+            <div>
+                <label for="muzdalifah">مزدلفة:</label>
+                <input type="number" id="muzdalifah" placeholder="عدد الفرق في مزدلفة" required>
+            </div>
+            <div>
+                <label for="arafat">عرفات:</label>
+                <input type="number" id="arafat" placeholder="عدد الفرق في عرفات" required>
+            </div>
+            <div>
+                <label for="mina">منى:</label>
+                <input type="number" id="mina" placeholder="عدد الفرق في منى" required>
+            </div>
+            <div>
+                <label for="hajj_road">طريق الحاج:</label>
+                <input type="number" id="hajj_road" placeholder="عدد الفرق في طريق الحاج" required>
+            </div>
         </div>
         <div class="form-section">
             <h3>أهداف المناوبة:</h3>
@@ -237,7 +255,7 @@
     </div>
 
     <footer>
-        <div style="font-size: 14px; color: #ccc; text-align: center;">
+        <div style="font-size: 14px; color: #7f8c8d; text-align: center;">
             الإصدار 1.3
         </div>
     </footer>
@@ -297,7 +315,14 @@
                 male_teams: document.getElementById('male_teams').value,
                 mechanical_teams: document.getElementById('mechanical_teams').value,
                 vehicle_teams: document.getElementById('vehicle_teams').value,
-                team_distribution: document.getElementById('team_distribution').value,
+                team_distribution: {
+                    haram: document.getElementById('haram').value,
+                    holy_capital: document.getElementById('holy_capital').value,
+                    muzdalifah: document.getElementById('muzdalifah').value,
+                    arafat: document.getElementById('arafat').value,
+                    mina: document.getElementById('mina').value,
+                    hajj_road: document.getElementById('hajj_road').value
+                },
                 shift_goals: [],
                 shift_notes: document.getElementById('shift_notes').value,
                 name: document.getElementById('name').value
@@ -323,8 +348,15 @@
             formText += `*إجمالي الوحدات التشغيلية:* ${data.total_operational_units}\n`;
             formText += `*فرق راجلة:* ${data.male_teams}\n`;
             formText += `*فرق آليات:* ${data.mechanical_teams}\n`;
-            formText += `*فرق مركبات:* ${data.vehicle_teams}\n`;
-            formText += `*توزيع الفرق بحسب مواقعها:* ${data.team_distribution}\n\n`;
+            formText += `*فرق مركبات:* ${data.vehicle_teams}\n\n`;
+
+            formText += `*توزيع الفرق بحسب مواقعها:*\n`;
+            formText += `- الحرم المكي: ${data.team_distribution.haram}\n`;
+            formText += `- العاصمة المقدسة: ${data.team_distribution.holy_capital}\n`;
+            formText += `- مزدلفة: ${data.team_distribution.muzdalifah}\n`;
+            formText += `- عرفات: ${data.team_distribution.arafat}\n`;
+            formText += `- منى: ${data.team_distribution.mina}\n`;
+            formText += `- طريق الحاج: ${data.team_distribution.hajj_road}\n\n`;
 
             formText += `*أهداف المناوبة:*\n`;
             data.shift_goals.forEach((goalObj, index) => {
