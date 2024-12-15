@@ -3,264 +3,363 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة تحكم القيادات</title>
+    <title>لوحة تحكم فريق العمليات</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* إعدادات أساسية */
         body {
             font-family: 'Cairo', sans-serif;
-            background-color: #fdf6e3;
             margin: 0;
             padding: 0;
+            background-color: #f4f7fa;
             direction: rtl;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
         }
-        /* شريط التنقل العلوي */
-        .navbar {
+
+        /* لوحة التحكم الجانبية */
+        .sidebar {
+            width: 250px;
+            background-color: #2d3436;
+            color: #dfe6e9;
+            display: flex;
+            flex-direction: column;
+            padding-top: 20px;
+            transition: width 0.3s;
+        }
+
+        .sidebar.collapsed {
+            width: 60px;
+        }
+
+        .sidebar .logo {
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 30px;
+            font-weight: bold;
+            color: #dfe6e9;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        .sidebar ul li {
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar ul li:hover, .sidebar ul li.active {
+            background-color: #636e72;
+        }
+
+        .sidebar ul li i {
+            margin-left: 10px;
+        }
+
+        /* المحتوى الرئيسي */
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #2c3e50; /* لون داكن */
-            padding: 15px 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
+            margin-bottom: 20px;
         }
-        .navbar .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #ecf0f1; /* لون فاتح */
+
+        .header h2 {
+            margin: 0;
+            color: #2d3436;
         }
-        .menu-header {
-            display: none; /* سيتم عرضه فقط على الشاشات الصغيرة */
-            font-size: 18px;
-            font-weight: bold;
-            padding: 10px 20px;
-            background-color: #2c3e50; /* مطابقة لون الخلفية */
-            width: 100%;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            color: #ecf0f1; /* لون النص فاتح */
-        }
-        .navbar .menu {
-            display: none; /* إخفاء القائمة لأنها غير مستخدمة بعد الآن */
-        }
-        /* أيقونة الهامبرجر للهواتف */
-        .hamburger {
-            display: none;
-            font-size: 24px;
-            color: #ecf0f1; /* لون الأيقونة فاتح */
-            cursor: pointer;
-        }
-        /* المحتوى الرئيسي */
-        .container {
-            padding: 100px 20px 20px 20px; /* زيادة padding-top لتعويض شريط التنقل */
-            max-width: 1200px;
-            margin: 0 auto;
+
+        /* النموذج */
+        .form-container {
             background-color: #ffffff;
+            padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
-        h2 {
-            color: #2980b9;
-            font-size: 28px;
-            margin-bottom: 20px;
-            text-align: center;
-            border-bottom: 2px solid #2980b9;
-            padding-bottom: 10px;
+
+        .form-section {
+            margin-bottom: 25px;
         }
-        h3 {
-            color: #2980b9;
-            font-size: 22px;
-            margin-bottom: 10px;
-        }
-        label {
-            margin-top: 10px;
+
+        .form-section label {
             display: block;
-            color: #34495e;
+            margin-bottom: 8px;
+            color: #2d3436;
             font-weight: bold;
             font-size: 16px;
         }
-        input[type="text"], input[type="number"], textarea, select {
+
+        .form-section input[type="number"],
+        .form-section input[type="text"],
+        .form-section textarea {
             width: 100%;
             padding: 12px;
-            margin: 5px 0 20px;
-            border: 1px solid #bdc3c7;
+            border: 1px solid #b2bec3;
             border-radius: 6px;
             font-size: 16px;
             transition: border-color 0.3s;
-            background-color: #ecf0f1;
+            background-color: #dfe6e9;
         }
-        input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:focus {
-            border-color: #2980b9;
+
+        .form-section input[type="number"]:focus,
+        .form-section input[type="text"]:focus,
+        .form-section textarea:focus {
+            border-color: #0984e3;
             outline: none;
             background-color: #ffffff;
         }
-        button {
+
+        .form-section table {
             width: 100%;
-            padding: 15px;
-            background-color: #2980b9;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .form-section table th,
+        .form-section table td {
+            border: 1px solid #b2bec3;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .form-section table th {
+            background-color: #74b9ff;
+            color: #ffffff;
+        }
+
+        .form-section button {
+            padding: 10px 15px;
+            background-color: #0984e3;
             border: none;
             border-radius: 6px;
-            color: white;
+            color: #ffffff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        .form-section button:hover {
+            background-color: #74b9ff;
+        }
+
+        /* زر الإرسال */
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: #00b894;
+            border: none;
+            border-radius: 6px;
+            color: #ffffff;
             font-size: 18px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
-        button:hover {
-            background-color: #1c5980;
+
+        .submit-btn:hover {
+            background-color: #55efc4;
         }
-        .form-section {
-            margin-bottom: 40px;
-            background-color: #ecf0f1;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-        table th, table td {
-            border: 1px solid #bdc3c7;
-            padding: 12px;
-            text-align: center;
-        }
-        table th {
-            background-color: #3498db;
-            color: #ffffff;
-        }
-        /* تصميم متجاوب لشاشات الهواتف المحمولة */
-        @media (max-width: 767px) {
-            .navbar {
-                flex-direction: column;
-                align-items: flex-start;
+
+        /* تصميم متجاوب */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                height: 100%;
+                z-index: 1000;
+                left: -250px;
             }
-            .menu-header {
+
+            .sidebar.active {
+                left: 0;
+            }
+
+            .sidebar.collapsed {
+                left: -60px;
+            }
+
+            .main-content {
+                padding: 20px 10px;
+            }
+
+            .hamburger-btn {
                 display: block;
+                position: fixed;
+                top: 15px;
+                left: 15px;
+                background-color: #2d3436;
+                color: #dfe6e9;
+                border: none;
+                padding: 10px;
+                border-radius: 5px;
+                cursor: pointer;
+                z-index: 1100;
             }
-            .hamburger {
-                display: block;
-            }
-            .container {
-                padding: 120px 15px 15px 15px;
+        }
+
+        @media (min-width: 769px) {
+            .hamburger-btn {
+                display: none;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- شريط التنقل العلوي -->
-    <nav class="navbar">
-        <div class="logo">لوحة التحكم</div>
-        <div class="menu-header">القائمة</div>
-        <ul class="menu" id="menu">
-            <!-- يمكن إضافة عناصر جديدة هنا إذا لزم الأمر -->
-        </ul>
-        <!-- أيقونة الهامبرجر -->
-        <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
-    </nav>
+    <!-- زر الهامبرجر للأجهزة الصغيرة -->
+    <button class="hamburger-btn" id="hamburgerBtn"><i class="fas fa-bars"></i></button>
 
-    <!-- المحتوى الرئيسي -->
-    <div class="container" id="form-container">
-        <!-- النموذج الجديد يظهر هنا -->
-        <h2>الموارد حسب الوضع الراهن</h2>
-        <div class="form-section">
-            <label for="total_service_providers">إجمالي مقدمي الخدمة الإسعافية:</label>
-            <input type="number" id="total_service_providers" placeholder="إجمالي مقدمي الخدمة الإسعافية" required>
-        </div>
-        <div class="form-section">
-            <label for="employees">الموظفين منهم:</label>
-            <input type="number" id="employees" placeholder="عدد الموظفين" required>
-        </div>
-        <div class="form-section">
-            <label for="volunteers">المتطوعين منهم:</label>
-            <input type="number" id="volunteers" placeholder="عدد المتطوعين" required>
-        </div>
-        <div class="form-section">
-            <label for="total_operational_units">إجمالي الوحدات التشغيلية:</label>
-            <input type="number" id="total_operational_units" placeholder="إجمالي الوحدات التشغيلية" required>
-        </div>
-        <div class="form-section">
-            <label for="male_teams">فرق راجلة:</label>
-            <input type="number" id="male_teams" placeholder="عدد فرق راجلة" required>
-        </div>
-        <div class="form-section">
-            <label for="mechanical_teams">فرق آليات:</label>
-            <input type="number" id="mechanical_teams" placeholder="عدد فرق آليات" required>
-        </div>
-        <div class="form-section">
-            <label for="vehicle_teams">فرق مركبات:</label>
-            <input type="number" id="vehicle_teams" placeholder="عدد فرق مركبات" required>
-        </div>
-        <div class="form-section">
-            <label>توزيع الفرق بحسب مواقعها:</label>
-            <div>
-                <label for="haram">الحرم المكي:</label>
-                <input type="number" id="haram" placeholder="عدد الفرق في الحرم المكي" required>
-            </div>
-            <div>
-                <label for="holy_capital">العاصمة المقدسة:</label>
-                <input type="number" id="holy_capital" placeholder="عدد الفرق في العاصمة المقدسة" required>
-            </div>
-            <div>
-                <label for="muzdalifah">مزدلفة:</label>
-                <input type="number" id="muzdalifah" placeholder="عدد الفرق في مزدلفة" required>
-            </div>
-            <div>
-                <label for="arafat">عرفات:</label>
-                <input type="number" id="arafat" placeholder="عدد الفرق في عرفات" required>
-            </div>
-            <div>
-                <label for="mina">منى:</label>
-                <input type="number" id="mina" placeholder="عدد الفرق في منى" required>
-            </div>
-            <div>
-                <label for="hajj_road">طريق الحاج:</label>
-                <input type="number" id="hajj_road" placeholder="عدد الفرق في طريق الحاج" required>
-            </div>
-        </div>
-        <div class="form-section">
-            <h3>أهداف المناوبة:</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>الهدف</th>
-                        <th>التحديث</th>
-                    </tr>
-                </thead>
-                <tbody id="shift_goals">
-                    <tr>
-                        <td><input type="text" placeholder="الهدف" required></td>
-                        <td><input type="text" placeholder="التحديث" required></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" placeholder="الهدف" required></td>
-                        <td><input type="text" placeholder="التحديث" required></td>
-                    </tr>
-                    <!-- يمكن إضافة المزيد من الصفوف حسب الحاجة -->
-                </tbody>
-            </table>
-            <button type="button" onclick="addShiftGoal()">إضافة هدف آخر</button>
-        </div>
-        <div class="form-section">
-            <label for="shift_notes">ملاحظات المناوبة:</label>
-            <textarea id="shift_notes" rows="4" placeholder="ملاحظات المناوبة" required></textarea>
-        </div>
-        <div class="form-section">
-            <label for="name">الاسم:</label>
-            <input type="text" id="name" placeholder="أدخل اسمك" required>
-        </div>
-        <button type="button" onclick="submitForm()">إرسال النموذج</button>
+    <!-- لوحة التحكم الجانبية -->
+    <div class="sidebar" id="sidebar">
+        <div class="logo">لوحة التحكم</div>
+        <ul>
+            <li class="active" data-form="resourceStatus"><i class="fas fa-chart-line"></i> الموارد حسب الوضع الراهن</li>
+            <!-- يمكن إضافة عناصر جديدة هنا للنماذج المستقبلية -->
+            <!-- مثال:
+            <li data-form="anotherForm"><i class="fas fa-file-alt"></i> نموذج آخر</li>
+            -->
+        </ul>
     </div>
 
-    <footer>
-        <div style="font-size: 14px; color: #7f8c8d; text-align: center;">
-            الإصدار 1.3
+    <!-- المحتوى الرئيسي -->
+    <div class="main-content">
+        <div class="header">
+            <h2>لوحة تحكم فريق العمليات</h2>
         </div>
-    </footer>
+
+        <!-- نموذج الموارد حسب الوضع الراهن -->
+        <div class="form-container" id="resourceStatus">
+            <div class="form-section">
+                <label for="total_service_providers">إجمالي مقدمي الخدمة الإسعافية:</label>
+                <input type="number" id="total_service_providers" placeholder="إجمالي مقدمي الخدمة الإسعافية" required>
+            </div>
+            <div class="form-section">
+                <label for="employees">الموظفين منهم:</label>
+                <input type="number" id="employees" placeholder="عدد الموظفين" required>
+            </div>
+            <div class="form-section">
+                <label for="volunteers">المتطوعين منهم:</label>
+                <input type="number" id="volunteers" placeholder="عدد المتطوعين" required>
+            </div>
+            <div class="form-section">
+                <label for="total_operational_units">إجمالي الوحدات التشغيلية:</label>
+                <input type="number" id="total_operational_units" placeholder="إجمالي الوحدات التشغيلية" required>
+            </div>
+            <div class="form-section">
+                <label for="male_teams">فرق راجلة:</label>
+                <input type="number" id="male_teams" placeholder="عدد فرق راجلة" required>
+            </div>
+            <div class="form-section">
+                <label for="mechanical_teams">فرق آليات:</label>
+                <input type="number" id="mechanical_teams" placeholder="عدد فرق آليات" required>
+            </div>
+            <div class="form-section">
+                <label for="vehicle_teams">فرق مركبات:</label>
+                <input type="number" id="vehicle_teams" placeholder="عدد فرق مركبات" required>
+            </div>
+            <div class="form-section">
+                <label>توزيع الفرق بحسب مواقعها:</label>
+                <div class="sub-section">
+                    <label for="haram">الحرم المكي:</label>
+                    <input type="number" id="haram" placeholder="عدد الفرق في الحرم المكي" required>
+                </div>
+                <div class="sub-section">
+                    <label for="holy_capital">العاصمة المقدسة:</label>
+                    <input type="number" id="holy_capital" placeholder="عدد الفرق في العاصمة المقدسة" required>
+                </div>
+                <div class="sub-section">
+                    <label for="muzdalifah">مزدلفة:</label>
+                    <input type="number" id="muzdalifah" placeholder="عدد الفرق في مزدلفة" required>
+                </div>
+                <div class="sub-section">
+                    <label for="arafat">عرفات:</label>
+                    <input type="number" id="arafat" placeholder="عدد الفرق في عرفات" required>
+                </div>
+                <div class="sub-section">
+                    <label for="mina">منى:</label>
+                    <input type="number" id="mina" placeholder="عدد الفرق في منى" required>
+                </div>
+                <div class="sub-section">
+                    <label for="hajj_road">طريق الحاج:</label>
+                    <input type="number" id="hajj_road" placeholder="عدد الفرق في طريق الحاج" required>
+                </div>
+            </div>
+            <div class="form-section">
+                <h3>أهداف المناوبة:</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>الهدف</th>
+                            <th>التحديث</th>
+                        </tr>
+                    </thead>
+                    <tbody id="shift_goals">
+                        <tr>
+                            <td><input type="text" placeholder="الهدف" required></td>
+                            <td><input type="text" placeholder="التحديث" required></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" placeholder="الهدف" required></td>
+                            <td><input type="text" placeholder="التحديث" required></td>
+                        </tr>
+                        <!-- يمكن إضافة المزيد من الصفوف حسب الحاجة -->
+                    </tbody>
+                </table>
+                <button type="button" onclick="addShiftGoal()">إضافة هدف آخر</button>
+            </div>
+            <div class="form-section">
+                <label for="shift_notes">ملاحظات المناوبة:</label>
+                <textarea id="shift_notes" rows="4" placeholder="ملاحظات المناوبة" required></textarea>
+            </div>
+            <div class="form-section">
+                <label for="name">الاسم:</label>
+                <input type="text" id="name" placeholder="أدخل اسمك" required>
+            </div>
+            <button type="button" class="submit-btn" onclick="submitForm()">إرسال النموذج</button>
+        </div>
+
+        <!-- يمكن إضافة نماذج أخرى هنا في المستقبل -->
+    </div>
 
     <script>
+        // تفعيل لوحة التحكم الجانبية
+        const sidebar = document.getElementById('sidebar');
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const menuItems = document.querySelectorAll('.sidebar ul li');
+        const forms = document.querySelectorAll('.form-container');
+
+        hamburgerBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // إزالة الفعالية من جميع العناصر
+                menuItems.forEach(el => el.classList.remove('active'));
+                // إضافة الفعالية للعناصر المحددة
+                item.classList.add('active');
+
+                // إخفاء جميع النماذج
+                forms.forEach(form => form.style.display = 'none');
+                // إظهار النموذج المحدد
+                const formToShow = document.getElementById(item.getAttribute('data-form'));
+                if (formToShow) {
+                    formToShow.style.display = 'block';
+                }
+            });
+        });
+
         // دالة لإضافة صف جديد في جدول أهداف المناوبة
         function addShiftGoal() {
             const shiftGoals = document.getElementById('shift_goals');
@@ -294,10 +393,10 @@
 
             requiredFields.forEach(field => {
                 if (!field.value.trim()) {
-                    field.style.border = '2px solid red';
+                    field.style.border = '2px solid #d63031';
                     allFieldsFilled = false;
                 } else {
-                    field.style.border = '';
+                    field.style.border = '1px solid #b2bec3';
                 }
             });
 
@@ -382,15 +481,16 @@
             }
         }
 
-        // دعم أيقونة الهامبرجر لإظهار القائمة في الشاشات الصغيرة
-        document.getElementById('hamburger').addEventListener('click', function() {
-            const menu = document.getElementById('menu');
-            if (menu.style.display === 'flex') {
-                menu.style.display = 'none';
-            } else {
-                menu.style.display = 'flex';
-                menu.style.flexDirection = 'column';
-                menu.style.width = '100%';
+        // إظهار النموذج الافتراضي عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', () => {
+            // إظهار النموذج الافتراضي
+            const defaultForm = document.querySelector('.sidebar ul li.active');
+            if (defaultForm) {
+                const formId = defaultForm.getAttribute('data-form');
+                const formToShow = document.getElementById(formId);
+                if (formToShow) {
+                    formToShow.style.display = 'block';
+                }
             }
         });
     </script>
