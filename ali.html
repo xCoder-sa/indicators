@@ -427,7 +427,7 @@
             <div class="form-section">
                 <h3>مؤشرات الترحيل الطبي</h3>
                 <p class="note">إجمالي عدد البلاغات للعاصمة المقدسة والحرم والمشاعر حسب تصنيف الترحيل الطبي.</p>
-                <table>
+                <table id="indicators_table">
                     <thead>
                         <tr>
                             <th>الفريق</th>
@@ -501,8 +501,8 @@
                     <input type="number" id="canceled_reports_911" placeholder="اجمالي بلاغات 911 الملغاة" required>
                 </div>
                 <div class="sub-section">
-                    <label>بلاغات (911) الملغاة:</label>
-                    <table>
+                    <h3>بلاغات (911) الملغاة:</h3>
+                    <table id="canceled_reports_table">
                         <thead>
                             <tr>
                                 <th>سبب الإلغاء</th>
@@ -791,6 +791,25 @@
                 }
             });
 
+            // جمع بيانات مؤشرات الترحيل الطبي
+            const indicatorsRows = document.querySelectorAll('#indicators_table tbody tr');
+            data.indicators = [];
+            indicatorsRows.forEach(row => {
+                const team = row.cells[0].textContent.trim();
+                const received = row.cells[1].querySelector('input').value;
+                const canceled = row.cells[2].querySelector('input').value;
+                data.indicators.push({ team, received, canceled });
+            });
+
+            // جمع بيانات بلاغات (911) الملغاة
+            const canceledReportsRows = document.querySelectorAll('#canceled_reports_table tbody tr');
+            data.canceled_reports = [];
+            canceledReportsRows.forEach(row => {
+                const reason = row.cells[0].textContent.trim();
+                const count = row.cells[1].querySelector('input').value;
+                data.canceled_reports.push({ reason, count });
+            });
+
             // إنشاء نص الرسالة لواتساب
             let formText = `*== فريق الترحيل الطبي ==*\n\n`;
             formText += `*إجمالي المكالمات:* ${data.total_calls}\n`;
@@ -810,30 +829,23 @@
             formText += `إجمالي عدد البلاغات للعاصمة المقدسة والحرم والمشاعر حسب تصنيف الترحيل الطبي.\n\n`;
 
             formText += `\n*التصنيفات:*\n`;
-            const tableRows = document.querySelectorAll('#medicalTransferTeam table tbody tr');
-            tableRows.forEach((row, index) => {
-                const team = row.cells[0].textContent.trim();
-                const received = row.cells[1].querySelector('input').value;
-                const canceled = row.cells[2].querySelector('input').value;
-                formText += `- ${team}: مستلمة ${received}, ملغاة ${canceled}\n`;
+            data.indicators.forEach((indicator, index) => {
+                formText += `- ${indicator.team}: مستلمة ${indicator.received}, ملغاة ${indicator.canceled}\n`;
             });
             formText += `\n*نسبة الالتزام ProQA:* ${document.getElementById('proqa_percentage').value}\n`;
             formText += `*نسبة المكالمات التي تم معالجتها خلال 90 ثانية:* ${document.getElementById('processed_calls_percentage').value}\n`;
             formText += `*نسبة بلاغات VECTOR من اجمالي البلاغات:* ${document.getElementById('vector_reports_percentage').value}\n\n`;
 
             formText += `*بلاغات 911:* \n`;
-            formText += `- إجمالي البلاغات الواردة من 911: ${data.reports_911}\n`;
-            formText += `- اجمالي بلاغات 911 المستجاب لها: ${document.getElementById('responded_reports_911').value}\n`;
-            formText += `- اجمالي بلاغات 911 الملغاة: ${document.getElementById('canceled_reports_911').value}\n\n`;
+            formText += `- إجمالي البلاغات الواردة من 911: ${data.total_reports_911}\n`;
+            formText += `- اجمالي بلاغات 911 المستجاب لها: ${data.responded_reports_911}\n`;
+            formText += `- اجمالي بلاغات 911 الملغاة: ${data.canceled_reports_911}\n\n`;
 
             formText += `*بلاغات (911) الملغاة:*\n`;
-            formText += `- سبب الإلغاء: مكرر مع ذكر رقم البلاغ: ${document.querySelector('#medicalTransferTeam table tbody tr:nth-child(1) td:nth-child(2) input').value}\n`;
-            formText += `- سبب الإلغاء: ألغي من قبل جهة حكومية: ${document.querySelector('#medicalTransferTeam table tbody tr:nth-child(2) td:nth-child(2) input').value}\n`;
-            formText += `- سبب الإلغاء: ألغي من قبل المبلغ لعدم الحاجة لنقل اسعافي: ${document.querySelector('#medicalTransferTeam table tbody tr:nth-child(3) td:nth-child(2) input').value}\n`;
-            formText += `- سبب الإلغاء: بلاغ غير اسعافي من قبل مركز العمليات الأمنية الموحدة: ${document.querySelector('#medicalTransferTeam table tbody tr:nth-child(4) td:nth-child(2) input').value}\n`;
-            formText += `- سبب الإلغاء: أسباب أخرى: ${document.querySelector('#medicalTransferTeam table tbody tr:nth-child(5) td:nth-child(2) input').value}\n\n`;
-
-            formText += `*أهداف المناوبة:*\n`;
+            data.canceled_reports.forEach((report, index) => {
+                formText += `- سبب الإلغاء: ${report.reason}: ${report.count}\n`;
+            });
+            formText += `\n*أهداف المناوبة:*\n`;
             data.shift_goals.forEach((goalObj, index) => {
                 formText += `${index + 1}- الهدف: ${goalObj.goal}\n   التحديث: ${goalObj.update}\n`;
             });
