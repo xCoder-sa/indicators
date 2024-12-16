@@ -475,15 +475,15 @@
                 </table>
             </div>
             <div class="form-section">
-                <label>نسبة الالتزام ProQA:</label>
+                <label for="proqa_percentage">نسبة الالتزام ProQA:</label>
                 <input type="text" id="proqa_percentage" placeholder="نسبة الالتزام ProQA" required>
             </div>
             <div class="form-section">
-                <label>نسبة المكالمات التي تم معالجتها خلال 90 ثانية:</label>
+                <label for="processed_calls_percentage">نسبة المكالمات التي تم معالجتها خلال 90 ثانية:</label>
                 <input type="text" id="processed_calls_percentage" placeholder="نسبة المكالمات التي تم معالجتها خلال 90 ثانية" required>
             </div>
             <div class="form-section">
-                <label>نسبة بلاغات VECTOR من اجمالي البلاغات:</label>
+                <label for="vector_reports_percentage">نسبة بلاغات VECTOR من اجمالي البلاغات:</label>
                 <input type="text" id="vector_reports_percentage" placeholder="نسبة بلاغات VECTOR من اجمالي البلاغات" required>
             </div>
             <div class="form-section">
@@ -776,7 +776,10 @@
                 patients_responsive: document.getElementById('patients_responsive').value,
                 shift_goals: [],
                 shift_notes: document.getElementById('shift_notes_medical').value,
-                name: document.getElementById('name_medical').value
+                name: document.getElementById('name_medical').value,
+                total_reports_911: document.getElementById('total_reports_911').value,
+                responded_reports_911: document.getElementById('responded_reports_911').value,
+                canceled_reports_911: document.getElementById('canceled_reports_911').value
             };
 
             // جمع أهداف المناوبة
@@ -795,19 +798,23 @@
             const indicatorsRows = document.querySelectorAll('#indicators_table tbody tr');
             data.indicators = [];
             indicatorsRows.forEach(row => {
-                const team = row.cells[0].textContent.trim();
-                const received = row.cells[1].querySelector('input').value;
-                const canceled = row.cells[2].querySelector('input').value;
-                data.indicators.push({ team, received, canceled });
+                if (row.cells.length >= 3) { // التأكد من وجود ثلاث خلايا
+                    const team = row.cells[0].textContent.trim();
+                    const received = row.cells[1].querySelector('input').value;
+                    const canceled = row.cells[2].querySelector('input').value;
+                    data.indicators.push({ team, received, canceled });
+                }
             });
 
             // جمع بيانات بلاغات (911) الملغاة
             const canceledReportsRows = document.querySelectorAll('#canceled_reports_table tbody tr');
             data.canceled_reports = [];
             canceledReportsRows.forEach(row => {
-                const reason = row.cells[0].textContent.trim();
-                const count = row.cells[1].querySelector('input').value;
-                data.canceled_reports.push({ reason, count });
+                if (row.cells.length >= 2) { // التأكد من وجود خليتين
+                    const reason = row.cells[0].textContent.trim();
+                    const count = row.cells[1].querySelector('input').value;
+                    data.canceled_reports.push({ reason, count });
+                }
             });
 
             // إنشاء نص الرسالة لواتساب
