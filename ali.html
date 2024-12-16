@@ -281,6 +281,7 @@
         <ul>
             <li class="active" data-form="ambulanceTeam"><i class="fas fa-ambulance"></i> فريق الإسعاف الارضي</li>
             <li data-form="medicalTransferTeam"><i class="fas fa-stethoscope"></i> فريق الترحيل الطبي</li>
+            <li data-form="leadershipControlTeam"><i class="fas fa-users-cog"></i> فريق القيادة والتحكم</li>
             <!-- يمكن إضافة عناصر جديدة هنا للنماذج المستقبلية -->
             <!-- مثال:
             <li data-form="anotherForm"><i class="fas fa-file-alt"></i> نموذج آخر</li>
@@ -568,6 +569,186 @@
             <button type="button" class="submit-btn" onclick="submitFormMedical()">إرسال النموذج</button>
         </div>
 
+        <!-- نموذج فريق القيادة والتحكم -->
+        <div class="form-container" id="leadershipControlTeam">
+            <div class="form-section">
+                <h3>بيانات المستشفيات:</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>م</th>
+                            <th>اسم المستشفى</th>
+                            <th>عدد الحالات</th>
+                            <th>نسبتها من إجمالي البلاغات المنقولة</th>
+                            <th>متوسط زمن البقاء في المستشفى</th>
+                        </tr>
+                    </thead>
+                    <tbody id="hospital_data">
+                        <tr>
+                            <td>1</td>
+                            <td><input type="text" id="hospital_name_1" placeholder="اسم المستشفى" required></td>
+                            <td><input type="number" id="hospital_cases_1" placeholder="عدد الحالات" required></td>
+                            <td><input type="text" id="hospital_percentage_1" placeholder="النسبة %" required></td>
+                            <td><input type="text" id="hospital_average_stay_1" placeholder="00:00:00" required></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td><input type="text" id="hospital_name_2" placeholder="اسم المستشفى" required></td>
+                            <td><input type="number" id="hospital_cases_2" placeholder="عدد الحالات" required></td>
+                            <td><input type="text" id="hospital_percentage_2" placeholder="النسبة %" required></td>
+                            <td><input type="text" id="hospital_average_stay_2" placeholder="00:00:00" required></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td><input type="text" id="hospital_name_3" placeholder="اسم المستشفى" required></td>
+                            <td><input type="number" id="hospital_cases_3" placeholder="عدد الحالات" required></td>
+                            <td><input type="text" id="hospital_percentage_3" placeholder="النسبة %" required></td>
+                            <td><input type="text" id="hospital_average_stay_3" placeholder="00:00:00" required></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td><input type="text" id="hospital_name_4" placeholder="اسم المستشفى" required></td>
+                            <td><input type="number" id="hospital_cases_4" placeholder="عدد الحالات" required></td>
+                            <td><input type="text" id="hospital_percentage_4" placeholder="النسبة %" required></td>
+                            <td><input type="text" id="hospital_average_stay_4" placeholder="00:00:00" required></td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td><input type="text" id="hospital_name_5" placeholder="اسم المستشفى" required></td>
+                            <td><input type="number" id="hospital_cases_5" placeholder="عدد الحالات" required></td>
+                            <td><input type="text" id="hospital_percentage_5" placeholder="النسبة %" required></td>
+                            <td><input type="text" id="hospital_average_stay_5" placeholder="00:00:00" required></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-section">
+                <h3>زمن البقاء في المستشفيات:</h3>
+                <div class="sub-section">
+                    <label for="reports_over_20">عدد البلاغات لأكثر من 20 دقيقة:</label>
+                    <input type="number" id="reports_over_20" placeholder="عدد البلاغات لأكثر من 20 دقيقة" required>
+                </div>
+                <div class="sub-section">
+                    <label for="reports_over_40">عدد البلاغات لأكثر من 40 دقيقة:</label>
+                    <input type="number" id="reports_over_40" placeholder="عدد البلاغات لأكثر من 40 دقيقة" required>
+                </div>
+                <div class="sub-section">
+                    <label for="reports_over_60">عدد البلاغات لأكثر من 60 دقيقة:</label>
+                    <input type="number" id="reports_over_60" placeholder="عدد البلاغات لأكثر من 60 دقيقة" required>
+                </div>
+            </div>
+            <div class="form-section">
+                <h3>المؤشرات التشغيلية: فريق القيادة والتحكم</h3>
+                <div class="sub-section">
+                    <label>متوسط زمن الاستجابة لجميع البلاغات:</label>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>الموقع</th>
+                                <th>الزمن</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>الحرم</td>
+                                <td><input type="text" id="response_time_haram" placeholder="00:00:00" required></td>
+                            </tr>
+                            <tr>
+                                <td>العاصمة المقدسة</td>
+                                <td><input type="text" id="response_time_holy_capital" placeholder="00:00:00" required></td>
+                            </tr>
+                            <tr>
+                                <td>منطقة مكة المكرمة</td>
+                                <td><input type="text" id="response_time_makkah_region" placeholder="00:00:00" required></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="sub-section">
+                    <label>نسبة زمن تقديم الخدمة الإسعافية في الموقع خلال 15 دقيقة:</label>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>الموقع</th>
+                                <th>النسبة</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>الحرم</td>
+                                <td><input type="text" id="service_time_haram" placeholder="81.98%" required></td>
+                            </tr>
+                            <tr>
+                                <td>العاصمة المقدسة</td>
+                                <td><input type="text" id="service_time_holy_capital" placeholder="58.09%" required></td>
+                            </tr>
+                            <tr>
+                                <td>منطقة مكة المكرمة</td>
+                                <td><input type="text" id="service_time_makkah_region" placeholder="54.35%" required></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="sub-section">
+                    <label>نسبة البلاغات الإسعافية ذات زمن استجابة أكثر من 60 دقيقة:</label>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>الموقع</th>
+                                <th>النسبة</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>الحرم</td>
+                                <td><input type="text" id="over60_percentage_haram" placeholder="0%" required></td>
+                            </tr>
+                            <tr>
+                                <td>العاصمة المقدسة</td>
+                                <td><input type="text" id="over60_percentage_holy_capital" placeholder="6.99%" required></td>
+                            </tr>
+                            <tr>
+                                <td>منطقة مكة المكرمة</td>
+                                <td><input type="text" id="over60_percentage_makkah_region" placeholder="7.77%" required></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="form-section">
+                <h3>أهداف المناوبة:</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>الهدف</th>
+                            <th>التحديث</th>
+                        </tr>
+                    </thead>
+                    <tbody id="shift_goals_leadership">
+                        <tr>
+                            <td><input type="text" placeholder="الهدف" required></td>
+                            <td><input type="text" placeholder="التحديث" required></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" placeholder="الهدف" required></td>
+                            <td><input type="text" placeholder="التحديث" required></td>
+                        </tr>
+                        <!-- يمكن إضافة المزيد من الصفوف حسب الحاجة -->
+                    </tbody>
+                </table>
+                <button type="button" onclick="addShiftGoalLeadership()">إضافة هدف آخر</button>
+            </div>
+            <div class="form-section">
+                <h3>ملاحظات المناوبة:</h3>
+                <textarea id="shift_notes_leadership" rows="4" placeholder="ملاحظات المناوبة" required></textarea>
+            </div>
+            <div class="form-section">
+                <h3>الاسم:</h3>
+                <input type="text" id="name_leadership" placeholder="أدخل اسمك" required>
+            </div>
+            <button type="button" class="submit-btn" onclick="submitFormLeadershipControl()">إرسال النموذج</button>
+        </div>
+
         <!-- يمكن إضافة نماذج أخرى هنا في المستقبل -->
     </div>
 
@@ -624,9 +805,34 @@
             shiftGoals.appendChild(newRow);
         }
 
-        // دالة لإضافة صف جديد في جدول أهداف المناوبة (النموذج الجديد)
+        // دالة لإضافة صف جديد في جدول أهداف المناوبة (النموذج الترحيل الطبي)
         function addShiftGoalMedical() {
             const shiftGoals = document.getElementById('shift_goals_medical');
+            const newRow = document.createElement('tr');
+
+            const goalCell = document.createElement('td');
+            const goalInput = document.createElement('input');
+            goalInput.type = 'text';
+            goalInput.placeholder = 'الهدف';
+            goalInput.required = true;
+            goalCell.appendChild(goalInput);
+
+            const updateCell = document.createElement('td');
+            const updateInput = document.createElement('input');
+            updateInput.type = 'text';
+            updateInput.placeholder = 'التحديث';
+            updateInput.required = true;
+            updateCell.appendChild(updateInput);
+
+            newRow.appendChild(goalCell);
+            newRow.appendChild(updateCell);
+
+            shiftGoals.appendChild(newRow);
+        }
+
+        // دالة لإضافة صف جديد في جدول أهداف المناوبة (النموذج القيادة والتحكم)
+        function addShiftGoalLeadership() {
+            const shiftGoals = document.getElementById('shift_goals_leadership');
             const newRow = document.createElement('tr');
 
             const goalCell = document.createElement('td');
@@ -723,7 +929,7 @@
 
             formText += `*أهداف المناوبة:*\n`;
             data.shift_goals.forEach((goalObj, index) => {
-                formText += `${index + 1}- الهدف: ${goalObj.goal}\n   التحديث: ${goalObj.update}\n`;
+                formText += `${index + 1}. *الهدف:* ${goalObj.goal}\n   *التحديث:* ${goalObj.update}\n`;
             });
             formText += `\n*ملاحظات المناوبة:* ${data.shift_notes}\n`;
             formText += `*الاسم:* ${data.name}\n`;
@@ -745,7 +951,7 @@
             }
         }
 
-        // دالة لإرسال النموذج عبر واتساب (النموذج الجديد)
+        // دالة لإرسال النموذج عبر واتساب (النموذج الترحيل الطبي)
         function submitFormMedical() {
             // التحقق من تعبئة جميع الحقول المطلوبة
             const requiredFields = document.querySelectorAll('#medicalTransferTeam input[required], #medicalTransferTeam textarea[required]');
@@ -852,11 +1058,293 @@
             data.canceled_reports.forEach((report, index) => {
                 formText += `- سبب الإلغاء: ${report.reason}: ${report.count}\n`;
             });
-            formText += `\n*أهداف المناوبة:*\n`;
+            formText += `\n*أهداف المناوبة:* \n`;
             data.shift_goals.forEach((goalObj, index) => {
-                formText += `${index + 1}- الهدف: ${goalObj.goal}\n   التحديث: ${goalObj.update}\n`;
+                formText += `${index + 1}. *الهدف:* ${goalObj.goal}\n   *التحديث:* ${goalObj.update}\n`;
             });
             formText += `\n*ملاحظات المناوبة:* ${data.shift_notes}\n`;
+            formText += `*الاسم:* ${data.name}\n`;
+
+            console.log(formText); // تأكيد عرض البيانات المجمعة
+
+            // تشفير النص
+            const encodedText = encodeURIComponent(formText);
+
+            // التحقق من نوع الجهاز أو المتصفح
+            if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                // على أجهزة iOS، استخدم رابط واتساب المباشر
+                const whatsappUrl = `whatsapp://send?text=${encodedText}`;
+                window.open(whatsappUrl, '_blank');
+            } else {
+                // على باقي الأجهزة، استخدم wa.me لفتح الرابط
+                const whatsappUrl = `https://wa.me/?text=${encodedText}`;
+                window.open(whatsappUrl, '_blank');
+            }
+        }
+
+        // دالة لإرسال النموذج عبر واتساب (النموذج القيادة والتحكم)
+        function submitFormLeadershipControl() {
+            // التحقق من تعبئة جميع الحقول المطلوبة
+            const requiredFields = document.querySelectorAll('#leadershipControlTeam input[required], #leadershipControlTeam textarea[required]');
+            let allFieldsFilled = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.border = '2px solid #d63031';
+                    allFieldsFilled = false;
+                } else {
+                    field.style.border = '1px solid #b2bec3';
+                }
+            });
+
+            if (!allFieldsFilled) {
+                alert("يرجى تعبئة جميع الحقول المطلوبة.");
+                return;
+            }
+
+            // جمع البيانات من النموذج
+            const data = {
+                // بيانات المستشفيات
+                hospitals: [],
+                reports_over_20: document.getElementById('reports_over_20').value,
+                reports_over_40: document.getElementById('reports_over_40').value,
+                reports_over_60: document.getElementById('reports_over_60').value,
+                // مؤشرات التشغيلية
+                response_times: {
+                    haram: document.getElementById('response_time_haram').value,
+                    holy_capital: document.getElementById('response_time_holy_capital').value,
+                    makkah_region: document.getElementById('response_time_makkah_region').value
+                },
+                service_time_percentage: {
+                    haram: document.getElementById('service_time_haram').value,
+                    holy_capital: document.getElementById('service_time_holy_capital').value,
+                    makkah_region: document.getElementById('service_time_makkah_region').value
+                },
+                over_60_percentage: {
+                    haram: document.getElementById('over60_percentage_haram').value,
+                    holy_capital: document.getElementById('over60_percentage_holy_capital').value,
+                    makkah_region: document.getElementById('over60_percentage_makkah_region').value
+                },
+                shift_goals: [],
+                shift_notes: document.getElementById('shift_notes_leadership').value,
+                name: document.getElementById('name_leadership').value
+            };
+
+            // جمع بيانات المستشفيات
+            const hospitalRows = document.querySelectorAll('#hospital_data tr');
+            hospitalRows.forEach(row => {
+                const number = row.cells[0].textContent.trim();
+                const hospitalName = row.cells[1].querySelector('input').value;
+                const cases = row.cells[2].querySelector('input').value;
+                const percentage = row.cells[3].querySelector('input').value;
+                const averageStay = row.cells[4].querySelector('input').value;
+
+                data.hospitals.push({
+                    number,
+                    hospitalName,
+                    cases,
+                    percentage,
+                    averageStay
+                });
+            });
+
+            // جمع أهداف المناوبة
+            const goals = document.querySelectorAll('#shift_goals_leadership tr');
+            goals.forEach(row => {
+                const goalInput = row.cells[0].querySelector('input');
+                const updateInput = row.cells[1].querySelector('input');
+                if (goalInput.value.trim() !== '' && updateInput.value.trim() !== '') {
+                    const goal = goalInput.value.trim();
+                    const update = updateInput.value.trim();
+                    data.shift_goals.push({ goal, update });
+                }
+            });
+
+            // إنشاء نص الرسالة لواتساب
+            let formText = `*== فريق القيادة والتحكم ==*\n\n`;
+
+            // بيانات المستشفيات
+            formText += `*بيانات المستشفيات:*\n`;
+            data.hospitals.forEach(hospital => {
+                formText += `${hospital.number}. *اسم المستشفى:* ${hospital.hospitalName}\n`;
+                formText += `   *عدد الحالات:* ${hospital.cases}\n`;
+                formText += `   *نسبة البلاغات المنقولة:* ${hospital.percentage}\n`;
+                formText += `   *متوسط زمن البقاء في المستشفى:* ${hospital.averageStay}\n\n`;
+            });
+
+            // زمن البقاء في المستشفيات
+            formText += `*زمن البقاء في المستشفيات:*\n`;
+            formText += `- عدد البلاغات لأكثر من 20 دقيقة: ${data.reports_over_20}\n`;
+            formText += `- عدد البلاغات لأكثر من 40 دقيقة: ${data.reports_over_40}\n`;
+            formText += `- عدد البلاغات لأكثر من 60 دقيقة: ${data.reports_over_60}\n\n`;
+
+            // مؤشرات التشغيلية
+            formText += `*المؤشرات التشغيلية: فريق القيادة والتحكم:*\n`;
+            formText += `*متوسط زمن الاستجابة لجميع البلاغات:*\n`;
+            formText += `- الحرم: ${data.response_times.haram}\n`;
+            formText += `- العاصمة المقدسة: ${data.response_times.holy_capital}\n`;
+            formText += `- منطقة مكة المكرمة: ${data.response_times.makkah_region}\n\n`;
+
+            formText += `*نسبة زمن تقديم الخدمة الإسعافية في الموقع خلال 15 دقيقة:*\n`;
+            formText += `- الحرم: ${data.service_time_percentage.haram}\n`;
+            formText += `- العاصمة المقدسة: ${data.service_time_percentage.holy_capital}\n`;
+            formText += `- منطقة مكة المكرمة: ${data.service_time_percentage.makkah_region}\n\n`;
+
+            formText += `*نسبة البلاغات الإسعافية ذات زمن استجابة أكثر من 60 دقيقة:*\n`;
+            formText += `- الحرم: ${data.over_60_percentage.haram}\n`;
+            formText += `- العاصمة المقدسة: ${data.over_60_percentage.holy_capital}\n`;
+            formText += `- منطقة مكة المكرمة: ${data.over_60_percentage.makkah_region}\n\n`;
+
+            // أهداف المناوبة
+            formText += `*أهداف المناوبة:*\n`;
+            data.shift_goals.forEach((goalObj, index) => {
+                formText += `${index + 1}. *الهدف:* ${goalObj.goal}\n   *التحديث:* ${goalObj.update}\n`;
+            });
+            formText += `\n`;
+
+            // ملاحظات المناوبة والاسم
+            formText += `*ملاحظات المناوبة:* ${data.shift_notes}\n`;
+            formText += `*الاسم:* ${data.name}\n`;
+
+            console.log(formText); // تأكيد عرض البيانات المجمعة
+
+            // تشفير النص
+            const encodedText = encodeURIComponent(formText);
+
+            // التحقق من نوع الجهاز أو المتصفح
+            if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                // على أجهزة iOS، استخدم رابط واتساب المباشر
+                const whatsappUrl = `whatsapp://send?text=${encodedText}`;
+                window.open(whatsappUrl, '_blank');
+            } else {
+                // على باقي الأجهزة، استخدم wa.me لفتح الرابط
+                const whatsappUrl = `https://wa.me/?text=${encodedText}`;
+                window.open(whatsappUrl, '_blank');
+            }
+        }
+
+        // دالة لإرسال النموذج عبر واتساب (النموذج القيادة والتحكم)
+        function submitFormLeadershipControl() {
+            // التحقق من تعبئة جميع الحقول المطلوبة
+            const requiredFields = document.querySelectorAll('#leadershipControlTeam input[required], #leadershipControlTeam textarea[required]');
+            let allFieldsFilled = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.border = '2px solid #d63031';
+                    allFieldsFilled = false;
+                } else {
+                    field.style.border = '1px solid #b2bec3';
+                }
+            });
+
+            if (!allFieldsFilled) {
+                alert("يرجى تعبئة جميع الحقول المطلوبة.");
+                return;
+            }
+
+            // جمع البيانات من النموذج
+            const data = {
+                // بيانات المستشفيات
+                hospitals: [],
+                reports_over_20: document.getElementById('reports_over_20').value,
+                reports_over_40: document.getElementById('reports_over_40').value,
+                reports_over_60: document.getElementById('reports_over_60').value,
+                // مؤشرات التشغيلية
+                response_times: {
+                    haram: document.getElementById('response_time_haram').value,
+                    holy_capital: document.getElementById('response_time_holy_capital').value,
+                    makkah_region: document.getElementById('response_time_makkah_region').value
+                },
+                service_time_percentage: {
+                    haram: document.getElementById('service_time_haram').value,
+                    holy_capital: document.getElementById('service_time_holy_capital').value,
+                    makkah_region: document.getElementById('service_time_makkah_region').value
+                },
+                over_60_percentage: {
+                    haram: document.getElementById('over60_percentage_haram').value,
+                    holy_capital: document.getElementById('over60_percentage_holy_capital').value,
+                    makkah_region: document.getElementById('over60_percentage_makkah_region').value
+                },
+                shift_goals: [],
+                shift_notes: document.getElementById('shift_notes_leadership').value,
+                name: document.getElementById('name_leadership').value
+            };
+
+            // جمع بيانات المستشفيات
+            const hospitalRows = document.querySelectorAll('#hospital_data tr');
+            hospitalRows.forEach(row => {
+                const number = row.cells[0].textContent.trim();
+                const hospitalName = row.cells[1].querySelector('input').value;
+                const cases = row.cells[2].querySelector('input').value;
+                const percentage = row.cells[3].querySelector('input').value;
+                const averageStay = row.cells[4].querySelector('input').value;
+
+                data.hospitals.push({
+                    number,
+                    hospitalName,
+                    cases,
+                    percentage,
+                    averageStay
+                });
+            });
+
+            // جمع أهداف المناوبة
+            const goals = document.querySelectorAll('#shift_goals_leadership tr');
+            goals.forEach(row => {
+                const goalInput = row.cells[0].querySelector('input');
+                const updateInput = row.cells[1].querySelector('input');
+                if (goalInput.value.trim() !== '' && updateInput.value.trim() !== '') {
+                    const goal = goalInput.value.trim();
+                    const update = updateInput.value.trim();
+                    data.shift_goals.push({ goal, update });
+                }
+            });
+
+            // إنشاء نص الرسالة لواتساب
+            let formText = `*== فريق القيادة والتحكم ==*\n\n`;
+
+            // بيانات المستشفيات
+            formText += `*بيانات المستشفيات:*\n`;
+            data.hospitals.forEach(hospital => {
+                formText += `${hospital.number}. *اسم المستشفى:* ${hospital.hospitalName}\n`;
+                formText += `   *عدد الحالات:* ${hospital.cases}\n`;
+                formText += `   *نسبة البلاغات المنقولة:* ${hospital.percentage}\n`;
+                formText += `   *متوسط زمن البقاء في المستشفى:* ${hospital.averageStay}\n\n`;
+            });
+
+            // زمن البقاء في المستشفيات
+            formText += `*زمن البقاء في المستشفيات:*\n`;
+            formText += `- عدد البلاغات لأكثر من 20 دقيقة: ${data.reports_over_20}\n`;
+            formText += `- عدد البلاغات لأكثر من 40 دقيقة: ${data.reports_over_40}\n`;
+            formText += `- عدد البلاغات لأكثر من 60 دقيقة: ${data.reports_over_60}\n\n`;
+
+            // مؤشرات التشغيلية
+            formText += `*المؤشرات التشغيلية: فريق القيادة والتحكم:*\n`;
+            formText += `*متوسط زمن الاستجابة لجميع البلاغات:*\n`;
+            formText += `- الحرم: ${data.response_times.haram}\n`;
+            formText += `- العاصمة المقدسة: ${data.response_times.holy_capital}\n`;
+            formText += `- منطقة مكة المكرمة: ${data.response_times.makkah_region}\n\n`;
+
+            formText += `*نسبة زمن تقديم الخدمة الإسعافية في الموقع خلال 15 دقيقة:*\n`;
+            formText += `- الحرم: ${data.service_time_percentage.haram}\n`;
+            formText += `- العاصمة المقدسة: ${data.service_time_percentage.holy_capital}\n`;
+            formText += `- منطقة مكة المكرمة: ${data.service_time_percentage.makkah_region}\n\n`;
+
+            formText += `*نسبة البلاغات الإسعافية ذات زمن استجابة أكثر من 60 دقيقة:*\n`;
+            formText += `- الحرم: ${data.over_60_percentage.haram}\n`;
+            formText += `- العاصمة المقدسة: ${data.over_60_percentage.holy_capital}\n`;
+            formText += `- منطقة مكة المكرمة: ${data.over_60_percentage.makkah_region}\n\n`;
+
+            // أهداف المناوبة
+            formText += `*أهداف المناوبة:*\n`;
+            data.shift_goals.forEach((goalObj, index) => {
+                formText += `${index + 1}. *الهدف:* ${goalObj.goal}\n   *التحديث:* ${goalObj.update}\n`;
+            });
+            formText += `\n`;
+
+            // ملاحظات المناوبة والاسم
+            formText += `*ملاحظات المناوبة:* ${data.shift_notes}\n`;
             formText += `*الاسم:* ${data.name}\n`;
 
             console.log(formText); // تأكيد عرض البيانات المجمعة
