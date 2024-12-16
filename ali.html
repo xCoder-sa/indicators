@@ -52,6 +52,8 @@
             padding: 15px 20px;
             cursor: pointer;
             transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
         }
 
         .sidebar ul li:hover, .sidebar ul li.active {
@@ -59,7 +61,8 @@
         }
 
         .sidebar ul li i {
-            margin-left: 10px;
+            margin-right: 15px; /* زيادة المسافة بين الأيقونة والنص */
+            font-size: 18px;
         }
 
         /* المحتوى الرئيسي */
@@ -87,6 +90,7 @@
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: none; /* إخفاء النماذج بشكل افتراضي */
         }
 
         .form-section {
@@ -111,6 +115,7 @@
             font-size: 16px;
             transition: border-color 0.3s;
             background-color: #dfe6e9;
+            box-sizing: border-box; /* لضمان أن الحقول لا تتداخل مع حدود الجدول */
         }
 
         .form-section input[type="number"]:focus,
@@ -132,6 +137,7 @@
             border: 1px solid #b2bec3;
             padding: 12px;
             text-align: center;
+            box-sizing: border-box; /* لضمان أن الخلايا لا تتداخل */
         }
 
         .form-section table th {
@@ -213,6 +219,56 @@
                 display: none;
             }
         }
+
+        /* تحسينات إضافية */
+        .form-section .section-title {
+            background-color: #0984e3; /* لون خلفية متناسق */
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 18px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .note {
+            background-color: #f1f2f6; /* لون خلفي مختلف لتجنب التشابه مع مربعات الإدخال */
+            padding: 10px;
+            border-left: 4px solid #0984e3;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #2d3436;
+        }
+
+        /* تحسين حدود الجداول */
+        table th, table td {
+            border: 1px solid #b2bec3 !important;
+        }
+
+        /* إزالة تداخل النصوص */
+        table input[type="number"], table input[type="text"] {
+            width: 90%; /* تقليل العرض لتجنب تداخل الحدود */
+        }
+
+        /* تنسيق العناوين الرئيسية */
+        .form-section h3 {
+            font-size: 20px;
+            color: #2d3436;
+            margin-bottom: 15px;
+            text-align: center;
+            background-color: #0984e3;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        /* تنسيق ملاحظات التطبيقات في سطر واحد */
+        .apps-note {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
     </style>
 </head>
 <body>
@@ -224,7 +280,8 @@
     <div class="sidebar" id="sidebar">
         <div class="logo">لوحة التحكم</div>
         <ul>
-            <li class="active" data-form="resourceStatus"><i class="fas fa-chart-line"></i> فريق الإسعاف الارضي</li>
+            <li class="active" data-form="ambulanceTeam"><i class="fas fa-ambulance"></i> فريق الإسعاف الارضي</li>
+            <li data-form="medicalTransferTeam"><i class="fas fa-stethoscope"></i> فريق الترحيل الطبي</li>
             <!-- يمكن إضافة عناصر جديدة هنا للنماذج المستقبلية -->
             <!-- مثال:
             <li data-form="anotherForm"><i class="fas fa-file-alt"></i> نموذج آخر</li>
@@ -238,8 +295,8 @@
             <h2>لوحة تحكم فريق العمليات</h2>
         </div>
 
-        <!-- نموذج الموارد حسب الوضع الراهن -->
-        <div class="form-container" id="resourceStatus">
+        <!-- نموذج فريق الإسعاف الارضي -->
+        <div class="form-container" id="ambulanceTeam" style="display: block;">
             <div class="form-section">
                 <label for="total_service_providers">إجمالي مقدمي الخدمة الإسعافية:</label>
                 <input type="number" id="total_service_providers" placeholder="إجمالي مقدمي الخدمة الإسعافية" required>
@@ -319,14 +376,197 @@
                 <button type="button" onclick="addShiftGoal()">إضافة هدف آخر</button>
             </div>
             <div class="form-section">
-                <label for="shift_notes">ملاحظات المناوبة:</label>
+                <h3>ملاحظات المناوبة:</h3>
                 <textarea id="shift_notes" rows="4" placeholder="ملاحظات المناوبة" required></textarea>
             </div>
             <div class="form-section">
-                <label for="name">الاسم:</label>
+                <h3>الاسم:</h3>
                 <input type="text" id="name" placeholder="أدخل اسمك" required>
             </div>
             <button type="button" class="submit-btn" onclick="submitForm()">إرسال النموذج</button>
+        </div>
+
+        <!-- نموذج فريق الترحيل الطبي -->
+        <div class="form-container" id="medicalTransferTeam">
+            <div class="form-section">
+                <label for="total_calls">إجمالي المكالمات:</label>
+                <input type="number" id="total_calls" placeholder="إجمالي المكالمات" required>
+            </div>
+            <div class="form-section">
+                <label for="received_calls">المكالمات المستلمة:</label>
+                <input type="number" id="received_calls" placeholder="المكالمات المستلمة" required>
+            </div>
+            <div class="form-section">
+                <label for="missed_calls_percentage">نسبة المكالمات الفائتة:</label>
+                <input type="text" id="missed_calls_percentage" placeholder="نسبة المكالمات الفائتة" required>
+            </div>
+            <div class="form-section">
+                <div class="section-title">بلاغات</div>
+                <div class="sub-section">
+                    <label for="reports_997">بلاغات 997:</label>
+                    <input type="number" id="reports_997" placeholder="بلاغات 997" required>
+                </div>
+                <div class="sub-section">
+                    <label for="reports_911">بلاغات 911:</label>
+                    <input type="number" id="reports_911" placeholder="بلاغات 911" required>
+                </div>
+                <div class="sub-section">
+                    <label for="reports_apps">بلاغات التطبيقات:</label>
+                    <input type="number" id="reports_apps" placeholder="بلاغات التطبيقات" required>
+                </div>
+            </div>
+            <div class="form-section">
+                <label for="patients_responsive">عدد المرضى المستجاب لهم:</label>
+                <input type="number" id="patients_responsive" placeholder="عدد المرضى المستجاب لهم" required>
+            </div>
+            <div class="form-section">
+                <div class="apps-note">
+                    <label>التطبيقات:</label>
+                    <p class="note">المسعف الإلكتروني توكلنا، أسعفني، صحتي، عقد</p>
+                </div>
+            </div>
+            <div class="form-section">
+                <div class="section-title">مؤشرات الترحيل الطبي</div>
+                <p class="note">إجمالي عدد البلاغات للعاصمة المقدسة والحرم والمشاعر حسب تصنيف الترحيل الطبي.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>الفريق</th>
+                            <th>المستلمة</th>
+                            <th>الملغاة</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ECHO</td>
+                            <td><input type="number" placeholder="المستلمة" required></td>
+                            <td><input type="number" placeholder="الملغاة" required></td>
+                        </tr>
+                        <tr>
+                            <td>DELTA</td>
+                            <td><input type="number" placeholder="المستلمة" required></td>
+                            <td><input type="number" placeholder="الملغاة" required></td>
+                        </tr>
+                        <tr>
+                            <td>BRAVO</td>
+                            <td><input type="number" placeholder="المستلمة" required></td>
+                            <td><input type="number" placeholder="الملغاة" required></td>
+                        </tr>
+                        <tr>
+                            <td>CHARLY</td>
+                            <td><input type="number" placeholder="المستلمة" required></td>
+                            <td><input type="number" placeholder="الملغاة" required></td>
+                        </tr>
+                        <tr>
+                            <td>ALPHA</td>
+                            <td><input type="number" placeholder="المستلمة" required></td>
+                            <td><input type="number" placeholder="الملغاة" required></td>
+                        </tr>
+                        <tr>
+                            <td>OMEGA</td>
+                            <td><input type="number" placeholder="المستلمة" required></td>
+                            <td><input type="number" placeholder="الملغاة" required></td>
+                        </tr>
+                        <tr>
+                            <td>VECTOR</td>
+                            <td><input type="number" placeholder="المستلمة" required></td>
+                            <td><input type="number" placeholder="الملغاة" required></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-section">
+                <label>نسبة الالتزام ProQA:</label>
+                <input type="text" id="proqa_percentage" placeholder="نسبة الالتزام ProQA" required>
+            </div>
+            <div class="form-section">
+                <label>نسبة المكالمات التي تم معالجتها خلال 90 ثانية:</label>
+                <input type="text" id="processed_calls_percentage" placeholder="نسبة المكالمات التي تم معالجتها خلال 90 ثانية" required>
+            </div>
+            <div class="form-section">
+                <label>نسبة بلاغات VECTOR من اجمالي البلاغات:</label>
+                <input type="text" id="vector_reports_percentage" placeholder="نسبة بلاغات VECTOR من اجمالي البلاغات" required>
+            </div>
+            <div class="form-section">
+                <h3>بلاغات 911</h3>
+                <div class="sub-section">
+                    <label for="total_reports_911">إجمالي البلاغات الواردة من 911:</label>
+                    <input type="number" id="total_reports_911" placeholder="إجمالي البلاغات الواردة من 911" required>
+                </div>
+                <div class="sub-section">
+                    <label for="responded_reports_911">اجمالي بلاغات 911 المستجاب لها:</label>
+                    <input type="number" id="responded_reports_911" placeholder="اجمالي بلاغات 911 المستجاب لها" required>
+                </div>
+                <div class="sub-section">
+                    <label for="canceled_reports_911">اجمالي بلاغات 911 الملغاة:</label>
+                    <input type="number" id="canceled_reports_911" placeholder="اجمالي بلاغات 911 الملغاة" required>
+                </div>
+                <div class="sub-section">
+                    <label>بلاغات (911) الملغاة:</label>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>سبب الإلغاء</th>
+                                <th>العدد</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>مكرر مع ذكر رقم البلاغ</td>
+                                <td><input type="number" placeholder="العدد" required></td>
+                            </tr>
+                            <tr>
+                                <td>ألغي من قبل جهة حكومية</td>
+                                <td><input type="number" placeholder="العدد" required></td>
+                            </tr>
+                            <tr>
+                                <td>ألغي من قبل المبلغ لعدم الحاجة لنقل اسعافي</td>
+                                <td><input type="number" placeholder="العدد" required></td>
+                            </tr>
+                            <tr>
+                                <td>بلاغ غير اسعافي من قبل مركز العمليات الأمنية الموحدة</td>
+                                <td><input type="number" placeholder="العدد" required></td>
+                            </tr>
+                            <tr>
+                                <td>أسباب أخرى</td>
+                                <td><input type="number" placeholder="العدد" required></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="form-section">
+                <h3>أهداف المناوبة:</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>الهدف</th>
+                            <th>التحديث</th>
+                        </tr>
+                    </thead>
+                    <tbody id="shift_goals_medical">
+                        <tr>
+                            <td><input type="text" placeholder="الهدف" required></td>
+                            <td><input type="text" placeholder="التحديث" required></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" placeholder="الهدف" required></td>
+                            <td><input type="text" placeholder="التحديث" required></td>
+                        </tr>
+                        <!-- يمكن إضافة المزيد من الصفوف حسب الحاجة -->
+                    </tbody>
+                </table>
+                <button type="button" onclick="addShiftGoalMedical()">إضافة هدف آخر</button>
+            </div>
+            <div class="form-section">
+                <h3>ملاحظات المناوبة:</h3>
+                <textarea id="shift_notes_medical" rows="4" placeholder="ملاحظات المناوبة" required></textarea>
+            </div>
+            <div class="form-section">
+                <h3>الاسم:</h3>
+                <input type="text" id="name_medical" placeholder="أدخل اسمك" required>
+            </div>
+            <button type="button" class="submit-btn" onclick="submitFormMedical()">إرسال النموذج</button>
         </div>
 
         <!-- يمكن إضافة نماذج أخرى هنا في المستقبل -->
@@ -360,7 +600,7 @@
             });
         });
 
-        // دالة لإضافة صف جديد في جدول أهداف المناوبة
+        // دالة لإضافة صف جديد في جدول أهداف المناوبة (النموذج الأول)
         function addShiftGoal() {
             const shiftGoals = document.getElementById('shift_goals');
             const newRow = document.createElement('tr');
@@ -385,10 +625,35 @@
             shiftGoals.appendChild(newRow);
         }
 
-        // دالة لإرسال النموذج عبر واتساب
+        // دالة لإضافة صف جديد في جدول أهداف المناوبة (النموذج الجديد)
+        function addShiftGoalMedical() {
+            const shiftGoals = document.getElementById('shift_goals_medical');
+            const newRow = document.createElement('tr');
+
+            const goalCell = document.createElement('td');
+            const goalInput = document.createElement('input');
+            goalInput.type = 'text';
+            goalInput.placeholder = 'الهدف';
+            goalInput.required = true;
+            goalCell.appendChild(goalInput);
+
+            const updateCell = document.createElement('td');
+            const updateInput = document.createElement('input');
+            updateInput.type = 'text';
+            updateInput.placeholder = 'التحديث';
+            updateInput.required = true;
+            updateCell.appendChild(updateInput);
+
+            newRow.appendChild(goalCell);
+            newRow.appendChild(updateCell);
+
+            shiftGoals.appendChild(newRow);
+        }
+
+        // دالة لإرسال النموذج عبر واتساب (النموذج الأول)
         function submitForm() {
             // التحقق من تعبئة جميع الحقول المطلوبة
-            const requiredFields = document.querySelectorAll('input[required], textarea[required]');
+            const requiredFields = document.querySelectorAll('#ambulanceTeam input[required], #ambulanceTeam textarea[required]');
             let allFieldsFilled = true;
 
             requiredFields.forEach(field => {
@@ -440,7 +705,7 @@
             });
 
             // إنشاء نص الرسالة لواتساب
-            let formText = `*الموارد حسب الوضع الراهن*\n\n`;
+            let formText = `*== فريق الإسعاف الارضي ==*\n\n`;
             formText += `*إجمالي مقدمي الخدمة الإسعافية:* ${data.total_service_providers}\n`;
             formText += `*الموظفين منهم:* ${data.employees}\n`;
             formText += `*المتطوعين منهم:* ${data.volunteers}\n`;
@@ -456,6 +721,118 @@
             formText += `- عرفات: ${data.team_distribution.arafat}\n`;
             formText += `- منى: ${data.team_distribution.mina}\n`;
             formText += `- طريق الحاج: ${data.team_distribution.hajj_road}\n\n`;
+
+            formText += `*أهداف المناوبة:*\n`;
+            data.shift_goals.forEach((goalObj, index) => {
+                formText += `${index + 1}- الهدف: ${goalObj.goal}\n   التحديث: ${goalObj.update}\n`;
+            });
+            formText += `\n*ملاحظات المناوبة:* ${data.shift_notes}\n`;
+            formText += `*الاسم:* ${data.name}\n`;
+
+            console.log(formText); // تأكيد عرض البيانات المجمعة
+
+            // تشفير النص
+            const encodedText = encodeURIComponent(formText);
+
+            // التحقق من نوع الجهاز أو المتصفح
+            if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                // على أجهزة iOS، استخدم رابط واتساب المباشر
+                const whatsappUrl = `whatsapp://send?text=${encodedText}`;
+                window.open(whatsappUrl, '_blank');
+            } else {
+                // على باقي الأجهزة، استخدم wa.me لفتح الرابط
+                const whatsappUrl = `https://wa.me/?text=${encodedText}`;
+                window.open(whatsappUrl, '_blank');
+            }
+        }
+
+        // دالة لإرسال النموذج عبر واتساب (النموذج الجديد)
+        function submitFormMedical() {
+            // التحقق من تعبئة جميع الحقول المطلوبة
+            const requiredFields = document.querySelectorAll('#medicalTransferTeam input[required], #medicalTransferTeam textarea[required]');
+            let allFieldsFilled = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.border = '2px solid #d63031';
+                    allFieldsFilled = false;
+                } else {
+                    field.style.border = '1px solid #b2bec3';
+                }
+            });
+
+            if (!allFieldsFilled) {
+                alert("يرجى تعبئة جميع الحقول المطلوبة.");
+                return;
+            }
+
+            // جمع البيانات من النموذج
+            const data = {
+                total_calls: document.getElementById('total_calls').value,
+                received_calls: document.getElementById('received_calls').value,
+                missed_calls_percentage: document.getElementById('missed_calls_percentage').value,
+                reports_997: document.getElementById('reports_997').value,
+                reports_911: document.getElementById('reports_911').value,
+                reports_apps: document.getElementById('reports_apps').value,
+                patients_responsive: document.getElementById('patients_responsive').value,
+                shift_goals: [],
+                shift_notes: document.getElementById('shift_notes_medical').value,
+                name: document.getElementById('name_medical').value
+            };
+
+            // جمع أهداف المناوبة
+            const goals = document.querySelectorAll('#shift_goals_medical tr');
+            goals.forEach(row => {
+                const goalInput = row.cells[0].querySelector('input');
+                const updateInput = row.cells[1].querySelector('input');
+                if (goalInput.value.trim() !== '' && updateInput.value.trim() !== '') {
+                    const goal = goalInput.value.trim();
+                    const update = updateInput.value.trim();
+                    data.shift_goals.push({ goal, update });
+                }
+            });
+
+            // إنشاء نص الرسالة لواتساب
+            let formText = `*== فريق الترحيل الطبي ==*\n\n`;
+            formText += `*إجمالي المكالمات:* ${data.total_calls}\n`;
+            formText += `*المكالمات المستلمة:* ${data.received_calls}\n`;
+            formText += `*نسبة المكالمات الفائتة:* ${data.missed_calls_percentage}\n\n`;
+
+            formText += `*بلاغات:*\n`;
+            formText += `- بلاغات 997: ${data.reports_997}\n`;
+            formText += `- بلاغات 911: ${data.reports_911}\n`;
+            formText += `- بلاغات التطبيقات: ${data.reports_apps}\n\n`;
+
+            formText += `*عدد المرضى المستجاب لهم:* ${data.patients_responsive}\n\n`;
+
+            formText += `*التطبيقات:* المسعف الإلكتروني توكلنا، أسعفني، صحتي، عقد\n\n`;
+
+            formText += `*مؤشرات الترحيل الطبي:*\n`;
+            formText += `إجمالي عدد البلاغات للعاصمة المقدسة والحرم والمشاعر حسب تصنيف الترحيل الطبي.\n\n`;
+
+            formText += `\n*التصنيفات:*\n`;
+            const tableRows = document.querySelectorAll('#medicalTransferTeam table tbody tr');
+            tableRows.forEach((row, index) => {
+                const team = row.cells[0].textContent.trim();
+                const received = row.cells[1].querySelector('input').value;
+                const canceled = row.cells[2].querySelector('input').value;
+                formText += `- ${team}: مستلمة ${received}, ملغاة ${canceled}\n`;
+            });
+            formText += `\n*نسبة الالتزام ProQA:* ${document.getElementById('proqa_percentage').value}\n`;
+            formText += `*نسبة المكالمات التي تم معالجتها خلال 90 ثانية:* ${document.getElementById('processed_calls_percentage').value}\n`;
+            formText += `*نسبة بلاغات VECTOR من اجمالي البلاغات:* ${document.getElementById('vector_reports_percentage').value}\n\n`;
+
+            formText += `*بلاغات 911:* \n`;
+            formText += `- إجمالي البلاغات الواردة من 911: ${data.reports_911}\n`;
+            formText += `- اجمالي بلاغات 911 المستجاب لها: ${data.responded_reports_911}\n`;
+            formText += `- اجمالي بلاغات 911 الملغاة: ${data.canceled_reports_911}\n\n`;
+
+            formText += `*بلاغات (911) الملغاة:*\n`;
+            formText += `- سبب الإلغاء: مكرر مع ذكر رقم البلاغ: ${document.querySelector('#medicalTransferTeam table tbody tr:nth-child(1) td:nth-child(2) input').value}\n`;
+            formText += `- سبب الإلغاء: ألغي من قبل جهة حكومية: ${document.querySelector('#medicalTransferTeam table tbody tr:nth-child(2) td:nth-child(2) input').value}\n`;
+            formText += `- سبب الإلغاء: ألغي من قبل المبلغ لعدم الحاجة لنقل اسعافي: ${document.querySelector('#medicalTransferTeam table tbody tr:nth-child(3) td:nth-child(2) input').value}\n`;
+            formText += `- سبب الإلغاء: بلاغ غير اسعافي من قبل مركز العمليات الأمنية الموحدة: ${document.querySelector('#medicalTransferTeam table tbody tr:nth-child(4) td:nth-child(2) input').value}\n`;
+            formText += `- سبب الإلغاء: أسباب أخرى: ${document.querySelector('#medicalTransferTeam table tbody tr:nth-child(5) td:nth-child(2) input').value}\n\n`;
 
             formText += `*أهداف المناوبة:*\n`;
             data.shift_goals.forEach((goalObj, index) => {
