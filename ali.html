@@ -254,13 +254,12 @@
         /* تنسيق العناوين الرئيسية */
         .form-section h3 {
             font-size: 20px;
-            color: #2d3436;
-            margin-bottom: 15px;
-            text-align: center;
-            background-color: #0984e3;
             color: #ffffff;
+            margin-bottom: 15px;
+            background-color: #0984e3;
             padding: 10px;
             border-radius: 6px;
+            text-align: center;
         }
 
         /* تنسيق ملاحظات التطبيقات في سطر واحد */
@@ -326,7 +325,7 @@
                 <input type="number" id="vehicle_teams" placeholder="عدد فرق مركبات" required>
             </div>
             <div class="form-section">
-                <label>توزيع الفرق بحسب مواقعها:</label>
+                <h3>توزيع الفرق بحسب مواقعها:</h3>
                 <div class="sub-section">
                     <label for="haram">الحرم المكي:</label>
                     <input type="number" id="haram" placeholder="عدد الفرق في الحرم المكي" required>
@@ -401,7 +400,7 @@
                 <input type="text" id="missed_calls_percentage" placeholder="نسبة المكالمات الفائتة" required>
             </div>
             <div class="form-section">
-                <div class="section-title">بلاغات</div>
+                <h3>بلاغات</h3>
                 <div class="sub-section">
                     <label for="reports_997">بلاغات 997:</label>
                     <input type="number" id="reports_997" placeholder="بلاغات 997" required>
@@ -426,7 +425,7 @@
                 </div>
             </div>
             <div class="form-section">
-                <div class="section-title">مؤشرات الترحيل الطبي</div>
+                <h3>مؤشرات الترحيل الطبي</h3>
                 <p class="note">إجمالي عدد البلاغات للعاصمة المقدسة والحرم والمشاعر حسب تصنيف الترحيل الطبي.</p>
                 <table>
                     <thead>
@@ -824,8 +823,8 @@
 
             formText += `*بلاغات 911:* \n`;
             formText += `- إجمالي البلاغات الواردة من 911: ${data.reports_911}\n`;
-            formText += `- اجمالي بلاغات 911 المستجاب لها: ${data.responded_reports_911}\n`;
-            formText += `- اجمالي بلاغات 911 الملغاة: ${data.canceled_reports_911}\n\n`;
+            formText += `- اجمالي بلاغات 911 المستجاب لها: ${document.getElementById('responded_reports_911').value}\n`;
+            formText += `- اجمالي بلاغات 911 الملغاة: ${document.getElementById('canceled_reports_911').value}\n\n`;
 
             formText += `*بلاغات (911) الملغاة:*\n`;
             formText += `- سبب الإلغاء: مكرر مع ذكر رقم البلاغ: ${document.querySelector('#medicalTransferTeam table tbody tr:nth-child(1) td:nth-child(2) input').value}\n`;
