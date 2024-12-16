@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>فلترة الموظفين حسب النطاق والقطاع والمركز والمناوبة</title>
+  <!-- ربط خطوط من Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #4CAF50;
+      --secondary-color: #008CBA;
+      --center-color: #e91e63;
+      --time-day-color: #FF9800;
+      --time-evening-color: #000; /* اللون الأسود لزر "مساء" */
+      --text-color: #fff;
+      --background-color: #f4f4f9;
+      --breadcrumb-bg: #fff;
+      --breadcrumb-text: #555;
+      --breadcrumb-separator: #007BFF; /* لون أزرق أكثر وضوحًا للفواصل */
+      --button-border-radius: 8px;
+      --button-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --font-family: 'Roboto', sans-serif;
+      --breadcrumb-font-family: 'Cairo', sans-serif; /* خط مختلف لـ breadcrumb */
+      --card-border-radius: 12px;
+      --card-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      --breadcrumb-gap: 10px;
+      --prefix-color: #333; /* لون العبارة المقدمة */
+      --info-text-color: #555;
+      --info-font-size: 16px;
+      --breadcrumb-prefix-font-weight: 700;
+      --breadcrumb-card-font-weight: 500;
+      --statistics-table-header-bg: #4CAF50;
+      --statistics-table-header-color: #fff;
+      --statistics-table-border: #ddd;
+      --statistics-font-size: 12px; /* تقليل حجم الخط */
+      --statistics-padding: 6px 8px; /* تقليل الحشو */
+      --statistics-table-width: 400px; /* تحديد عرض الجدول */
+    }
+
+    body {
+      font-family: var(--font-family);
+      margin: 0;
+      padding: 0;
+      background-color: var(--background-color);
+      direction: rtl;
+      padding-bottom: 60px; /* زيادة المساحة لتجنب تغطية شريط التمرير */
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-top: 20px;
+      font-family: 'Cairo', sans-serif; /* استخدام خط مختلف لعنوان الصفحة */
+      font-weight: 700;
+      font-size: 24px;
+    }
+
+    .buttons-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 20px 10px;
+      gap: 10px;
+    }
+
+    .filter-button {
+      padding: 10px 20px;
+      font-size: 14px;
+      border: none;
+      border-radius: var(--button-border-radius);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: var(--button-shadow);
+      color: var(--text-color);
+      background-color: var(--primary-color);
+      font-family: 'Cairo', sans-serif; /* استخدام خط مختلف للأزرار */
+    }
+
+    .filter-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    /* تنسيقات الأزرار الثانوية */
+    #sub-buttons .filter-button {
+      background-color: var(--secondary-color);
+    }
+
+    #sub-buttons .filter-button:hover {
+      background-color: #007bb5;
+    }
+
+    /* تنسيقات أزرار المركز */
+    #center-buttons .filter-button {
+      background-color: var(--center-color);
+    }
+
+    #center-buttons .filter-button:hover {
+      background-color: #d81b60;
+    }
+
+    /* تنسيقات أزرار المناوبة */
+    #time-buttons .filter-button {
+      background-color: var(--time-day-color);
+    }
+
+    #time-buttons .filter-button:hover {
+      background-color: #e68900;
+    }
+
+    /* تنسيق زر "مساء" */
+    .evening-button {
+      background-color: var(--time-evening-color) !important; /* تأكيد اللون الأسود */
+      color: var(--text-color);
+    }
+
+    .evening-button:hover {
+      background-color: #333 !important; /* لون رمادي داكن عند التمرير */
+    }
+
+    /* شريط التوضيح (breadcrumb) كبطاقات */
+    .breadcrumb {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--breadcrumb-gap);
+      margin: 20px auto;
+      max-width: 1200px;
+      padding: 10px;
+      display: none; /* إخفاء شريط التوضيح افتراضيًا */
+    }
+
+    .breadcrumb-card {
+      background-color: var(--breadcrumb-bg);
+      color: var(--breadcrumb-text);
+      padding: var(--statistics-padding);
+      border-radius: var(--card-border-radius);
+      box-shadow: var(--card-shadow);
+      display: flex;
+      align-items: center;
+      font-size: var(--statistics-font-size);
+      cursor: default;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      font-family: 'Cairo', sans-serif;
+      font-weight: var(--breadcrumb-card-font-weight);
+    }
+
+    .breadcrumb-card:hover {
+      background-color: #f0f0f0;
+    }
+
+    .breadcrumb-separator {
+      margin: 0 5px;
+      color: var(--breadcrumb-separator);
+      font-weight: bold;
+    }
+
+    /* تنسيق العبارة المقدمة */
+    .breadcrumb-prefix {
+      background-color: transparent;
+      color: var(--prefix-color);
+      padding: var(--statistics-padding);
+      font-weight: var(--breadcrumb-prefix-font-weight);
+      font-size: 16px;
+      font-family: 'Cairo', sans-serif;
+    }
+
+    /* تنسيق حاوية الإحصائيات */
+    .statistics-container {
+      margin: 20px auto;
+      max-width: var(--statistics-table-width);
+      padding: 10px;
+      background-color: #fff;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      display: none; /* إخفاء حاوية الإحصائيات افتراضيًا */
+    }
+
+    /* تنسيق جدول الإحصائيات */
+    .statistics-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Cairo', sans-serif;
+      font-size: var(--statistics-font-size);
+    }
+
+    .statistics-table th, .statistics-table td {
+      border: 1px solid var(--statistics-table-border);
+      padding: var(--statistics-padding);
+      text-align: center;
+    }
+
+    .statistics-table th {
+      background-color: var(--statistics-table-header-bg);
+      color: var(--statistics-table-header-color);
+      font-weight: 700;
+    }
+
+    .statistics-table tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .statistics-table tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    /* تنسيق النص الإرشادي */
+    .info {
+      margin-top: 10px;
+      font-size: var(--info-font-size);
+      color: var(--info-text-color);
+      text-align: center;
+      font-family: 'Cairo', sans-serif;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin: 20px auto;
+      font-size: 14px;
+      text-align: right;
+      width: 95%;
+      max-width: 1200px;
+      background-color: #fff;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    table th, table td {
+      border: 1px solid #ddd;
+      padding: 12px 15px;
+      vertical-align: top;
+      white-space: nowrap;
+      font-family: 'Cairo', sans-serif;
+    }
+
+    table th {
+      background-color: var(--primary-color);
+      color: white;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    table tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    table tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      width: 100%;
+      display: none;
+    }
+
+    .fixed-scrollbar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 20px;
+      overflow-x: auto;
+      background-color: #fff;
+      box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+      display: none;
+      z-index: 1000;
+    }
+
+    .fixed-scrollbar::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .fixed-scrollbar::-webkit-scrollbar-thumb {
+      background-color: var(--primary-color);
+      border-radius: 4px;
+    }
+
+    .fixed-scrollbar-inner {
+      width: 1000px;
+      height: 1px;
+    }
+
+    /* إخفاء الحاويات افتراضيًا */
+    #sub-buttons, #center-buttons {
+      display: none;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .breadcrumb {
+        justify-content: flex-start;
+      }
+
+      .breadcrumb-card {
+        flex: 1 1 100%;
+      }
+
+      .breadcrumb-prefix {
+        flex: 1 1 100%;
+      }
+
+      .buttons-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      table, .statistics-table {
+        width: 100%;
+      }
+
+      .info {
+        font-size: 14px;
+      }
+
+      .statistics-table th, .statistics-table td {
+        padding: 6px 8px;
+        font-size: 12px;
+      }
+
+      .statistics-container {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>فلترة الموظفين حسب النطاق والقطاع والمركز والمناوبة</h1>
+  
+  <!-- حاوية الأزرار الرئيسية -->
+  <div class="buttons-container" id="buttons">جاري تحميل الأزرار...</div>
+  
+  <!-- حاوية الأزرار الثانوية -->
+  <div class="buttons-container" id="sub-buttons"></div>
+  
+  <!-- حاوية أزرار المركز -->
+  <div class="buttons-container" id="center-buttons"></div>
+  
+  <!-- حاوية أزرار المناوبة -->
+  <div class="buttons-container" id="time-buttons" style="display: none;">اختر المناوبة:</div>
+  
+  <!-- حاوية الإحصائيات -->
+  <div class="statistics-container" id="statistics">
+    <table class="statistics-table">
+      <thead>
+        <tr>
+          <th>المناوبة</th>
+          <th>مساء</th>
+          <th>صباحا</th>
+          <th>المجموع</th>
+        </tr>
+      </thead>
+      <tbody id="statistics-body">
+        <!-- بيانات الإحصائيات ستتم إضافتها هنا -->
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- شريط التوضيح (breadcrumb) كبطاقات -->
+  <div class="breadcrumb" id="breadcrumb">
+    <div class="breadcrumb-prefix">أنت هنا:</div>
+    <div class="breadcrumb-card">لم يتم اختيار أي فلتر بعد.</div>
+  </div>
+  
+  <div class="info" id="info">اختر النطاق من الأزرار أعلاه، ثم القطاع، ثم المركز، وأخيرًا المناوبة.</div>
+  
+  <!-- حاوية الجدول -->
+  <div class="table-container" id="data"></div>
+  
+  <!-- شريط التمرير الأفقي الثابت -->
+  <div class="fixed-scrollbar" id="fixed-scrollbar">
+    <div class="fixed-scrollbar-inner"></div>
+  </div>
+
+  <script>
+    let allData = [];
+    let headers = [];
+    let tableScrollElement = null;
+    let fixedScrollbar = null;
+    let currentMainFilter = null; // لتخزين الفلتر الرئيسي الحالي (النطاق)
+    let currentSubFilter = null;  // لتخزين الفلتر الثانوي الحالي (القطاع)
+    let currentCenterFilter = null; // لتخزين الفلتر الخاص بالمركز الحالي
+    let currentTimeFilter = null; // لتخزين الفلتر الثالث الحالي (المناوبة)
+
+    async function fetchData() {
+      const sheetId = "11IXGOchQqRWj3YprW1ohCkTMnsxGdlq0L3XS6jH2hGE";
+      const range = "الجدول!A5:AL1205";
+      const apiKey = "AIzaSyAjcEIIYVHCRzslb_dKfk67W6J7DplTFsU"; // تأكد من حماية مفتاح API الخاص بك
+      const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
+
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+
+        if (data.values && data.values.length > 0) {
+          headers = data.values[0];
+          allData = mergeShifts(data.values.slice(1));
+          createFilterButtons(allData.map(row => extractMainFilter(row[5]))); // افترض أن النطاق في العمود 6 (index 5)
+          computeStatistics(allData); // عرض الإحصائيات عند تحميل الصفحة
+        } else {
+          document.getElementById("buttons").textContent = "لا توجد بيانات.";
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        document.getElementById("buttons").textContent = "حدث خطأ أثناء جلب البيانات.";
+      }
+    }
+
+    function mergeShifts(data) {
+      const mergedData = [];
+      for (let i = 0; i < data.length; i += 2) {
+        const row = data[i].slice();
+        const shifts = data[i + 1] || [];
+        for (let j = 7; j < row.length; j++) { // From column H (index 7)
+          if (shifts[j]) {
+            if (row[j]) {
+              row[j] += `<br>${shifts[j]}`;
+            } else {
+              row[j] = shifts[j];
+            }
+          }
+        }
+        mergedData.push(row);
+      }
+      return mergedData;
+    }
+
+    // دالة لاستخراج اسم المركز بدون رمز المناوبة
+    function extractCenterName(fullName) {
+      if (!fullName) return '';
+      const parts = fullName.split('<br>');
+      return parts[0].trim(); // الجزء الأول هو اسم المركز
+    }
+
+    // دالة لاستخراج رمز المناوبة
+    function extractTimeCode(fullName) {
+      if (!fullName) return '';
+      const parts = fullName.split('<br>');
+      return parts[1] ? parts[1].trim() : ''; // الجزء الثاني هو رمز المناوبة إذا كان موجودًا
+    }
+
+    // دالة لاستخراج النطاق الرئيسي بدون تعديلات إضافية إذا لزم الأمر
+    function extractMainFilter(filter) {
+      return filter.trim();
+    }
+
+    function createFilterButtons(filters) {
+      const uniqueFilters = [...new Set(filters)].filter(filter => filter);
+      const buttonsContainer = document.getElementById("buttons");
+      buttonsContainer.innerHTML = ""; // مسح الأزرار السابقة
+
+      // إنشاء زر "عرض كامل الجدول"
+      const allButton = document.createElement("button");
+      allButton.textContent = "عرض كامل الجدول";
+      allButton.className = "filter-button";
+      allButton.onclick = () => {
+        currentMainFilter = null;
+        currentSubFilter = null;
+        currentCenterFilter = null;
+        currentTimeFilter = null;
+        displayTable(allData);
+        computeStatistics(allData);
+        hideSubButtons();
+        hideCenterButtons();
+        hideTimeButtons();
+        hideBreadcrumb(); // إخفاء شريط التوضيح
+      };
+      buttonsContainer.appendChild(allButton);
+
+      // إنشاء أزرار الفلترة الرئيسية
+      uniqueFilters.forEach(filter => {
+        const button = document.createElement("button");
+        button.textContent = filter;
+        button.className = "filter-button";
+        button.onclick = () => {
+          currentMainFilter = filter;
+          currentSubFilter = null;
+          currentCenterFilter = null;
+          currentTimeFilter = null;
+          filterByMain(filter);
+          updateBreadcrumb();
+        };
+        buttonsContainer.appendChild(button);
+      });
+    }
+
+    function filterByMain(filter) {
+      const filteredData = allData.filter(row => extractMainFilter(row[5]) === filter);
+      displayTable(filteredData);
+      computeStatistics(filteredData);
+      createSubFilterButtons(filteredData.map(row => row[6])); // افترض أن "القطاع" هو العمود 7 (index 6)
+      hideCenterButtons();
+      hideTimeButtons();
+    }
+
+    function createSubFilterButtons(filters) {
+      const uniqueFilters = [...new Set(filters)].filter(filter => filter);
+      const subButtonsContainer = document.getElementById("sub-buttons");
+      subButtonsContainer.innerHTML = ""; // مسح الأزرار السابقة
+
+      if (uniqueFilters.length === 0) {
+        subButtonsContainer.style.display = "none";
+        hideCenterButtons();
+        hideTimeButtons();
+        updateBreadcrumb();
+        return;
+      }
+
+      // إنشاء زر "عرض كامل القطاع" في الفلتر الثانوي
+      const allButton = document.createElement("button");
+      allButton.textContent = "عرض كامل القطاع";
+      allButton.className = "filter-button";
+      allButton.onclick = () => {
+        const filteredMain = allData.filter(row => extractMainFilter(row[5]) === currentMainFilter);
+        displayTable(filteredMain);
+        computeStatistics(filteredMain);
+        resetSubFilterButtons();
+        hideCenterButtons();
+        hideTimeButtons();
+        updateBreadcrumb();
+      };
+      subButtonsContainer.appendChild(allButton);
+
+      // إنشاء أزرار الفلترة الثانوية
+      uniqueFilters.forEach(filter => {
+        const button = document.createElement("button");
+        button.textContent = filter;
+        button.className = "filter-button";
+        button.onclick = () => {
+          currentSubFilter = filter;
+          currentCenterFilter = null;
+          currentTimeFilter = null;
+          filterBySub(filter);
+          updateBreadcrumb();
+        };
+        subButtonsContainer.appendChild(button);
+      });
+
+      subButtonsContainer.style.display = "flex";
+    }
+
+    function filterBySub(filter) {
+      const filteredData = allData.filter(row => 
+        extractMainFilter(row[5]) === currentMainFilter && 
+        row[6] === filter
+      );
+      displayTable(filteredData);
+      computeStatistics(filteredData);
+      createCenterButtons(filteredData.map(row => row[7])); // افترض أن "المركز" هو العمود 8 (index 7)
+      hideTimeButtons();
+    }
+
+    function createCenterButtons(filters) {
+      const uniqueFilters = [...new Set(filters.map(f => extractCenterName(f)))].filter(filter => filter);
+      const centerButtonsContainer = document.getElementById("center-buttons");
+      centerButtonsContainer.innerHTML = ""; // مسح الأزرار السابقة
+
+      if (uniqueFilters.length === 0) {
+        centerButtonsContainer.style.display = "none";
+        hideTimeButtons();
+        updateBreadcrumb();
+        return;
+      }
+
+      // إنشاء زر "عرض كامل المركز" في الفلتر الخاص بالمركز
+      const allButton = document.createElement("button");
+      allButton.textContent = "عرض كامل المركز";
+      allButton.className = "filter-button";
+      allButton.onclick = () => {
+        const filteredMainSub = allData.filter(row => 
+          extractMainFilter(row[5]) === currentMainFilter && 
+          row[6] === currentSubFilter
+        );
+        displayTable(filteredMainSub);
+        computeStatistics(filteredMainSub);
+        resetCenterButtons();
+        hideTimeButtons();
+        updateBreadcrumb();
+      };
+      centerButtonsContainer.appendChild(allButton);
+
+      // إنشاء أزرار الفلترة للمركز
+      uniqueFilters.forEach(filter => {
+        const button = document.createElement("button");
+        button.textContent = filter;
+        button.className = "filter-button";
+        button.onclick = () => {
+          currentCenterFilter = filter;
+          currentTimeFilter = null;
+          filterByCenter(filter);
+          updateBreadcrumb();
+        };
+        centerButtonsContainer.appendChild(button);
+      });
+
+      centerButtonsContainer.style.display = "flex";
+    }
+
+    function filterByCenter(filter) {
+      const filteredData = allData.filter(row => 
+        extractMainFilter(row[5]) === currentMainFilter && 
+        row[6] === currentSubFilter && 
+        extractCenterName(row[7]) === filter
+      );
+      displayTable(filteredData);
+      computeStatistics(filteredData);
+      createTimeButtons(filteredData.map(row => row[7])); // افترض أن "المناوبة" يمكن استخراجه من العمود 8 (index 7)
+    }
+
+    function createTimeButtons(filters) {
+      // استخراج رموز المناوبة فقط
+      const uniqueTimeCodes = [...new Set(filters.map(f => extractTimeCode(f)))].filter(time => time);
+      const uniqueMappedTimes = uniqueTimeCodes.map(timeCode => timeCode === "D" ? "صباحا" : timeCode === "N" ? "مساءا" : timeCode);
+
+      if (uniqueMappedTimes.length === 0) {
+        hideTimeButtons();
+        updateBreadcrumb();
+        return;
+      }
+
+      const uniqueTimes = [...new Set(uniqueMappedTimes)];
+
+      const timeButtonsContainer = document.getElementById("time-buttons");
+      timeButtonsContainer.innerHTML = ""; // مسح الأزرار السابقة
+
+      // إنشاء زر "عرض كامل المناوبة" في الفلتر الثالث
+      const allButton = document.createElement("button");
+      allButton.textContent = "عرض كامل المناوبة";
+      allButton.className = "filter-button";
+      allButton.onclick = () => {
+        const filteredMainSubCenter = allData.filter(row => 
+          extractMainFilter(row[5]) === currentMainFilter && 
+          row[6] === currentSubFilter && 
+          extractCenterName(row[7]) === currentCenterFilter
+        );
+        displayTable(filteredMainSubCenter);
+        computeStatistics(filteredMainSubCenter);
+        resetTimeButtons();
+        updateBreadcrumb();
+      };
+      timeButtonsContainer.appendChild(allButton);
+
+      // إنشاء أزرار الفلترة الثالثة (المناوبة)
+      uniqueTimes.forEach(time => {
+        const button = document.createElement("button");
+        button.textContent = time;
+        // تعيين فئة خاصة إذا كان الوقت "مساءا"
+        if (time === "مساءا") {
+          button.classList.add("filter-button", "evening-button");
+        } else {
+          button.classList.add("filter-button");
+        }
+        button.onclick = () => {
+          currentTimeFilter = time;
+          filterByTime(time);
+          updateBreadcrumb();
+        };
+        timeButtonsContainer.appendChild(button);
+      });
+
+      timeButtonsContainer.style.display = "flex";
+    }
+
+    function filterByTime(time) {
+      // تحويل المناوبة من النص العربي إلى المدخلات في الخلايا
+      const timeKey = time === "صباحا" ? "D" : time === "مساءا" ? "N" : time;
+      const filteredData = allData.filter(row => 
+        extractMainFilter(row[5]) === currentMainFilter && 
+        row[6] === currentSubFilter && 
+        extractCenterName(row[7]) === currentCenterFilter && 
+        extractTimeCode(row[7]) === timeKey // استخدم extractTimeCode لاستخراج رمز المناوبة
+      );
+      displayTable(filteredData);
+      computeStatistics(filteredData);
+    }
+
+    function hideSubButtons() {
+      const subButtonsContainer = document.getElementById("sub-buttons");
+      subButtonsContainer.style.display = "none";
+      subButtonsContainer.innerHTML = "";
+    }
+
+    function hideCenterButtons() {
+      const centerButtonsContainer = document.getElementById("center-buttons");
+      centerButtonsContainer.style.display = "none";
+      centerButtonsContainer.innerHTML = "";
+    }
+
+    function resetSubFilterButtons() {
+      const subButtonsContainer = document.getElementById("sub-buttons");
+      subButtonsContainer.innerHTML = "";
+      subButtonsContainer.style.display = "none";
+      currentSubFilter = null;
+    }
+
+    function resetCenterButtons() {
+      const centerButtonsContainer = document.getElementById("center-buttons");
+      centerButtonsContainer.innerHTML = "";
+      centerButtonsContainer.style.display = "none";
+      currentCenterFilter = null;
+    }
+
+    function hideTimeButtons() {
+      const timeButtonsContainer = document.getElementById("time-buttons");
+      timeButtonsContainer.style.display = "none";
+      timeButtonsContainer.innerHTML = "";
+      currentTimeFilter = null;
+    }
+
+    function resetTimeButtons() {
+      const timeButtonsContainer = document.getElementById("time-buttons");
+      timeButtonsContainer.innerHTML = "";
+      timeButtonsContainer.style.display = "none";
+      currentTimeFilter = null;
+    }
+
+    function displayTable(data) {
+      const tableContainer = document.getElementById("data");
+      tableContainer.style.display = "block";
+      tableContainer.innerHTML = "";
+
+      const table = document.createElement("table");
+      const thead = document.createElement("thead");
+      const headerTr = document.createElement("tr");
+      headers.forEach(header => {
+        const th = document.createElement("th");
+        th.textContent = header;
+        headerTr.appendChild(th);
+      });
+      thead.appendChild(headerTr);
+      table.appendChild(thead);
+
+      const tbody = document.createElement("tbody");
+      data.forEach(row => {
+        const tr = document.createElement("tr");
+        row.forEach(cell => {
+          const td = document.createElement("td");
+          td.innerHTML = cell || "";
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      });
+      table.appendChild(tbody);
+      tableContainer.appendChild(table);
+
+      // بعد إنشاء الجدول، إعداد شريط التمرير الثابت
+      setupFixedScrollbar(table);
+    }
+
+    function setupFixedScrollbar(table) {
+      if (tableScrollElement) {
+        // إزالة المستمعين السابقين إذا كان موجودًا
+        tableScrollElement.removeEventListener('scroll', syncFixedScrollbar);
+        fixedScrollbar.removeEventListener('scroll', syncTableScroll);
+      }
+
+      // الحصول على عناصر التمرير
+      tableScrollElement = document.getElementById("data");
+      fixedScrollbar = document.getElementById("fixed-scrollbar");
+
+      // ضبط عرض شريط التمرير الثابت بناءً على عرض الجدول باستخدام scrollWidth
+      const tableWidth = table.scrollWidth;
+      const viewportWidth = window.innerWidth;
+      const scrollableWidth = tableWidth - viewportWidth;
+      
+      if (scrollableWidth > 0) {
+        // إظهار شريط التمرير الثابت
+        fixedScrollbar.style.display = "block";
+
+        // ضبط محتوى شريط التمرير الثابت مع إضافة مساحة إضافية
+        const scrollbarInner = fixedScrollbar.querySelector('.fixed-scrollbar-inner');
+        scrollbarInner.style.width = `${tableWidth + 50}px`; // إضافة 50px كمساحة إضافية
+
+        // ضبط الأحداث لمزامنة التمرير
+        tableScrollElement.addEventListener('scroll', syncFixedScrollbar);
+        fixedScrollbar.addEventListener('scroll', syncTableScroll);
+      } else {
+        // إخفاء شريط التمرير الثابت إذا لم يكن هناك حاجة
+        fixedScrollbar.style.display = "none";
+      }
+    }
+
+    function syncFixedScrollbar() {
+      if (fixedScrollbar.scrollLeft !== tableScrollElement.scrollLeft) {
+        fixedScrollbar.scrollLeft = tableScrollElement.scrollLeft;
+      }
+    }
+
+    function syncTableScroll() {
+      if (tableScrollElement.scrollLeft !== fixedScrollbar.scrollLeft) {
+        tableScrollElement.scrollLeft = fixedScrollbar.scrollLeft;
+      }
+    }
+
+    // تحديث شريط التمرير الثابت عند تغيير حجم النافذة
+    window.addEventListener('resize', () => {
+      const tableContainer = document.getElementById("data");
+      const table = tableContainer.querySelector("table");
+      if (table) {
+        setupFixedScrollbar(table);
+      }
+    });
+
+    // دالة لإخفاء شريط التوضيح (breadcrumb)
+    function hideBreadcrumb() {
+      const breadcrumb = document.getElementById("breadcrumb");
+      breadcrumb.style.display = "none";
+    }
+
+    // دالة لإظهار شريط التوضيح (breadcrumb)
+    function showBreadcrumb() {
+      const breadcrumb = document.getElementById("breadcrumb");
+      breadcrumb.style.display = "flex";
+    }
+
+    // دالة لتحديث شريط التوضيح (breadcrumb) كبطاقات
+    function updateBreadcrumb() {
+      const breadcrumb = document.getElementById("breadcrumb");
+      breadcrumb.innerHTML = ""; // مسح المحتوى السابق
+      let path = [];
+
+      if (currentMainFilter || currentSubFilter || currentCenterFilter || currentTimeFilter) {
+        showBreadcrumb();
+
+        // إضافة العبارة المقدمة كبطاقة منفصلة
+        const prefixCard = `<div class="breadcrumb-prefix">أنت هنا:</div>`;
+        breadcrumb.innerHTML += prefixCard;
+
+        if (currentMainFilter) {
+          path.push(`<div class="breadcrumb-card">النطاق: ${currentMainFilter}</div>`);
+        }
+        if (currentSubFilter) {
+          path.push(`<div class="breadcrumb-card">القطاع: ${currentSubFilter}</div>`);
+        }
+        if (currentCenterFilter) {
+          path.push(`<div class="breadcrumb-card">المركز: ${currentCenterFilter}</div>`);
+        }
+        if (currentTimeFilter) {
+          path.push(`<div class="breadcrumb-card">المناوبة: ${currentTimeFilter}</div>`);
+        }
+
+        if (path.length > 0) {
+          breadcrumb.innerHTML += path.join(`<span class="breadcrumb-separator">></span>`);
+        }
+      } else {
+        // إذا لم يتم اختيار أي فلتر، إخفاء شريط التوضيح
+        hideBreadcrumb();
+      }
+    }
+
+    // دالة لحساب وعرض إحصائيات عدد الموظفين
+    function computeStatistics(data) {
+      const statisticsContainer = document.getElementById("statistics");
+      const statisticsBody = document.getElementById("statistics-body");
+      statisticsBody.innerHTML = ""; // مسح البيانات السابقة
+
+      if (data.length === 0) {
+        statisticsContainer.style.display = "none";
+        return;
+      }
+
+      // حساب عدد الموظفين في كل مناوبة
+      let morningCount = 0;
+      let eveningCount = 0;
+
+      data.forEach(row => {
+        const shiftCode = extractTimeCode(row[7]);
+        if (shiftCode === 'D') {
+          morningCount++;
+        } else if (shiftCode === 'N') {
+          eveningCount++;
+        }
+      });
+
+      // إنشاء صف البيانات
+      let statsRow = `<tr><td>عدد الموظفين</td>`;
+
+      if (currentTimeFilter) {
+        // إذا تم اختيار مناوبة محددة، عرض فقط تلك المناوبة والمجموع
+        if (currentTimeFilter === 'صباحا') {
+          statsRow += `<td></td><td>${morningCount}</td><td>${morningCount}</td></tr>`;
+        } else if (currentTimeFilter === 'مساءا') {
+          statsRow += `<td>${eveningCount}</td><td></td><td>${eveningCount}</td></tr>`;
+        }
+      } else {
+        // عرض كلا المناوبتين والمجموع
+        statsRow += `<td>${eveningCount}</td><td>${morningCount}</td><td>${morningCount + eveningCount}</td></tr>`;
+      }
+
+      statisticsBody.innerHTML = statsRow;
+      statisticsContainer.style.display = "block";
+    }
+
+    window.onload = fetchData;
+  </script>
+</body>
+</html>
