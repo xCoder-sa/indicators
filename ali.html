@@ -283,6 +283,9 @@
             <li data-form="medicalTransferTeam"><i class="fas fa-stethoscope"></i> فريق الترحيل الطبي</li>
             <li data-form="leadershipControlTeam"><i class="fas fa-users-cog"></i> فريق القيادة والتحكم</li>
             <li data-form="medicalControlTeam"><i class="fas fa-heartbeat"></i> فريق التحكم الطبي</li>
+			<li data-form="airAmbulanceTeam"><i class="fas fa-plane-departure"></i> فريق الإسعاف الجوي</li>
+			<li data-form="detivigationTeam"><i class="fas fa-route"></i> فريق التفويج</li>
+
             <!-- يمكن إضافة عناصر جديدة هنا للنماذج المستقبلية -->
             <!-- مثال:
             <li data-form="anotherForm"><i class="fas fa-file-alt"></i> نموذج آخر</li>
@@ -812,8 +815,222 @@
             </div>
             <button type="button" class="submit-btn" onclick="submitFormMedicalControl()">إرسال النموذج</button>
         </div>
+		
 
-        <!-- يمكن إضافة نماذج أخرى هنا في المستقبل -->
+<!-- إضافة نموذج فريق الإسعاف الجوي بعد هذا السطر -->
+<div class="form-container" id="airAmbulanceTeam">
+    <div class="form-section">
+        <h3>إحصائية الإسعاف الجوي: فريق الإسعاف الجوي</h3>
+        <div class="sub-section">
+            <label for="total_air_patients">عدد المرضى المنقولين من بداية الموسم:</label>
+            <input type="number" id="total_air_patients" placeholder="عدد المرضى المنقولين من بداية الموسم" required>
+        </div>
+        <div class="sub-section">
+            <label for="shift_air_patients">عدد المرضى المنقولين اثناء المناوبة:</label>
+            <input type="number" id="shift_air_patients" placeholder="عدد المرضى المنقولين اثناء المناوبة" required>
+        </div>
+    </div>
+    <div class="form-section">
+        <h3>أهداف المناوبة:</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>الهدف</th>
+                    <th>التحديث</th>
+                </tr>
+            </thead>
+            <tbody id="shift_goals_airAmbulance">
+                <tr>
+                    <td><input type="text" placeholder="الهدف" required></td>
+                    <td><input type="text" placeholder="التحديث" required></td>
+                </tr>
+                <tr>
+                    <td><input type="text" placeholder="الهدف" required></td>
+                    <td><input type="text" placeholder="التحديث" required></td>
+                </tr>
+                <!-- يمكن إضافة المزيد من الصفوف حسب الحاجة -->
+            </tbody>
+        </table>
+        <button type="button" onclick="addShiftGoalAirAmbulance()">إضافة هدف آخر</button>
+    </div>
+    <div class="form-section">
+        <h3>ملاحظات المناوبة:</h3>
+        <textarea id="shift_notes_airAmbulance" rows="4" placeholder="ملاحظات المناوبة" required></textarea>
+    </div>
+    <div class="form-section">
+        <h3>الاسم:</h3>
+        <input type="text" id="name_airAmbulance" placeholder="أدخل اسمك" required>
+    </div>
+    <button type="button" class="submit-btn" onclick="submitFormAirAmbulance()">إرسال النموذج</button>
+</div>
+<!-- وإضافة نموذج فريق الإسعاف الجوي قبل هذا السطر -->
+
+<!-- إضافة نموذج فريق التفويج بعد هذا السطر -->
+<div class="form-container" id="detivigationTeam">
+    <div class="form-section">
+        <h3>صائية التفويج: فريق التفويج</h3>
+        <div class="sub-section">
+            <label for="detivigation_trips">عدد رحلات التفويج:</label>
+            <input type="number" id="detivigation_trips" placeholder="عدد رحلات التفويج" required>
+        </div>
+        <div class="sub-section">
+            <label for="detivigation_beneficiaries">عدد المستفيدين:</label>
+            <input type="number" id="detivigation_beneficiaries" placeholder="عدد المستفيدين" required>
+        </div>
+    </div>
+
+    <div class="form-section">
+        <h3>تفويج الأسطول:</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>النوع</th>
+                    <th>العدد</th>
+                </tr>
+            </thead>
+            <tbody id="fleet_detivigation">
+                <tr>
+                    <td><input type="text" placeholder="النوع" required></td>
+                    <td><input type="number" placeholder="العدد" required></td>
+                </tr>
+                <tr>
+                    <td><input type="text" placeholder="النوع" required></td>
+                    <td><input type="number" placeholder="العدد" required></td>
+                </tr>
+                <tr>
+                    <td><input type="text" placeholder="النوع" required></td>
+                    <td><input type="number" placeholder="العدد" required></td>
+                </tr>
+                <tr>
+                    <td><input type="text" placeholder="النوع" required></td>
+                    <td><input type="number" placeholder="العدد" required></td>
+                </tr>
+                <tr>
+                    <td><input type="text" placeholder="النوع" required></td>
+                    <td><input type="number" placeholder="العدد" required></td>
+                </tr>
+                <tr>
+                    <td><input type="text" placeholder="النوع" required></td>
+                    <td><input type="number" placeholder="العدد" required></td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="button" onclick="addFleetDetivigation()">إضافة المزيد</button>
+    </div>
+
+    <div class="form-section">
+        <h3>تفويج التجهيزات:</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>النوع</th>
+                    <th>العدد</th>
+                </tr>
+            </thead>
+            <tbody id="equipment_detivigation">
+                <tr>
+                    <td><input type="text" placeholder="النوع" required></td>
+                    <td><input type="number" placeholder="العدد" required></td>
+                </tr>
+                <tr>
+                    <td><input type="text" placeholder="النوع" required></td>
+                    <td><input type="number" placeholder="العدد" required></td>
+                </tr>
+                <tr>
+                    <td><input type="text" placeholder="النوع" required></td>
+                    <td><input type="number" placeholder="العدد" required></td>
+                </tr>
+                <tr>
+                    <td><input type="text" placeholder="النوع" required></td>
+                    <td><input type="number" placeholder="العدد" required></td>
+                </tr>
+                <tr>
+                    <td><input type="text" placeholder="النوع" required></td>
+                    <td><input type="number" placeholder="العدد" required></td>
+                </tr>
+                <tr>
+                    <td><input type="text" placeholder="النوع" required></td>
+                    <td><input type="number" placeholder="العدد" required></td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="button" onclick="addEquipmentDetivigation()">إضافة المزيد</button>
+    </div>
+
+    <div class="form-section">
+        <h3>تفويج الأدوية والأجهزة الطبية:</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>النوع</th>
+                    <th>العدد</th>
+                </tr>
+            </thead>
+            <tbody id="medical_equipment_detivigation">
+                <tr>
+                    <td><input type="text" placeholder="النوع" required></td>
+                    <td><input type="number" placeholder="العدد" required></td>
+                </tr>
+                <tr>
+                    <td><input type="text" placeholder="النوع" required></td>
+                    <td><input type="number" placeholder="العدد" required></td>
+                </tr>
+                <tr>
+                    <td><input type="text" placeholder="النوع" required></td>
+                    <td><input type="number" placeholder="العدد" required></td>
+                </tr>
+                <tr>
+                    <td><input type="text" placeholder="النوع" required></td>
+                    <td><input type="number" placeholder="العدد" required></td>
+                </tr>
+                <tr>
+                    <td><input type="text" placeholder="النوع" required></td>
+                    <td><input type="number" placeholder="العدد" required></td>
+                </tr>
+                <tr>
+                    <td><input type="text" placeholder="النوع" required></td>
+                    <td><input type="number" placeholder="العدد" required></td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="button" onclick="addMedicalEquipmentDetivigation()">إضافة المزيد</button>
+    </div>
+
+    <div class="form-section">
+        <h3>أهداف المناوبة:</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>الهدف</th>
+                    <th>التحديث</th>
+                </tr>
+            </thead>
+            <tbody id="shift_goals_detivigation">
+                <tr>
+                    <td><input type="text" placeholder="الهدف" required></td>
+                    <td><input type="text" placeholder="التحديث" required></td>
+                </tr>
+                <tr>
+                    <td><input type="text" placeholder="الهدف" required></td>
+                    <td><input type="text" placeholder="التحديث" required></td>
+                </tr>
+                <!-- يمكن إضافة المزيد من الصفوف حسب الحاجة -->
+            </tbody>
+        </table>
+        <button type="button" onclick="addShiftGoalDetivigation()">إضافة هدف آخر</button>
+    </div>
+
+    <div class="form-section">
+        <h3>ملاحظات المناوبة:</h3>
+        <textarea id="shift_notes_detivigation" rows="4" placeholder="ملاحظات المناوبة" required></textarea>
+    </div>
+    <div class="form-section">
+        <h3>الاسم:</h3>
+        <input type="text" id="name_detivigation" placeholder="أدخل اسمك" required>
+    </div>
+    <button type="button" class="submit-btn" onclick="submitFormDetivigation()">إرسال النموذج</button>
+</div>
+<!-- وإضافة نموذج فريق التفويج قبل هذا السطر -->
     </div>
 
     <script>
@@ -2483,6 +2700,352 @@
                 }
             }
         });
+		
+		    // إضافة هدف آخر في نموذج فريق الإسعاف الجوي
+    function addShiftGoalAirAmbulance() {
+        const shiftGoals = document.getElementById('shift_goals_airAmbulance');
+        const newRow = document.createElement('tr');
+
+        const goalCell = document.createElement('td');
+        const goalInput = document.createElement('input');
+        goalInput.type = 'text';
+        goalInput.placeholder = 'الهدف';
+        goalInput.required = true;
+        goalCell.appendChild(goalInput);
+
+        const updateCell = document.createElement('td');
+        const updateInput = document.createElement('input');
+        updateInput.type = 'text';
+        updateInput.placeholder = 'التحديث';
+        updateInput.required = true;
+        updateCell.appendChild(updateInput);
+
+        newRow.appendChild(goalCell);
+        newRow.appendChild(updateCell);
+
+        shiftGoals.appendChild(newRow);
+    }
+
+    // إضافة صف جديد في جدول تفويج الأسطول
+    function addFleetDetivigation() {
+        const fleetTable = document.getElementById('fleet_detivigation');
+        const newRow = document.createElement('tr');
+
+        const typeCell = document.createElement('td');
+        const typeInput = document.createElement('input');
+        typeInput.type = 'text';
+        typeInput.placeholder = 'النوع';
+        typeInput.required = true;
+        typeCell.appendChild(typeInput);
+
+        const countCell = document.createElement('td');
+        const countInput = document.createElement('input');
+        countInput.type = 'number';
+        countInput.placeholder = 'العدد';
+        countInput.required = true;
+        countCell.appendChild(countInput);
+
+        newRow.appendChild(typeCell);
+        newRow.appendChild(countCell);
+
+        fleetTable.appendChild(newRow);
+    }
+
+    // إضافة صف جديد في جدول تفويج التجهيزات
+    function addEquipmentDetivigation() {
+        const equipmentTable = document.getElementById('equipment_detivigation');
+        const newRow = document.createElement('tr');
+
+        const typeCell = document.createElement('td');
+        const typeInput = document.createElement('input');
+        typeInput.type = 'text';
+        typeInput.placeholder = 'النوع';
+        typeInput.required = true;
+        typeCell.appendChild(typeInput);
+
+        const countCell = document.createElement('td');
+        const countInput = document.createElement('input');
+        countInput.type = 'number';
+        countInput.placeholder = 'العدد';
+        countInput.required = true;
+        countCell.appendChild(countInput);
+
+        newRow.appendChild(typeCell);
+        newRow.appendChild(countCell);
+
+        equipmentTable.appendChild(newRow);
+    }
+
+    // إضافة صف جديد في جدول تفويج الأدوية والأجهزة الطبية
+    function addMedicalEquipmentDetivigation() {
+        const medicalEquipmentTable = document.getElementById('medical_equipment_detivigation');
+        const newRow = document.createElement('tr');
+
+        const typeCell = document.createElement('td');
+        const typeInput = document.createElement('input');
+        typeInput.type = 'text';
+        typeInput.placeholder = 'النوع';
+        typeInput.required = true;
+        typeCell.appendChild(typeInput);
+
+        const countCell = document.createElement('td');
+        const countInput = document.createElement('input');
+        countInput.type = 'number';
+        countInput.placeholder = 'العدد';
+        countInput.required = true;
+        countCell.appendChild(countInput);
+
+        newRow.appendChild(typeCell);
+        newRow.appendChild(countCell);
+
+        medicalEquipmentTable.appendChild(newRow);
+    }
+
+    // إضافة هدف آخر في نموذج فريق التفويج
+    function addShiftGoalDetivigation() {
+        const shiftGoals = document.getElementById('shift_goals_detivigation');
+        const newRow = document.createElement('tr');
+
+        const goalCell = document.createElement('td');
+        const goalInput = document.createElement('input');
+        goalInput.type = 'text';
+        goalInput.placeholder = 'الهدف';
+        goalInput.required = true;
+        goalCell.appendChild(goalInput);
+
+        const updateCell = document.createElement('td');
+        const updateInput = document.createElement('input');
+        updateInput.type = 'text';
+        updateInput.placeholder = 'التحديث';
+        updateInput.required = true;
+        updateCell.appendChild(updateInput);
+
+        newRow.appendChild(goalCell);
+        newRow.appendChild(updateCell);
+
+        shiftGoals.appendChild(newRow);
+    }
+
+    // دوال لإرسال النماذج عبر واتساب
+
+    // إرسال نموذج فريق الإسعاف الجوي
+    function submitFormAirAmbulance() {
+        // التحقق من تعبئة جميع الحقول المطلوبة
+        const requiredFields = document.querySelectorAll('#airAmbulanceTeam input[required], #airAmbulanceTeam textarea[required]');
+        let allFieldsFilled = true;
+
+        requiredFields.forEach(field => {
+            if (!field.value.trim()) {
+                field.style.border = '2px solid #d63031';
+                allFieldsFilled = false;
+            } else {
+                field.style.border = '1px solid #b2bec3';
+            }
+        });
+
+        if (!allFieldsFilled) {
+            alert("يرجى تعبئة جميع الحقول المطلوبة.");
+            return;
+        }
+
+        // جمع البيانات من النموذج
+        const data = {
+            total_air_patients: document.getElementById('total_air_patients').value,
+            shift_air_patients: document.getElementById('shift_air_patients').value,
+            shift_goals: [],
+            shift_notes: document.getElementById('shift_notes_airAmbulance').value,
+            name: document.getElementById('name_airAmbulance').value
+        };
+
+        // جمع أهداف المناوبة
+        const goals = document.querySelectorAll('#shift_goals_airAmbulance tr');
+        goals.forEach(row => {
+            const goalInput = row.cells[0].querySelector('input');
+            const updateInput = row.cells[1].querySelector('input');
+            if (goalInput.value.trim() !== '' && updateInput.value.trim() !== '') {
+                const goal = goalInput.value.trim();
+                const update = updateInput.value.trim();
+                data.shift_goals.push({ goal, update });
+            }
+        });
+
+        // إنشاء نص الرسالة لواتساب
+        let formText = `*== فريق الإسعاف الجوي ==*\n\n`;
+        formText += `*إحصائية الإسعاف الجوي: فريق الإسعاف الجوي*\n`;
+        formText += `- عدد المرضى المنقولين من بداية الموسم: ${data.total_air_patients}\n`;
+        formText += `- عدد المرضى المنقولين اثناء المناوبة: ${data.shift_air_patients}\n\n`;
+
+        // أهداف المناوبة
+        formText += `*أهداف المناوبة:*\n`;
+        data.shift_goals.forEach((goalObj, index) => {
+            formText += `${index + 1}. *الهدف:* ${goalObj.goal}\n   *التحديث:* ${goalObj.update}\n`;
+        });
+        formText += `\n`;
+
+        // ملاحظات المناوبة والاسم
+        formText += `*ملاحظات المناوبة:* ${data.shift_notes}\n`;
+        formText += `*الاسم:* ${data.name}\n`;
+
+        console.log(formText); // تأكيد عرض البيانات المجمعة
+
+        // تشفير النص
+        const encodedText = encodeURIComponent(formText);
+
+        // التحقق من نوع الجهاز أو المتصفح
+        if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+            // على أجهزة iOS، استخدم رابط واتساب المباشر
+            const whatsappUrl = `whatsapp://send?text=${encodedText}`;
+            window.open(whatsappUrl, '_blank');
+        } else {
+            // على باقي الأجهزة، استخدم wa.me لفتح الرابط
+            const whatsappUrl = `https://wa.me/?text=${encodedText}`;
+            window.open(whatsappUrl, '_blank');
+        }
+    }
+
+    // إرسال نموذج فريق التفويج
+    function submitFormDetivigation() {
+        // التحقق من تعبئة جميع الحقول المطلوبة
+        const requiredFields = document.querySelectorAll('#detivigationTeam input[required], #detivigationTeam textarea[required]');
+        let allFieldsFilled = true;
+
+        requiredFields.forEach(field => {
+            if (!field.value.trim()) {
+                field.style.border = '2px solid #d63031';
+                allFieldsFilled = false;
+            } else {
+                field.style.border = '1px solid #b2bec3';
+            }
+        });
+
+        if (!allFieldsFilled) {
+            alert("يرجى تعبئة جميع الحقول المطلوبة.");
+            return;
+        }
+
+        // جمع البيانات من النموذج
+        const data = {
+            detivigation_trips: document.getElementById('detivigation_trips').value,
+            detivigation_beneficiaries: document.getElementById('detivigation_beneficiaries').value,
+            fleet_detivigation: [],
+            equipment_detivigation: [],
+            medical_equipment_detivigation: [],
+            shift_goals: [],
+            shift_notes: document.getElementById('shift_notes_detivigation').value,
+            name: document.getElementById('name_detivigation').value
+        };
+
+        // جمع بيانات تفويج الأسطول
+        const fleetRows = document.querySelectorAll('#fleet_detivigation tr');
+        fleetRows.forEach(row => {
+            const type = row.cells[0].querySelector('input').value.trim();
+            const count = row.cells[1].querySelector('input').value.trim();
+            if (type !== '' && count !== '') {
+                data.fleet_detivigation.push({ type, count });
+            }
+        });
+
+        // جمع بيانات تفويج التجهيزات
+        const equipmentRows = document.querySelectorAll('#equipment_detivigation tr');
+        equipmentRows.forEach(row => {
+            const type = row.cells[0].querySelector('input').value.trim();
+            const count = row.cells[1].querySelector('input').value.trim();
+            if (type !== '' && count !== '') {
+                data.equipment_detivigation.push({ type, count });
+            }
+        });
+
+        // جمع بيانات تفويج الأدوية والأجهزة الطبية
+        const medicalEquipmentRows = document.querySelectorAll('#medical_equipment_detivigation tr');
+        medicalEquipmentRows.forEach(row => {
+            const type = row.cells[0].querySelector('input').value.trim();
+            const count = row.cells[1].querySelector('input').value.trim();
+            if (type !== '' && count !== '') {
+                data.medical_equipment_detivigation.push({ type, count });
+            }
+        });
+
+        // جمع أهداف المناوبة
+        const goals = document.querySelectorAll('#shift_goals_detivigation tr');
+        goals.forEach(row => {
+            const goalInput = row.cells[0].querySelector('input');
+            const updateInput = row.cells[1].querySelector('input');
+            if (goalInput.value.trim() !== '' && updateInput.value.trim() !== '') {
+                const goal = goalInput.value.trim();
+                const update = updateInput.value.trim();
+                data.shift_goals.push({ goal, update });
+            }
+        });
+
+        // إنشاء نص الرسالة لواتساب
+        let formText = `*== فريق التفويج ==*\n\n`;
+        formText += `*صائية التفويج: فريق التفويج*\n`;
+        formText += `- عدد رحلات التفويج: ${data.detivigation_trips}\n`;
+        formText += `- عدد المستفيدين: ${data.detivigation_beneficiaries}\n\n`;
+
+        // تفويج الأسطول
+        formText += `*تفويج الأسطول:*\n`;
+        data.fleet_detivigation.forEach((item, index) => {
+            formText += `- النوع: ${item.type}, العدد: ${item.count}\n`;
+        });
+        formText += `\n`;
+
+        // تفويج التجهيزات
+        formText += `*تفويج التجهيزات:*\n`;
+        data.equipment_detivigation.forEach((item, index) => {
+            formText += `- النوع: ${item.type}, العدد: ${item.count}\n`;
+        });
+        formText += `\n`;
+
+        // تفويج الأدوية والأجهزة الطبية
+        formText += `*تفويج الأدوية والأجهزة الطبية:*\n`;
+        data.medical_equipment_detivigation.forEach((item, index) => {
+            formText += `- النوع: ${item.type}, العدد: ${item.count}\n`;
+        });
+        formText += `\n`;
+
+        // أهداف المناوبة
+        formText += `*أهداف المناوبة:*\n`;
+        data.shift_goals.forEach((goalObj, index) => {
+            formText += `${index + 1}. *الهدف:* ${goalObj.goal}\n   *التحديث:* ${goalObj.update}\n`;
+        });
+        formText += `\n`;
+
+        // ملاحظات المناوبة والاسم
+        formText += `*ملاحظات المناوبة:* ${data.shift_notes}\n`;
+        formText += `*الاسم:* ${data.name}\n`;
+
+        console.log(formText); // تأكيد عرض البيانات المجمعة
+
+        // تشفير النص
+        const encodedText = encodeURIComponent(formText);
+
+        // التحقق من نوع الجهاز أو المتصفح
+        if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+            // على أجهزة iOS، استخدم رابط واتساب المباشر
+            const whatsappUrl = `whatsapp://send?text=${encodedText}`;
+            window.open(whatsappUrl, '_blank');
+        } else {
+            // على باقي الأجهزة، استخدم wa.me لفتح الرابط
+            const whatsappUrl = `https://wa.me/?text=${encodedText}`;
+            window.open(whatsappUrl, '_blank');
+        }
+    }
+
+    // ... الكود الحالي ...
+
+    // إظهار النموذج الافتراضي عند تحميل الصفحة
+    document.addEventListener('DOMContentLoaded', () => {
+        // إظهار النموذج الافتراضي
+        const defaultForm = document.querySelector('.sidebar ul li.active');
+        if (defaultForm) {
+            const formId = defaultForm.getAttribute('data-form');
+            const formToShow = document.getElementById(formId);
+            if (formToShow) {
+                formToShow.style.display = 'block';
+            }
+        }
+    });
     </script>
 </body>
 </html>
