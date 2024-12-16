@@ -282,6 +282,7 @@
             <li class="active" data-form="ambulanceTeam"><i class="fas fa-ambulance"></i> فريق الإسعاف الارضي</li>
             <li data-form="medicalTransferTeam"><i class="fas fa-stethoscope"></i> فريق الترحيل الطبي</li>
             <li data-form="leadershipControlTeam"><i class="fas fa-users-cog"></i> فريق القيادة والتحكم</li>
+            <li data-form="medicalControlTeam"><i class="fas fa-heartbeat"></i> فريق التحكم الطبي</li>
             <!-- يمكن إضافة عناصر جديدة هنا للنماذج المستقبلية -->
             <!-- مثال:
             <li data-form="anotherForm"><i class="fas fa-file-alt"></i> نموذج آخر</li>
@@ -749,6 +750,69 @@
             <button type="button" class="submit-btn" onclick="submitFormLeadershipControl()">إرسال النموذج</button>
         </div>
 
+        <!-- نموذج فريق التحكم الطبي -->
+        <div class="form-container" id="medicalControlTeam">
+            <div class="form-section">
+                <h3>المؤشرات الطبية: فريق التحكم الطبي</h3>
+                <div class="sub-section">
+                    <label for="ecg_percentage">نسبة المرضى الذين تم إجراء تخطيط القلب الكهربائي لهم في حالات ألم الصدر:</label>
+                    <input type="text" id="ecg_percentage" placeholder="نسبة %" required>
+                </div>
+                <div class="sub-section">
+                    <label for="telemedicine_patients">عدد المرضى الذين تم تقديم الخدمة لهم عبر الطب الاتصالي:</label>
+                    <input type="number" id="telemedicine_patients" placeholder="عدد المرضى" required>
+                </div>
+                <div class="sub-section">
+                    <label for="cardiac_catheterization">عدد المنقولين لمعمل القسطرة القلبية (مريض جلطة قلبية):</label>
+                    <input type="number" id="cardiac_catheterization" placeholder="عدد المنقولين" required>
+                </div>
+                <div class="sub-section">
+                    <label for="ct_scan_transfers">عدد المنقولين لجهاز الاشعة المقطعية مباشرة (مريض سكتة دماغية):</label>
+                    <input type="number" id="ct_scan_transfers" placeholder="عدد المنقولين" required>
+                </div>
+                <div class="sub-section">
+                    <label for="cpr_cases">عدد حالات توقف القلب والتنفس CPR:</label>
+                    <input type="number" id="cpr_cases" placeholder="عدد الحالات" required>
+                </div>
+                <div class="sub-section">
+                    <label for="ros_success_percentage">نسبة حالات استعادة النبض الناجحة ROSC:</label>
+                    <input type="text" id="ros_success_percentage" placeholder="نسبة %" required>
+                </div>
+            </div>
+            <div class="form-section">
+                <h3>أهداف المناوبة:</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>الهدف</th>
+                            <th>التحديث</th>
+                        </tr>
+                    </thead>
+                    <tbody id="shift_goals_medicalControl">
+                        <tr>
+                            <td><input type="text" placeholder="الهدف" required></td>
+                            <td><input type="text" placeholder="التحديث" required></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" placeholder="الهدف" required></td>
+                            <td><input type="text" placeholder="التحديث" required></td>
+                        </tr>
+                        <!-- يمكن إضافة المزيد من الصفوف حسب الحاجة -->
+                    </tbody>
+                </table>
+                <button type="button" onclick="addShiftGoalMedicalControl()">إضافة هدف آخر</button>
+            </div>
+            <div class="form-section">
+                <h3>ملاحظات المناوبة:</h3>
+                <textarea id="shift_notes_medicalControl" rows="4" placeholder="ملاحظات المناوبة" required></textarea>
+            </div>
+            <div class="form-section">
+                <h3>الاسم:</h3>
+                <input type="text" id="name_medicalControl" placeholder="أدخل اسمك" required>
+            </div>
+            <button type="button" class="submit-btn" onclick="submitFormMedicalControl()">إرسال النموذج</button>
+        </div>
+
         <!-- يمكن إضافة نماذج أخرى هنا في المستقبل -->
     </div>
 
@@ -833,6 +897,31 @@
         // دالة لإضافة صف جديد في جدول أهداف المناوبة (النموذج القيادة والتحكم)
         function addShiftGoalLeadership() {
             const shiftGoals = document.getElementById('shift_goals_leadership');
+            const newRow = document.createElement('tr');
+
+            const goalCell = document.createElement('td');
+            const goalInput = document.createElement('input');
+            goalInput.type = 'text';
+            goalInput.placeholder = 'الهدف';
+            goalInput.required = true;
+            goalCell.appendChild(goalInput);
+
+            const updateCell = document.createElement('td');
+            const updateInput = document.createElement('input');
+            updateInput.type = 'text';
+            updateInput.placeholder = 'التحديث';
+            updateInput.required = true;
+            updateCell.appendChild(updateInput);
+
+            newRow.appendChild(goalCell);
+            newRow.appendChild(updateCell);
+
+            shiftGoals.appendChild(newRow);
+        }
+
+        // دالة لإضافة صف جديد في جدول أهداف المناوبة (النموذج التحكم الطبي)
+        function addShiftGoalMedicalControl() {
+            const shiftGoals = document.getElementById('shift_goals_medicalControl');
             const newRow = document.createElement('tr');
 
             const goalCell = document.createElement('td');
@@ -1335,6 +1424,1024 @@
             formText += `- الحرم: ${data.over_60_percentage.haram}\n`;
             formText += `- العاصمة المقدسة: ${data.over_60_percentage.holy_capital}\n`;
             formText += `- منطقة مكة المكرمة: ${data.over_60_percentage.makkah_region}\n\n`;
+
+            // أهداف المناوبة
+            formText += `*أهداف المناوبة:*\n`;
+            data.shift_goals.forEach((goalObj, index) => {
+                formText += `${index + 1}. *الهدف:* ${goalObj.goal}\n   *التحديث:* ${goalObj.update}\n`;
+            });
+            formText += `\n`;
+
+            // ملاحظات المناوبة والاسم
+            formText += `*ملاحظات المناوبة:* ${data.shift_notes}\n`;
+            formText += `*الاسم:* ${data.name}\n`;
+
+            console.log(formText); // تأكيد عرض البيانات المجمعة
+
+            // تشفير النص
+            const encodedText = encodeURIComponent(formText);
+
+            // التحقق من نوع الجهاز أو المتصفح
+            if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                // على أجهزة iOS، استخدم رابط واتساب المباشر
+                const whatsappUrl = `whatsapp://send?text=${encodedText}`;
+                window.open(whatsappUrl, '_blank');
+            } else {
+                // على باقي الأجهزة، استخدم wa.me لفتح الرابط
+                const whatsappUrl = `https://wa.me/?text=${encodedText}`;
+                window.open(whatsappUrl, '_blank');
+            }
+        }
+
+        // دالة لإرسال النموذج عبر واتساب (النموذج التحكم الطبي)
+        function submitFormMedicalControl() {
+            // التحقق من تعبئة جميع الحقول المطلوبة
+            const requiredFields = document.querySelectorAll('#medicalControlTeam input[required], #medicalControlTeam textarea[required]');
+            let allFieldsFilled = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.border = '2px solid #d63031';
+                    allFieldsFilled = false;
+                } else {
+                    field.style.border = '1px solid #b2bec3';
+                }
+            });
+
+            if (!allFieldsFilled) {
+                alert("يرجى تعبئة جميع الحقول المطلوبة.");
+                return;
+            }
+
+            // جمع البيانات من النموذج
+            const data = {
+                ecg_percentage: document.getElementById('ecg_percentage').value,
+                telemedicine_patients: document.getElementById('telemedicine_patients').value,
+                cardiac_catheterization: document.getElementById('cardiac_catheterization').value,
+                ct_scan_transfers: document.getElementById('ct_scan_transfers').value,
+                cpr_cases: document.getElementById('cpr_cases').value,
+                ros_success_percentage: document.getElementById('ros_success_percentage').value,
+                shift_goals: [],
+                shift_notes: document.getElementById('shift_notes_medicalControl').value,
+                name: document.getElementById('name_medicalControl').value
+            };
+
+            // جمع أهداف المناوبة
+            const goals = document.querySelectorAll('#shift_goals_medicalControl tr');
+            goals.forEach(row => {
+                const goalInput = row.cells[0].querySelector('input');
+                const updateInput = row.cells[1].querySelector('input');
+                if (goalInput.value.trim() !== '' && updateInput.value.trim() !== '') {
+                    const goal = goalInput.value.trim();
+                    const update = updateInput.value.trim();
+                    data.shift_goals.push({ goal, update });
+                }
+            });
+
+            // إنشاء نص الرسالة لواتساب
+            let formText = `*== فريق التحكم الطبي ==*\n\n`;
+
+            // المؤشرات الطبية
+            formText += `*المؤشرات الطبية: فريق التحكم الطبي*\n`;
+            formText += `- نسبة المرضى الذين تم إجراء تخطيط القلب الكهربائي لهم في حالات ألم الصدر: ${data.ecg_percentage}\n`;
+            formText += `- عدد المرضى الذين تم تقديم الخدمة لهم عبر الطب الاتصالي: ${data.telemedicine_patients}\n`;
+            formText += `- عدد المنقولين لمعمل القسطرة القلبية (مريض جلطة قلبية): ${data.cardiac_catheterization}\n`;
+            formText += `- عدد المنقولين لجهاز الاشعة المقطعية مباشرة (مريض سكتة دماغية): ${data.ct_scan_transfers}\n`;
+            formText += `- عدد حالات توقف القلب والتنفس CPR: ${data.cpr_cases}\n`;
+            formText += `- نسبة حالات استعادة النبض الناجحة ROSC: ${data.ros_success_percentage}\n\n`;
+
+            // أهداف المناوبة
+            formText += `*أهداف المناوبة:*\n`;
+            data.shift_goals.forEach((goalObj, index) => {
+                formText += `${index + 1}. *الهدف:* ${goalObj.goal}\n   *التحديث:* ${goalObj.update}\n`;
+            });
+            formText += `\n`;
+
+            // ملاحظات المناوبة والاسم
+            formText += `*ملاحظات المناوبة:* ${data.shift_notes}\n`;
+            formText += `*الاسم:* ${data.name}\n`;
+
+            console.log(formText); // تأكيد عرض البيانات المجمعة
+
+            // تشفير النص
+            const encodedText = encodeURIComponent(formText);
+
+            // التحقق من نوع الجهاز أو المتصفح
+            if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                // على أجهزة iOS، استخدم رابط واتساب المباشر
+                const whatsappUrl = `whatsapp://send?text=${encodedText}`;
+                window.open(whatsappUrl, '_blank');
+            } else {
+                // على باقي الأجهزة، استخدم wa.me لفتح الرابط
+                const whatsappUrl = `https://wa.me/?text=${encodedText}`;
+                window.open(whatsappUrl, '_blank');
+            }
+        }
+
+        // دالة لإرسال النموذج عبر واتساب (النموذج القيادة والتحكم)
+        function submitFormLeadershipControl() {
+            // التحقق من تعبئة جميع الحقول المطلوبة
+            const requiredFields = document.querySelectorAll('#leadershipControlTeam input[required], #leadershipControlTeam textarea[required]');
+            let allFieldsFilled = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.border = '2px solid #d63031';
+                    allFieldsFilled = false;
+                } else {
+                    field.style.border = '1px solid #b2bec3';
+                }
+            });
+
+            if (!allFieldsFilled) {
+                alert("يرجى تعبئة جميع الحقول المطلوبة.");
+                return;
+            }
+
+            // جمع البيانات من النموذج
+            const data = {
+                // بيانات المستشفيات
+                hospitals: [],
+                reports_over_20: document.getElementById('reports_over_20').value,
+                reports_over_40: document.getElementById('reports_over_40').value,
+                reports_over_60: document.getElementById('reports_over_60').value,
+                // مؤشرات التشغيلية
+                response_times: {
+                    haram: document.getElementById('response_time_haram').value,
+                    holy_capital: document.getElementById('response_time_holy_capital').value,
+                    makkah_region: document.getElementById('response_time_makkah_region').value
+                },
+                service_time_percentage: {
+                    haram: document.getElementById('service_time_haram').value,
+                    holy_capital: document.getElementById('service_time_holy_capital').value,
+                    makkah_region: document.getElementById('service_time_makkah_region').value
+                },
+                over_60_percentage: {
+                    haram: document.getElementById('over60_percentage_haram').value,
+                    holy_capital: document.getElementById('over60_percentage_holy_capital').value,
+                    makkah_region: document.getElementById('over60_percentage_makkah_region').value
+                },
+                shift_goals: [],
+                shift_notes: document.getElementById('shift_notes_leadership').value,
+                name: document.getElementById('name_leadership').value
+            };
+
+            // جمع بيانات المستشفيات
+            const hospitalRows = document.querySelectorAll('#hospital_data tr');
+            hospitalRows.forEach(row => {
+                const number = row.cells[0].textContent.trim();
+                const hospitalName = row.cells[1].querySelector('input').value;
+                const cases = row.cells[2].querySelector('input').value;
+                const percentage = row.cells[3].querySelector('input').value;
+                const averageStay = row.cells[4].querySelector('input').value;
+
+                data.hospitals.push({
+                    number,
+                    hospitalName,
+                    cases,
+                    percentage,
+                    averageStay
+                });
+            });
+
+            // جمع أهداف المناوبة
+            const goals = document.querySelectorAll('#shift_goals_leadership tr');
+            goals.forEach(row => {
+                const goalInput = row.cells[0].querySelector('input');
+                const updateInput = row.cells[1].querySelector('input');
+                if (goalInput.value.trim() !== '' && updateInput.value.trim() !== '') {
+                    const goal = goalInput.value.trim();
+                    const update = updateInput.value.trim();
+                    data.shift_goals.push({ goal, update });
+                }
+            });
+
+            // إنشاء نص الرسالة لواتساب
+            let formText = `*== فريق القيادة والتحكم ==*\n\n`;
+
+            // بيانات المستشفيات
+            formText += `*بيانات المستشفيات:*\n`;
+            data.hospitals.forEach(hospital => {
+                formText += `${hospital.number}. *اسم المستشفى:* ${hospital.hospitalName}\n`;
+                formText += `   *عدد الحالات:* ${hospital.cases}\n`;
+                formText += `   *نسبة البلاغات المنقولة:* ${hospital.percentage}\n`;
+                formText += `   *متوسط زمن البقاء في المستشفى:* ${hospital.averageStay}\n\n`;
+            });
+
+            // زمن البقاء في المستشفيات
+            formText += `*زمن البقاء في المستشفيات:*\n`;
+            formText += `- عدد البلاغات لأكثر من 20 دقيقة: ${data.reports_over_20}\n`;
+            formText += `- عدد البلاغات لأكثر من 40 دقيقة: ${data.reports_over_40}\n`;
+            formText += `- عدد البلاغات لأكثر من 60 دقيقة: ${data.reports_over_60}\n\n`;
+
+            // مؤشرات التشغيلية
+            formText += `*المؤشرات التشغيلية: فريق القيادة والتحكم:*\n`;
+            formText += `*متوسط زمن الاستجابة لجميع البلاغات:*\n`;
+            formText += `- الحرم: ${data.response_times.haram}\n`;
+            formText += `- العاصمة المقدسة: ${data.response_times.holy_capital}\n`;
+            formText += `- منطقة مكة المكرمة: ${data.response_times.makkah_region}\n\n`;
+
+            formText += `*نسبة زمن تقديم الخدمة الإسعافية في الموقع خلال 15 دقيقة:*\n`;
+            formText += `- الحرم: ${data.service_time_percentage.haram}\n`;
+            formText += `- العاصمة المقدسة: ${data.service_time_percentage.holy_capital}\n`;
+            formText += `- منطقة مكة المكرمة: ${data.service_time_percentage.makkah_region}\n\n`;
+
+            formText += `*نسبة البلاغات الإسعافية ذات زمن استجابة أكثر من 60 دقيقة:*\n`;
+            formText += `- الحرم: ${data.over_60_percentage.haram}\n`;
+            formText += `- العاصمة المقدسة: ${data.over_60_percentage.holy_capital}\n`;
+            formText += `- منطقة مكة المكرمة: ${data.over_60_percentage.makkah_region}\n\n`;
+
+            // أهداف المناوبة
+            formText += `*أهداف المناوبة:*\n`;
+            data.shift_goals.forEach((goalObj, index) => {
+                formText += `${index + 1}. *الهدف:* ${goalObj.goal}\n   *التحديث:* ${goalObj.update}\n`;
+            });
+            formText += `\n`;
+
+            // ملاحظات المناوبة والاسم
+            formText += `*ملاحظات المناوبة:* ${data.shift_notes}\n`;
+            formText += `*الاسم:* ${data.name}\n`;
+
+            console.log(formText); // تأكيد عرض البيانات المجمعة
+
+            // تشفير النص
+            const encodedText = encodeURIComponent(formText);
+
+            // التحقق من نوع الجهاز أو المتصفح
+            if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                // على أجهزة iOS، استخدم رابط واتساب المباشر
+                const whatsappUrl = `whatsapp://send?text=${encodedText}`;
+                window.open(whatsappUrl, '_blank');
+            } else {
+                // على باقي الأجهزة، استخدم wa.me لفتح الرابط
+                const whatsappUrl = `https://wa.me/?text=${encodedText}`;
+                window.open(whatsappUrl, '_blank');
+            }
+        }
+
+        // دالة لإرسال النموذج عبر واتساب (النموذج التحكم الطبي)
+        function submitFormMedicalControl() {
+            // التحقق من تعبئة جميع الحقول المطلوبة
+            const requiredFields = document.querySelectorAll('#medicalControlTeam input[required], #medicalControlTeam textarea[required]');
+            let allFieldsFilled = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.border = '2px solid #d63031';
+                    allFieldsFilled = false;
+                } else {
+                    field.style.border = '1px solid #b2bec3';
+                }
+            });
+
+            if (!allFieldsFilled) {
+                alert("يرجى تعبئة جميع الحقول المطلوبة.");
+                return;
+            }
+
+            // جمع البيانات من النموذج
+            const data = {
+                ecg_percentage: document.getElementById('ecg_percentage').value,
+                telemedicine_patients: document.getElementById('telemedicine_patients').value,
+                cardiac_catheterization: document.getElementById('cardiac_catheterization').value,
+                ct_scan_transfers: document.getElementById('ct_scan_transfers').value,
+                cpr_cases: document.getElementById('cpr_cases').value,
+                ros_success_percentage: document.getElementById('ros_success_percentage').value,
+                shift_goals: [],
+                shift_notes: document.getElementById('shift_notes_medicalControl').value,
+                name: document.getElementById('name_medicalControl').value
+            };
+
+            // جمع أهداف المناوبة
+            const goals = document.querySelectorAll('#shift_goals_medicalControl tr');
+            goals.forEach(row => {
+                const goalInput = row.cells[0].querySelector('input');
+                const updateInput = row.cells[1].querySelector('input');
+                if (goalInput.value.trim() !== '' && updateInput.value.trim() !== '') {
+                    const goal = goalInput.value.trim();
+                    const update = updateInput.value.trim();
+                    data.shift_goals.push({ goal, update });
+                }
+            });
+
+            // إنشاء نص الرسالة لواتساب
+            let formText = `*== فريق التحكم الطبي ==*\n\n`;
+
+            // المؤشرات الطبية
+            formText += `*المؤشرات الطبية: فريق التحكم الطبي*\n`;
+            formText += `- نسبة المرضى الذين تم إجراء تخطيط القلب الكهربائي لهم في حالات ألم الصدر: ${data.ecg_percentage}\n`;
+            formText += `- عدد المرضى الذين تم تقديم الخدمة لهم عبر الطب الاتصالي: ${data.telemedicine_patients}\n`;
+            formText += `- عدد المنقولين لمعمل القسطرة القلبية (مريض جلطة قلبية): ${data.cardiac_catheterization}\n`;
+            formText += `- عدد المنقولين لجهاز الاشعة المقطعية مباشرة (مريض سكتة دماغية): ${data.ct_scan_transfers}\n`;
+            formText += `- عدد حالات توقف القلب والتنفس CPR: ${data.cpr_cases}\n`;
+            formText += `- نسبة حالات استعادة النبض الناجحة ROSC: ${data.ros_success_percentage}\n\n`;
+
+            // أهداف المناوبة
+            formText += `*أهداف المناوبة:*\n`;
+            data.shift_goals.forEach((goalObj, index) => {
+                formText += `${index + 1}. *الهدف:* ${goalObj.goal}\n   *التحديث:* ${goalObj.update}\n`;
+            });
+            formText += `\n`;
+
+            // ملاحظات المناوبة والاسم
+            formText += `*ملاحظات المناوبة:* ${data.shift_notes}\n`;
+            formText += `*الاسم:* ${data.name}\n`;
+
+            console.log(formText); // تأكيد عرض البيانات المجمعة
+
+            // تشفير النص
+            const encodedText = encodeURIComponent(formText);
+
+            // التحقق من نوع الجهاز أو المتصفح
+            if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                // على أجهزة iOS، استخدم رابط واتساب المباشر
+                const whatsappUrl = `whatsapp://send?text=${encodedText}`;
+                window.open(whatsappUrl, '_blank');
+            } else {
+                // على باقي الأجهزة، استخدم wa.me لفتح الرابط
+                const whatsappUrl = `https://wa.me/?text=${encodedText}`;
+                window.open(whatsappUrl, '_blank');
+            }
+        }
+
+        // دالة لإرسال النموذج عبر واتساب (النموذج القيادة والتحكم)
+        function submitFormLeadershipControl() {
+            // التحقق من تعبئة جميع الحقول المطلوبة
+            const requiredFields = document.querySelectorAll('#leadershipControlTeam input[required], #leadershipControlTeam textarea[required]');
+            let allFieldsFilled = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.border = '2px solid #d63031';
+                    allFieldsFilled = false;
+                } else {
+                    field.style.border = '1px solid #b2bec3';
+                }
+            });
+
+            if (!allFieldsFilled) {
+                alert("يرجى تعبئة جميع الحقول المطلوبة.");
+                return;
+            }
+
+            // جمع البيانات من النموذج
+            const data = {
+                // بيانات المستشفيات
+                hospitals: [],
+                reports_over_20: document.getElementById('reports_over_20').value,
+                reports_over_40: document.getElementById('reports_over_40').value,
+                reports_over_60: document.getElementById('reports_over_60').value,
+                // مؤشرات التشغيلية
+                response_times: {
+                    haram: document.getElementById('response_time_haram').value,
+                    holy_capital: document.getElementById('response_time_holy_capital').value,
+                    makkah_region: document.getElementById('response_time_makkah_region').value
+                },
+                service_time_percentage: {
+                    haram: document.getElementById('service_time_haram').value,
+                    holy_capital: document.getElementById('service_time_holy_capital').value,
+                    makkah_region: document.getElementById('service_time_makkah_region').value
+                },
+                over_60_percentage: {
+                    haram: document.getElementById('over60_percentage_haram').value,
+                    holy_capital: document.getElementById('over60_percentage_holy_capital').value,
+                    makkah_region: document.getElementById('over60_percentage_makkah_region').value
+                },
+                shift_goals: [],
+                shift_notes: document.getElementById('shift_notes_leadership').value,
+                name: document.getElementById('name_leadership').value
+            };
+
+            // جمع بيانات المستشفيات
+            const hospitalRows = document.querySelectorAll('#hospital_data tr');
+            hospitalRows.forEach(row => {
+                const number = row.cells[0].textContent.trim();
+                const hospitalName = row.cells[1].querySelector('input').value;
+                const cases = row.cells[2].querySelector('input').value;
+                const percentage = row.cells[3].querySelector('input').value;
+                const averageStay = row.cells[4].querySelector('input').value;
+
+                data.hospitals.push({
+                    number,
+                    hospitalName,
+                    cases,
+                    percentage,
+                    averageStay
+                });
+            });
+
+            // جمع أهداف المناوبة
+            const goals = document.querySelectorAll('#shift_goals_leadership tr');
+            goals.forEach(row => {
+                const goalInput = row.cells[0].querySelector('input');
+                const updateInput = row.cells[1].querySelector('input');
+                if (goalInput.value.trim() !== '' && updateInput.value.trim() !== '') {
+                    const goal = goalInput.value.trim();
+                    const update = updateInput.value.trim();
+                    data.shift_goals.push({ goal, update });
+                }
+            });
+
+            // إنشاء نص الرسالة لواتساب
+            let formText = `*== فريق القيادة والتحكم ==*\n\n`;
+
+            // بيانات المستشفيات
+            formText += `*بيانات المستشفيات:*\n`;
+            data.hospitals.forEach(hospital => {
+                formText += `${hospital.number}. *اسم المستشفى:* ${hospital.hospitalName}\n`;
+                formText += `   *عدد الحالات:* ${hospital.cases}\n`;
+                formText += `   *نسبة البلاغات المنقولة:* ${hospital.percentage}\n`;
+                formText += `   *متوسط زمن البقاء في المستشفى:* ${hospital.averageStay}\n\n`;
+            });
+
+            // زمن البقاء في المستشفيات
+            formText += `*زمن البقاء في المستشفيات:*\n`;
+            formText += `- عدد البلاغات لأكثر من 20 دقيقة: ${data.reports_over_20}\n`;
+            formText += `- عدد البلاغات لأكثر من 40 دقيقة: ${data.reports_over_40}\n`;
+            formText += `- عدد البلاغات لأكثر من 60 دقيقة: ${data.reports_over_60}\n\n`;
+
+            // مؤشرات التشغيلية
+            formText += `*المؤشرات التشغيلية: فريق القيادة والتحكم:*\n`;
+            formText += `*متوسط زمن الاستجابة لجميع البلاغات:*\n`;
+            formText += `- الحرم: ${data.response_times.haram}\n`;
+            formText += `- العاصمة المقدسة: ${data.response_times.holy_capital}\n`;
+            formText += `- منطقة مكة المكرمة: ${data.response_times.makkah_region}\n\n`;
+
+            formText += `*نسبة زمن تقديم الخدمة الإسعافية في الموقع خلال 15 دقيقة:*\n`;
+            formText += `- الحرم: ${data.service_time_percentage.haram}\n`;
+            formText += `- العاصمة المقدسة: ${data.service_time_percentage.holy_capital}\n`;
+            formText += `- منطقة مكة المكرمة: ${data.service_time_percentage.makkah_region}\n\n`;
+
+            formText += `*نسبة البلاغات الإسعافية ذات زمن استجابة أكثر من 60 دقيقة:*\n`;
+            formText += `- الحرم: ${data.over_60_percentage.haram}\n`;
+            formText += `- العاصمة المقدسة: ${data.over_60_percentage.holy_capital}\n`;
+            formText += `- منطقة مكة المكرمة: ${data.over_60_percentage.makkah_region}\n\n`;
+
+            // أهداف المناوبة
+            formText += `*أهداف المناوبة:*\n`;
+            data.shift_goals.forEach((goalObj, index) => {
+                formText += `${index + 1}. *الهدف:* ${goalObj.goal}\n   *التحديث:* ${goalObj.update}\n`;
+            });
+            formText += `\n`;
+
+            // ملاحظات المناوبة والاسم
+            formText += `*ملاحظات المناوبة:* ${data.shift_notes}\n`;
+            formText += `*الاسم:* ${data.name}\n`;
+
+            console.log(formText); // تأكيد عرض البيانات المجمعة
+
+            // تشفير النص
+            const encodedText = encodeURIComponent(formText);
+
+            // التحقق من نوع الجهاز أو المتصفح
+            if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                // على أجهزة iOS، استخدم رابط واتساب المباشر
+                const whatsappUrl = `whatsapp://send?text=${encodedText}`;
+                window.open(whatsappUrl, '_blank');
+            } else {
+                // على باقي الأجهزة، استخدم wa.me لفتح الرابط
+                const whatsappUrl = `https://wa.me/?text=${encodedText}`;
+                window.open(whatsappUrl, '_blank');
+            }
+        }
+
+        // دالة لإرسال النموذج عبر واتساب (النموذج التحكم الطبي)
+        function submitFormMedicalControl() {
+            // التحقق من تعبئة جميع الحقول المطلوبة
+            const requiredFields = document.querySelectorAll('#medicalControlTeam input[required], #medicalControlTeam textarea[required]');
+            let allFieldsFilled = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.border = '2px solid #d63031';
+                    allFieldsFilled = false;
+                } else {
+                    field.style.border = '1px solid #b2bec3';
+                }
+            });
+
+            if (!allFieldsFilled) {
+                alert("يرجى تعبئة جميع الحقول المطلوبة.");
+                return;
+            }
+
+            // جمع البيانات من النموذج
+            const data = {
+                ecg_percentage: document.getElementById('ecg_percentage').value,
+                telemedicine_patients: document.getElementById('telemedicine_patients').value,
+                cardiac_catheterization: document.getElementById('cardiac_catheterization').value,
+                ct_scan_transfers: document.getElementById('ct_scan_transfers').value,
+                cpr_cases: document.getElementById('cpr_cases').value,
+                ros_success_percentage: document.getElementById('ros_success_percentage').value,
+                shift_goals: [],
+                shift_notes: document.getElementById('shift_notes_medicalControl').value,
+                name: document.getElementById('name_medicalControl').value
+            };
+
+            // جمع أهداف المناوبة
+            const goals = document.querySelectorAll('#shift_goals_medicalControl tr');
+            goals.forEach(row => {
+                const goalInput = row.cells[0].querySelector('input');
+                const updateInput = row.cells[1].querySelector('input');
+                if (goalInput.value.trim() !== '' && updateInput.value.trim() !== '') {
+                    const goal = goalInput.value.trim();
+                    const update = updateInput.value.trim();
+                    data.shift_goals.push({ goal, update });
+                }
+            });
+
+            // إنشاء نص الرسالة لواتساب
+            let formText = `*== فريق التحكم الطبي ==*\n\n`;
+
+            // المؤشرات الطبية
+            formText += `*المؤشرات الطبية: فريق التحكم الطبي*\n`;
+            formText += `- نسبة المرضى الذين تم إجراء تخطيط القلب الكهربائي لهم في حالات ألم الصدر: ${data.ecg_percentage}\n`;
+            formText += `- عدد المرضى الذين تم تقديم الخدمة لهم عبر الطب الاتصالي: ${data.telemedicine_patients}\n`;
+            formText += `- عدد المنقولين لمعمل القسطرة القلبية (مريض جلطة قلبية): ${data.cardiac_catheterization}\n`;
+            formText += `- عدد المنقولين لجهاز الاشعة المقطعية مباشرة (مريض سكتة دماغية): ${data.ct_scan_transfers}\n`;
+            formText += `- عدد حالات توقف القلب والتنفس CPR: ${data.cpr_cases}\n`;
+            formText += `- نسبة حالات استعادة النبض الناجحة ROSC: ${data.ros_success_percentage}\n\n`;
+
+            // أهداف المناوبة
+            formText += `*أهداف المناوبة:*\n`;
+            data.shift_goals.forEach((goalObj, index) => {
+                formText += `${index + 1}. *الهدف:* ${goalObj.goal}\n   *التحديث:* ${goalObj.update}\n`;
+            });
+            formText += `\n`;
+
+            // ملاحظات المناوبة والاسم
+            formText += `*ملاحظات المناوبة:* ${data.shift_notes}\n`;
+            formText += `*الاسم:* ${data.name}\n`;
+
+            console.log(formText); // تأكيد عرض البيانات المجمعة
+
+            // تشفير النص
+            const encodedText = encodeURIComponent(formText);
+
+            // التحقق من نوع الجهاز أو المتصفح
+            if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                // على أجهزة iOS، استخدم رابط واتساب المباشر
+                const whatsappUrl = `whatsapp://send?text=${encodedText}`;
+                window.open(whatsappUrl, '_blank');
+            } else {
+                // على باقي الأجهزة، استخدم wa.me لفتح الرابط
+                const whatsappUrl = `https://wa.me/?text=${encodedText}`;
+                window.open(whatsappUrl, '_blank');
+            }
+        }
+
+        // دالة لإرسال النموذج عبر واتساب (النموذج القيادة والتحكم)
+        function submitFormLeadershipControl() {
+            // التحقق من تعبئة جميع الحقول المطلوبة
+            const requiredFields = document.querySelectorAll('#leadershipControlTeam input[required], #leadershipControlTeam textarea[required]');
+            let allFieldsFilled = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.border = '2px solid #d63031';
+                    allFieldsFilled = false;
+                } else {
+                    field.style.border = '1px solid #b2bec3';
+                }
+            });
+
+            if (!allFieldsFilled) {
+                alert("يرجى تعبئة جميع الحقول المطلوبة.");
+                return;
+            }
+
+            // جمع البيانات من النموذج
+            const data = {
+                // بيانات المستشفيات
+                hospitals: [],
+                reports_over_20: document.getElementById('reports_over_20').value,
+                reports_over_40: document.getElementById('reports_over_40').value,
+                reports_over_60: document.getElementById('reports_over_60').value,
+                // مؤشرات التشغيلية
+                response_times: {
+                    haram: document.getElementById('response_time_haram').value,
+                    holy_capital: document.getElementById('response_time_holy_capital').value,
+                    makkah_region: document.getElementById('response_time_makkah_region').value
+                },
+                service_time_percentage: {
+                    haram: document.getElementById('service_time_haram').value,
+                    holy_capital: document.getElementById('service_time_holy_capital').value,
+                    makkah_region: document.getElementById('service_time_makkah_region').value
+                },
+                over_60_percentage: {
+                    haram: document.getElementById('over60_percentage_haram').value,
+                    holy_capital: document.getElementById('over60_percentage_holy_capital').value,
+                    makkah_region: document.getElementById('over60_percentage_makkah_region').value
+                },
+                shift_goals: [],
+                shift_notes: document.getElementById('shift_notes_leadership').value,
+                name: document.getElementById('name_leadership').value
+            };
+
+            // جمع بيانات المستشفيات
+            const hospitalRows = document.querySelectorAll('#hospital_data tr');
+            hospitalRows.forEach(row => {
+                const number = row.cells[0].textContent.trim();
+                const hospitalName = row.cells[1].querySelector('input').value;
+                const cases = row.cells[2].querySelector('input').value;
+                const percentage = row.cells[3].querySelector('input').value;
+                const averageStay = row.cells[4].querySelector('input').value;
+
+                data.hospitals.push({
+                    number,
+                    hospitalName,
+                    cases,
+                    percentage,
+                    averageStay
+                });
+            });
+
+            // جمع أهداف المناوبة
+            const goals = document.querySelectorAll('#shift_goals_leadership tr');
+            goals.forEach(row => {
+                const goalInput = row.cells[0].querySelector('input');
+                const updateInput = row.cells[1].querySelector('input');
+                if (goalInput.value.trim() !== '' && updateInput.value.trim() !== '') {
+                    const goal = goalInput.value.trim();
+                    const update = updateInput.value.trim();
+                    data.shift_goals.push({ goal, update });
+                }
+            });
+
+            // إنشاء نص الرسالة لواتساب
+            let formText = `*== فريق القيادة والتحكم ==*\n\n`;
+
+            // بيانات المستشفيات
+            formText += `*بيانات المستشفيات:*\n`;
+            data.hospitals.forEach(hospital => {
+                formText += `${hospital.number}. *اسم المستشفى:* ${hospital.hospitalName}\n`;
+                formText += `   *عدد الحالات:* ${hospital.cases}\n`;
+                formText += `   *نسبة البلاغات المنقولة:* ${hospital.percentage}\n`;
+                formText += `   *متوسط زمن البقاء في المستشفى:* ${hospital.averageStay}\n\n`;
+            });
+
+            // زمن البقاء في المستشفيات
+            formText += `*زمن البقاء في المستشفيات:*\n`;
+            formText += `- عدد البلاغات لأكثر من 20 دقيقة: ${data.reports_over_20}\n`;
+            formText += `- عدد البلاغات لأكثر من 40 دقيقة: ${data.reports_over_40}\n`;
+            formText += `- عدد البلاغات لأكثر من 60 دقيقة: ${data.reports_over_60}\n\n`;
+
+            // مؤشرات التشغيلية
+            formText += `*المؤشرات التشغيلية: فريق القيادة والتحكم:*\n`;
+            formText += `*متوسط زمن الاستجابة لجميع البلاغات:*\n`;
+            formText += `- الحرم: ${data.response_times.haram}\n`;
+            formText += `- العاصمة المقدسة: ${data.response_times.holy_capital}\n`;
+            formText += `- منطقة مكة المكرمة: ${data.response_times.makkah_region}\n\n`;
+
+            formText += `*نسبة زمن تقديم الخدمة الإسعافية في الموقع خلال 15 دقيقة:*\n`;
+            formText += `- الحرم: ${data.service_time_percentage.haram}\n`;
+            formText += `- العاصمة المقدسة: ${data.service_time_percentage.holy_capital}\n`;
+            formText += `- منطقة مكة المكرمة: ${data.service_time_percentage.makkah_region}\n\n`;
+
+            formText += `*نسبة البلاغات الإسعافية ذات زمن استجابة أكثر من 60 دقيقة:*\n`;
+            formText += `- الحرم: ${data.over_60_percentage.haram}\n`;
+            formText += `- العاصمة المقدسة: ${data.over_60_percentage.holy_capital}\n`;
+            formText += `- منطقة مكة المكرمة: ${data.over_60_percentage.makkah_region}\n\n`;
+
+            // أهداف المناوبة
+            formText += `*أهداف المناوبة:*\n`;
+            data.shift_goals.forEach((goalObj, index) => {
+                formText += `${index + 1}. *الهدف:* ${goalObj.goal}\n   *التحديث:* ${goalObj.update}\n`;
+            });
+            formText += `\n`;
+
+            // ملاحظات المناوبة والاسم
+            formText += `*ملاحظات المناوبة:* ${data.shift_notes}\n`;
+            formText += `*الاسم:* ${data.name}\n`;
+
+            console.log(formText); // تأكيد عرض البيانات المجمعة
+
+            // تشفير النص
+            const encodedText = encodeURIComponent(formText);
+
+            // التحقق من نوع الجهاز أو المتصفح
+            if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                // على أجهزة iOS، استخدم رابط واتساب المباشر
+                const whatsappUrl = `whatsapp://send?text=${encodedText}`;
+                window.open(whatsappUrl, '_blank');
+            } else {
+                // على باقي الأجهزة، استخدم wa.me لفتح الرابط
+                const whatsappUrl = `https://wa.me/?text=${encodedText}`;
+                window.open(whatsappUrl, '_blank');
+            }
+        }
+
+        // دالة لإرسال النموذج عبر واتساب (النموذج التحكم الطبي)
+        function submitFormMedicalControl() {
+            // التحقق من تعبئة جميع الحقول المطلوبة
+            const requiredFields = document.querySelectorAll('#medicalControlTeam input[required], #medicalControlTeam textarea[required]');
+            let allFieldsFilled = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.border = '2px solid #d63031';
+                    allFieldsFilled = false;
+                } else {
+                    field.style.border = '1px solid #b2bec3';
+                }
+            });
+
+            if (!allFieldsFilled) {
+                alert("يرجى تعبئة جميع الحقول المطلوبة.");
+                return;
+            }
+
+            // جمع البيانات من النموذج
+            const data = {
+                ecg_percentage: document.getElementById('ecg_percentage').value,
+                telemedicine_patients: document.getElementById('telemedicine_patients').value,
+                cardiac_catheterization: document.getElementById('cardiac_catheterization').value,
+                ct_scan_transfers: document.getElementById('ct_scan_transfers').value,
+                cpr_cases: document.getElementById('cpr_cases').value,
+                ros_success_percentage: document.getElementById('ros_success_percentage').value,
+                shift_goals: [],
+                shift_notes: document.getElementById('shift_notes_medicalControl').value,
+                name: document.getElementById('name_medicalControl').value
+            };
+
+            // جمع أهداف المناوبة
+            const goals = document.querySelectorAll('#shift_goals_medicalControl tr');
+            goals.forEach(row => {
+                const goalInput = row.cells[0].querySelector('input');
+                const updateInput = row.cells[1].querySelector('input');
+                if (goalInput.value.trim() !== '' && updateInput.value.trim() !== '') {
+                    const goal = goalInput.value.trim();
+                    const update = updateInput.value.trim();
+                    data.shift_goals.push({ goal, update });
+                }
+            });
+
+            // إنشاء نص الرسالة لواتساب
+            let formText = `*== فريق التحكم الطبي ==*\n\n`;
+
+            // المؤشرات الطبية
+            formText += `*المؤشرات الطبية: فريق التحكم الطبي*\n`;
+            formText += `- نسبة المرضى الذين تم إجراء تخطيط القلب الكهربائي لهم في حالات ألم الصدر: ${data.ecg_percentage}\n`;
+            formText += `- عدد المرضى الذين تم تقديم الخدمة لهم عبر الطب الاتصالي: ${data.telemedicine_patients}\n`;
+            formText += `- عدد المنقولين لمعمل القسطرة القلبية (مريض جلطة قلبية): ${data.cardiac_catheterization}\n`;
+            formText += `- عدد المنقولين لجهاز الاشعة المقطعية مباشرة (مريض سكتة دماغية): ${data.ct_scan_transfers}\n`;
+            formText += `- عدد حالات توقف القلب والتنفس CPR: ${data.cpr_cases}\n`;
+            formText += `- نسبة حالات استعادة النبض الناجحة ROSC: ${data.ros_success_percentage}\n\n`;
+
+            // أهداف المناوبة
+            formText += `*أهداف المناوبة:*\n`;
+            data.shift_goals.forEach((goalObj, index) => {
+                formText += `${index + 1}. *الهدف:* ${goalObj.goal}\n   *التحديث:* ${goalObj.update}\n`;
+            });
+            formText += `\n`;
+
+            // ملاحظات المناوبة والاسم
+            formText += `*ملاحظات المناوبة:* ${data.shift_notes}\n`;
+            formText += `*الاسم:* ${data.name}\n`;
+
+            console.log(formText); // تأكيد عرض البيانات المجمعة
+
+            // تشفير النص
+            const encodedText = encodeURIComponent(formText);
+
+            // التحقق من نوع الجهاز أو المتصفح
+            if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                // على أجهزة iOS، استخدم رابط واتساب المباشر
+                const whatsappUrl = `whatsapp://send?text=${encodedText}`;
+                window.open(whatsappUrl, '_blank');
+            } else {
+                // على باقي الأجهزة، استخدم wa.me لفتح الرابط
+                const whatsappUrl = `https://wa.me/?text=${encodedText}`;
+                window.open(whatsappUrl, '_blank');
+            }
+        }
+
+        // دالة لإرسال النموذج عبر واتساب (النموذج التحكم الطبي)
+        function submitFormMedicalControl() {
+            // التحقق من تعبئة جميع الحقول المطلوبة
+            const requiredFields = document.querySelectorAll('#medicalControlTeam input[required], #medicalControlTeam textarea[required]');
+            let allFieldsFilled = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.border = '2px solid #d63031';
+                    allFieldsFilled = false;
+                } else {
+                    field.style.border = '1px solid #b2bec3';
+                }
+            });
+
+            if (!allFieldsFilled) {
+                alert("يرجى تعبئة جميع الحقول المطلوبة.");
+                return;
+            }
+
+            // جمع البيانات من النموذج
+            const data = {
+                ecg_percentage: document.getElementById('ecg_percentage').value,
+                telemedicine_patients: document.getElementById('telemedicine_patients').value,
+                cardiac_catheterization: document.getElementById('cardiac_catheterization').value,
+                ct_scan_transfers: document.getElementById('ct_scan_transfers').value,
+                cpr_cases: document.getElementById('cpr_cases').value,
+                ros_success_percentage: document.getElementById('ros_success_percentage').value,
+                shift_goals: [],
+                shift_notes: document.getElementById('shift_notes_medicalControl').value,
+                name: document.getElementById('name_medicalControl').value
+            };
+
+            // جمع أهداف المناوبة
+            const goals = document.querySelectorAll('#shift_goals_medicalControl tr');
+            goals.forEach(row => {
+                const goalInput = row.cells[0].querySelector('input');
+                const updateInput = row.cells[1].querySelector('input');
+                if (goalInput.value.trim() !== '' && updateInput.value.trim() !== '') {
+                    const goal = goalInput.value.trim();
+                    const update = updateInput.value.trim();
+                    data.shift_goals.push({ goal, update });
+                }
+            });
+
+            // إنشاء نص الرسالة لواتساب
+            let formText = `*== فريق التحكم الطبي ==*\n\n`;
+
+            // المؤشرات الطبية
+            formText += `*المؤشرات الطبية: فريق التحكم الطبي*\n`;
+            formText += `- نسبة المرضى الذين تم إجراء تخطيط القلب الكهربائي لهم في حالات ألم الصدر: ${data.ecg_percentage}\n`;
+            formText += `- عدد المرضى الذين تم تقديم الخدمة لهم عبر الطب الاتصالي: ${data.telemedicine_patients}\n`;
+            formText += `- عدد المنقولين لمعمل القسطرة القلبية (مريض جلطة قلبية): ${data.cardiac_catheterization}\n`;
+            formText += `- عدد المنقولين لجهاز الاشعة المقطعية مباشرة (مريض سكتة دماغية): ${data.ct_scan_transfers}\n`;
+            formText += `- عدد حالات توقف القلب والتنفس CPR: ${data.cpr_cases}\n`;
+            formText += `- نسبة حالات استعادة النبض الناجحة ROSC: ${data.ros_success_percentage}\n\n`;
+
+            // أهداف المناوبة
+            formText += `*أهداف المناوبة:*\n`;
+            data.shift_goals.forEach((goalObj, index) => {
+                formText += `${index + 1}. *الهدف:* ${goalObj.goal}\n   *التحديث:* ${goalObj.update}\n`;
+            });
+            formText += `\n`;
+
+            // ملاحظات المناوبة والاسم
+            formText += `*ملاحظات المناوبة:* ${data.shift_notes}\n`;
+            formText += `*الاسم:* ${data.name}\n`;
+
+            console.log(formText); // تأكيد عرض البيانات المجمعة
+
+            // تشفير النص
+            const encodedText = encodeURIComponent(formText);
+
+            // التحقق من نوع الجهاز أو المتصفح
+            if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                // على أجهزة iOS، استخدم رابط واتساب المباشر
+                const whatsappUrl = `whatsapp://send?text=${encodedText}`;
+                window.open(whatsappUrl, '_blank');
+            } else {
+                // على باقي الأجهزة، استخدم wa.me لفتح الرابط
+                const whatsappUrl = `https://wa.me/?text=${encodedText}`;
+                window.open(whatsappUrl, '_blank');
+            }
+        }
+
+        // دالة لإرسال النموذج عبر واتساب (النموذج التحكم الطبي)
+        function submitFormMedicalControl() {
+            // التحقق من تعبئة جميع الحقول المطلوبة
+            const requiredFields = document.querySelectorAll('#medicalControlTeam input[required], #medicalControlTeam textarea[required]');
+            let allFieldsFilled = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.border = '2px solid #d63031';
+                    allFieldsFilled = false;
+                } else {
+                    field.style.border = '1px solid #b2bec3';
+                }
+            });
+
+            if (!allFieldsFilled) {
+                alert("يرجى تعبئة جميع الحقول المطلوبة.");
+                return;
+            }
+
+            // جمع البيانات من النموذج
+            const data = {
+                ecg_percentage: document.getElementById('ecg_percentage').value,
+                telemedicine_patients: document.getElementById('telemedicine_patients').value,
+                cardiac_catheterization: document.getElementById('cardiac_catheterization').value,
+                ct_scan_transfers: document.getElementById('ct_scan_transfers').value,
+                cpr_cases: document.getElementById('cpr_cases').value,
+                ros_success_percentage: document.getElementById('ros_success_percentage').value,
+                shift_goals: [],
+                shift_notes: document.getElementById('shift_notes_medicalControl').value,
+                name: document.getElementById('name_medicalControl').value
+            };
+
+            // جمع أهداف المناوبة
+            const goals = document.querySelectorAll('#shift_goals_medicalControl tr');
+            goals.forEach(row => {
+                const goalInput = row.cells[0].querySelector('input');
+                const updateInput = row.cells[1].querySelector('input');
+                if (goalInput.value.trim() !== '' && updateInput.value.trim() !== '') {
+                    const goal = goalInput.value.trim();
+                    const update = updateInput.value.trim();
+                    data.shift_goals.push({ goal, update });
+                }
+            });
+
+            // إنشاء نص الرسالة لواتساب
+            let formText = `*== فريق التحكم الطبي ==*\n\n`;
+
+            // المؤشرات الطبية
+            formText += `*المؤشرات الطبية: فريق التحكم الطبي*\n`;
+            formText += `- نسبة المرضى الذين تم إجراء تخطيط القلب الكهربائي لهم في حالات ألم الصدر: ${data.ecg_percentage}\n`;
+            formText += `- عدد المرضى الذين تم تقديم الخدمة لهم عبر الطب الاتصالي: ${data.telemedicine_patients}\n`;
+            formText += `- عدد المنقولين لمعمل القسطرة القلبية (مريض جلطة قلبية): ${data.cardiac_catheterization}\n`;
+            formText += `- عدد المنقولين لجهاز الاشعة المقطعية مباشرة (مريض سكتة دماغية): ${data.ct_scan_transfers}\n`;
+            formText += `- عدد حالات توقف القلب والتنفس CPR: ${data.cpr_cases}\n`;
+            formText += `- نسبة حالات استعادة النبض الناجحة ROSC: ${data.ros_success_percentage}\n\n`;
+
+            // أهداف المناوبة
+            formText += `*أهداف المناوبة:*\n`;
+            data.shift_goals.forEach((goalObj, index) => {
+                formText += `${index + 1}. *الهدف:* ${goalObj.goal}\n   *التحديث:* ${goalObj.update}\n`;
+            });
+            formText += `\n`;
+
+            // ملاحظات المناوبة والاسم
+            formText += `*ملاحظات المناوبة:* ${data.shift_notes}\n`;
+            formText += `*الاسم:* ${data.name}\n`;
+
+            console.log(formText); // تأكيد عرض البيانات المجمعة
+
+            // تشفير النص
+            const encodedText = encodeURIComponent(formText);
+
+            // التحقق من نوع الجهاز أو المتصفح
+            if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                // على أجهزة iOS، استخدم رابط واتساب المباشر
+                const whatsappUrl = `whatsapp://send?text=${encodedText}`;
+                window.open(whatsappUrl, '_blank');
+            } else {
+                // على باقي الأجهزة، استخدم wa.me لفتح الرابط
+                const whatsappUrl = `https://wa.me/?text=${encodedText}`;
+                window.open(whatsappUrl, '_blank');
+            }
+        }
+
+        // دالة لإرسال النموذج عبر واتساب (النموذج التحكم الطبي)
+        function submitFormMedicalControl() {
+            // التحقق من تعبئة جميع الحقول المطلوبة
+            const requiredFields = document.querySelectorAll('#medicalControlTeam input[required], #medicalControlTeam textarea[required]');
+            let allFieldsFilled = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.border = '2px solid #d63031';
+                    allFieldsFilled = false;
+                } else {
+                    field.style.border = '1px solid #b2bec3';
+                }
+            });
+
+            if (!allFieldsFilled) {
+                alert("يرجى تعبئة جميع الحقول المطلوبة.");
+                return;
+            }
+
+            // جمع البيانات من النموذج
+            const data = {
+                ecg_percentage: document.getElementById('ecg_percentage').value,
+                telemedicine_patients: document.getElementById('telemedicine_patients').value,
+                cardiac_catheterization: document.getElementById('cardiac_catheterization').value,
+                ct_scan_transfers: document.getElementById('ct_scan_transfers').value,
+                cpr_cases: document.getElementById('cpr_cases').value,
+                ros_success_percentage: document.getElementById('ros_success_percentage').value,
+                shift_goals: [],
+                shift_notes: document.getElementById('shift_notes_medicalControl').value,
+                name: document.getElementById('name_medicalControl').value
+            };
+
+            // جمع أهداف المناوبة
+            const goals = document.querySelectorAll('#shift_goals_medicalControl tr');
+            goals.forEach(row => {
+                const goalInput = row.cells[0].querySelector('input');
+                const updateInput = row.cells[1].querySelector('input');
+                if (goalInput.value.trim() !== '' && updateInput.value.trim() !== '') {
+                    const goal = goalInput.value.trim();
+                    const update = updateInput.value.trim();
+                    data.shift_goals.push({ goal, update });
+                }
+            });
+
+            // إنشاء نص الرسالة لواتساب
+            let formText = `*== فريق التحكم الطبي ==*\n\n`;
+
+            // المؤشرات الطبية
+            formText += `*المؤشرات الطبية: فريق التحكم الطبي*\n`;
+            formText += `- نسبة المرضى الذين تم إجراء تخطيط القلب الكهربائي لهم في حالات ألم الصدر: ${data.ecg_percentage}\n`;
+            formText += `- عدد المرضى الذين تم تقديم الخدمة لهم عبر الطب الاتصالي: ${data.telemedicine_patients}\n`;
+            formText += `- عدد المنقولين لمعمل القسطرة القلبية (مريض جلطة قلبية): ${data.cardiac_catheterization}\n`;
+            formText += `- عدد المنقولين لجهاز الاشعة المقطعية مباشرة (مريض سكتة دماغية): ${data.ct_scan_transfers}\n`;
+            formText += `- عدد حالات توقف القلب والتنفس CPR: ${data.cpr_cases}\n`;
+            formText += `- نسبة حالات استعادة النبض الناجحة ROSC: ${data.ros_success_percentage}\n\n`;
 
             // أهداف المناوبة
             formText += `*أهداف المناوبة:*\n`;
