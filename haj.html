@@ -82,6 +82,18 @@
       box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
     }
 
+    /* أنماط مخصصة لأزرار "عرض كامل..." */
+    .filter-button.all-button {
+      background-color: white; /* خلفية بيضاء */
+      color: var(--primary-color); /* لون النص */
+      border: 2px solid var(--primary-color); /* حدود للزر */
+    }
+
+    .filter-button.all-button:hover {
+      background-color: #f0f0f0; /* خلفية رمادية فاتحة عند التمرير */
+      color: var(--primary-color); /* الحفاظ على لون النص */
+    }
+
     /* تنسيقات الأزرار الثانوية */
     #sub-buttons .filter-button {
       background-color: var(--secondary-color);
@@ -458,7 +470,7 @@
       // إنشاء زر "عرض كامل الجدول"
       const allButton = document.createElement("button");
       allButton.textContent = "عرض كامل الجدول";
-      allButton.className = "filter-button";
+      allButton.className = "filter-button all-button"; // إضافة فئة all-button
       allButton.onclick = () => {
         currentMainFilter = null;
         currentSubFilter = null;
@@ -515,7 +527,7 @@
       // إنشاء زر "عرض كامل القطاع" في الفلتر الثانوي
       const allButton = document.createElement("button");
       allButton.textContent = "عرض كامل القطاع";
-      allButton.className = "filter-button";
+      allButton.className = "filter-button all-button"; // إضافة فئة all-button
       allButton.onclick = () => {
         const filteredMain = allData.filter(row => extractMainFilter(row[5]) === currentMainFilter);
         displayTable(filteredMain);
@@ -571,7 +583,7 @@
       // إنشاء زر "عرض كامل المركز" في الفلتر الخاص بالمركز
       const allButton = document.createElement("button");
       allButton.textContent = "عرض كامل المركز";
-      allButton.className = "filter-button";
+      allButton.className = "filter-button all-button"; // إضافة فئة all-button
       allButton.onclick = () => {
         const filteredMainSub = allData.filter(row => 
           extractMainFilter(row[5]) === currentMainFilter && 
@@ -632,7 +644,7 @@
       // إنشاء زر "عرض كامل المناوبة" في الفلتر الثالث
       const allButton = document.createElement("button");
       allButton.textContent = "عرض كامل المناوبة";
-      allButton.className = "filter-button";
+      allButton.className = "filter-button all-button"; // إضافة فئة all-button
       allButton.onclick = () => {
         const filteredMainSubCenter = allData.filter(row => 
           extractMainFilter(row[5]) === currentMainFilter && 
