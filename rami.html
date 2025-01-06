@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>أداة تحويل البيانات الاحترافية</title>
+  <style>
+      body {
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          direction: rtl;
+          text-align: center;
+          background-color: white;
+          color: #333;
+          margin: 0;
+          padding: 0;
+      }
+      h1 {
+          color: #2196F3; /* لون أزرق */
+          font-size: 2em;
+          margin: 20px 0;
+          text-shadow: 0px 0px 5px #2196F3;
+      }
+      .container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 0 20px;
+      }
+      textarea {
+          width: 80%;
+          height: 150px;
+          margin-bottom: 20px;
+          border-radius: 10px;
+          border: 2px solid #2196F3;
+          padding: 10px;
+          font-size: 1em;
+          background-color: white;
+          color: #333;
+          resize: none;
+          box-shadow: 0px 0px 10px #2196F3;
+      }
+      button {
+          background-color: #2196F3; /* لون أزرق */
+          color: white;
+          border: none;
+          padding: 10px 20px;
+          font-size: 1.2em;
+          cursor: pointer;
+          border-radius: 5px;
+          margin-top: 10px;
+          transition: 0.3s;
+          box-shadow: 0px 0px 15px #2196F3;
+      }
+      button:hover {
+          background-color: #1976D2; /* لون أزرق داكن عند التحويم */
+          box-shadow: 0px 0px 20px #1976D2;
+      }
+      .table-container {
+          width: 100%;
+          margin: 20px 0;
+      }
+      table {
+          width: 100%; /* ضبط عرض الجدول ليكون 100% من الحاوية */
+          table-layout: fixed; /* تخطيط ثابت للأعمدة */
+          border-collapse: collapse;
+          box-shadow: 0px 0px 20px #2196F3;
+      }
+      table, th, td {
+          border: 1px solid #2196F3; /* لون أزرق */
+      }
+      th, td {
+          padding: 8px; /* تقليل الحشو */
+          text-align: center;
+          color: #2196F3;
+          font-size: 0.9em; /* تقليل حجم الخط */
+          word-wrap: break-word; /* السماح بكسر الكلمات الطويلة */
+      }
+      th {
+          background-color: #2196F3;
+          color: white;
+      }
+      .instruction {
+          font-size: 1em;
+          color: #2196F3;
+          margin-bottom: 15px;
+          text-shadow: 0px 0px 5px #2196F3;
+      }
+      .hidden {
+          display: none;
+      }
+      footer {
+          margin-top: 30px;
+          font-size: 0.8em;
+          color: red;
+          text-shadow: 1px 1px 2px #000;
+          text-align: center;
+          padding: 10px 0;
+          background-color: #f9f9f9;
+      }
+      footer a {
+          color: #2196F3;
+          text-decoration: none;
+      }
+      footer a:hover {
+          text-decoration: underline;
+      }
+      .version {
+          font-size: 0.9em;
+          color: #555;
+          margin-top: 10px;
+      }
+      .footer-highlight-ali, .footer-highlight-rami {
+          font-weight: bold;
+          color: #2196F3;
+      }
+      
+      /* تحسين العرض على الشاشات الصغيرة */
+      @media screen and (max-width: 1200px) {
+          table {
+              font-size: 0.8em;
+          }
+          th, td {
+              padding: 6px;
+          }
+      }
+      
+      @media screen and (max-width: 992px) {
+          textarea {
+              width: 100%;
+          }
+          table {
+              font-size: 0.7em;
+          }
+          th, td {
+              padding: 5px;
+          }
+      }
+      
+      @media screen and (max-width: 768px) {
+          table {
+              font-size: 0.6em;
+          }
+          th, td {
+              padding: 4px;
+          }
+      }
+      
+      @media screen and (max-width: 576px) {
+          table {
+              font-size: 0.5em;
+          }
+          th, td {
+              padding: 3px;
+          }
+      }
+  </style>
+</head>
+<body>
+
+<h1>برمجة الأداة للإستخدام الشخصي فقط 🐪</h1>
+
+<div class="container">
+  <p class="instruction">لصق البيانات من ملف التحكم الطبي بالمربع كما هي</p>
+  <textarea id="dataInput" placeholder="ألصق نص الصف هنا"></textarea>
+  <button onclick="processData()">تحويل البيانات</button>
+  <button id="copyButton" class="hidden" onclick="copyTableData()">نسخ</button>
+  <button id="downloadButton" class="hidden" onclick="downloadCSV()">تنزيل الجدول اكسل</button>
+</div>
+
+<div class="table-container">
+  <table id="dataTable">
+    <thead id="tableHead"></thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+</div>
+
+<footer>
+    Design and Development by <span class="footer-highlight-ali">Ali Alshahrani</span><br>
+    This script was created for <span class="footer-highlight-rami">Rami Albaqmi</span><br>
+    إصدار النسخة: 1.0
+</footer>
+
+<script>
+// نفس الأعمدة السابقة (37 عمود) مع العمود الفارغ في البداية
+const columnsFile2 = [
+  "Serial (Empty)",                       // 0  ← فارغ دائماً
+  "Age",                                  // 1
+  "Gender",                               // 2
+  "Nationality",                          // 3
+  "ID-رقم الهوية",                        // 4
+  "Patient Name",                         // 5
+  "Hospital Name",                        // 6  // اسم المنشأة
+  "ROSC",                                 // 7  // فارغ
+  "Ende of Resuscitation Effort",         // 8
+  "AED/DEFIBRILLATOR",                    // 9  // استخدام جهاز مزيل الرجفان
+  "OPA,NPA,BVM,ETT",                      // 10
+  "IV /IO",                               // 11
+  "ALS/BLS/ALS+BLS/ALS+ALS/BLS+BLS",      // 12
+  "RR",                                   // 13
+  "Prehospital Medications",              // 14
+  "No.of shocks",                         // 15
+  "Initial Rythm",                        // 16
+  "Pre-arrival intrevention CPR initiated by", // 17
+  "Time of arrest if(post arrival)",      // 18
+  "Response time(min)from Incident time to Reach time", // 19
+  "Response time(min)for the second team if applicable",// 20
+  "Number of cycles",                     // 21 // عدد الدورات
+  "Underlying cause of arrest",           // 22
+  "Case code",                            // 23
+  "Date",                                 // 24
+  "Report No",                            // 25
+  "Region",                               // 26
+  "Witnessed By whom",                    // 27
+  "EMT Code",                             // 28
+  "EMT Code",                             // 29
+  "Paramedic Code",                       // 30
+  "Paramedic Code",                       // 31
+  "Station Name",                         // 32
+  "Mechanical CPR Device USE",            // 33
+  "PROQA CODE",                           // 34
+  "Estimated time of arrest",             // 35
+  "NOTE"                                  // 36
+];
+
+/*
+  mapping:
+   - 24: Date ← العمود 0
+   - 23: Case code ← العمود 2
+   - 25: Report No ← العمود 3
+   - 19: Response time ← العمود 4
+   - 12: ALS/BLS ← العمود 6
+   - 14: Prehospital Medications ← العمود 10
+   - 16: Initial Rythm ← العمود 8
+   - 15: No.of shocks ← العمود 19
+   - 27: Witnessed By whom ← العمود 20
+   - 8:  Ende of Resuscitation Effort ← العمود 14
+   - 22: Underlying cause of arrest ← العمود 2
+   - 34: PROQA CODE ← العمود 1
+   - 36: NOTE ← العمود 15
+   - 9:  AED/DEFIBRILLATOR ← العمود 9 (استخدام جهاز مزيل الرجفان)
+   - 21: Number of cycles ← العمود 19 (عدد الدورات)
+   - **أضفنا** 6: Hospital Name ← العمود 13 (مثال) لإرجاع اسم المنشأة
+*/
+const mapping = {
+  24: 0,  
+  23: 2,  
+  25: 3,  
+  19: 4,  
+  12: 6,  
+  14: 10, 
+  16: 8,  
+  15: 19, 
+  27: 20, 
+  8: 14,  
+  22: 2,  
+  34: 1,  
+  36: 15, 
+  9: 9,   
+  21: 19, 
+  // إعادة "اسم المنشأة" (Hospital Name) إلى عمود 6 بالملف الثاني
+  // يفترض أنه في العمود 13 بالملف الأول (مثال)
+  6: 13
+};
+
+// نفس مجموعة رموز التروما
+const traumaCodes = [29, 30, 27, 7, 17, 32];
+
+function processData() {
+  const input = document.getElementById("dataInput").value.trim();
+  if (!input) {
+    alert("الرجاء لصق بيانات من الملف الأول أولاً.");
+    return;
+  }
+
+  const tableBody = document.getElementById("tableBody");
+  tableBody.innerHTML = "";
+
+  // نفس منطق اكتشاف الفاصل
+  const firstLine = input.split(/\r?\n/)[0];
+  let delimiter = "\t";
+  if (firstLine.includes(",")) delimiter = ",";
+  else if (firstLine.includes(";")) delimiter = ";";
+
+  const rows = input.split(/\r?\n/);
+  const processedData = [];
+
+  rows.forEach((line) => {
+    if (!line.trim()) return; // السطر فارغ
+    const cols = line.split(delimiter).map(x => x.trim());
+
+    // بناء صف بطول 37
+    let newRow = new Array(columnsFile2.length).fill("");
+
+    // تطبيق mapping
+    for (const targetIndex in mapping) {
+      const sourceIndex = mapping[targetIndex];
+      if (cols[sourceIndex] !== undefined) {
+        newRow[targetIndex] = cols[sourceIndex];
+      }
+    }
+
+    // المعالجات الخاصة كما سبق
+    // 1) حذف الوقت من التاريخ (index 24)
+    let originalDate = newRow[24] || "";
+    if (originalDate.includes(" ")) {
+      originalDate = originalDate.split(" ")[0];
+    }
+    newRow[24] = originalDate;
+
+    // 2) استخلاص الرقم من Case code (index 23)
+    let originalCaseText = newRow[23] || "";
+    let matchCase = originalCaseText.match(/^(\d+)/);
+    if (matchCase) {
+      newRow[23] = matchCase[1];
+    }
+
+    // 3) Underlying cause (index 22) => Trauma/Medical
+    let causeText = newRow[22] || "";
+    let causeMatch = causeText.match(/^(\d+)/);
+    if (causeMatch) {
+      let causeNum = parseInt(causeMatch[1], 10);
+      if (traumaCodes.includes(causeNum)) {
+        newRow[22] = "Trauma";
+      } else {
+        newRow[22] = "Medical";
+      }
+    } else {
+      newRow[22] = "Medical";
+    }
+
+    // 4) ROSC (7) فارغ
+    newRow[7] = "";
+
+    // بناء صف HTML
+    const tr = document.createElement("tr");
+    newRow.forEach(val => {
+      const td = document.createElement("td");
+      td.textContent = val;
+      tr.appendChild(td);
+    });
+    tableBody.appendChild(tr);
+
+    processedData.push(newRow);
+  });
+
+  window.processedData = processedData;
+
+  const copyBtn = document.getElementById("copyButton");
+  const downloadBtn = document.getElementById("downloadButton");
+  if (processedData.length > 0) {
+    copyBtn.classList.remove("hidden");
+    downloadBtn.classList.remove("hidden");
+  } else {
+    copyBtn.classList.add("hidden");
+    downloadBtn.classList.add("hidden");
+  }
+}
+
+window.onload = () => {
+  const tableHead = document.getElementById("tableHead");
+  let tr = document.createElement("tr");
+  columnsFile2.forEach(col => {
+    const th = document.createElement("th");
+    th.textContent = col;
+    tr.appendChild(th);
+  });
+  tableHead.appendChild(tr);
+};
+
+function copyTableData() {
+  const tableBody = document.getElementById("tableBody");
+  const rows = tableBody.querySelectorAll("tr");
+  let textToCopy = "";
+
+  rows.forEach(row => {
+    const cells = row.querySelectorAll("td");
+    let rowText = "";
+    cells.forEach((cell, index) => {
+      rowText += cell.textContent;
+      if (index < cells.length - 1) {
+        rowText += "\t"; // فاصل علامة تبويب بين الخلايا
+      }
+    });
+    textToCopy += rowText + "\n"; // فاصل سطر بين الصفوف
+  });
+
+  // استخدام Clipboard API لنسخ النص
+  navigator.clipboard.writeText(textToCopy).then(() => {
+    alert("تم النسخ يبو سند");
+  }).catch(err => {
+    console.error('فشل النسخ: ', err);
+    alert("حدث خطأ أثناء النسخ. يرجى المحاولة يدويًا.");
+  });
+}
+
+function downloadCSV() {
+  if (!window.processedData || window.processedData.length === 0) {
+    alert("لا توجد بيانات للتنزيل.");
+    return;
+  }
+
+  const allIndexes = [...Array(columnsFile2.length).keys()];
+  let csvContent = ""; // ابدأ بسلسلة فارغة
+
+  // إضافة BOM لتمكين Excel من التعرف على الترميز UTF-8
+  csvContent += "\uFEFF";
+
+  // إضافة الهيدر فقط إذا كنت ترغب بذلك. بناءً على طلبك السابق، الهيدر غير مطلوب للنسخ، ولكن يمكن إضافته للتنزيل
+  // إذا كنت ترغب في تضمين الهيدر في التنزيل، يمكنك تضمينه هنا. إذا لم ترغب، اتركه بدون إضافة الهيدر
+  // في هذا المثال، سأبقيه مضافًا لتكون ملف CSV مكتمل
+  // لكن إذا كنت تفضل عدم تضمينه، ببساطة قم بإزالة السطر التالي:
+  csvContent += allIndexes.map(i => `"${columnsFile2[i]}"`).join(";") + "\n";
+
+  window.processedData.forEach(row => {
+    const csvRow = allIndexes
+      .map(i => `"${(row[i] || "").replace(/"/g, '""')}"`)
+      .join(";");
+    csvContent += csvRow + "\n";
+  });
+
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.setAttribute("href", url);
+  link.setAttribute("download", "transformed_data.csv");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+</script>
+
+</body>
+</html>
