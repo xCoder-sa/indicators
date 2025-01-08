@@ -170,6 +170,8 @@
       shiftArray.forEach(function(shift) {
         shift = shift.trim();
         if (shift === "") return;
+
+        // التحقق من نمط يحتوي على أحرف وأرقام (مثل D12 أو N8 أو F24)
         var match = shift.match(/^([A-Z]+)(\d+)$/);
         if (match) {
           var type = match[1];
@@ -185,7 +187,24 @@
           shiftCounts.HoursShifts++;
           shiftCounts.HoursValues.push(hours);
           totalHours += hours;
-        } else {
+        } 
+        // التحقق من نمط يحتوي على أحرف فقط (مثل WO أو V أو E أو VC أو S)
+        else if (/^[A-Z]+$/.test(shift)) {
+          var type = shift;
+          var hours = 0;
+          // إذا كانت المناوبة F بدون رقم، اعتبرها 24 ساعة
+          if(type === 'F') {
+            hours = 24;
+          }
+          if (!shiftCounts.hasOwnProperty(type)) {
+            shiftCounts[type] = 0;
+          }
+          shiftCounts[type]++;
+          shiftCounts.HoursShifts++;
+          shiftCounts.HoursValues.push(hours);
+          totalHours += hours;
+        } 
+        else {
           var num = parseFloat(shift);
           if (!isNaN(num) && num >= 0 && num <= 24) {
             shiftCounts.HoursShifts++;
