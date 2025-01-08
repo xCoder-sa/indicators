@@ -72,19 +72,8 @@
     .highlight-red {
       background-color: rgba(255, 0, 0, 0.5);
     }
-    footer {
-      margin-top: 40px;
-      font-size: 14px;
-      color: #333333;
-      background-color: #f9f9f9;
-      padding: 10px 0;
-      border-top: 1px solid #ccc;
-    }
-    .gray-border-background {
-      background-color: grey;
-      display: inline;
-      padding: 5px;
-      border-radius: 3px;
+    .row-highlight {
+      background-color: #98FB98;
     }
     .blue-highlight {
       background-color: blue;
@@ -102,8 +91,19 @@
       background-color: #FF8C00;
       color: #fff;
     }
-    .row-highlight {
-      background-color: #98FB98;
+    footer {
+      margin-top: 40px;
+      font-size: 14px;
+      color: #333333;
+      background-color: #f9f9f9;
+      padding: 10px 0;
+      border-top: 1px solid #ccc;
+    }
+    .gray-border-background {
+      background-color: grey;
+      display: inline;
+      padding: 5px;
+      border-radius: 3px;
     }
     .footer-highlight-ali {
       background-color: #D3D3D3;
@@ -150,6 +150,10 @@
         if (match) {
           var type = match[1];
           var hours = parseFloat(match[2]);
+          // التعامل مع F كمناوبة 24 ساعة على أساس أنها قد تحمل 24 ساعة بالفعل
+          if(type === 'F') {
+            hours = 24;
+          }
           if (!shiftCounts.hasOwnProperty(type)) {
             shiftCounts[type] = 0;
           }
@@ -205,12 +209,11 @@
         var shifts = Array.from(columns).slice(4).map(function(col) { return col.innerText.trim(); });
         var counts = countShifts(shifts);
 
-        // تحديد ما إذا كانت توجد مناوبات من نوع D أو N أو CP أو أنواع أخرى معينة
+        // تحديد وجود مناوبات ذات صلة
         var relevantShiftExists = shifts.some(function(shift) {
           return shift.startsWith('D') || shift.startsWith('N') || shift.startsWith('CP');
         });
 
-        // منطق تلوين الصفوف بناءً على عدد الساعات
         var onlyF = shifts.every(function(shift) { return shift.startsWith('F') || shift === ''; });
         var rowClass = "";
         if (onlyF) {
