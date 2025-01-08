@@ -87,6 +87,30 @@
       background-color: #FFDAB9;
       color: #000;
     }
+    .stat-WO {
+      background-color: #87CEFA;
+      color: #000;
+    }
+    .stat-V {
+      background-color: #FFB6C1;
+      color: #000;
+    }
+    .stat-E {
+      background-color: #FFA07A;
+      color: #000;
+    }
+    .stat-VC {
+      background-color: #20B2AA;
+      color: #000;
+    }
+    .stat-S {
+      background-color: #DA70D6;
+      color: #000;
+    }
+    .stat-F {
+      background-color: #9370DB;
+      color: #fff;
+    }
     .stat-Total {
       background-color: #FF8C00;
       color: #fff;
@@ -150,7 +174,7 @@
         if (match) {
           var type = match[1];
           var hours = parseFloat(match[2]);
-          // التعامل مع F كمناوبة 24 ساعة على أساس أنها قد تحمل 24 ساعة بالفعل
+          // إذا كانت المناوبة F، اعتبرها 24 ساعة
           if(type === 'F') {
             hours = 24;
           }
@@ -199,6 +223,12 @@
       }
       table += "<th class='stat-Result'>نتيجة المعادلة</th>";
       table += "<th class='stat-Diff'>فرق الساعات</th>";
+      table += "<th class='stat-WO'>دوام رسمي (WO)</th>";
+      table += "<th class='stat-V'>إجازة اعتيادية (V)</th>";
+      table += "<th class='stat-E'>إجازة اختبار (E)</th>";
+      table += "<th class='stat-VC'>إجازة تعويضية (VC)</th>";
+      table += "<th class='stat-S'>إجازة مرضية (S)</th>";
+      table += "<th class='stat-F'>مناوبات 24 ساعة (F)</th>";
       table += "<th class='stat-Total'>إجمالي الساعات</th>";
       table += "</tr></thead><tbody>";
 
@@ -209,7 +239,7 @@
         var shifts = Array.from(columns).slice(4).map(function(col) { return col.innerText.trim(); });
         var counts = countShifts(shifts);
 
-        // تحديد وجود مناوبات ذات صلة
+        // تحديد وجود مناوبات ذات صلة لحساب الساعات المطلوبة
         var relevantShiftExists = shifts.some(function(shift) {
           return shift.startsWith('D') || shift.startsWith('N') || shift.startsWith('CP');
         });
@@ -266,6 +296,12 @@
 
         table += `<td class="stat-Result">${equationResult}</td>`;
         table += `<td class="stat-Diff">${hoursDifference}</td>`;
+        table += `<td class="stat-WO">${counts.WO || 0}</td>`;
+        table += `<td class="stat-V">${counts.V || 0}</td>`;
+        table += `<td class="stat-E">${counts.E || 0}</td>`;
+        table += `<td class="stat-VC">${counts.VC || 0}</td>`;
+        table += `<td class="stat-S">${counts.S || 0}</td>`;
+        table += `<td class="stat-F">${counts.F || 0}</td>`;
         if (totalWorkingHours < 192 && !onlyF) {
           table += `<td class="stat-Total highlight-total">${totalWorkingHours}</td>`;
         } else {
