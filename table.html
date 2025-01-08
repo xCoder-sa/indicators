@@ -171,7 +171,7 @@
         shift = shift.trim();
         if (shift === "") return;
 
-        // التحقق من نمط يحتوي على أحرف وأرقام (مثل D12 أو N8 أو F24)
+        // نمط يحتوي على أحرف وأرقام (مثل D12 أو N8 أو F24)
         var match = shift.match(/^([A-Z]+)(\d+)$/);
         if (match) {
           var type = match[1];
@@ -180,6 +180,10 @@
           if(type === 'F') {
             hours = 24;
           }
+          // إذا كانت المناوبة V أو VC أو S، اعتبرها 8 ساعات
+          if(type === 'V' || type === 'VC' || type === 'S') {
+            hours = 8;
+          }
           if (!shiftCounts.hasOwnProperty(type)) {
             shiftCounts[type] = 0;
           }
@@ -187,14 +191,17 @@
           shiftCounts.HoursShifts++;
           shiftCounts.HoursValues.push(hours);
           totalHours += hours;
-        } 
-        // التحقق من نمط يحتوي على أحرف فقط (مثل WO أو V أو E أو VC أو S)
+        }
+        // نمط يحتوي على أحرف فقط (مثل WO أو V أو E أو VC أو S أو F)
         else if (/^[A-Z]+$/.test(shift)) {
           var type = shift;
           var hours = 0;
-          // إذا كانت المناوبة F بدون رقم، اعتبرها 24 ساعة
           if(type === 'F') {
             hours = 24;
+          }
+          // إذا كانت المناوبة V أو VC أو S، اعتبرها 8 ساعات
+          if(type === 'V' || type === 'VC' || type === 'S') {
+            hours = 8;
           }
           if (!shiftCounts.hasOwnProperty(type)) {
             shiftCounts[type] = 0;
@@ -203,7 +210,7 @@
           shiftCounts.HoursShifts++;
           shiftCounts.HoursValues.push(hours);
           totalHours += hours;
-        } 
+        }
         else {
           var num = parseFloat(shift);
           if (!isNaN(num) && num >= 0 && num <= 24) {
@@ -240,7 +247,8 @@
       for (var i = 1; i <= 31; i++) {
         table += "<th>" + i + "</th>";
       }
-      table += "<th class='stat-Result'>نتيجة المعادلة</th>";
+      // تغيير عنوان عمود نتيجة المعادلة حسب المطلوب
+      table += "<th class='stat-Result'>المطلوب منه</th>";
       table += "<th class='stat-Diff'>فرق الساعات</th>";
       table += "<th class='stat-WO'>دوام رسمي (WO)</th>";
       table += "<th class='stat-V'>إجازة اعتيادية (V)</th>";
@@ -258,7 +266,6 @@
         var shifts = Array.from(columns).slice(4).map(function(col) { return col.innerText.trim(); });
         var counts = countShifts(shifts);
 
-        // تحديد وجود مناوبات ذات صلة لحساب الساعات المطلوبة
         var relevantShiftExists = shifts.some(function(shift) {
           return shift.startsWith('D') || shift.startsWith('N') || shift.startsWith('CP');
         });
