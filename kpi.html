@@ -395,6 +395,29 @@
     addSectorMarker(northPolygon, "الشمال");
     addSectorMarker(eastPolygon, "الشرق");
     addSectorMarker(centerPolygon, "الوسط");
+    
+    function addSectorMarker(polygon, sectorName) {
+    var center;
+
+    if (sectorName === "الجنوب") {
+        // مركز خاص لقطاع الجنوب (ضع الإحداثيات التي تراها مناسبة)
+        center = L.latLng(24.600, 46.750);
+    } else {
+        // القطاعات الأخرى تستخدم مركز المضلع تلقائياً
+        center = polygon.getBounds().getCenter();
+    }
+
+    L.marker(center, {
+        icon: L.divIcon({
+            className: 'sector-label',
+            html: '<i class="fas fa-map-marker-alt"></i>' + sectorName,
+            iconSize: [30, 30],
+            iconAnchor: [15, 30]
+        }),
+        interactive: false
+    }).addTo(map);
+}
+
 
     // ========== دوال عرض المعلومات والرسوم المتحركة ==========
     function displaySectorInfo(name, teams, cars, brokenCars, reports, whatsappToday, whatsappMonthly, monthlyBrokenCars, openReports, difference) {
