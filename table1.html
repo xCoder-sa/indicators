@@ -288,13 +288,11 @@
         // نفترض أن في هذا الجدول:
         // الأعمدة 0..30: الأيام من 31 إلى 1 (معكوسة)
         // العمود[31]: الفرقة
-        // العمود[32]: طبيعة العمل
+        // العمود[32]: طبيعة العمل (الوظيفة)
         // العمود[33]: اسم الموظف
         // العمود[34]: الرقم
         // العمود[35]: م (إن وجد)
-        // لو عدد الأعمدة لا يقل عن 35 نتعامل كما يلي:
         if (columns.length < 35) {
-          // إن كانت الصفوف غير مكتملة أو فيها مشكلة نتخطاها
           return;
         }
 
@@ -307,44 +305,39 @@
         var col_الاسم  = columns[33] ? columns[33].innerText.trim() : "";
         var col_الرقم  = columns[34] ? columns[34].innerText.trim() : "";
         // (العمود[35] إذا أردت التعامل معه أضفه هنا)
-        // var col_م      = columns[35] ? columns[35].innerText.trim() : "";
 
         // 3) نعكس الأيام لتصبح من اليوم1..اليوم31
         reversedDays.reverse();
 
-        // 4) رتب المصفوفة بالصيغة المطلوبة لدى السكربت القديم:
+        // 4) رتب المصفوفة بالصيغة المطلوبة:
         // [الرقم, الاسم, الوظيفة, التسلسلي, الأيام 1..31]
-        // هنا اعتبرت:
-        //   الرقم = col_الرقم
-        //   الاسم = col_الاسم
-        //   الوظيفة = col_طبيعة
-        //   التسلسلي = col_فرقة
-        // يمكنك تبادلها لو أردت
         var arranged = [];
         arranged[0] = col_الرقم;     // الرقم
         arranged[1] = col_الاسم;     // الاسم
         arranged[2] = col_طبيعة;     // الوظيفة
-        arranged[3] = col_فرقة;      // الرقم التسلسلي (أو "الفرقة")
+        arranged[3] = col_فرقة;      // الرقم التسلسلي
         
         reversedDays.forEach(function(td, i){
           arranged[4 + i] = td.innerText.trim();
         });
 
-        // الآن نحصل على شيفتات الأيام
-        var shifts = arranged.slice(4); // الأيام فقط
+        // نحصل على شيفتات الأيام
+        var shifts = arranged.slice(4);
 
-        // تحديث إحصائية كل عمود للمناوبات المطلوبة
-        for (var i = 0; i < 31; i++) {
-          var shiftValue = shifts[i] || "";
-          if (shiftTypes.indexOf(shiftValue) !== -1) {
-            if (!dayShiftCounts[i].hasOwnProperty(shiftValue)) {
-              dayShiftCounts[i][shiftValue] = 0;
+        // تحديث إحصائية كل عمود للمناوبات المطلوبة فقط إذا كان عمود الوظيفة يحتوي على "أخصائي" أو "مسعف"
+        if (col_طبيعة === "أخصائي" || col_طبيعة === "مسعف") {
+          for (var i = 0; i < 31; i++) {
+            var shiftValue = shifts[i] || "";
+            if (shiftTypes.indexOf(shiftValue) !== -1) {
+              if (!dayShiftCounts[i].hasOwnProperty(shiftValue)) {
+                dayShiftCounts[i][shiftValue] = 0;
+              }
+              dayShiftCounts[i][shiftValue]++;
             }
-            dayShiftCounts[i][shiftValue]++;
           }
         }
 
-        // نُجري الحسابات المعتادة
+        // الحسابات المعتادة للصف
         var counts = countShifts(shifts);
 
         var relevantShiftExists = shifts.some(function(shift) {
@@ -368,7 +361,7 @@
           rowClass = "row-highlight";
         }
 
-        // لو أردت تمييز الخلايا المتتالية بـ F فحسب
+        // تمييز الخلايا المتتالية بـ F
         var highlightCells = [];
         for (var i = 0; i < shifts.length - 1; i++) {
           if (shifts[i].startsWith('F') && shifts[i + 1].startsWith('F')) {
@@ -377,22 +370,19 @@
           }
         }
 
-        // نبني صف الجدول
+        // بناء صف الجدول
         table += `<tr class="${rowClass}">`;
-        // الأعمدة الأربعة الأولى: الرقم, الاسم, الوظيفة, التسلسلي
         table += `<td>${ arranged[0] }</td>`; // الرقم
         table += `<td>${ arranged[1] }</td>`; // الاسم
         table += `<td>${ arranged[2] }</td>`; // الوظيفة
         table += `<td>${ arranged[3] }</td>`; // الرقم التسلسلي
 
-        // بقية أعمدة الأيام (1..31)
         for (var i = 0; i < 31; i++) {
           var shift = shifts[i] || "";
           var cellClass = highlightCells.includes(i) ? 'blue-highlight' : '';
           table += `<td class="${cellClass}">${shift}</td>`;
         }
 
-        // حساب الإجازات
         var totalVVCandS = (counts.V || 0) + (counts.VC || 0) + (counts.S || 0);
         var equationResult = Math.abs((8 * totalVVCandS) - 192) / 12;
         if (equationResult == 16) {
@@ -415,7 +405,6 @@
         table += `<td class="stat-S">${counts.S || 0}</td>`;
         table += `<td class="stat-F">${counts.F || 0}</td>`;
 
-        // تمييز إجمالي الساعات إذا أقل من 192
         if (totalWorkingHours < 192 && !onlyF) {
           table += `<td class="stat-Total highlight-total">${totalWorkingHours}</td>`;
         } else {
@@ -427,15 +416,12 @@
       // إضافة صفوف الإحصائية السفلية لكل نوع مناوبة مع تلوين بديل للأعمدة
       shiftTypes.forEach(function(shiftType) {
         table += "<tr>";
-        // دمج أول 4 خلايا لعرض اسم المناوبة
         table += `<td colspan="4">${shiftType}</td>`;
-        // عرض إحصائية كل عمود من 31 عمود للمناوبات مع تلوين بديل للأعمدة
         for (var i = 0; i < 31; i++) {
           var count = dayShiftCounts[i][shiftType] || 0;
           var cellClass = (i % 2 === 0) ? 'stat-even' : 'stat-odd';
           table += `<td class="${cellClass}">${count}</td>`;
         }
-        // ترك خلايا الأعمدة الإحصائية الأخرى (9 خلايا) فارغة
         for (var i = 0; i < 9; i++) {
           table += `<td></td>`;
         }
