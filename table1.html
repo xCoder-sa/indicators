@@ -1,252 +1,382 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أداة تنظيم الجدول</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            direction: rtl;
-            text-align: center;
-            padding: 20px;
-            background-color: #ffffff;
-            color: #000000;
-        }
-        textarea {
-            width: 100%;
-            height: 200px;
-            margin-bottom: 20px;
-            padding: 10px;
-            font-size: 16px;
-            background-color: #f9f9f9;
-            color: #000000;
-            border: 1px solid #ccc;
-        }
-        button {
-            padding: 12px 24px;
-            font-size: 18px;
-            background-color: #c7cfc2;
-            color: white;
-            border: none;
-            cursor: pointer;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            transition: background-color 0.3s ease;
-        }
-        button:hover {
-            background-color: #000000;
-        }
-        .table-container {
-            overflow-x: auto; /* يسمح بالتمرير الأفقي عند الحاجة */
-            margin-top: 20px;
-            max-height: 500px; /* حد أقصى للارتفاع لتمكين التمرير العمودي */
-            overflow-y: auto; /* تمكين التمرير العمودي */
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: #ffffff;
-            color: #000000;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: center;
-            font-size: 14px;
-        }
-        th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-            color: #000000;
-            position: sticky; /* جعل العنوان ثابتًا */
-            top: 0; /* تثبيت العنوان في الأعلى */
-            z-index: 1; /* لضمان بقاء العنوان فوق باقي الصفوف */
-        }
-        .highlight {
-            background-color: rgba(255, 69, 0, 0.2); /* برتقالي فاتح */
-        }
-        .highlight-total {
-            background-color: rgba(255, 69, 0, 0.5); /* برتقالي داكن */
-        }
-        .highlight-red {
-            background-color: rgba(255, 0, 0, 0.5); /* أحمر */
-        }
-        footer {
-            margin-top: 40px;
-            font-size: 14px;
-            color: #333333;
-            background-color: #f9f9f9;
-            padding: 10px 0;
-            border-top: 1px solid #ccc;
-        }
-        .gray-border-background {
-            background-color: grey;
-            display: inline;
-            padding: 5px;
-            border-radius: 3px;
-        }
-        .blue-highlight {
-            background-color: blue;
-            color: white;
-        }
-        /* ألوان مميزة لكل عمود إحصائيات */
-        .stat-D {
-            background-color: #FFD700; /* ذهبي */
-            color: #000;
-        }
-        .stat-N {
-            background-color: #ADFF2F; /* أخضر فاتح */
-            color: #000;
-        }
-        .stat-WO {
-            background-color: #87CEFA; /* أزرق سماوي */
-            color: #000;
-        }
-        .stat-V {
-            background-color: #FFB6C1; /* وردي فاتح */
-            color: #000;
-        }
-        .stat-E {
-            background-color: #FFA07A; /* لوزي */
-            color: #000;
-        }
-        .stat-VC {
-            background-color: #20B2AA; /* أخضر مزرق */
-            color: #000;
-        }
-        .stat-F {
-            background-color: #9370DB; /* أرجواني */
-            color: #fff;
-        }
-        .stat-Total {
-            background-color: #FF8C00; /* برتقالي داكن */
-            color: #fff;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>أداة تنظيم الجدول</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      direction: rtl;
+      text-align: center;
+      padding: 20px;
+      background-color: #ffffff;
+      color: #000000;
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+      margin-bottom: 20px;
+      padding: 10px;
+      font-size: 16px;
+      background-color: #f9f9f9;
+      color: #000000;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 12px 24px;
+      font-size: 18px;
+      background-color: #c7cfc2;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #000000;
+    }
+    .table-container {
+      overflow-x: auto;
+      margin-top: 20px;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #ffffff;
+      color: #000000;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: center;
+      font-size: 14px;
+    }
+    th {
+      background-color: #f2f2f2;
+      font-weight: bold;
+      color: #000000;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+    .highlight {
+      background-color: rgba(255, 69, 0, 0.2);
+    }
+    .highlight-total {
+      background-color: rgba(255, 69, 0, 0.5);
+    }
+    .highlight-red {
+      background-color: rgba(255, 0, 0, 0.5);
+    }
+    .row-highlight {
+      background-color: #98FB98;
+    }
+    .blue-highlight {
+      background-color: blue;
+      color: white;
+    }
+    .stat-Result {
+      background-color: #98FB98;
+      color: #000;
+    }
+    .stat-Diff {
+      background-color: #FFDAB9;
+      color: #000;
+    }
+    .stat-WO {
+      background-color: #87CEFA;
+      color: #000;
+    }
+    .stat-V {
+      background-color: #FFB6C1;
+      color: #000;
+    }
+    .stat-E {
+      background-color: #FFA07A;
+      color: #000;
+    }
+    .stat-VC {
+      background-color: #20B2AA;
+      color: #000;
+    }
+    .stat-S {
+      background-color: #DA70D6;
+      color: #000;
+    }
+    .stat-F {
+      background-color: #9370DB;
+      color: #fff;
+    }
+    .stat-Total {
+      background-color: #FF8C00;
+      color: #fff;
+    }
+    footer {
+      margin-top: 40px;
+      font-size: 14px;
+      color: #333333;
+      background-color: #f9f9f9;
+      padding: 10px 0;
+      border-top: 1px solid #ccc;
+    }
+    .gray-border-background {
+      background-color: grey;
+      display: inline;
+      padding: 5px;
+      border-radius: 3px;
+    }
+    .footer-highlight-ali {
+      background-color: #D3D3D3;
+      color: #000000;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+    .footer-highlight-mansour {
+      background-color: #ADD8E6;
+      color: #000000;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
 
-<h2>أداة تنظيم الجدول</h2>
-<textarea id="inputText" placeholder="لصق سورس الصفحة هنا ..."></textarea>
-<br>
-<button onclick="parseHTMLSource()">ترتيب الجدول مع الإحصائيات</button>
-<br>
-<h2 class="gray-border-background" style="color: white;">
-  الجدول المرتب مع إحصائيات المناوبات:
-</h2>
-<div class="table-container" id="outputTable"></div>
+  <h2>أداة تنظيم الجدول</h2>
+  <textarea id="inputText" placeholder="لصق سورس الصفحة هنا ..."></textarea>
+  <br>
+  <button onclick="parseHTMLSource()">ترتيب الجدول مع الإحصائيات</button>
+  <br>
+  <h2 class="gray-border-background" style="color: white;">
+    الجدول المرتب مع إحصائيات المناوبات:
+  </h2>
+  <div class="table-container" id="outputTable"></div>
 
-<footer>
-    Design and Development by Ali Alshahrani<br>
-    This script was created for Mansour<br>
-    إصدار النسخة: 3.0
-</footer>
+  <footer>
+    Design and Development by <span class="footer-highlight-ali">Ali Alshahrani</span><br>
+    This script was created for <span class="footer-highlight-mansour">Mansour</span><br>
+    إصدار النسخة: 4.1
+  </footer>
 
-<script>
-    // دالة لحساب المناوبات، تشمل "F" (مناوبات 24 ساعة) وتحتسب فقط 'D' و 'N' في الإجمالي
+  <script>
     function countShifts(shiftArray) {
-        var shiftCounts = { D: 0, N: 0, WO: 0, V: 0, E: 0, VC: 0, F: 0 };
-        shiftArray.forEach(function(shift) {
-            if (shiftCounts.hasOwnProperty(shift)) {
-                shiftCounts[shift]++;
-            }
-        });
-        // فقط احتساب مناوبات 'D' و 'N' في الإجمالي
-        shiftCounts['Total'] = shiftCounts.D + shiftCounts.N;
-        return shiftCounts;
-    }
+      var shiftCounts = { HoursShifts: 0, HoursValues: [] };
+      var totalHours = 0;
+      shiftArray.forEach(function(shift) {
+        shift = shift.trim();
+        if (shift === "") return;
 
-    // دالة لتحليل سورس الـ HTML ولصق الجدول الخاص بالموظفين
-    function parseHTMLSource() {
-        var inputText = document.getElementById("inputText").value;
-        var parser = new DOMParser();
-        var doc = parser.parseFromString(inputText, "text/html");
-        var rows = doc.querySelectorAll("tr"); // تحديد صفوف الجدول
-
-        var table = "<table><thead><tr><th>الرقم</th><th>الاسم</th><th>الوظيفة</th><th>الرقم التسلسلي</th>";
-
-        // إضافة أعمدة المناوبات من 1 إلى 31
-        for (var i = 1; i <= 31; i++) {
-            table += "<th>" + i + "</th>";
+        // نمط يحتوي على أحرف وأرقام (مثل D12 أو N8 أو F24)
+        var match = shift.match(/^([A-Z]+)(\d+)$/);
+        if (match) {
+          var type = match[1];
+          var hours = parseFloat(match[2]);
+          // إذا كانت المناوبة F، اعتبرها 24 ساعة
+          if(type === 'F') {
+            hours = 24;
+          }
+          // إذا كانت المناوبة V أو VC أو S، اعتبرها 8 ساعات
+          if(type === 'V' || type === 'VC' || type === 'S') {
+            hours = 8;
+          }
+          if (!shiftCounts.hasOwnProperty(type)) {
+            shiftCounts[type] = 0;
+          }
+          shiftCounts[type]++;
+          shiftCounts.HoursShifts++;
+          shiftCounts.HoursValues.push(hours);
+          totalHours += hours;
         }
-        // إضافة أعمدة الإحصائيات مع الأصناف المميزة لكل عمود
-        table += "<th class='stat-D'>مناوبات صباحية (D)</th>";
-        table += "<th class='stat-N'>مناوبات مسائية (N)</th>";
-        table += "<th class='stat-WO'>دوام رسمي (WO)</th>";
-        table += "<th class='stat-V'>إجازة اعتيادية (V)</th>";
-        table += "<th class='stat-E'>إجازة اختبار (E)</th>";
-        table += "<th class='stat-VC'>إجازة تعويضية (VC)</th>";
-        table += "<th class='stat-F'>مناوبات 24 ساعة (F)</th>";
-        table += "<th class='stat-Total'>إجمالي المناوبات (D و N فقط)</th></tr></thead><tbody>";
+        // نمط يحتوي على أحرف فقط (مثل WO أو V أو E أو VC أو S أو F)
+        else if (/^[A-Z]+$/.test(shift)) {
+          var type = shift;
+          var hours = 0;
+          if(type === 'F') {
+            hours = 24;
+          }
+          // إذا كانت المناوبة V أو VC أو S، اعتبرها 8 ساعات
+          if(type === 'V' || type === 'VC' || type === 'S') {
+            hours = 8;
+          }
+          if (!shiftCounts.hasOwnProperty(type)) {
+            shiftCounts[type] = 0;
+          }
+          shiftCounts[type]++;
+          shiftCounts.HoursShifts++;
+          shiftCounts.HoursValues.push(hours);
+          totalHours += hours;
+        }
+        else {
+          var num = parseFloat(shift);
+          if (!isNaN(num) && num >= 0 && num <= 24) {
+            shiftCounts.HoursShifts++;
+            shiftCounts.HoursValues.push(num);
+            totalHours += num;
+          }
+        }
+      });
+      shiftCounts['TotalHours'] = totalHours;
+      return shiftCounts;
+    }
 
-        rows.forEach(function(row) {
-            var columns = row.querySelectorAll("td div");
-            if (columns.length === 0) return; // تخطي الصفوف التي لا تحتوي على بيانات
+    function containsVVCorS(shiftArray) {
+      return shiftArray.some(function(shift) {
+        return shift.startsWith('V') || shift.startsWith('VC') || shift.startsWith('S');
+      });
+    }
 
-            var shifts = Array.from(columns).slice(4).map(function(col) { return col.innerText.trim(); }); // استخراج تفاصيل المناوبات
-            var counts = countShifts(shifts);
+    function containsMorME(shiftArray) {
+      return shiftArray.some(function(shift) {
+        return shift === 'M' || shift === 'ME';
+      });
+    }
 
-            // التحقق مما إذا كانت جميع المناوبات 'F' أو خلايا فارغة
-            var onlyF = shifts.every(function(shift) { return shift === 'F' || shift === ''; });
+    function parseHTMLSource() {
+      var inputText = document.getElementById("inputText").value;
+      var parser = new DOMParser();
+      var doc = parser.parseFromString(inputText, "text/html");
+      var rows = doc.querySelectorAll("tr");
 
-            // تحديد صنف الصف بناءً على الشروط
-            var rowClass = "";
-            if (onlyF) {
-                if (counts.F < 8) {
-                    rowClass = "highlight-red"; // نقص في مناوبات F
-                }
-                // إذا كان F >=8، لا يتم تمييز الصف
-            } else {
-                if (counts.Total < 16) {
-                    rowClass = "highlight"; // تمييز الصف إذا كان مجموع D و N أقل من 16
-                }
+      // تعريف أنواع المناوبات المطلوبة للإحصائية
+      var shiftTypes = ["C", "CP24", "CP8", "CPD", "CPN", "D10", "D11", "D12", "D6", "D8", "E", "EV", "F", "LN10", "M", "ME", "N10", "N11", "N12", "N6", "N8", "O10", "O12", "O6", "O8"];
+      // مصفوفة لتجميع إحصائية كل عمود (31 عمود للمناوبات)
+      var dayShiftCounts = [];
+      for (var i = 0; i < 31; i++) {
+        dayShiftCounts.push({});
+      }
+
+      var table = "<table><thead><tr><th>الرقم</th><th>الاسم</th><th>الوظيفة</th><th>الرقم التسلسلي</th>";
+
+      for (var i = 1; i <= 31; i++) {
+        table += "<th>" + i + "</th>";
+      }
+      // تغيير عنوان عمود نتيجة المعادلة حسب المطلوب
+      table += "<th class='stat-Result'>المطلوب منه</th>";
+      table += "<th class='stat-Diff'>فرق الساعات</th>";
+      table += "<th class='stat-WO'>دوام رسمي (WO)</th>";
+      table += "<th class='stat-V'>إجازة اعتيادية (V)</th>";
+      table += "<th class='stat-E'>إجازة اختبار (E)</th>";
+      table += "<th class='stat-VC'>إجازة تعويضية (VC)</th>";
+      table += "<th class='stat-S'>إجازة مرضية (S)</th>";
+      table += "<th class='stat-F'>مناوبات 24 ساعة (F)</th>";
+      table += "<th class='stat-Total'>إجمالي الساعات</th>";
+      table += "</tr></thead><tbody>";
+
+      rows.forEach(function(row) {
+        var columns = row.querySelectorAll("td div");
+        if (columns.length === 0) return;
+
+        // استخراج المناوبات ابتداءً من العمود الخامس
+        var shifts = Array.from(columns).slice(4).map(function(col) { return col.innerText.trim(); });
+        // تحديث إحصائية كل عمود للمناوبات المطلوبة
+        for (var i = 0; i < 31; i++) {
+          var shiftValue = shifts[i] || "";
+          if (shiftTypes.indexOf(shiftValue) !== -1) {
+            if (!dayShiftCounts[i].hasOwnProperty(shiftValue)) {
+              dayShiftCounts[i][shiftValue] = 0;
             }
+            dayShiftCounts[i][shiftValue]++;
+          }
+        }
 
-            // تحديد الخلايا التي يجب تمييزها باللون الأزرق للمناوبات F المتتالية
-            var highlightCells = [];
-            for (var i = 0; i < shifts.length - 1; i++) {
-                if (shifts[i] === 'F' && shifts[i + 1] === 'F') {
-                    highlightCells.push(i);
-                    highlightCells.push(i + 1);
-                }
-            }
+        var counts = countShifts(shifts);
 
-            table += `<tr class="${rowClass}">`;
-            columns.forEach(function(column, index) {
-                if (index < 4) {
-                    table += "<td>" + column.innerText.trim() + "</td>";
-                }
-            });
-
-            // إضافة تفاصيل المناوبات في أعمدة منفصلة مع التمييز الأزرق إذا لزم الأمر
-            for (var i = 0; i < 31; i++) {
-                var shift = shifts[i] || "";
-                var cellClass = highlightCells.includes(i) ? 'blue-highlight' : '';
-                table += `<td class="${cellClass}">${shift}</td>`;
-            }
-
-            // إضافة أعمدة الإحصائيات مع الأصناف المميزة لكل عمود
-            table += `<td class="stat-D">${counts.D}</td>`;
-            table += `<td class="stat-N">${counts.N}</td>`;
-            table += `<td class="stat-WO">${counts.WO}</td>`;
-            table += `<td class="stat-V">${counts.V}</td>`;
-            table += `<td class="stat-E">${counts.E}</td>`;
-            table += `<td class="stat-VC">${counts.VC}</td>`;
-            table += `<td class="stat-F">${counts.F}</td>`;
-            // تمييز عمود الإجمالي إذا كان أقل من 16 ولا يحتوي فقط على 'F'
-            if (counts.Total < 16 && !onlyF) {
-                table += `<td class="stat-Total highlight-total">${counts.Total}</td>`;
-            } else {
-                table += `<td class="stat-Total">${counts.Total}</td>`;
-            }
-            table += "</tr>";
+        var relevantShiftExists = shifts.some(function(shift) {
+          return shift.startsWith('D') || shift.startsWith('N') || shift.startsWith('CP');
         });
 
-        table += "</tbody></table>";
-        document.getElementById("outputTable").innerHTML = table;
+        var onlyF = shifts.every(function(shift) { return shift.startsWith('F') || shift === ''; });
+        var rowClass = "";
+        if (onlyF) {
+          if ((counts.F || 0) < 8) {
+            rowClass = "highlight-red";
+          }
+        } else if (relevantShiftExists) {
+          if (counts.TotalHours < 192) {
+            rowClass = "highlight";
+          }
+        }
+
+        if (containsVVCorS(shifts)) {
+          rowClass = "row-highlight";
+        }
+
+        var highlightCells = [];
+        for (var i = 0; i < shifts.length - 1; i++) {
+          if (shifts[i].startsWith('F') && shifts[i + 1].startsWith('F')) {
+            highlightCells.push(i);
+            highlightCells.push(i + 1);
+          }
+        }
+
+        table += `<tr class="${rowClass}">`;
+        columns.forEach(function(column, index) {
+          if (index < 4) {
+            table += "<td>" + column.innerText.trim() + "</td>";
+          }
+        });
+
+        for (var i = 0; i < 31; i++) {
+          var shift = shifts[i] || "";
+          var cellClass = highlightCells.includes(i) ? 'blue-highlight' : '';
+          table += `<td class="${cellClass}">${shift}</td>`;
+        }
+
+        var totalVVCandS = (counts.V || 0) + (counts.VC || 0) + (counts.S || 0);
+        var equationResult = Math.abs((8 * totalVVCandS) - 192) / 12;
+        if (equationResult == 16) {
+          equationResult = 0;
+        }
+        equationResult = equationResult.toFixed(2);
+
+        var totalWorkingHours = counts.TotalHours || 0;
+        var hoursDifference = "";
+        if (!containsMorME(shifts) && relevantShiftExists) {
+          hoursDifference = 192 - totalWorkingHours;
+        }
+
+        table += `<td class="stat-Result">${equationResult}</td>`;
+        table += `<td class="stat-Diff">${hoursDifference}</td>`;
+        table += `<td class="stat-WO">${counts.WO || 0}</td>`;
+        table += `<td class="stat-V">${counts.V || 0}</td>`;
+        table += `<td class="stat-E">${counts.E || 0}</td>`;
+        table += `<td class="stat-VC">${counts.VC || 0}</td>`;
+        table += `<td class="stat-S">${counts.S || 0}</td>`;
+        table += `<td class="stat-F">${counts.F || 0}</td>`;
+        if (totalWorkingHours < 192 && !onlyF) {
+          table += `<td class="stat-Total highlight-total">${totalWorkingHours}</td>`;
+        } else {
+          table += `<td class="stat-Total">${totalWorkingHours}</td>`;
+        }
+        table += "</tr>";
+      });
+
+      // إضافة صفوف الإحصائية السفلية لكل نوع مناوبة
+      shiftTypes.forEach(function(shiftType) {
+        table += "<tr>";
+        // دمج أول 4 خلايا لعرض اسم المناوبة
+        table += `<td colspan="4">${shiftType}</td>`;
+        // عرض إحصائية كل عمود من 31 عمود للمناوبات
+        for (var i = 0; i < 31; i++) {
+          var count = dayShiftCounts[i][shiftType] || 0;
+          table += `<td>${count}</td>`;
+        }
+        // ترك خلايا الإحصائيات الأخرى فارغة
+        for (var i = 0; i < 9; i++) {
+          table += `<td></td>`;
+        }
+        table += "</tr>";
+      });
+
+      table += "</tbody></table>";
+      document.getElementById("outputTable").innerHTML = table;
     }
-</script>
+  </script>
 
 </body>
 </html>
