@@ -122,6 +122,12 @@
     .stat-odd {
       background-color: #fce4ec;
     }
+    /* تنسيق رسالة الصفوف المخفية */
+    .hidden-message {
+      margin-top: 20px;
+      font-weight: bold;
+      color: red;
+    }
     footer {
       margin-top: 40px;
       font-size: 14px;
@@ -163,6 +169,8 @@
     الجدول المرتب مع إحصائيات المناوبات:
   </h2>
   <div class="table-container" id="outputTable"></div>
+  <!-- سيتم عرض رسالة الصفوف المخفية هنا -->
+  <div id="hiddenMessage"></div>
 
   <footer>
     Design and Development by <span class="footer-highlight-ali">Ali Alshahrani</span><br>
@@ -180,18 +188,15 @@
       shiftArray.forEach(function(shift) {
         shift = shift.trim();
         if (shift === "") return;
-
         // نمط يحتوي على أحرف وأرقام (مثل D12 أو N8 أو F24)
         var match = shift.match(/^([A-Z]+)(\d+)$/);
         if (match) {
           var type = match[1];
           var hours = parseFloat(match[2]);
-          // إذا كانت المناوبة F، اعتبرها 24 ساعة
-          if(type === 'F') {
+          if (type === 'F') { // إذا كانت المناوبة F، اعتبرها 24 ساعة
             hours = 24;
           }
-          // إذا كانت المناوبة V أو VC أو S، اعتبرها 8 ساعات
-          if(type === 'V' || type === 'VC' || type === 'S') {
+          if (type === 'V' || type === 'VC' || type === 'S') { // إجازات V أو VC أو S تعتبر 8 ساعات
             hours = 8;
           }
           if (!shiftCounts.hasOwnProperty(type)) {
@@ -201,15 +206,14 @@
           shiftCounts.HoursShifts++;
           shiftCounts.HoursValues.push(hours);
           totalHours += hours;
-        }
-        // نمط يحتوي على أحرف فقط (WO أو V أو E أو VC أو S أو F...)
-        else if (/^[A-Z]+$/.test(shift)) {
+        } else if (/^[A-Z]+$/.test(shift)) {
+          // نمط يحتوي على أحرف فقط (مثل WO أو V أو E أو VC أو S أو F)
           var type = shift;
           var hours = 0;
-          if(type === 'F') {
+          if (type === 'F') {
             hours = 24;
           }
-          if(type === 'V' || type === 'VC' || type === 'S') {
+          if (type === 'V' || type === 'VC' || type === 'S') {
             hours = 8;
           }
           if (!shiftCounts.hasOwnProperty(type)) {
@@ -219,9 +223,7 @@
           shiftCounts.HoursShifts++;
           shiftCounts.HoursValues.push(hours);
           totalHours += hours;
-        }
-        else {
-          // ربما رقم ساعات فقط (مثل 12 أو 8...)
+        } else {
           var num = parseFloat(shift);
           if (!isNaN(num) && num >= 0 && num <= 24) {
             shiftCounts.HoursShifts++;
@@ -260,7 +262,6 @@
       for (var i = 1; i <= 31; i++) {
         table += "<th>" + i + "</th>";
       }
-      // أعمدة الإحصائيات
       table += "<th class='stat-Result'>المطلوب منه</th>"
              + "<th class='stat-Diff'>فرق الساعات</th>"
              + "<th class='stat-WO'>دوام رسمي (WO)</th>"
@@ -280,51 +281,39 @@
         dayShiftCounts.push({});
       }
 
+      // مصفوفة لتجميع أسماء الصفوف التي سيتم إخفاؤها
+      var hiddenShiftTypes = [];
+
       rows.forEach(function(row) {
-        // نحصل على الأعمدة <td> بدل من <td> div
         var columns = row.querySelectorAll("td");
         if (columns.length === 0) return;
+        // نتأكد من أن عدد الأعمدة لا يقل عن 35
+        if (columns.length < 35) return;
 
-        // نفترض أن في هذا الجدول:
-        // الأعمدة 0..30: الأيام من 31 إلى 1 (معكوسة)
-        // العمود[31]: الفرقة
-        // العمود[32]: طبيعة العمل (الوظيفة)
-        // العمود[33]: اسم الموظف
-        // العمود[34]: الرقم
-        // العمود[35]: م (إن وجد)
-        if (columns.length < 35) {
-          return;
-        }
-
-        // 1) استخرج أول 31 عموداً => الأيام المعكوسة
+        // 1) استخرج أول 31 عموداً (الأيام المعكوسة)
         var reversedDays = Array.from(columns).slice(0, 31);
+        // 2) الأعمدة التالية:
+        var col_فرقة  = columns[31] ? columns[31].innerText.trim() : "";
+        var col_طبيعة = columns[32] ? columns[32].innerText.trim() : "";
+        var col_الاسم = columns[33] ? columns[33].innerText.trim() : "";
+        var col_الرقم = columns[34] ? columns[34].innerText.trim() : "";
 
-        // 2) خذ الأعمدة التالية:
-        var col_فرقة   = columns[31] ? columns[31].innerText.trim() : "";
-        var col_طبيعة  = columns[32] ? columns[32].innerText.trim() : "";
-        var col_الاسم  = columns[33] ? columns[33].innerText.trim() : "";
-        var col_الرقم  = columns[34] ? columns[34].innerText.trim() : "";
-        // (العمود[35] إذا أردت التعامل معه أضفه هنا)
-
-        // 3) نعكس الأيام لتصبح من اليوم1..اليوم31
+        // 3) نعكس الأيام لتصبح من اليوم1 إلى اليوم31
         reversedDays.reverse();
 
-        // 4) رتب المصفوفة بالصيغة المطلوبة:
-        // [الرقم, الاسم, الوظيفة, التسلسلي, الأيام 1..31]
+        // 4) ترتيب البيانات في مصفوفة بالشكل المطلوب:
         var arranged = [];
-        arranged[0] = col_الرقم;     // الرقم
-        arranged[1] = col_الاسم;     // الاسم
-        arranged[2] = col_طبيعة;     // الوظيفة
-        arranged[3] = col_فرقة;      // الرقم التسلسلي
-        
+        arranged[0] = col_الرقم;    // الرقم
+        arranged[1] = col_الاسم;    // الاسم
+        arranged[2] = col_طبيعة;    // الوظيفة
+        arranged[3] = col_فرقة;     // الرقم التسلسلي
         reversedDays.forEach(function(td, i){
           arranged[4 + i] = td.innerText.trim();
         });
 
-        // نحصل على شيفتات الأيام
-        var shifts = arranged.slice(4);
+        var shifts = arranged.slice(4); // الأيام فقط
 
-        // تحديث إحصائية كل عمود للمناوبات المطلوبة فقط إذا كان عمود الوظيفة يحتوي على "أخصائي" أو "مسعف"
+        // تحديث إحصائية كل عمود للمناوبات المطلوبة فقط إذا كانت الوظيفة "أخصائي" أو "مسعف"
         if (col_طبيعة === "أخصائي" || col_طبيعة === "مسعف") {
           for (var i = 0; i < 31; i++) {
             var shiftValue = shifts[i] || "";
@@ -337,9 +326,8 @@
           }
         }
 
-        // الحسابات المعتادة للصف
+        // الحسابات المعتادة للصف:
         var counts = countShifts(shifts);
-
         var relevantShiftExists = shifts.some(function(shift) {
           return shift.startsWith('D') || shift.startsWith('N') || shift.startsWith('CP');
         });
@@ -361,7 +349,7 @@
           rowClass = "row-highlight";
         }
 
-        // تمييز الخلايا المتتالية بـ F
+        // تمييز الخلايا المتتالية بـ "F"
         var highlightCells = [];
         for (var i = 0; i < shifts.length - 1; i++) {
           if (shifts[i].startsWith('F') && shifts[i + 1].startsWith('F')) {
@@ -370,32 +358,28 @@
           }
         }
 
-        // بناء صف الجدول
+        // بناء صف الجدول الرئيسي:
         table += `<tr class="${rowClass}">`;
-        table += `<td>${ arranged[0] }</td>`; // الرقم
-        table += `<td>${ arranged[1] }</td>`; // الاسم
-        table += `<td>${ arranged[2] }</td>`; // الوظيفة
-        table += `<td>${ arranged[3] }</td>`; // الرقم التسلسلي
-
+        table += `<td>${ arranged[0] }</td>`;
+        table += `<td>${ arranged[1] }</td>`;
+        table += `<td>${ arranged[2] }</td>`;
+        table += `<td>${ arranged[3] }</td>`;
         for (var i = 0; i < 31; i++) {
           var shift = shifts[i] || "";
           var cellClass = highlightCells.includes(i) ? 'blue-highlight' : '';
           table += `<td class="${cellClass}">${shift}</td>`;
         }
-
         var totalVVCandS = (counts.V || 0) + (counts.VC || 0) + (counts.S || 0);
         var equationResult = Math.abs((8 * totalVVCandS) - 192) / 12;
         if (equationResult == 16) {
           equationResult = 0;
         }
         equationResult = equationResult.toFixed(2);
-
         var totalWorkingHours = counts.TotalHours || 0;
         var hoursDifference = "";
         if (!containsMorME(shifts) && relevantShiftExists) {
           hoursDifference = 192 - totalWorkingHours;
         }
-
         table += `<td class="stat-Result">${equationResult}</td>`;
         table += `<td class="stat-Diff">${hoursDifference}</td>`;
         table += `<td class="stat-WO">${counts.WO || 0}</td>`;
@@ -404,7 +388,6 @@
         table += `<td class="stat-VC">${counts.VC || 0}</td>`;
         table += `<td class="stat-S">${counts.S || 0}</td>`;
         table += `<td class="stat-F">${counts.F || 0}</td>`;
-
         if (totalWorkingHours < 192 && !onlyF) {
           table += `<td class="stat-Total highlight-total">${totalWorkingHours}</td>`;
         } else {
@@ -413,23 +396,46 @@
         table += "</tr>";
       });
 
-      // إضافة صفوف الإحصائية السفلية لكل نوع مناوبة مع تلوين بديل للأعمدة
+      // بناء صفوف الإحصائية السفلية لكل نوع مناوبة مع التلوين البديل،
+      // وفي حالة كون جميع قيم الصف من العمود 1 إلى 31 صفر يتم إخفاؤه وتسجيله في مصفوفة
       shiftTypes.forEach(function(shiftType) {
-        table += "<tr>";
-        table += `<td colspan="4">${shiftType}</td>`;
+        var allZero = true;
         for (var i = 0; i < 31; i++) {
           var count = dayShiftCounts[i][shiftType] || 0;
-          var cellClass = (i % 2 === 0) ? 'stat-even' : 'stat-odd';
-          table += `<td class="${cellClass}">${count}</td>`;
+          if (count !== 0) {
+            allZero = false;
+            break;
+          }
         }
-        for (var i = 0; i < 9; i++) {
-          table += `<td></td>`;
+        if (allZero) {
+          hiddenShiftTypes.push(shiftType);
+        } else {
+          table += "<tr>";
+          table += `<td colspan="4">${shiftType}</td>`;
+          for (var i = 0; i < 31; i++) {
+            var count = dayShiftCounts[i][shiftType] || 0;
+            var cellClass = (i % 2 === 0) ? 'stat-even' : 'stat-odd';
+            table += `<td class="${cellClass}">${count}</td>`;
+          }
+          for (var i = 0; i < 9; i++) {
+            table += `<td></td>`;
+          }
+          table += "</tr>";
         }
-        table += "</tr>";
       });
 
       table += "</tbody></table>";
+
+      // عرض الجدول في العنصر المحدد:
       document.getElementById("outputTable").innerHTML = table;
+
+      // إذا كانت هناك صفوف إحصائية مخفية، عرض رسالة أسفل الصفحة
+      if (hiddenShiftTypes.length > 0) {
+        var message = "<div class='hidden-message'>تم اخفاء الصفوف التالية لأن إحصائيتها 0 طوال الشهر: " + hiddenShiftTypes.join(", ") + "</div>";
+        document.getElementById("hiddenMessage").innerHTML = message;
+      } else {
+        document.getElementById("hiddenMessage").innerHTML = "";
+      }
     }
   </script>
 
