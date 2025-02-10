@@ -115,6 +115,13 @@
       background-color: #FF8C00;
       color: #fff;
     }
+    /* تعريف ألوان الأعمدة البديلة للإحصائيات السفلية */
+    .stat-even {
+      background-color: #e3f2fd;
+    }
+    .stat-odd {
+      background-color: #fce4ec;
+    }
     footer {
       margin-top: 40px;
       font-size: 14px;
@@ -356,15 +363,16 @@
         table += "</tr>";
       });
 
-      // إضافة صفوف الإحصائية السفلية لكل نوع مناوبة
+      // إضافة صفوف الإحصائية السفلية لكل نوع مناوبة مع تلوين الأعمدة بالتناوب
       shiftTypes.forEach(function(shiftType) {
         table += "<tr>";
         // دمج أول 4 خلايا لعرض اسم المناوبة
         table += `<td colspan="4">${shiftType}</td>`;
-        // عرض إحصائية كل عمود من 31 عمود للمناوبات
+        // عرض إحصائية كل عمود من 31 عمود للمناوبات مع تلوين بديل للأعمدة
         for (var i = 0; i < 31; i++) {
           var count = dayShiftCounts[i][shiftType] || 0;
-          table += `<td>${count}</td>`;
+          var cellClass = (i % 2 === 0) ? 'stat-even' : 'stat-odd';
+          table += `<td class="${cellClass}">${count}</td>`;
         }
         // ترك خلايا الإحصائيات الأخرى فارغة
         for (var i = 0; i < 9; i++) {
