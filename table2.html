@@ -183,10 +183,10 @@
         if (match) {
           var type = match[1];
           var hours = parseFloat(match[2]);
-          if(type === 'F') {
+          if (type === 'F') {
             hours = 24;
           }
-          if(type === 'V' || type === 'VC' || type === 'S') {
+          if (type === 'V' || type === 'VC' || type === 'S') {
             hours = 8;
           }
           if (!shiftCounts.hasOwnProperty(type)) {
@@ -196,14 +196,13 @@
           shiftCounts.HoursShifts++;
           shiftCounts.HoursValues.push(hours);
           totalHours += hours;
-        }
-        else if (/^[A-Z]+$/.test(shift)) {
+        } else if (/^[A-Z]+$/.test(shift)) {
           var type = shift;
           var hours = 0;
-          if(type === 'F') {
+          if (type === 'F') {
             hours = 24;
           }
-          if(type === 'V' || type === 'VC' || type === 'S') {
+          if (type === 'V' || type === 'VC' || type === 'S') {
             hours = 8;
           }
           if (!shiftCounts.hasOwnProperty(type)) {
@@ -213,8 +212,7 @@
           shiftCounts.HoursShifts++;
           shiftCounts.HoursValues.push(hours);
           totalHours += hours;
-        }
-        else {
+        } else {
           var num = parseFloat(shift);
           if (!isNaN(num) && num >= 0 && num <= 24) {
             shiftCounts.HoursShifts++;
@@ -273,7 +271,7 @@
         dayShiftCounts.push({});
       }
       
-      // قائمة لتجميع معلومات الصفوف التي تحتوي على أصفار في الأعمدة من يوم 1 إلى 31
+      // قائمة لتجميع معلومات الصفوف التي تحتوي على أصفار في الأعمدة من يوم 1 إلى 31 (للصفوف الرئيسية)
       var hiddenRows = [];
 
       rows.forEach(function(row) {
@@ -303,7 +301,7 @@
         // تحقق مما إذا كانت جميع خلايا الأيام تحتوي على "0"
         var isAllZeros = shifts.every(function(cell) { return cell === "0"; });
 
-        // تفعيل شرط إخفاء الصفوف في جدول الإحصائية فقط (أي عدم احتسابها في الإحصائيات)
+        // تفعيل شرط إخفاء الصفوف في جدول الإحصائية الرئيسية فقط
         if ((col_طبيعة === "أخصائي" || col_طبيعة === "مسعف") && !isAllZeros) {
           for (var i = 0; i < 31; i++) {
             var shiftValue = shifts[i] || "";
@@ -315,7 +313,6 @@
             }
           }
         } else if (isAllZeros) {
-          // تسجيل معلومات الصف الذي يحتوي على أصفار بالكامل للأيام (للإحصائية السفلية)
           hiddenRows.push(col_الرقم + " - " + col_الاسم);
         }
 
@@ -390,26 +387,43 @@
         table += "</tr>";
       });
 
-      // إضافة صفوف الإحصائية السفلية لكل نوع مناوبة مع تلوين بديل للأعمدة
+      // تعديل: معالجة صفوف الإحصائية السفلية بحيث إذا كانت كل خلايا الأيام (1-31) صفراً يتم إخفاؤها
+      var hiddenStatsRows = [];
       shiftTypes.forEach(function(shiftType) {
-        table += "<tr>";
-        table += `<td colspan="4">${shiftType}</td>`;
+        var allZeros = true;
         for (var i = 0; i < 31; i++) {
           var count = dayShiftCounts[i][shiftType] || 0;
-          var cellClass = (i % 2 === 0) ? 'stat-even' : 'stat-odd';
-          table += `<td class="${cellClass}">${count}</td>`;
+          if (count != 0) {
+            allZeros = false;
+            break;
+          }
         }
-        for (var i = 0; i < 9; i++) {
-          table += `<td></td>`;
+        if (allZeros) {
+          hiddenStatsRows.push(shiftType);
+        } else {
+          table += "<tr>";
+          table += `<td colspan="4">${shiftType}</td>`;
+          for (var i = 0; i < 31; i++) {
+            var count = dayShiftCounts[i][shiftType] || 0;
+            var cellClass = (i % 2 === 0) ? 'stat-even' : 'stat-odd';
+            table += `<td class="${cellClass}">${count}</td>`;
+          }
+          for (var i = 0; i < 9; i++) {
+            table += `<td></td>`;
+          }
+          table += "</tr>";
         }
-        table += "</tr>";
       });
 
-      // في حال وجود صفوف للأيام تحتوي على أصفار (لم تُحتسب في الإحصائيات)
-      if (hiddenRows.length > 0) {
-        table += `<tr><td colspan="44" style="text-align:center; background-color: #f2f2f2;">الصفوف التالية في جدول الإحصائية لم تُحسب لأنها تحتوي على أصفار من يوم 1 إلى يوم 31: ${hiddenRows.join("; ")}</td></tr>`;
+      if (hiddenStatsRows.length > 0) {
+        table += `<tr><td colspan="44" style="text-align:center; background-color: #f2f2f2;">الصفوف التالية في جدول الإحصائية لم تُعرض لأنها تحتوي على أصفار من يوم 1 إلى يوم 31: ${hiddenStatsRows.join("; ")}</td></tr>`;
       }
-
+      
+      // في حال وجود صفوف رئيسية تحتوي على أصفار للأيام
+      if (hiddenRows.length > 0) {
+        table += `<tr><td colspan="44" style="text-align:center; background-color: #f2f2f2;">الصفوف التالية في الجدول الرئيسي لم تُحتسب لأنها تحتوي على أصفار من يوم 1 إلى يوم 31: ${hiddenRows.join("; ")}</td></tr>`;
+      }
+      
       table += "</tbody></table>";
       document.getElementById("outputTable").innerHTML = table;
     }
