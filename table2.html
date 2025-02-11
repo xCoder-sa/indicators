@@ -170,6 +170,9 @@
   </footer>
 
   <script>
+    // --------------------------------------------------
+    // دوال المساعدة القديمة كما هي:
+    // --------------------------------------------------
     function countShifts(shiftArray) {
       var shiftCounts = { HoursShifts: 0, HoursValues: [] };
       var totalHours = 0;
@@ -236,57 +239,72 @@
       });
     }
 
+    // --------------------------------------------------
+    // الدالة الرئيسية بعد التعديل:
+    // --------------------------------------------------
     function parseHTMLSource() {
       var inputText = document.getElementById("inputText").value;
       var parser = new DOMParser();
       var doc = parser.parseFromString(inputText, "text/html");
       var rows = doc.querySelectorAll("tr");
+
+      // بناء الهيكلية الأساسية للجدول النهائي:
       var table = "<table><thead><tr><th>الرقم</th><th>الاسم</th><th>الوظيفة</th><th>الرقم التسلسلي</th>";
       for (var i = 1; i <= 31; i++) {
         table += "<th>" + i + "</th>";
       }
+      // أعمدة الإحصائيات
       table += "<th class='stat-Result'>المطلوب منه</th>"
-            + "<th class='stat-Diff'>فرق الساعات</th>"
-            + "<th class='stat-WO'>دوام رسمي (WO)</th>"
-            + "<th class='stat-V'>إجازة اعتيادية (V)</th>"
-            + "<th class='stat-E'>إجازة اختبار (E)</th>"
-            + "<th class='stat-VC'>إجازة تعويضية (VC)</th>"
-            + "<th class='stat-S'>إجازة مرضية (S)</th>"
-            + "<th class='stat-F'>مناوبات 24 ساعة (F)</th>"
-            + "<th class='stat-Total'>إجمالي الساعات</th>"
-            + "</tr></thead><tbody>";
+             + "<th class='stat-Diff'>فرق الساعات</th>"
+             + "<th class='stat-WO'>دوام رسمي (WO)</th>"
+             + "<th class='stat-V'>إجازة اعتيادية (V)</th>"
+             + "<th class='stat-E'>إجازة اختبار (E)</th>"
+             + "<th class='stat-VC'>إجازة تعويضية (VC)</th>"
+             + "<th class='stat-S'>إجازة مرضية (S)</th>"
+             + "<th class='stat-F'>مناوبات 24 ساعة (F)</th>"
+             + "<th class='stat-Total'>إجمالي الساعات</th>"
+             + "</tr></thead><tbody>";
 
+      // تعريف أنواع المناوبات المطلوبة للإحصائية
       var shiftTypes = ["C", "CP24", "CP8", "CPD", "CPN", "D10", "D11", "D12", "D6", "D8", "E", "EV", "F", "LN10", "M", "ME", "N10", "N11", "N12", "N6", "N8", "O10", "O12", "O6", "O8"];
+      // مصفوفة لتجميع إحصائية كل عمود (31 عمود) للمناوبات
       var dayShiftCounts = [];
       for (var i = 0; i < 31; i++) {
         dayShiftCounts.push({});
       }
-
+      
+      // قائمة لتجميع معلومات الصفوف التي تحتوي على أصفار في الأعمدة من يوم 1 إلى 31
       var hiddenRows = [];
+
       rows.forEach(function(row) {
         var columns = row.querySelectorAll("td");
         if (columns.length === 0) return;
         if (columns.length < 35) return;
+
+        // استخراج أول 31 عمود (الأيام) ومن ثم باقي الأعمدة
         var reversedDays = Array.from(columns).slice(0, 31);
         var col_فرقة   = columns[31] ? columns[31].innerText.trim() : "";
         var col_طبيعة  = columns[32] ? columns[32].innerText.trim() : "";
         var col_الاسم  = columns[33] ? columns[33].innerText.trim() : "";
         var col_الرقم  = columns[34] ? columns[34].innerText.trim() : "";
         reversedDays.reverse();
+
+        // ترتيب البيانات: [الرقم, الاسم, الوظيفة, الرقم التسلسلي, الأيام 1..31]
         var arranged = [];
         arranged[0] = col_الرقم;
         arranged[1] = col_الاسم;
         arranged[2] = col_طبيعة;
         arranged[3] = col_فرقة;
-        reversedDays.forEach(function(td, i){
+        reversedDays.forEach(function(td, i) {
           arranged[4 + i] = td.innerText.trim();
         });
         var shifts = arranged.slice(4);
-        if (shifts.every(function(cell) { return cell === "0"; })) {
-          hiddenRows.push(col_الرقم + " - " + col_الاسم);
-          return;
-        }
-        if (col_طبيعة === "أخصائي" || col_طبيعة === "مسعف") {
+
+        // تحقق مما إذا كانت جميع خلايا الأيام تحتوي على "0"
+        var isAllZeros = shifts.every(function(cell) { return cell === "0"; });
+
+        // تفعيل شرط إخفاء الصفوف في جدول الإحصائية فقط (أي عدم احتسابها في الإحصائيات)
+        if ((col_طبيعة === "أخصائي" || col_طبيعة === "مسعف") && !isAllZeros) {
           for (var i = 0; i < 31; i++) {
             var shiftValue = shifts[i] || "";
             if (shiftTypes.indexOf(shiftValue) !== -1) {
@@ -296,7 +314,12 @@
               dayShiftCounts[i][shiftValue]++;
             }
           }
+        } else if (isAllZeros) {
+          // تسجيل معلومات الصف الذي يحتوي على أصفار بالكامل للأيام (للإحصائية السفلية)
+          hiddenRows.push(col_الرقم + " - " + col_الاسم);
         }
+
+        // الحسابات المعتادة للصف
         var counts = countShifts(shifts);
         var relevantShiftExists = shifts.some(function(shift) {
           return shift.startsWith('D') || shift.startsWith('N') || shift.startsWith('CP');
@@ -317,6 +340,7 @@
         if (containsVVCorS(shifts)) {
           rowClass = "row-highlight";
         }
+        // تمييز الخلايا المتتالية بـ F
         var highlightCells = [];
         for (var i = 0; i < shifts.length - 1; i++) {
           if (shifts[i].startsWith('F') && shifts[i + 1].startsWith('F')) {
@@ -324,6 +348,8 @@
             highlightCells.push(i + 1);
           }
         }
+
+        // إضافة الصف إلى الجدول الرئيسي (يُعرض جميع الصفوف)
         table += `<tr class="${rowClass}">`;
         table += `<td>${ arranged[0] }</td>`;
         table += `<td>${ arranged[1] }</td>`;
@@ -334,17 +360,20 @@
           var cellClass = highlightCells.includes(i) ? 'blue-highlight' : '';
           table += `<td class="${cellClass}">${shift}</td>`;
         }
+
         var totalVVCandS = (counts.V || 0) + (counts.VC || 0) + (counts.S || 0);
         var equationResult = Math.abs((8 * totalVVCandS) - 192) / 12;
         if (equationResult == 16) {
           equationResult = 0;
         }
         equationResult = equationResult.toFixed(2);
+
         var totalWorkingHours = counts.TotalHours || 0;
         var hoursDifference = "";
         if (!containsMorME(shifts) && relevantShiftExists) {
           hoursDifference = 192 - totalWorkingHours;
         }
+
         table += `<td class="stat-Result">${equationResult}</td>`;
         table += `<td class="stat-Diff">${hoursDifference}</td>`;
         table += `<td class="stat-WO">${counts.WO || 0}</td>`;
@@ -361,6 +390,7 @@
         table += "</tr>";
       });
 
+      // إضافة صفوف الإحصائية السفلية لكل نوع مناوبة مع تلوين بديل للأعمدة
       shiftTypes.forEach(function(shiftType) {
         table += "<tr>";
         table += `<td colspan="4">${shiftType}</td>`;
@@ -375,8 +405,9 @@
         table += "</tr>";
       });
 
+      // في حال وجود صفوف للأيام تحتوي على أصفار (لم تُحتسب في الإحصائيات)
       if (hiddenRows.length > 0) {
-        table += `<tr><td colspan="44" style="text-align:center; background-color: #f2f2f2;">تم إخفاء الصفوف التالية لأن جميع مدخلاتها من يوم 1 إلى يوم 31 تساوي 0: ${hiddenRows.join("; ")}</td></tr>`;
+        table += `<tr><td colspan="44" style="text-align:center; background-color: #f2f2f2;">الصفوف التالية في جدول الإحصائية لم تُحسب لأنها تحتوي على أصفار من يوم 1 إلى يوم 31: ${hiddenRows.join("; ")}</td></tr>`;
       }
 
       table += "</tbody></table>";
