@@ -1,3 +1,6 @@
+<?php
+date_default_timezone_set('Asia/Riyadh');
+?>
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -6,50 +9,64 @@
     <title>منصة فريق التخطيط</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        body { font-family: 'Cairo', sans-serif; margin:0; padding:0; background:#f4f7fa; direction:rtl; }
-        .sidebar { width:200px; background:#2d3436; color:#dfe6e9; height:100vh; position:fixed; transition:width .3s; overflow:hidden; }
-        .sidebar.collapsed { width:60px; }
-        .sidebar ul { list-style:none; padding:0; margin:0; }
-        .sidebar ul li { padding:15px; cursor:pointer; display:flex; align-items:center; white-space:nowrap; }
-        .sidebar ul li.active, .sidebar ul li:hover { background:#636e72; }
-        .sidebar ul li i { margin-left:10px; font-size:18px; }
-        .main { margin-right:200px; padding:20px; transition:margin-right .3s; }
-        .sidebar.collapsed ~ .main { margin-right:60px; }
-        .hamburger { display:none; position:fixed; top:15px; right:15px; background:#2d3436; color:#dfe6e9; border:none; padding:10px; border-radius:4px; z-index:1000; }
-        h2 { margin:0 0 20px; color:#2d3436; }
-        .form-container { display:none; background:#fff; padding:20px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,.1); }
+        * { box-sizing: border-box; margin:0; padding:0; }
+        body { font-family: 'Cairo', sans-serif; background:#f4f7fa; direction:rtl; }
+        .container { display: flex; min-height:100vh; }
+        .sidebar {
+            width:220px; background:#2d3436; color:#dfe6e9;
+            flex-shrink:0; display:flex; flex-direction:column;
+        }
+        .sidebar ul { list-style:none; width:100%; }
+        .sidebar li {
+            padding:16px; cursor:pointer; display:flex; align-items:center;
+            transition:background .3s;
+        }
+        .sidebar li.active, .sidebar li:hover { background:#636e72; }
+        .sidebar li i { margin-left:10px; font-size:18px; }
+        .main { flex-grow:1; padding:20px; overflow-y:auto; }
+        h2 { margin-bottom:20px; color:#2d3436; }
+        .form-container {
+            background:#fff; border-radius:8px; padding:20px;
+            box-shadow:0 2px 8px rgba(0,0,0,.1); display:none;
+        }
         .form-container.active { display:block; }
-        .form-row { margin-bottom:15px; }
-        .form-row label { display:block; margin-bottom:5px; font-weight:bold; color:#2d3436; }
-        .form-row input, .form-row select { width:100%; padding:8px; border:1px solid #b2bec3; border-radius:4px; font-size:14px; box-sizing:border-box; }
-        .inline { display:flex; gap:10px; }
-        .inline .form-row { flex:1; margin-bottom:0; }
-        .submit-btn { background:#00b894; color:#fff; border:none; padding:12px; font-size:16px; border-radius:6px; cursor:pointer; width:100%; margin-top:10px; }
-        .submit-btn:hover { background:#55efc4; }
-        table { width:100%; border-collapse:collapse; margin-top:10px; font-size:14px; }
-        table th, table td { border:1px solid #b2bec3; padding:8px; text-align:center; }
+        .grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+        .grid-full { grid-column:span 2; }
+        .form-row { display:flex; flex-direction:column; }
+        .form-row label { margin-bottom:6px; font-weight:bold; color:#2d3436; }
+        .form-row input, .form-row select { padding:8px; border:1px solid #b2bec3; border-radius:4px; font-size:14px; }
+        h3 { margin-top:24px; margin-bottom:12px; color:#0984e3; font-size:18px; }
+        table { width:100%; border-collapse:collapse; margin-top:8px; }
+        table th, table td { border:1px solid #b2bec3; padding:8px; text-align:center; font-size:14px; }
         table th { background:#0984e3; color:#fff; }
-        @media (max-width:768px) {
-            .sidebar { left:-200px; position:fixed; }
-            .sidebar.active { left:0; }
-            .hamburger { display:block; }
-            .main { margin:0; padding:60px 10px 20px; }
-            .inline { flex-direction:column; }
+        .submit-btn {
+            margin-top:20px; background:#00b894; color:#fff;
+            border:none; padding:14px; font-size:16px; border-radius:6px; cursor:pointer;
+        }
+        .submit-btn:hover { background:#55efc4; }
+        @media(max-width:768px){
+            .container { flex-direction:column; }
+            .sidebar { width:100%; flex-direction:row; overflow-x:auto; }
+            .sidebar li { flex:1; justify-content:center; }
+            .main { padding:10px; }
+            .grid { grid-template-columns:1fr; }
+            .grid-full { grid-column:span 1; }
         }
     </style>
 </head>
 <body>
-    <button class="hamburger" id="hamburgerBtn"><i class="fas fa-bars"></i></button>
-    <div class="sidebar" id="sidebar">
+<div class="container">
+    <nav class="sidebar">
         <ul>
-            <li class="active" data-form="formAmb"><i class="fas fa-ambulance"></i><span>الإسعاف الأرضي</span></li>
-            <li data-form="formLog"><i class="fas fa-truck"></i><span>الدعم اللوجستي</span></li>
+            <li class="active" data-form="formAmb"><i class="fas fa-ambulance"></i> الإسعاف الأرضي</li>
+            <li data-form="formLog"><i class="fas fa-truck"></i> الدعم اللوجستي</li>
         </ul>
-    </div>
-    <div class="main">
+    </nav>
+    <section class="main">
         <h2>منصة فريق التخطيط</h2>
+
         <div id="formAmb" class="form-container active">
-            <div class="inline">
+            <div class="grid">
                 <div class="form-row">
                     <label>التاريخ</label>
                     <input type="date" id="amb_date" required>
@@ -58,12 +75,10 @@
                     <label>الوقت</label>
                     <input type="time" id="amb_time" required>
                 </div>
-            </div>
-            <div class="form-row">
-                <label>رقم المناوبة</label>
-                <input type="number" id="amb_shift_no" required>
-            </div>
-            <div class="form-row inline">
+                <div class="form-row">
+                    <label>رقم المناوبة</label>
+                    <input type="number" id="amb_shift_no" required>
+                </div>
                 <div class="form-row">
                     <label>النطاق</label>
                     <select id="amb_zone" required>
@@ -81,12 +96,63 @@
                         <option value="" disabled selected>اختر القطاع</option>
                     </select>
                 </div>
+                <div class="form-row">
+                    <label>اسم كبير مسعفين القطاع</label>
+                    <input type="text" id="amb_lead_name" required>
+                </div>
+                <div class="form-row">
+                    <label>الكود الوظيفي لكبير المسعفين</label>
+                    <input type="text" id="amb_lead_code" required>
+                </div>
+                <div class="form-row">
+                    <label>عدد الوحدات التشغيلية</label>
+                    <input type="number" id="amb_units" required>
+                </div>
+                <div class="form-row">
+                    <label>عدد مقدمي الخدمة</label>
+                    <input type="number" id="amb_providers" required>
+                </div>
+                <div class="form-row">
+                    <label>عدد الموظفين</label>
+                    <input type="number" id="amb_staff" required>
+                </div>
+                <div class="form-row">
+                    <label>عدد المتطوعين</label>
+                    <input type="number" id="amb_volunteers" required>
+                </div>
             </div>
-            <!-- بقية الحقول كما في السابق بنفس التنسيق -->
+            <h3>الموارد التقنية</h3>
+            <div class="grid-full">
+                <label><input type="checkbox" id="tech_pc"> جهاز حاسب آلي</label>
+                <label><input type="checkbox" id="tech_tablet"> جهاز تابلت</label>
+                <label><input type="checkbox" id="tech_eparamedic"> جهاز مسعف إلكتروني</label>
+                <label><input type="checkbox" id="tech_radio"> جهاز اتصال لاسلكي</label>
+            </div>
+            <h3>الموارد الطبية</h3>
+            <div class="grid-full">
+                <label><input type="checkbox" id="med_aed"> جهاز AED</label>
+                <label><input type="checkbox" id="med_lux"> جهاز لوكس</label>
+                <label><input type="checkbox" id="med_lifepak"> جهاز لايف باك15</label>
+                <label><input type="checkbox" id="med_vitals"> جهاز قياس العلامات الحيوية</label>
+                <label><input type="checkbox" id="med_suction"> جهاز الشفط المتنقل</label>
+                <label><input type="checkbox" id="med_thermometer"> جهاز قياس حرارة الجسم</label>
+                <label><input type="checkbox" id="med_oxygen_bag"> شنطة أوكسجين</label>
+                <label><input type="checkbox" id="med_kit"> شنطة إسعافية مجهزة</label>
+            </div>
+            <h3>وسائل النقل</h3>
+            <div class="grid-full">
+                <?php
+                $vehicles = ['سيارات الإسعاف','القولف','دراجات نارية','دراجات كهربائية','سكوترات','بولاريس','باصات','طويق','طويق ICU','سلمى','سند','تنهات','خزام','هداج','ضمك','ثريا'];
+                foreach($vehicles as $v){
+                    echo "<label><input type='checkbox' class='veh_cb'> $v</label>";
+                }
+                ?>
+            </div>
             <button class="submit-btn" onclick="submitAmb()">إرسال النموذج</button>
         </div>
+
         <div id="formLog" class="form-container">
-            <div class="inline">
+            <div class="grid">
                 <div class="form-row">
                     <label>التاريخ</label>
                     <input type="date" id="log_date" required>
@@ -96,30 +162,139 @@
                     <input type="time" id="log_time" required>
                 </div>
             </div>
-            <!-- جداول الموارد كما في السابق -->
+            <h3>الموارد التقنية</h3>
+            <table>
+                <thead><tr><th>اسم المورد</th><th>المستلم</th><th>تم التسليم</th><th>لم تستلم</th></tr></thead>
+                <tbody>
+                    <?php
+                    $tech = ['جهاز حاسب آلي','جهاز تابلت','جهاز مسعف إلكتروني','جهاز اتصال لاسلكي'];
+                    foreach($tech as $i=>$m){
+                        echo "<tr>
+                            <td>$m</td>
+                            <td><input type='text' id='log_recv_tech_$i'></td>
+                            <td><input type='checkbox' id='log_done_tech_$i'></td>
+                            <td><input type='checkbox' id='log_not_tech_$i'></td>
+                        </tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+            <h3>الموارد الطبية</h3>
+            <table>
+                <thead><tr><th>اسم المورد</th><th>المستلم</th><th>تم التسليم</th><th>لم تستلم</th></tr></thead>
+                <tbody>
+                    <?php
+                    $meds = ['جهاز AED','جهاز لوكس','جهاز لايف باك15','جهاز قياس العلامات الحيوية','جهاز الشفط المتنقل','جهاز قياس حرارة الجسم','شنطة أوكسجين','شنطة إسعافية مجهزة'];
+                    foreach($meds as $i=>$m){
+                        echo "<tr>
+                            <td>$m</td>
+                            <td><input type='text' id='log_recv_med_$i'></td>
+                            <td><input type='checkbox' id='log_done_med_$i'></td>
+                            <td><input type='checkbox' id='log_not_med_$i'></td>
+                        </tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+            <h3>وسائل النقل</h3>
+            <table>
+                <thead><tr><th>اسم المورد</th><th>المستلم</th><th>تم التسليم</th><th>لم تستلم</th></tr></thead>
+                <tbody>
+                    <?php
+                    foreach($vehicles as $i=>$v){
+                        echo "<tr>
+                            <td>$v</td>
+                            <td><input type='text' id='log_recv_veh_$i'></td>
+                            <td><input type='checkbox' id='log_done_veh_$i'></td>
+                            <td><input type='checkbox' id='log_not_veh_$i'></td>
+                        </tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
             <button class="submit-btn" onclick="submitLog()">إرسال النموذج</button>
         </div>
-    </div>
-    <script>
-        document.getElementById('hamburgerBtn').onclick=()=>{
-            document.getElementById('sidebar').classList.toggle('active');
-        };
-        document.querySelectorAll('.sidebar ul li').forEach(li=>{
-            li.onclick=()=>{
-                document.querySelectorAll('.sidebar ul li').forEach(x=>x.classList.remove('active'));
-                li.classList.add('active');
-                document.querySelectorAll('.form-container').forEach(f=>f.classList.remove('active'));
-                document.getElementById(li.dataset.form).classList.add('active');
-            };
+    </section>
+</div>
+
+<script>
+    document.querySelectorAll('.sidebar li').forEach(li=>{
+        li.addEventListener('click', ()=>{
+            document.querySelectorAll('.sidebar li').forEach(x=>x.classList.remove('active'));
+            li.classList.add('active');
+            document.querySelectorAll('.form-container').forEach(f=>f.classList.remove('active'));
+            document.getElementById(li.dataset.form).classList.add('active');
         });
-        const sectors={"نطاق الحرم":["المطاف والرواق السعودي","المساء والساحات الشرقية","الساحات الغربية والجنوبية","التوسعة الثالثة"],"نطاق العاصمة المقدسة":["الشمال الشرقي","الغرب","الجنوب","المركزية"],"نطاق منى":["الجمرات","القطارات","بطن منى الشمالي","بطن منى الجنوبي","منى الجديد","منى الجديد 2","الشعيبين"],"نطاق عرفات ومزدلفة":["جنوب عرفة","شمال عرفة","نمرة","جبل الرحمة","شمال مزدلفة","جنوب مزدلفة"],"نطاق طريق الحاج":["طريق الحاج"]};
-        document.getElementById('amb_zone').onchange=function(){
-            let opts=sectors[this.value]||[];
-            let sel=document.getElementById('amb_sector'); sel.innerHTML='<option disabled selected>اختر القطاع</option>';
-            opts.forEach(o=>sel.innerHTML+=`<option>${o}</option>`);
-        };
-        function openWhatsApp(msg){let enc=encodeURIComponent(msg);let url=/iPhone|iPad|iPod/i.test(navigator.userAgent)?`whatsapp://send?text=${enc}`:`https://wa.me/?text=${enc}`;window.open(url,'_blank');}
-        function submitAmb(){let msg=`*== الإسعاف الأرضي ==*\n\n• التاريخ: ${document.getElementById('amb_date').value} • الوقت: ${document.getElementById('amb_time').value}\n`;openWhatsApp(msg);}        
-        function submitLog(){let msg=`*== الدعم اللوجستي ==*\n\n• التاريخ: ${document.getElementById('log_date').value} • الوقت: ${document.getElementById('log_time').value}\n`;openWhatsApp(msg);}    </script>
+    });
+
+    const sectors = {
+        "نطاق الحرم": ["المطاف والرواق السعودي","المساء والساحات الشرقية","الساحات الغربية والجنوبية","التوسعة الثالثة"],
+        "نطاق العاصمة المقدسة": ["الشمال الشرقي","الغرب","الجنوب","المركزية"],
+        "نطاق منى": ["الجمرات","القطارات","بطن منى الشمالي","بطن منى الجنوبي","منى الجديد","منى الجديد 2","الشعيبين"],
+        "نطاق عرفات ومزدلفة": ["جنوب عرفة","شمال عرفة","نمرة","جبل الرحمة","شمال مزدلفة","جنوب مزدلفة"],
+        "نطاق طريق الحاج": ["طريق الحاج"]
+    };
+    document.getElementById('amb_zone').addEventListener('change', function(){
+        const sel = document.getElementById('amb_sector');
+        sel.innerHTML = '<option disabled selected>اختر القطاع</option>';
+        (sectors[this.value]||[]).forEach(o=> sel.innerHTML += `<option>${o}</option>`);
+    });
+
+    function openWhatsApp(msg){
+        const enc = encodeURIComponent(msg);
+        const url = /iPhone|iPad|iPod/i.test(navigator.userAgent)
+            ? `whatsapp://send?text=${enc}` : `https://wa.me/?text=${enc}`;
+        window.open(url,'_blank');
+    }
+
+    function submitAmb(){
+        let msg = `*== الإسعاف الأرضي ==*\n\n`;
+        msg += `• التاريخ: ${document.getElementById('amb_date').value}\n`;
+        msg += `• الوقت: ${document.getElementById('amb_time').value}\n`;
+        msg += `• رقم المناوبة: ${document.getElementById('amb_shift_no').value}\n`;
+        msg += `• النطاق: ${document.getElementById('amb_zone').value}\n`;
+        msg += `• القطاع: ${document.getElementById('amb_sector').value}\n`;
+        msg += `• كبير المسعفين: ${document.getElementById('amb_lead_name').value} (${document.getElementById('amb_lead_code').value})\n\n`;
+        msg += `• وحدات تشغيلية: ${document.getElementById('amb_units').value}\n`;
+        msg += `• مقدمو الخدمة: ${document.getElementById('amb_providers').value}\n`;
+        msg += `• الموظفين: ${document.getElementById('amb_staff').value}\n`;
+        msg += `• المتطوعين: ${document.getElementById('amb_volunteers').value}\n\n`;
+        msg += `*الموارد التقنية:*\n`;
+        ['tech_pc','tech_tablet','tech_eparamedic','tech_radio'].forEach(id=>{
+            if(document.getElementById(id).checked){
+                msg += `- ${document.querySelector('label[for="'+id+'"]').textContent.trim()}\n`;
+            }
+        });
+        msg += `\n*الموارد الطبية:*\n`;
+        ['med_aed','med_lux','med_lifepak','med_vitals','med_suction','med_thermometer','med_oxygen_bag','med_kit']
+        .forEach(id=>{ if(document.getElementById(id).checked)
+            msg += `- ${document.querySelector('label[for="'+id+'"]').textContent.trim()}\n`;
+        });
+        msg += `\n*وسائل النقل:*\n`;
+        document.querySelectorAll('.veh_cb').forEach(cb=>{
+            if(cb.checked) msg += `- ${cb.parentElement.textContent.trim()}\n`;
+        });
+        openWhatsApp(msg);
+    }
+
+    function submitLog(){
+        let msg = `*== الدعم اللوجستي ==*\n\n`;
+        msg += `• التاريخ: ${document.getElementById('log_date').value}\n`;
+        msg += `• الوقت: ${document.getElementById('log_time').value}\n\n`;
+        ['tech','med','veh'].forEach((type,i0)=>{
+            const title = type==='tech'?'الموارد التقنية': type==='med'?'الموارد الطبية':'وسائل النقل';
+            msg += `*${title}:*\n`;
+            document.querySelectorAll(`#formLog table:nth-of-type(${i0+1}) tbody tr`).forEach(row=>{
+                const name = row.cells[0].textContent.trim();
+                const recv = row.cells[1].querySelector('input').value||'-';
+                const done = row.cells[2].querySelector('input').checked?'✔':'✖';
+                const not = row.cells[3].querySelector('input').checked?'✔':'✖';
+                msg += `- ${name}: مستلم(${recv}) تم التسليم(${done}) لم تستلم(${not})\n`;
+            });
+            msg += '\n';
+        });
+        openWhatsApp(msg);
+    }
+</script>
 </body>
 </html>
