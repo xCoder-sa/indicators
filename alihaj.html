@@ -21,7 +21,6 @@ date_default_timezone_set('Asia/Riyadh');
             height:100vh;
             overflow:hidden
         }
-        /* الشريط الجانبي */
         .sidebar{
             width:240px;
             background:#2d3436;
@@ -39,7 +38,7 @@ date_default_timezone_set('Asia/Riyadh');
             font-weight:bold;
             color:#dfe6e9
         }
-        .sidebar ul{list-style:none;margin:0;padding:0;flex-grow:1}
+        .sidebar ul{list-style:none;flex-grow:1}
         .sidebar li{
             padding:15px 18px;
             cursor:pointer;
@@ -48,9 +47,7 @@ date_default_timezone_set('Asia/Riyadh');
             align-items:center
         }
         .sidebar li i{margin-right:14px;font-size:17px}
-        .sidebar li:hover,
-        .sidebar li.active{background:#636e72}
-        /* زر الموبايل */
+        .sidebar li:hover,.sidebar li.active{background:#636e72}
         .hamburger-btn{
             position:fixed;
             top:15px;
@@ -65,18 +62,8 @@ date_default_timezone_set('Asia/Riyadh');
             z-index:2000;
             display:none
         }
-        /* المحتوى */
-        .main-content{
-            flex-grow:1;
-            padding:25px 20px;
-            overflow-y:auto
-        }
-        .header{
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            margin-bottom:20px
-        }
+        .main-content{flex-grow:1;padding:25px 20px;overflow-y:auto}
+        .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
         .header h2{color:#2d3436;font-size:24px}
         .form-container{
             background:#fff;
@@ -111,17 +98,12 @@ date_default_timezone_set('Asia/Riyadh');
             background:#dfe6e9;
             transition:border-color .3s,background .3s
         }
-        select:focus,
-        input:focus{
+        select:focus,input:focus{
             background:#fff;
             border-color:#0984e3;
             outline:none
         }
-        table{
-            width:100%;
-            border-collapse:collapse;
-            margin-top:10px
-        }
+        table{width:100%;border-collapse:collapse;margin-top:10px}
         table th,table td{
             border:1px solid #b2bec3;
             padding:10px 8px;
@@ -165,9 +147,7 @@ date_default_timezone_set('Asia/Riyadh');
 <div class="main-content">
     <div class="header"><h2>منصة فريق التخطيط</h2></div>
 
-    <!-- نموذج الإسعاف الأرضي -->
     <div class="form-container" id="groundEMS" style="display:block">
-        <!-- بيانات عامة -->
         <div class="form-section">
             <h3>بيانات النطاق والقطاع</h3>
             <label for="scope">النطاق:</label>
@@ -216,66 +196,57 @@ date_default_timezone_set('Asia/Riyadh');
             <input type="number" id="volunteers_count" required>
         </div>
 
-        <!-- الموارد التقنية -->
         <div class="form-section">
             <h3>الموارد التقنية</h3>
             <table id="tech_resources">
-                <thead>
-                    <tr><th>الاسم</th><th>العدد</th></tr>
-                </thead>
+                <thead><tr><th>الاسم</th><th>العدد</th></tr></thead>
                 <tbody>
-                    <tr><td>جهاز حاسب آلي</td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>جهاز تابلت</td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>جهاز مسعف إلكتروني</td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>جهاز اتصال لاسلكي</td><td><input type="number" value="0" min="0"></td></tr>
+                    <tr><td>جهاز حاسب آلي</td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>جهاز تابلت</td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>جهاز مسعف إلكتروني</td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>جهاز اتصال لاسلكي</td><td><input type="number" min="0" placeholder="0"></td></tr>
                 </tbody>
             </table>
         </div>
 
-        <!-- الموارد الطبية -->
         <div class="form-section">
             <h3>الموارد الطبية</h3>
             <table id="medical_resources">
-                <thead>
-                    <tr><th>الاسم</th><th>العدد</th></tr>
-                </thead>
+                <thead><tr><th>الاسم</th><th>العدد</th></tr></thead>
                 <tbody>
-                    <tr><td>جهاز AED</td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>جهاز لوكس (الضغطات الصدرية الآلي)</td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>جهاز لايف باك15</td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>جهاز قياس العلامات الحيوية</td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>جهاز الشفط المتنقل</td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>جهاز قياس حرارة الجسم</td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>شنطة أوكسجين</td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>شنطة إسعافية مجهزة</td><td><input type="number" value="0" min="0"></td></tr>
+                    <tr><td>جهاز AED</td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>جهاز لوكس (الضغطات الصدرية الآلي)</td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>جهاز لايف باك15</td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>جهاز قياس العلامات الحيوية</td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>جهاز الشفط المتنقل</td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>جهاز قياس حرارة الجسم</td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>شنطة أوكسجين</td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>شنطة إسعافية مجهزة</td><td><input type="number" min="0" placeholder="0"></td></tr>
                 </tbody>
             </table>
         </div>
 
-        <!-- وسائل النقل -->
         <div class="form-section">
             <h3>وسائل النقل</h3>
             <table id="transport_resources">
-                <thead>
-                    <tr><th>الاسم</th><th>العدد</th></tr>
-                </thead>
+                <thead><tr><th>الاسم</th><th>العدد</th></tr></thead>
                 <tbody>
-                    <tr><td>سيارات الإسعاف</td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>القولف</td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>دراجات نارية</td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>دراجات كهربائية</td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>سكوترات</td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>بولاريس</td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>باصات</td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>طويق</td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>طويق ICU</td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>سلمى</td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>سند</td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>تنهات</td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>خزام</td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>هداج</td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>ضمك</td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>ثريا</td><td><input type="number" value="0" min="0"></td></tr>
+                    <tr><td>سيارات الإسعاف        </td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>القولف               </td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>دراجات نارية        </td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>دراجات كهربائية      </td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>سكوترات              </td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>بولاريس              </td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>باصات                </td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>طويق                 </td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>طويق ICU             </td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>سلمى                 </td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>سند                  </td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>تنهات                </td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>خزام                 </td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>هداج                 </td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>ضمك                  </td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>ثريا                 </td><td><input type="number" min="0" placeholder="0"></td></tr>
                 </tbody>
             </table>
         </div>
@@ -283,62 +254,60 @@ date_default_timezone_set('Asia/Riyadh');
         <button type="button" class="submit-btn" onclick="sendGroundEMS()">إرسال</button>
     </div>
 
-    <!-- نموذج الدعم اللوجستي -->
     <div class="form-container" id="logistics">
-        <!-- الموارد التقنية -->
         <div class="form-section">
             <h3>الموارد التقنية</h3>
             <table>
-                <thead>
-                    <tr><th>اسم المورد</th><th>المستلم</th><th>تم التسليم</th><th>لم تُسْتَلَم</th></tr>
-                </thead>
+                <thead><tr><th>اسم المورد</th><th>المستلم</th><th>تم التسليم</th><th>لم تُسْتَلَم</th></tr></thead>
                 <tbody id="log_tech">
-                    <tr><td>جهاز حاسب آلي        </td><td><input type="text"></td><td><input type="number" min="0" value="0"></td><td><input type="number" min="0" value="0"></td></tr>
-                    <tr><td>جهاز تابلت           </td><td><input type="text"></td><td><input type="number" min="0" value="0"></td><td><input type="number" min="0" value="0"></td></tr>
-                    <tr><td>جهاز مسعف إلكتروني   </td><td><input type="text"></td><td><input type="number" min="0" value="0"></td><td><input type="number" min="0" value="0"></td></tr>
-                    <tr><td>جهاز اتصال لاسلكي    </td><td><input type="text"></td><td><input type="number" min="0" value="0"></td><td><input type="number" min="0" value="0"></td></tr>
+                    <tr><td>جهاز حاسب آلي        </td><td><input type="text"></td><td><input type="number" min="0" placeholder="0"></td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>جهاز تابلت           </td><td><input type="text"></td><td><input type="number" min="0" placeholder="0"></td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>جهاز مسعف إلكتروني   </td><td><input type="text"></td><td><input type="number" min="0" placeholder="0"></td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>جهاز اتصال لاسلكي    </td><td><input type="text"></td><td><input type="number" min="0" placeholder="0"></td><td><input type="number" min="0" placeholder="0"></td></tr>
                 </tbody>
             </table>
         </div>
 
-        <!-- الموارد الطبية -->
         <div class="form-section">
             <h3>الموارد الطبية</h3>
             <table>
-                <thead>
-                    <tr><th>اسم المورد</th><th>المستلم</th><th>تم التسليم</th><th>لم تُسْتَلَم</th></tr>
-                </thead>
+                <thead><tr><th>اسم المورد</th><th>المستلم</th><th>تم التسليم</th><th>لم تُسْتَلَم</th></tr></thead>
                 <tbody id="log_med">
-                    <tr><td>جهاز AED                         </td><td><input type="text"></td><td><input type="number" value="0" min="0"></td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>جهاز لوكس (الضغطات الصدرية الآلي)</td><td><input type="text"></td><td><input type="number" value="0" min="0"></td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>جهاز لايف باك15                  </td><td><input type="text"></td><td><input type="number" value="0" min="0"></td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>جهاز قياس العلامات الحيوية       </td><td><input type="text"></td><td><input type="number" value="0" min="0"></td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>جهاز الشفط المتنقل              </td><td><input type="text"></td><td><input type="number" value="0" min="0"></td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>جهاز قياس حرارة الجسم           </td><td><input type="text"></td><td><input type="number" value="0" min="0"></td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>شنطة أوكسجين                     </td><td><input type="text"></td><td><input type="number" value="0" min="0"></td><td><input type="number" value="0" min="0"></td></tr>
-                    <tr><td>شنطة إسعافية مجهزة              </td><td><input type="text"></td><td><input type="number" value="0" min="0"></td><td><input type="number" value="0" min="0"></td></tr>
+                    <tr><td>جهاز AED                         </td><td><input type="text"></td><td><input type="number" min="0" placeholder="0"></td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>جهاز لوكس (الضغطات الصدرية الآلي)</td><td><input type="text"></td><td><input type="number" min="0" placeholder="0"></td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>جهاز لايف باك15                  </td><td><input type="text"></td><td><input type="number" min="0" placeholder="0"></td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>جهاز قياس العلامات الحيوية       </td><td><input type="text"></td><td><input type="number" min="0" placeholder="0"></td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>جهاز الشفط المتنقل              </td><td><input type="text"></td><td><input type="number" min="0" placeholder="0"></td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>جهاز قياس حرارة الجسم           </td><td><input type="text"></td><td><input type="number" min="0" placeholder="0"></td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>شنطة أوكسجين                     </td><td><input type="text"></td><td><input type="number" min="0" placeholder="0"></td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>شنطة إسعافية مجهزة              </td><td><input type="text"></td><td><input type="number" min="0" placeholder="0"></td><td><input type="number" min="0" placeholder="0"></td></tr>
                 </tbody>
             </table>
         </div>
 
-        <!-- وسائل النقل -->
         <div class="form-section">
             <h3>وسائل النقل</h3>
             <table>
-                <thead>
-                    <tr><th>اسم المورد</th><th>المستلم</th><th>تم التسليم</th><th>لم تُسْتَلَم</th></tr>
-                </thead>
+                <thead><tr><th>اسم المورد</th><th>المستلم</th><th>تم التسليم</th><th>لم تُسْتَلَم</th></tr></thead>
                 <tbody id="log_transport">
-                    <?php
-                    $transportList=[
-                        'سيارات الإسعاف','القولف','دراجات نارية','دراجات كهربائية','سكوترات','بولاريس','باصات',
-                        'طويق','طويق ICU','سلمى','سند','تنهات','خزام','هداج','ضمك','ثريا',
-                        'سرير متحرك (Trolley)','كرسي متحرك (Wheelchair)'
-                    ];
-                    foreach($transportList as $name){
-                        echo "<tr><td>$name</td><td><input type=\"text\"></td><td><input type=\"number\" value=\"0\" min=\"0\"></td><td><input type=\"number\" value=\"0\" min=\"0\"></td></tr>";
-                    }
-                    ?>
+                    <tr><td>سيارات الإسعاف        </td><td><input type="text"></td><td><input type="number" min="0" placeholder="0"></td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>القولف               </td><td><input type="text"></td><td><input type="number" min="0" placeholder="0"></td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>دراجات نارية        </td><td><input type="text"></td><td><input type="number" min="0" placeholder="0"></td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>دراجات كهربائية      </td><td><input type="text"></td><td><input type="number" min="0" placeholder="0"></td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>سكوترات              </td><td><input type="text"></td><td><input type="number" min="0" placeholder="0"></td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>بولاريس              </td><td><input type="text"></td><td><input type="number" min="0" placeholder="0"></td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>باصات                </td><td><input type="text"></td><td><input type="number" min="0" placeholder="0"></td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>طويق                 </td><td><input type="text"></td><td><input type="number" min="0" placeholder="0"></td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>طويق ICU             </td><td><input type="text"></td><td><input type="number" min="0" placeholder="0"></td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>سلمى                 </td><td><input type="text"></td><td><input type="number" min="0" placeholder="0"></td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>سند                  </td><td><input type="text"></td><td><input type="number" min="0" placeholder="0"></td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>تنهات                </td><td><input type="text"></td><td><input type="number" min="0" placeholder="0"></td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>خزام                 </td><td><input type="text"></td><td><input type="number" min="0" placeholder="0"></td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>هداج                 </td><td><input type="text"></td><td><input type="number" min="0" placeholder="0"></td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>ضمك                  </td><td><input type="text"></td><td><input type="number" min="0" placeholder="0"></td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>ثريا                 </td><td><input type="text"></td><td><input type="number" min="0" placeholder="0"></td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>سرير متحرك (Trolley) </td><td><input type="text"></td><td><input type="number" min="0" placeholder="0"></td><td><input type="number" min="0" placeholder="0"></td></tr>
+                    <tr><td>كرسي متحرك (Wheelchair)</td><td><input type="text"></td><td><input type="number" min="0" placeholder="0"></td><td><input type="number" min="0" placeholder="0"></td></tr>
                 </tbody>
             </table>
         </div>
@@ -348,7 +317,6 @@ date_default_timezone_set('Asia/Riyadh');
 </div>
 
 <script>
-/* زر الشريط الجانبي */
 const sidebar=document.getElementById('sidebar'),
       hamburger=document.getElementById('hamburgerBtn'),
       menuItems=document.querySelectorAll('.sidebar li'),
@@ -365,7 +333,6 @@ menuItems.forEach(item=>{
     });
 });
 
-/* ربط القطاعات بالنطاق */
 const scopeSelect=document.getElementById('scope'),
       sectorSelect=document.getElementById('sector');
 
@@ -385,20 +352,16 @@ scopeSelect.addEventListener('change',()=>{
     });
 });
 
-/* تجميع بيانات عددية من جدول */
 function collectTableNumbers(tbl){
-    const rows=[...tbl.querySelectorAll('tbody tr')];
-    return rows.map(r=>{
+    return [...tbl.querySelectorAll('tbody tr')].map(r=>{
         const name=r.cells[0].textContent.trim();
         const val=r.cells[1].querySelector('input').value||'0';
         return `${name}: ${val}`;
     }).join('\n');
 }
 
-/* جمع بيانات لوجستية */
 function collectLogisticRows(tbl){
-    const rows=[...tbl.querySelectorAll('tbody tr')];
-    return rows.map(r=>{
+    return [...tbl.querySelectorAll('tbody tr')].map(r=>{
         const name=r.cells[0].textContent.trim(),
               receiver=r.cells[1].querySelector('input').value||'-',
               inCount=r.cells[2].querySelector('input').value||'0',
@@ -407,18 +370,15 @@ function collectLogisticRows(tbl){
     }).join('\n');
 }
 
-/* إرسال نموذج الإسعاف الأرضي */
 function sendGroundEMS(){
-    /* التحقق من الحقول الأساسية */
-    const essentials=['scope','sector','ems_lead','ems_code','shift_datetime','shift_number',
-                      'operational_units','total_providers','employees_count','volunteers_count'];
-    for(const id of essentials){
+    const ids=['scope','sector','ems_lead','ems_code','shift_datetime','shift_number',
+               'operational_units','total_providers','employees_count','volunteers_count'];
+    for(const id of ids){
         const el=document.getElementById(id);
         if(!el.value.trim()){alert('يرجى تعبئة جميع الحقول المطلوبة');return;}
     }
     let msg=`== منصة تخطيط – الإسعاف الأرضي ==\n\n`;
-    msg+=`النطاق: ${scopeSelect.value}\n`;
-    msg+=`القطاع: ${sectorSelect.value}\n`;
+    msg+=`النطاق: ${scopeSelect.value}\nالقطاع: ${sectorSelect.value}\n`;
     msg+=`كبير المسعفين: ${document.getElementById('ems_lead').value}\n`;
     msg+=`الكود الوظيفي: ${document.getElementById('ems_code').value}\n`;
     msg+=`التاريخ والوقت: ${document.getElementById('shift_datetime').value}\n`;
@@ -431,22 +391,17 @@ function sendGroundEMS(){
     msg+=`-- الموارد الطبية --\n${collectTableNumbers(document.getElementById('medical_resources'))}\n\n`;
     msg+=`-- وسائل النقل --\n${collectTableNumbers(document.getElementById('transport_resources'))}`;
     const encoded=encodeURIComponent(msg);
-    const link=/iPhone|iPad|iPod/i.test(navigator.userAgent)
-        ?`whatsapp://send?text=${encoded}`
-        :`https://wa.me/?text=${encoded}`;
+    const link=/iPhone|iPad|iPod/i.test(navigator.userAgent)?`whatsapp://send?text=${encoded}`:`https://wa.me/?text=${encoded}`;
     window.open(link,'_blank');
 }
 
-/* إرسال نموذج الدعم اللوجستي */
 function sendLogistics(){
     let msg=`== منصة تخطيط – الدعم اللوجستي ==\n\n`;
     msg+=`-- الموارد التقنية --\n${collectLogisticRows(document.getElementById('log_tech'))}\n\n`;
     msg+=`-- الموارد الطبية --\n${collectLogisticRows(document.getElementById('log_med'))}\n\n`;
     msg+=`-- وسائل النقل --\n${collectLogisticRows(document.getElementById('log_transport'))}`;
     const encoded=encodeURIComponent(msg);
-    const link=/iPhone|iPad|iPod/i.test(navigator.userAgent)
-        ?`whatsapp://send?text=${encoded}`
-        :`https://wa.me/?text=${encoded}`;
+    const link=/iPhone|iPad|iPod/i.test(navigator.userAgent)?`whatsapp://send?text=${encoded}`:`https://wa.me/?text=${encoded}`;
     window.open(link,'_blank');
 }
 </script>
